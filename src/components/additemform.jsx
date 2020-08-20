@@ -35,7 +35,9 @@ const AddItemForm = () => {
     }
   
     return (
-      <form onSubmit={onSubmit}>
+        <div>
+        <h2>Add Resource</h2>
+        <form onSubmit={onSubmit}>
         <input placeholder="Name"
           value={name}
           name="name"
@@ -78,6 +80,7 @@ const AddItemForm = () => {
         />
         <button>Submit</button>
       </form>
+      </div>
     )
   }
 

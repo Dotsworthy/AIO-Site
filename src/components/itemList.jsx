@@ -32,13 +32,13 @@ const useItems = () => {
       .delete()
 }  
 
-const ItemList = () => {
+const ItemList = ( { editItem }) => {
     const listItem = useItems();
   return (
 <table className="item-table">
   <tbody>
     <tr>
-      <th className="resource-name">Resource Name</th>
+      <th className="name">Resource Name</th>
       <th className="image">Image</th>
       <th className="description">Description</th>
       <th className="category">Category</th>
@@ -49,14 +49,14 @@ const ItemList = () => {
   {listItem.map(item => (
         <tbody key={item.id}>
           <tr>
-            <td className="resource-name">{item.name}</td>
+            <td className="name">{item.name}</td>
             <td className="image">{item.image}</td>
             <td className="description">{item.description}</td>
             <td className="category">{item.category}</td>
             <td className="level">{item.level}</td>
             <td className="tags">{item.tags}</td>
             <td class="buttons">
-                <button>Edit</button>
+                <button onClick={() => editItem(item)}>Edit</button>
                 <button onClick={() => deleteItem(item.id)}>Delete</button>
             </td>
           </tr>
