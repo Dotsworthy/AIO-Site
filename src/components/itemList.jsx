@@ -24,6 +24,14 @@ const useItems = () => {
     return items;
   };
 
+  const deleteItem = (id) => {
+    firebase
+      .firestore()
+      .collection("items")
+      .doc(id)
+      .delete()
+}  
+
 const ItemList = () => {
     const listItem = useItems();
   return (
@@ -47,6 +55,10 @@ const ItemList = () => {
             <td className="category">{item.category}</td>
             <td className="level">{item.level}</td>
             <td className="tags">{item.tags}</td>
+            <td class="buttons">
+                <button>Edit</button>
+                <button onClick={() => deleteItem(item.id)}>Delete</button>
+            </td>
           </tr>
         </tbody>
       ))}
