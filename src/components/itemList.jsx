@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import firebase from "./firebase"
+import unsubscribe from "./firebase"
 // import "../styles/global.css"
 
 const useItems = () => {
@@ -17,6 +18,8 @@ const useItems = () => {
           }));
           setItems(listItems); //items is equal to listItems
         });
+        //called the unsubscribe--closing connection to Firestore.
+        return () => unsubscribe()
     }, []);
     return items;
   };
