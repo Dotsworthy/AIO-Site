@@ -2,3 +2,21 @@
     max-width: 200px;
     max-height: 200px;
 }
+
+.resource-page-container {
+    display: flex;
+}
+
+.resource-page-items {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.resource-page-search {
+    width: 300px;
+}
+
+.catalogue-item {
+    padding: 10px;
+    min-width: 250px;
+}

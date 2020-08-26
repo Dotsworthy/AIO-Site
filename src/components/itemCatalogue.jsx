@@ -25,10 +25,10 @@ const useItems = () => {
 const ItemCatalogue = () => {
     const listItem = useItems();
   return (
-      <div>
+      <div className ="resource-page-items">
     {listItem.map(item => (
-      <div className={item.category}>
-            <h1>{item.name}</h1>
+      <div className={item.category} className="catalogue-item">
+            <h3>{item.name}</h3>
             <img className="catalogue-image" src={item.image}></img>
             <div>
             <button>More Info</button>
