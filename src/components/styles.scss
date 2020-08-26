@@ -1,10 +1,22 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.catalogue-image-container {
+    height: 200px;
+    width: 150px;
+}
+
 .catalogue-image {
-    max-width: 200px;
-    max-height: 200px;
+    max-width: 150px;
+    max-height: 150px;
 }
 
 .resource-page-container {
     display: flex;
+    align-items: flex-start;
 }
 
 .resource-page-items {
@@ -13,10 +25,26 @@
 }
 
 .resource-page-search {
-    width: 300px;
+    max-width: 350px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    p {
+        padding: 1px;
+    }
 }
 
 .catalogue-item {
+    display: flex;
+    flex-direction: column;
     padding: 10px;
-    min-width: 250px;
+    max-width: 200px;
+    height: 300px;
+}
+
+.catalogue-button {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
 }

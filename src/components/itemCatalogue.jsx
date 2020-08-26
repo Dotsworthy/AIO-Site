@@ -29,8 +29,10 @@ const ItemCatalogue = () => {
     {listItem.map(item => (
       <div className={item.category} className="catalogue-item">
             <h3>{item.name}</h3>
+            <div className="catalogue-image-container">
             <img className="catalogue-image" src={item.image}></img>
-            <div>
+            </div>
+            <div className="catalogue-button">
             <button>More Info</button>
             <button>Download</button>
             </div>

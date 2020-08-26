@@ -11,7 +11,6 @@ const SecondPage = () => {
 
   return (
 
-  
   <Layout>
     <SEO title="Page two" />
     <h3>Resource Database</h3>

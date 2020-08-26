@@ -27,7 +27,7 @@ const SearchList = () => {
     return (
         <div className="resource-page-search">
             {listCategory.map(category => (
-                <h3>{category.name}</h3>
+                <p>{category.name}</p>
             ))}
         </div>
     )

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import firebase from "./firebase"
+import UpdateItem from "./updateItem";
 // import unsubscribe from "./firebase"
 // import "../styles/global.css"
 
