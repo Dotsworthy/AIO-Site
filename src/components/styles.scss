@@ -26,12 +26,15 @@
 
 .resource-page-search {
     max-width: 350px;
+    padding: 10px;
+}
+
+.resource-page-categories {
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
 
     p {
-        padding: 1px;
+        padding: 3px;
     }
 }
 
@@ -45,6 +48,11 @@
 
 .catalogue-button {
     display: flex;
-    justify-content: space-around;
     padding: 10px;
+    justify-content: center;
+
+    button {
+        margin: 0 5px;
+        padding: 0 3px;
+    }
 }

@@ -26,9 +26,12 @@ const SearchList = () => {
     const listCategory = useItems();
     return (
         <div className="resource-page-search">
+            <h3>Categories</h3>
+            <div className="resource-page-categories">
             {listCategory.map(category => (
                 <p>{category.name}</p>
             ))}
+            </div>
         </div>
     )
 }
