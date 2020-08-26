@@ -14,13 +14,13 @@ const SecondPage = () => {
   
   <Layout>
     <SEO title="Page two" />
-    <h1>Resource Database</h1>
-    <h2>List of Resources</h2>
-    <h2>Add Resource</h2>
+    <h3>Resource Database</h3>
+    <h3>List of Resources</h3>
     <ItemList/>
-    <h2>Add Item</h2>
+    <h3>Add Resource</h3>
     <AddItemForm/>
     <Link to="/">Go back to the homepage</Link>
+    <Link to="/categories">Categories</Link>
   </Layout>
   )
 }
