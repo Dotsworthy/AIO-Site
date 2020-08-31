@@ -27,7 +27,7 @@ const ItemCatalogue = () => {
   return (
       <div className ="resource-page-items">
     {listItem.map(item => (
-      <div className={item.category} className="catalogue-item">
+      <div className={`${item.category} catalogue-item filter-item`}>
             <h3>{item.name}</h3>
             <div className="catalogue-image-container">
             <img className="catalogue-image" src={item.image}></img>

@@ -8,8 +8,6 @@ import AddCategoryForm from "../components/addCategoryForm"
 const CategoryPage = () => {
 
     return (
-  
-    
     <Layout>
       <h3>Categories Database</h3>
       <h3>List of Resources</h3>
