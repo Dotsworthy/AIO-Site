@@ -1,0 +1,21 @@
+{
+    "items": {
+        "001": {
+            "name": "Barack Obama",
+            "description": "44th President of the United States",
+            "imageURL": "exampleURL",
+            "category": "Politics",
+            "level": "Key Stage One",
+            "tags": "US History"
+        },
+        "002": {
+            "name": "Red Tails",
+            "description": "WW2 Air Squadron",
+            "imageURL": "exampleURL",
+            "category": "History",
+            "level": "Key Stage Three",
+            "tags": "War" 
+        }
+    }
+
+}

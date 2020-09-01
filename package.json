@@ -26,6 +26,7 @@
   "devDependencies": {
     "@babel/plugin-syntax-jsx": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
+    "@firebase/testing": "^0.20.11",
     "babel-cli": "^6.6.5",
     "babel-jest": "^26.3.0",
     "babel-preset-gatsby": "^0.5.8",
