@@ -54,7 +54,8 @@
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "test": "mocha --reporter spec"
+    "test": "mocha --reporter spec",
+    "seed": "node seed.js"
   },
   "repository": {
     "type": "git",
