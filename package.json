@@ -55,7 +55,8 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "mocha --reporter spec",
-    "seed": "node seed.js"
+    "emulator": "firebase emulators:start --only firestore  --import ./seed-data",
+    "testing": "npm test ./src/components/test"
   },
   "repository": {
     "type": "git",

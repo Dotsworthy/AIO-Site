@@ -12,28 +12,36 @@ async function snooz(time = 500) {
         });
     }
 
-const user1 = {
-        name: "Barack Obama",
-        image: "exampleURL",
-        description: "44th President of the United States",
-        category: "Politics",
-        level: "Key Stage One",
-        tags: ["United States", "Famous People"]
-}
+const user = {name: "Jackie Robinson", image: "exampleURL", description: "America's first black baseball player", category: "Culture", level: "Key Stage Two", tags: ["United States", "Sport"]}
+
+it("Should get all resources", async function() {
+
+   const resourcesRef = []
+    
+   admin
+   .firestore()
+   .collection("items")
+   .get()
+   .then(function(querySnapshot) {
+       querySnapshot.forEach(function(doc) {
+        resourcesRef.push(doc.data())  
+       })
+   })
+
+    await snooz()
+
+    assert.deepStrictEqual(resourcesRef.length, 6)
+})
 
 it("Should add a resource", async function() {
-        
-        admin
-                .firestore()
-                .collection("items")
-                .doc("001")
-                .set(user1)  
 
-    const itemsRef = admin.firestore().collection("items").doc("001")
+    admin.firestore().collection("items").doc("007").set(user)  
+
+    const itemsRef = admin.firestore().collection("items").doc("007")
     const query =  await itemsRef.get();
     
     await snooz();
 
-    assert.deepStrictEqual(query.data().name, "Barack Obama");
+    assert.deepStrictEqual(query.data().name, "Jackie Robinson");
     
 }) 
