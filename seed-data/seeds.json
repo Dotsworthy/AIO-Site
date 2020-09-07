@@ -1,0 +1,53 @@
+{
+    "resources": {
+        "001": {
+            "name": "Barack Obama",
+            "description": "44th President of the United States",
+            "imageURL": "exampleURL",
+            "category": "Politics",
+            "level": "Key Stage One",
+            "tags": ["United States", "Society"]
+        },
+        "002": {
+            "name": "Tuskegee Airmen",
+            "description": "World War II fighter pilots",
+            "imageURL": "exampleURL",
+            "category": "History",
+            "level": "Key Stage Three",
+            "tags": ["War", "United States"]
+        },
+        "003": {
+            "name": "Bob Marley",
+            "description": "Legendary Reggae Musician",
+            "imageURL": "exampleURL",
+            "category": "Culture",
+            "level": "Key Stage Two",
+            "tags": ["Music", "Society"]
+        },
+        "004": {
+            "name": "Sierra Leone Civil War",
+            "description": "1991 Civil War and the Refugees who took refuge in the UK",
+            "imageURL": "exampleURL",
+            "category": "History",
+            "level": "Key Stage Three",
+            "tags": ["War", "United Kingdom"]
+        },
+        "005": {
+            "name": "Laurie Cunningham",
+            "description": "England's first black football player",
+            "imageURL": "exampleURL",
+            "category": "Culture",
+            "level": "Key Stage Two",
+            "tags": ["Sport", "United Kingdom"]
+        },
+        "006": {
+            "name": "Jessie Owens",
+            "description": "American athlete at the 1936 Olympics",
+            "imageURL": "exampleURL",
+            "category": "Culture",
+            "level": "Key Stage One",
+            "tags": ["Sport", "United States"]
+        }
+    }
+
+}

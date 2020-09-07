@@ -80,6 +80,7 @@ const SecondPage = () => {
           <AddItemForm />
       }
     <Link to="/">Go back to the homepage</Link>
+    <Link to="/categories">Categories</Link>
   </Layout>
   )
 }

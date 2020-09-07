@@ -5,22 +5,43 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "firebase": "^7.18.0",
+    "@babel/core": "^7.11.4",
+    "@babel/preset-env": "^7.11.0",
+    "admin": "^1.4.1",
+    "firebase": "^7.19.1",
+    "firebase-functions": "^3.11.0",
+    "firebase-tools": "^8.9.2",
     "gatsby": "^2.24.47",
     "gatsby-image": "^2.4.16",
     "gatsby-plugin-manifest": "^2.4.23",
     "gatsby-plugin-offline": "^3.2.23",
     "gatsby-plugin-react-helmet": "^3.3.10",
+    "gatsby-plugin-sass": "^2.3.12",
     "gatsby-plugin-sharp": "^2.6.27",
     "gatsby-source-filesystem": "^2.3.24",
     "gatsby-transformer-sharp": "^2.5.13",
+    "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^6.1.0"
   },
   "devDependencies": {
-    "prettier": "2.0.5"
+    "@babel/plugin-syntax-jsx": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
+    "@firebase/testing": "^0.20.11",
+    "babel-cli": "^6.6.5",
+    "babel-preset-gatsby": "^0.5.8",
+    "firebase-admin": "^9.1.1",
+    "firebase-functions-test": "^0.2.1",
+    "identity-obj-proxy": "^3.0.0",
+    "prettier": "2.0.5",
+    "react-test-renderer": "^16.13.1",
+    "sass": "^1.26.10",
+    "sass-loader": "^10.0.1",
+    "webpack": "^4.44.1",
+    "mocha": "^6.2.0",
+    "firebase-tools": "^7.3.2"
   },
   "keywords": [
     "gatsby"
@@ -33,7 +54,9 @@
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "test": "mocha --reporter spec",
+    "emulator": "firebase emulators:start --only firestore  --import ./seed-data",
+    "testing": "npm test ./src/components/test"
   },
   "repository": {
     "type": "git",
