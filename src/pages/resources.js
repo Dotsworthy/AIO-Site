@@ -11,7 +11,7 @@ const ResourcePage = () => {
             <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.."/>
             <div className="resource-page-container">
             <SearchList/>
-            <ItemCatalogue/>
+            <ItemCatalogue resource={"items"}/>
             </div>
             <Link to="/">Go back to the homepage</Link>
         </Layout>
