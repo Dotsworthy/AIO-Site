@@ -5,18 +5,25 @@ import * as firebase from '@firebase/testing';
 import "../setupTests"
 
 const projectId = "testproject-85401";	
-const admin = firebase.initializeAdminApp({ projectId: projectId });
+// const admin = firebase.initializeAdminApp({ projectId: projectId });
 
+// async function snooz(time = 500) {
+//     return new Promise(resolve => {
+//         setTimeout(e => {
+//             resolve();
+//         }, time);
+//     });
+// }
 
 describe("itemCatalogue", () => {
 
     it("renders", () => {
-        shallow(<ItemCatalogue db={admin}/>);
+        shallow(<ItemCatalogue/>);
     })
 
     it("displays six resources", () => {
-        const wrapper = mount(<ItemCatalogue db={admin}/>)
-        expect(wrapper.find("resource-page-items")).toHaveLength(6);
+        const wrapper = mount(<ItemCatalogue/>)
+        expect(wrapper.find("h3")).toHaveLength(6);
     })
 
 })

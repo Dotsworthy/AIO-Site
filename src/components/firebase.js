@@ -15,6 +15,6 @@ var firebaseConfig = {
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
-
+  // firebase.analytics();
+  // NOTE: firebase.analytics must be turned off when testing the app. 
   export default firebase
