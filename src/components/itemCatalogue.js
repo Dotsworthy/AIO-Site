@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react"
-import firebase from "./firebase"
+// import firebase from "./firebase"
 
 const useItems = () => {
     const [items, setItems] = useState([]); //useState() hook, sets initial state to an empty array
     useEffect(() => {
-      firebase
+      db
         .firestore() //access firestore
         .collection("items") //access "items" collection
         .onSnapshot(snapshot => {

@@ -3,7 +3,7 @@ import ItemCatalogue from "../components/itemCatalogue"
 import SearchList from "../components/searchList"
 import Layout from "../components/layout";
 import { Link } from "gatsby";
-
+import firebase from "./firebase"
 
 const ResourcePage = () => {
     return (
@@ -11,7 +11,7 @@ const ResourcePage = () => {
             <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.."/>
             <div className="resource-page-container">
             <SearchList/>
-            <ItemCatalogue resource={"items"}/>
+            <ItemCatalogue db={firebase} resource={"items"}/>
             </div>
             <Link to="/">Go back to the homepage</Link>
         </Layout>
