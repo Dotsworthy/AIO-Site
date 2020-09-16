@@ -22,19 +22,21 @@ const useItems = () => {
     return categories;
 }
 
-function filterSelection(category) {
-    console.log(category);
-}
+// const filterSelection = () => {
+//     // const [category, setCategory] = useState("")
+//     // console.log(category);
+// }
 
-const SearchList = () => {
+const SearchList = ({category, setCategory}) => {
     const listCategory = useItems();
+    
     return (
         <div className="resource-page-search">
             <h3>Categories</h3>
             <div className="resource-page-categories">
-            <button className="button-active" onClick={() => {filterSelection("show all")}}>Show All</button>    
+            <button className="button-active" onClick={() => setCategory("")}>Show All</button>    
             {listCategory.map(category => (
-                <button className="button" onClick={() =>{filterSelection(category.name)}}>{category.name}</button>
+                <button className="button" onClick={() => setCategory(category.name)}>{category.name}</button>
             ))}
             </div>
         </div>
