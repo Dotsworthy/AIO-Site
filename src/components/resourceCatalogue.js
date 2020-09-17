@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react"
 import firebase from "./firebase"
+import 'firebase/storage'
+
+
 
 function ResourceCatalogue() {
   const [resources, setResources] = useState([]);
@@ -17,6 +20,25 @@ function ResourceCatalogue() {
     }))
     setAllCategories(listCategories)
   })
+}
+
+const getDownload = () => {
+  const storage = firebase.storage();
+  const storageRef = storage.ref()
+  const httpsReference = storageRef.child('downloads/Barack-Obama.jpg');
+  
+  httpsReference.getDownloadURL().then(function(url) {
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = 'blob';
+    xhr.onload = function(event) {
+    var blob = xhr.response;
+    };
+    xhr.open('GET', url);
+    xhr.send(new Blob);
+    console.log(xhr);
+  }).catch(function(error) {
+    console.log(error);
+  });
 }
 
 const categories = CategoriesList();
@@ -47,7 +69,7 @@ useEffect(() => {
     })
   }
 
-});
+},[category]);
 
 return (
   <div>
@@ -71,7 +93,7 @@ return (
             </div>
             <div className="catalogue-button">
             <button>More Info</button>
-            <button>Download</button>
+            <button onClick={() => getDownload(resource.download)}>Download</button>
             </div>
         </div>      
       ))}
