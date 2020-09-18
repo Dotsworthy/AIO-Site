@@ -27,17 +27,16 @@ const getDownload = (download) => {
   const httpsReference = storageRef.child(download);
   
   httpsReference.getDownloadURL().then(function(url) {
-    const xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
     xhr.responseType = 'blob';
     xhr.onload = function(event) {
-    const blob = xhr.response;
-    var a = document.createElement('a');
+    let blob = xhr.response;
+    let a = document.createElement('a');
         a.href = window.URL.createObjectURL(xhr.response);
         a.download = `${download}`;
         a.style.display = 'none';
         document.body.appendChild(a);
         a.click();   
-    console.log(blob)
     };
     xhr.open('GET', url);
     xhr.send();
