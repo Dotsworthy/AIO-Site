@@ -3,7 +3,6 @@ import firebase from "./firebase"
 import 'firebase/storage'
 
 
-
 function ResourceCatalogue() {
   const [resources, setResources] = useState([]);
   const [allCategories, setAllCategories] = useState([])
@@ -22,10 +21,10 @@ function ResourceCatalogue() {
   })
 }
 
-const getDownload = () => {
+const getDownload = (download) => {
   const storage = firebase.storage();
   const storageRef = storage.ref()
-  const httpsReference = storageRef.child('downloads/Barack-Obama.jpg');
+  const httpsReference = storageRef.child(download);
   
   httpsReference.getDownloadURL().then(function(url) {
     const xhr = new XMLHttpRequest();
@@ -34,12 +33,11 @@ const getDownload = () => {
     const blob = xhr.response;
     var a = document.createElement('a');
         a.href = window.URL.createObjectURL(xhr.response);
-        a.download = 'someFileName';
+        a.download = `${download}`;
         a.style.display = 'none';
         document.body.appendChild(a);
         a.click();   
     console.log(blob)
-    // saveOrOpenBlob(blob, fileName);
     };
     xhr.open('GET', url);
     xhr.send();
@@ -47,21 +45,6 @@ const getDownload = () => {
     console.log(error);
   });
 }
-
-// const saveOrOpenBlob = (blob, fileName) => {
-//   window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
-//   window.requestFileSystem(window.TEMPORARY, 1024 * 1024, function (fs) {
-//       fs.root.getFile(fileName, { create: true }, function (fileEntry) {
-//           fileEntry.createWriter(function (fileWriter) {
-//               fileWriter.addEventListener("writeend", function () {
-//                   window.location = fileEntry.toURL();
-//               }, false);
-//               fileWriter.write(blob, "_blank");
-//           }, function () { });
-//       }, function () { });
-//   }, function () { });
-// }
-
 
 const categories = CategoriesList();
 
