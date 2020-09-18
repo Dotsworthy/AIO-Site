@@ -28,18 +28,40 @@ const getDownload = () => {
   const httpsReference = storageRef.child('downloads/Barack-Obama.jpg');
   
   httpsReference.getDownloadURL().then(function(url) {
-    var xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
     xhr.responseType = 'blob';
     xhr.onload = function(event) {
-    var blob = xhr.response;
+    const blob = xhr.response;
+    var a = document.createElement('a');
+        a.href = window.URL.createObjectURL(xhr.response);
+        a.download = 'someFileName';
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();   
+    console.log(blob)
+    // saveOrOpenBlob(blob, fileName);
     };
     xhr.open('GET', url);
-    xhr.send(new Blob);
-    console.log(xhr);
+    xhr.send();
   }).catch(function(error) {
     console.log(error);
   });
 }
+
+// const saveOrOpenBlob = (blob, fileName) => {
+//   window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
+//   window.requestFileSystem(window.TEMPORARY, 1024 * 1024, function (fs) {
+//       fs.root.getFile(fileName, { create: true }, function (fileEntry) {
+//           fileEntry.createWriter(function (fileWriter) {
+//               fileWriter.addEventListener("writeend", function () {
+//                   window.location = fileEntry.toURL();
+//               }, false);
+//               fileWriter.write(blob, "_blank");
+//           }, function () { });
+//       }, function () { });
+//   }, function () { });
+// }
+
 
 const categories = CategoriesList();
 
