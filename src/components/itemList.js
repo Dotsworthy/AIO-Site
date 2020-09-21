@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import firebase from "./firebase"
+import 'firebase/storage'
 import UpdateItem from "./updateItem";
 // import unsubscribe from "./firebase"
 // import "../styles/global.css"
@@ -25,7 +26,15 @@ const useItems = () => {
     return items;
   };
 
-  const deleteItem = (id) => {
+  const deleteItem = (id, downloadRef) => {
+    const storageRef = firebase.storage().ref()
+    const imageRef = storageRef.child(downloadRef)
+    imageRef.delete().then(function() {
+      console.log("resource deleted successfully")
+    }).catch(function(error) {
+      console.log(error)
+    })
+
     firebase
       .firestore()
       .collection("items")
@@ -58,7 +67,7 @@ const ItemList = ( { editItem }) => {
             <td className="tags">{item.tags}</td>
             <td class="buttons">
                 <button onClick={() => editItem(item)}>Edit</button>
-                <button onClick={() => deleteItem(item.id)}>Delete</button>
+                <button onClick={() => deleteItem(item.id, item.download)}>Delete</button>
             </td>
           </tr>
         </tbody>

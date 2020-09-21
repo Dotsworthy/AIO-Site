@@ -11,21 +11,15 @@ const AddItemForm = () => {
     const [level, setLevel] = useState("")
     const [tags, setTags] = useState("")
   
-    /* The onSubmit function we takes the 'e'
-      or event and submits it to Firebase
-      */
     const onSubmit = e => {
-      /* 
-      preventDefault is important because it
-      prevents the whole page from reloading
-      */
       e.preventDefault()
+      // Adding file to database
       const selectedFile = document.getElementById('fileUpload').files[0];
       const storageRef = firebase.storage().ref(`downloads/${selectedFile.name}`)
       storageRef.put(selectedFile)
       const download = `downloads/${selectedFile.name}`
-      console.log(download)
   
+      //adding item to database 
       firebase
       .firestore()
       .collection("items")
@@ -87,10 +81,8 @@ const AddItemForm = () => {
         />
 
         <input
-        // value={download}
         type="file"
         id="fileUpload"
-        // onChange={e => setDownload(getFile())}
         />
 
         <button>Submit</button>
