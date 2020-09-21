@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import firebase from "firebase"
+import 'firebase/storage'
 
 const AddItemForm = () => {
 
@@ -19,21 +20,27 @@ const AddItemForm = () => {
       prevents the whole page from reloading
       */
       e.preventDefault()
+      const selectedFile = document.getElementById('fileUpload').files[0];
+      const storageRef = firebase.storage().ref(`downloads/${selectedFile.name}`)
+      storageRef.put(selectedFile)
+      const download = `downloads/${selectedFile.name}`
+      console.log(download)
+  
       firebase
-        .firestore()
-        .collection("items")
-        .add({
+      .firestore()
+      .collection("items")
+      .add({
           name,
           image,
           description,
           category,
           level,
-          tags
+          tags,
+          download
         })
-        //.then will reset the form to nothing
-        .then(() => setName(""), setImage(""), setDescription(''), setCategory(""), setLevel(""), setTags(""))
+      .then(() => setName(""), setImage(""), setDescription(''), setCategory(""), setLevel(""), setTags(""))
     }
-  
+ 
     return (
         <div>
         <h2>Add Resource</h2>
@@ -78,6 +85,14 @@ const AddItemForm = () => {
         onChange={e => setTags(e.currentTarget.value)}
         type="tags"
         />
+
+        <input
+        // value={download}
+        type="file"
+        id="fileUpload"
+        // onChange={e => setDownload(getFile())}
+        />
+
         <button>Submit</button>
       </form>
       </div>
