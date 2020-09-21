@@ -4,9 +4,7 @@ import firebase from "../components/firebase"
 import ItemList from "../components/itemList"
 import UpdateItem from "../components/updateitem"
 import AddItemForm from "../components/addItemForm"
-
 import Layout from "../components/layout"
-import SEO from "../components/seo"
 
 
 

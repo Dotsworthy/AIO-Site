@@ -1,24 +1,19 @@
 import React, { useState, useEffect } from "react"
 import firebase from "./firebase"
 import 'firebase/storage'
-import UpdateItem from "./updateItem";
-// import unsubscribe from "./firebase"
-// import "../styles/global.css"
 
 const useItems = () => {
-    const [items, setItems] = useState([]); //useState() hook, sets initial state to an empty array
+    const [items, setItems] = useState([]);
     useEffect(() => {
       firebase
-        .firestore() //access firestore
-        .collection("items") //access "items" collection
+        .firestore()
+        .collection("items")
         .onSnapshot(snapshot => {
-          //You can "listen" to a document with the onSnapshot() method.
           const listItems = snapshot.docs.map(doc => ({
-            //map each document into snapshot
-            id: doc.id, //id and data pushed into items array
-            ...doc.data() //spread operator merges data to id.
+            id: doc.id,
+            ...doc.data()
           }));
-          setItems(listItems); //items is equal to listItems
+          setItems(listItems);
         });
         //called the unsubscribe--closing connection to Firestore.
         // return () => unsubscribe()
@@ -60,12 +55,12 @@ const ItemList = ( { editItem }) => {
         <tbody key={item.id}>
           <tr>
             <td className="resource-name">{item.name}</td>
-            <td className="image"><img className="catalogue-image" src={item.image}/></td>
+            <td className="image"><img className="catalogue-image" src={item.image} alt={item.name}/></td>
             <td className="description">{item.description}</td>
             <td className="category">{item.category}</td>
             <td className="level">{item.level}</td>
             <td className="tags">{item.tags}</td>
-            <td class="buttons">
+            <td className="buttons">
                 <button onClick={() => editItem(item)}>Edit</button>
                 <button onClick={() => deleteItem(item.id, item.download)}>Delete</button>
             </td>
@@ -73,6 +68,5 @@ const ItemList = ( { editItem }) => {
         </tbody>
       ))}
 </table>
-)
-}
+)}
 export default ItemList

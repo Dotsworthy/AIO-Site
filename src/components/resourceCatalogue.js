@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react"
 import firebase from "./firebase"
 import 'firebase/storage'
 
-
 function ResourceCatalogue() {
   const [resources, setResources] = useState([]);
   const [allCategories, setAllCategories] = useState([])
@@ -30,7 +29,6 @@ const getDownload = (download) => {
     let xhr = new XMLHttpRequest();
     xhr.responseType = 'blob';
     xhr.onload = function(event) {
-    let blob = xhr.response;
     let a = document.createElement('a');
         a.href = window.URL.createObjectURL(xhr.response);
         a.download = `${download}`;
@@ -45,7 +43,7 @@ const getDownload = (download) => {
   });
 }
 
-const categories = CategoriesList();
+
 
 useEffect(() => {
   if(category) {
@@ -80,9 +78,10 @@ return (
   <div className="resource-page-search">
           <h3>Categories</h3>
           <div className="resource-page-categories">
-          <button className="button-active" onClick={() => setCategory("")}>Show All</button>    
+          <button className="button-active" onClick={() => setCategory("")}>Show All</button>  
+          {CategoriesList()}  
           {allCategories.map(category => (
-              <button className="button" 
+              <button key={category.id} className="button" 
               onClick={() => setCategory(category.name)}
               >{category.name}</button>
           ))}
@@ -90,10 +89,10 @@ return (
       </div>
   <div className ="resource-page-items">
       {resources.map(resource => (
-        <div className="catalogue-item">
+        <div key={resource.id} className="catalogue-item">
             <h3>{resource.name}</h3>
             <div className="catalogue-image-container">
-            <img className="catalogue-image" src={resource.image}></img>
+            <img className="catalogue-image" src={resource.image} alt={resource.name}></img>
             </div>
             <div className="catalogue-button">
             <button>More Info</button>

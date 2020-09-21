@@ -8,7 +8,7 @@ const ResourcePage = () => {
 
     return (
         <Layout>
-            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.."/>
+            {/* <input type="text" id="myInput" onKeyUp="myFunction()" placeholder="Search for names.."/> */}
             <div className="resource-page-container">
             <ResourceCatalogue/>
             </div>
