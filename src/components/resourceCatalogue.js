@@ -74,10 +74,9 @@ useEffect(() => {
 },[category]);
 
 return (
-  <div>
-  <div className="resource-page-search">
+  <div className="resource-page-container">
+  <div className="resource-page-filter">
           <h3>Categories</h3>
-          <div className="resource-page-categories">
           <button className="button-active" onClick={() => setCategory("")}>Show All</button>  
           {CategoriesList()}  
           {allCategories.map(category => (
@@ -85,7 +84,6 @@ return (
               onClick={() => setCategory(category.name)}
               >{category.name}</button>
           ))}
-          </div>
       </div>
   <div className ="resource-page-items">
       {resources.map(resource => (

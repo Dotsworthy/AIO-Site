@@ -1,32 +1,83 @@
+@font-face {
+    font-family: 'Alternate Gothic No3 D Regular';
+    src: "fonts/Alternate Gothic No3 D Regular.otf";
+}
+
 * {
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
+    font-family: 'Alternate Gothic No3 D Regular', Fallback, sans-serif;
+    letter-spacing: 0em;
+}
+
+body {
+    background-color: #cbd9bf;
+}
+
+.navigation-bar-container {
+    height: 100px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #869679;
+    font-size: 2rem;
+
+    a, a:visited {
+     text-decoration: none;
+     color: #ffc800;
+    }
 }
 
 .catalogue-image-container {
     height: 200px;
-    width: 150px;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
 }
 
 .catalogue-image {
-    max-width: 150px;
-    max-height: 150px;
+    max-height: 100%;
+    max-width: 100%;
 }
 
 .resource-page-container {
     display: flex;
+    flex-direction: row;
     align-items: flex-start;
 }
 
 .resource-page-items {
     display: flex;
     flex-wrap: wrap;
+    flex-grow: 2;
+
+    h3 {
+      height: 50px;  
+    }
 }
 
-.resource-page-search {
-    max-width: 350px;
+.resource-page-filter {
+    flex-grow: 1;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    button {
+      margin: 1px;  
+      font-family: inherit;
+      font-size: 1em;
+      border: 0;
+      padding: 0;
+      background-color: transparent;
+    }
+
+    button:focus {
+        outline: none;
+        color: white;
+    }
 }
 
 .resource-page-categories {
@@ -44,6 +95,7 @@
     padding: 10px;
     max-width: 200px;
     height: 300px;
+
 }
 
 .catalogue-button {
@@ -55,4 +107,17 @@
         margin: 0 5px;
         padding: 0 3px;
     }
+}
+
+.resource-database-table {
+    margin: 20px;
+}
+
+.data-row {
+    height: 30px;
+}
+
+.table-image {
+    max-height: 30px;
+    max-width: 30px;
 }

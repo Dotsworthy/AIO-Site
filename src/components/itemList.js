@@ -40,7 +40,7 @@ const useItems = () => {
 const ItemList = ( { editItem }) => {
     const listItem = useItems();
   return (
-<table className="item-table">
+<table className="resource-database-table">
   <tbody>
     <tr>
       <th className="name">Resource Name</th>
@@ -53,9 +53,9 @@ const ItemList = ( { editItem }) => {
   </tbody>
   {listItem.map(item => (
         <tbody key={item.id}>
-          <tr>
+          <tr className="data-row">
             <td className="resource-name">{item.name}</td>
-            <td className="image"><img className="catalogue-image" src={item.image} alt={item.name}/></td>
+            <td className="image"><img className="table-image" src={item.image} alt={item.name}/></td>
             <td className="description">{item.description}</td>
             <td className="category">{item.category}</td>
             <td className="level">{item.level}</td>

@@ -60,10 +60,6 @@ const SecondPage = () => {
   return (
 
   <Layout>
-    <h1>Resource Database</h1>
-    <h2>List of Resources</h2>
-    {/* Prop passed from the ItemList component */}
-     
       <ItemList editItem={editItem} />
         {/* We add a ternary operator to switch
       between the UpdateItem form
@@ -77,8 +73,6 @@ const SecondPage = () => {
             : 
           <AddItemForm />
       }
-    <Link to="/">Go back to the homepage</Link>
-    <Link to="/categories">Categories</Link>
   </Layout>
   )
 }

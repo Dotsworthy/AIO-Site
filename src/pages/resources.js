@@ -12,7 +12,6 @@ const ResourcePage = () => {
             <div className="resource-page-container">
             <ResourceCatalogue/>
             </div>
-            <Link to="/">Go back to the homepage</Link>
         </Layout>
     )
 }
