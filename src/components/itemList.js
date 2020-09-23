@@ -42,7 +42,7 @@ const ItemList = ( { editItem }) => {
   return (
 <table className="resource-database-table">
   <tbody>
-    <tr>
+    <tr className="header-row">
       <th className="name">Resource Name</th>
       <th className="image">Image</th>
       <th className="description">Description</th>

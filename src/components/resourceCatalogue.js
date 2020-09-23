@@ -4,8 +4,10 @@ import 'firebase/storage'
 
 function ResourceCatalogue() {
   const [resources, setResources] = useState([]);
-  const [allCategories, setAllCategories] = useState([])
-  const [category, setCategory] = useState("") 
+  const [allCategories, setAllCategories] = useState([]);
+  const [allLevels, setAllLevels] = useState([]);
+  const [category, setCategory] = useState("") ;
+  const [level, setLevel] = useState("");
 
   const CategoriesList = () => {
     firebase
@@ -18,6 +20,19 @@ function ResourceCatalogue() {
     }))
     setAllCategories(listCategories)
   })
+}
+
+const LevelsList = () => {
+  firebase
+  .firestore()
+  .collection("levels")
+  .onSnapshot(snapshot => {
+    const listLevels = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+  }))
+  setAllLevels(listLevels)
+})
 }
 
 const getDownload = (download) => {
@@ -43,14 +58,13 @@ const getDownload = (download) => {
   });
 }
 
-
-
 useEffect(() => {
-  if(category) {
+  if (category && level) {
     firebase
     .firestore()
     .collection("items")
     .where("category", "==", category)
+    .where("level", "==", level)
     .onSnapshot(snapshot => {
       const listResources = snapshot.docs.map(doc => ({
         id: doc.id,
@@ -58,24 +72,55 @@ useEffect(() => {
       }));
       setResources(listResources);
     })
-  } else {
-    firebase
-    .firestore()
-    .collection("items")
-    .onSnapshot(snapshot => {
-      const listResources = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setResources(listResources);
-    })
-  }
+}
 
-},[category]);
+if (category && !level) {
+  firebase
+  .firestore()
+  .collection("items")
+  .where("category", "==", category)
+  .onSnapshot(snapshot => {
+    const listResources = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    setResources(listResources);
+  })
+}
+
+if (level && !category) {
+  firebase
+  .firestore()
+  .collection("items")
+  .where("category", "==", level)
+  .onSnapshot(snapshot => {
+    const listResources = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    setResources(listResources);
+  })
+}
+
+if (!level && !category) {
+  firebase
+  .firestore()
+  .collection("items")
+  .onSnapshot(snapshot => {
+    const listResources = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    setResources(listResources);
+  })
+}
+
+},[category],[level]);
 
 return (
   <div className="resource-page-container">
-  <div className="resource-page-filter">
+    <div>
+      <div className="resource-page-filter">
           <h3>Categories</h3>
           <button className="button-active" onClick={() => setCategory("")}>Show All</button>  
           {CategoriesList()}  
@@ -85,6 +130,17 @@ return (
               >{category.name}</button>
           ))}
       </div>
+      <div className="resource-page-filter">
+          <h3>Education Level</h3>
+          <button className="button-active" onClick={() => setLevel("")}>Show All</button>  
+          {LevelsList()}  
+          {allLevels.map(level => (
+              <button key={level.id} className="button" 
+              onClick={() => setLevel(level.name)}
+              >{level.name}</button>
+          ))}
+      </div>
+    </div>
   <div className ="resource-page-items">
       {resources.map(resource => (
         <div key={resource.id} className="catalogue-item">
