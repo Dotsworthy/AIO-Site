@@ -92,7 +92,7 @@ if (level && !category) {
   firebase
   .firestore()
   .collection("items")
-  .where("category", "==", level)
+  .where("level", "==", level)
   .onSnapshot(snapshot => {
     const listResources = snapshot.docs.map(doc => ({
       id: doc.id,
@@ -103,7 +103,7 @@ if (level && !category) {
 }
 
 if (!level && !category) {
-  firebase
+    firebase
   .firestore()
   .collection("items")
   .onSnapshot(snapshot => {
@@ -115,7 +115,8 @@ if (!level && !category) {
   })
 }
 
-},[category],[level]);
+
+},[category, level]);
 
 return (
   <div className="resource-page-container">
