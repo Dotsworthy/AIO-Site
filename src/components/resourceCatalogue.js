@@ -139,22 +139,32 @@ function ResourceCatalogue() {
             ))}
         </div>
         <div className="resource-page-filter">
+          <form>
+              <input type="text" placeholder="Search.." name="search"/>
+              <button type="submit">Submit</button>
+          </form>
             <button onClick={() => clearFilters()}>Clear Filter</button>
         </div>
       </div>
-    <div className ="resource-page-items">
-        {resources.map(resource => (
-          <div key={resource.id} className="catalogue-item">
-              <h3>{resource.name}</h3>
-              <div className="catalogue-image-container">
-              <img className="catalogue-image" src={resource.image} alt={resource.name}></img>
-              </div>
-              <div className="catalogue-button">
-              <button>More Info</button>
-              <button onClick={() => getDownload(resource.download)}>Download</button>
-              </div>
-          </div>      
-        ))}
+    <div className="resource-page-items">
+      {resources.length > 0  ? 
+      resources.map(resource => (
+      <div key={resource.id} className="catalogue-item">
+          <h3>{resource.name}</h3>
+          <div className="catalogue-image-container">
+          <img className="catalogue-image" src={resource.image} alt={resource.name}></img>
+          </div>
+          <div className="catalogue-button">
+          <button>More Info</button>
+          <button onClick={() => getDownload(resource.download)}>Download</button>
+          </div>
+      </div>      
+      ))
+        :
+        <div>
+          <p>Sorry no results. Please try a different level or category, or press cancel filter to try a new search</p>
+        </div>
+      }
       </div>
     </div>
   )

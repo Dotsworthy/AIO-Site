@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import { Link } from "gatsby"
 import firebase from "../components/firebase"
 import ItemList from "../components/itemList"
 import UpdateItem from "../components/updateitem"

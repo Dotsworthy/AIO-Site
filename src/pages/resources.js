@@ -1,7 +1,6 @@
 import React from "react"
 import ResourceCatalogue from "../components/resourceCatalogue"
 import Layout from "../components/layout";
-import { Link } from "gatsby";
 
 
 const ResourcePage = () => {

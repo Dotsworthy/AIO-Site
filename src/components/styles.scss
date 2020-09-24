@@ -46,6 +46,7 @@ body {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    margin: 20px;
 }
 
 .resource-page-items {
@@ -60,7 +61,7 @@ body {
 
 .resource-page-filter {
     width: 200px;
-    padding: 10px;
+    margin-bottom: 10px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -89,6 +90,10 @@ body {
         padding: 3px;
     }
 }
+
+// .no-result-feedback {
+//     transition-delay: 5s;
+// }
 
 .catalogue-item {
     display: flex;
