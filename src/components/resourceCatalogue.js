@@ -4,62 +4,43 @@ import 'firebase/storage'
 
 function ResourceCatalogue() {
   const [resources, setResources] = useState([]);
-  // const [allCategories, setAllCategories] = useState([]);
-  // const [allLevels, setAllLevels] = useState([]);
-  const [category, setCategory] = useState("") ;
-  const [level, setLevel] = useState("");
+  const [allCategories, setAllCategories] = useState([]);
+  const [allLevels, setAllLevels] = useState([]);
+  const [categorySelected, setCategorySelected] = useState("") ;
+  const [levelSelected, setLevelSelected] = useState("");
 
-
-  const getFilters = async() => {
-    let list
-    const database = firebase.firestore();
-    await database.collection("categories")
-    .get()
-    .then(function(snapshot) {
-      list = snapshot.docs.map(doc => ({
+  useEffect(() => {
+    let listCategories
+    firebase
+    .firestore()
+    .collection("categories")
+    .onSnapshot(snapshot => {
+      listCategories = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
-      }));
+    }))
+      setAllCategories(listCategories)
     })
-    .catch(function(error) {
-      console.log("Error getting documents: ", error)
+  },[])
+
+  useEffect(() => {
+    let listLevels
+    firebase
+    .firestore()
+    .collection("levels")
+    .onSnapshot(snapshot => {
+      listLevels = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+    }))
+      setAllLevels(listLevels)
     })
-    return list
+  },[])
+
+  const clearFilters = () => {
+    setLevelSelected("")
+    setCategorySelected("")
   }
-
-  // const CategoriesList = () => {
-  //   let result
-  //   firebase
-  //   .firestore()
-  //   .collection("categories")
-  //   .onSnapshot(snapshot => {
-  //     result = snapshot.docs.map(doc => ({
-  //       id: doc.id,
-  //       ...doc.data()
-  //   }))
-  //   // console.log(result)
-  //   // return result
-  // })
-  // console.log(result)
-  // // return result
-  
-  // }
-
-  const categories = getFilters()
-  console.log(categories)
-
-// const LevelsList = () => {
-//   firebase
-//   .firestore()
-//   .collection("levels")
-//   .onSnapshot(snapshot => {
-//     const listLevels = snapshot.docs.map(doc => ({
-//       id: doc.id,
-//       ...doc.data()
-//   }))
-//   setAllLevels(listLevels)
-//   })
-//   }
 
   const getDownload = (download) => {
     const storage = firebase.storage();
@@ -85,11 +66,12 @@ function ResourceCatalogue() {
   }
 
   useEffect(() => {
-    if (category) {
+    if (categorySelected && levelSelected) {
       firebase
       .firestore()
       .collection("items")
-      .where("category", "==", category)
+      .where("category", "==", categorySelected)
+      .where("level", "==", levelSelected)
       .onSnapshot(snapshot => {
         const listResources = snapshot.docs.map(doc => ({
           id: doc.id,
@@ -97,6 +79,30 @@ function ResourceCatalogue() {
         }));
         setResources(listResources);
       })
+  } else if (categorySelected && !levelSelected) {
+    firebase
+    .firestore()
+    .collection("items")
+    .where("category", "==", categorySelected)
+    .onSnapshot(snapshot => {
+      const listResources = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setResources(listResources);
+    })
+  } else if (!categorySelected && levelSelected) {
+    firebase
+    .firestore()
+    .collection("items")
+    .where("level", "==", levelSelected)
+    .onSnapshot(snapshot => {
+      const listResources = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setResources(listResources);
+    })
   } else {
     firebase
     .firestore()
@@ -108,31 +114,33 @@ function ResourceCatalogue() {
       }));
       setResources(listResources);
     })
-    }
-  },[category]);
+  }
+  },[categorySelected, levelSelected]);
 
   return (
     <div className="resource-page-container">
       <div>
-        {/* <div className="resource-page-filter">
+        <div className="resource-page-filter">
             <h3>Categories</h3>
-            <button className="button-active" onClick={() => setCategory("")}>Show All</button>  
-            {categories.map(category => (
-                <button key={category.id} className="button" 
-                onClick={() => setCategory(category.name)}
+            <button className="button-active" onClick={() => setCategorySelected("")}>Show All</button>  
+            {allCategories.map(category => (
+                <button style={ category.name === categorySelected ? {color: "red"} : {color: "black"}} key={category.id} className="button" 
+                onClick={() => setCategorySelected(category.name)}
                 >{category.name}</button>
             ))}
-        </div> */}
-        {/* <div className="resource-page-filter">
+        </div>
+        <div className="resource-page-filter">
             <h3>Education Level</h3>
-            <button className="button-active" onClick={() => setLevel("")}>Show All</button>  
-            {LevelsList()}  
+            <button className="button-active" onClick={() => setLevelSelected("")}>Show All</button>    
             {allLevels.map(level => (
-                <button key={level.id} className="button" 
-                onClick={() => setLevel(level.name)}
+                <button style={ level.name === levelSelected ? {color: "red"} : {color: "black"}} key={level.id} className="button" 
+                onClick={() => setLevelSelected(level.name)}
                 >{level.name}</button>
             ))}
-        </div> */}
+        </div>
+        <div className="resource-page-filter">
+            <button onClick={() => clearFilters()}>Clear Filter</button>
+        </div>
       </div>
     <div className ="resource-page-items">
         {resources.map(resource => (
