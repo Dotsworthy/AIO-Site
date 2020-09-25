@@ -6,8 +6,25 @@ function ResourceCatalogue() {
   const [resources, setResources] = useState([]);
   const [allCategories, setAllCategories] = useState([]);
   const [allLevels, setAllLevels] = useState([]);
+  const [allTags, setAllTags] = useState([]);
   const [categorySelected, setCategorySelected] = useState("") ;
   const [levelSelected, setLevelSelected] = useState("");
+  const [tagSelected, setTagSelected] = useState("");
+  
+
+  useEffect(() => {
+    let listTags
+    firebase
+    .firestore()
+    .collection("tags")
+    .onSnapshot(snapshot => {
+      listTags = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+    }))
+      setAllTags(listTags)
+    })
+  },[])
 
   useEffect(() => {
     let listCategories
@@ -66,12 +83,13 @@ function ResourceCatalogue() {
   }
 
   useEffect(() => {
-    if (categorySelected && levelSelected) {
+    if (categorySelected && levelSelected && tagSelected) {
       firebase
       .firestore()
       .collection("items")
       .where("category", "==", categorySelected)
       .where("level", "==", levelSelected)
+      .where("tags", "array-contains", tagSelected)
       .onSnapshot(snapshot => {
         const listResources = snapshot.docs.map(doc => ({
           id: doc.id,
@@ -79,7 +97,33 @@ function ResourceCatalogue() {
         }));
         setResources(listResources);
       })
-  } else if (categorySelected && !levelSelected) {
+  } else if (categorySelected && levelSelected && !tagSelected) {
+    firebase
+    .firestore()
+    .collection("items")
+    .where("category", "==", categorySelected)
+    .where("level", "==", levelSelected)
+    .onSnapshot(snapshot => {
+      const listResources = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setResources(listResources);
+    })
+  } else if (categorySelected && !levelSelected && tagSelected) {
+    firebase
+    .firestore()
+    .collection("items")
+    .where("category", "==", categorySelected)
+    .where("tags", "array-contains", tagSelected)
+    .onSnapshot(snapshot => {
+      const listResources = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setResources(listResources);
+    })
+  } else if (categorySelected && !levelSelected && !tagSelected) {
     firebase
     .firestore()
     .collection("items")
@@ -91,11 +135,36 @@ function ResourceCatalogue() {
       }));
       setResources(listResources);
     })
-  } else if (!categorySelected && levelSelected) {
+  } else if (!categorySelected && levelSelected && tagSelected) {
     firebase
     .firestore()
     .collection("items")
     .where("level", "==", levelSelected)
+    .where("tags", "array-contains", tagSelected)
+    .onSnapshot(snapshot => {
+      const listResources = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setResources(listResources);
+    })
+  } else if (!categorySelected && levelSelected && !tagSelected) {
+    firebase
+    .firestore()
+    .collection("items")
+    .where("level", "==", levelSelected)
+    .onSnapshot(snapshot => {
+      const listResources = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setResources(listResources);
+    })
+  } else if (!categorySelected && !levelSelected && tagSelected) {
+    firebase
+    .firestore()
+    .collection("items")
+    .where("tags", "array-contains", tagSelected)
     .onSnapshot(snapshot => {
       const listResources = snapshot.docs.map(doc => ({
         id: doc.id,
@@ -115,7 +184,7 @@ function ResourceCatalogue() {
       setResources(listResources);
     })
   }
-  },[categorySelected, levelSelected]);
+  },[categorySelected, levelSelected, tagSelected]);
 
   return (
     <div className="resource-page-container">
@@ -136,6 +205,15 @@ function ResourceCatalogue() {
                 <button style={ level.name === levelSelected ? {color: "red"} : {color: "black"}} key={level.id} className="button" 
                 onClick={() => setLevelSelected(level.name)}
                 >{level.name}</button>
+            ))}
+        </div>
+        <div className="resource-page-filter">
+            <h3>Tags</h3>
+            <button className="button-active" onClick={() => setTagSelected("")}>Show All</button>    
+            {allTags.map(tag => (
+                <button style={ tag.name === tagSelected ? {color: "red"} : {color: "black"}} key={tag.id} className="button" 
+                onClick={() => setTagSelected(tag.name)}
+                >{tag.name}</button>
             ))}
         </div>
         <div className="resource-page-filter">
