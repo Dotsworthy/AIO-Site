@@ -10,7 +10,8 @@ function ResourceCatalogue() {
   const [categorySelected, setCategorySelected] = useState("") ;
   const [levelSelected, setLevelSelected] = useState("");
   const [tagSelected, setTagSelected] = useState("");
-  const [searchTerm, setSearchTerm] = useState("")
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchLog, setSearchLog] = useState("")
   
 
   useEffect(() => {
@@ -61,10 +62,11 @@ function ResourceCatalogue() {
     setTagSelected("")
     setSearchTerm("")
   }
-
-  const handleChange = (e) => {
-    e.preventdefault();
-    // setSearchTerm(e.target.value)
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSearchTerm(searchLog);
+    setSearchLog("");
   }
 
   const getDownload = (download) => {
@@ -225,9 +227,9 @@ function ResourceCatalogue() {
             ))}
         </div>
         <div className="resource-page-filter">
-          <form>
-              <input type="text" placeholder="Search.." id="input" name="search"/>
-              <button onSubmit={(e) => handleChange()} type="submit">Submit</button>
+          <form onSubmit={(e) => handleSubmit(e)}>
+              <input type="text" value={searchLog} onChange={(e) => setSearchLog(e.target.value)}  placeholder="Search.." id="input" name="search"/>
+              <button  type="submit">Submit</button>
           </form>
             <button onClick={() => clearFilters()}>Clear Filter</button>
         </div>
