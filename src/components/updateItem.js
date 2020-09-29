@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
+import firebase from "firebase"
+import 'firebase/storage'
 
 const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   const [item, setItem] = useState(currentItem);
+  const [updatedImage, setUpdatedImage] = useState(false);
 
   useEffect(() => {
     setItem(currentItem);
@@ -16,6 +19,18 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     const { name, value } = e.target
     setItem({ ...item, [name]: value })
   }
+
+  const getImageURL = (item) => {
+    const storageRef = firebase.storage().ref(`${item.image}`)
+    storageRef.getDownloadURL().then(function(url) {
+
+      const img = document.getElementById('original-image')
+      img.src = url;
+    }).catch(function(error) {
+
+    });
+
+  }
   
     return (
       <div className="database-form-container">
@@ -28,7 +43,6 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
             
             <div className="form-fields">
               <label>Resource Information</label>
-              <label htmlFor="Update Item">Update Item:</label>
               <input type="text" name="name" value={item.name} onChange={onChange} />
               <textarea className="input-description" type="text" name="description" value={item.description} onChange={onChange}/>
               <input type="text" name="category" value={item.category} onChange={onChange}/>
@@ -41,7 +55,12 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
               <div className="image-upload-container">
                 <label for="image">Upload Image</label>
                 <div className="form-preview">
+                  {updatedImage ?
                   <img className="image-preview" id="output"></img>
+                :
+                  <img src={getImageURL(item)} className="image-preview" id="original-image"></img>
+                }
+                  
                 </div>
                   <input accept="image/*" placeholder="Image" id="image" name="image"type="file"/>
               </div>

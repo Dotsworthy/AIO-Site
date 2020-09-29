@@ -9,7 +9,6 @@ const AddItemForm = ({setAddResource}) => {
     const [category, setCategory] = useState("")
     const [level, setLevel] = useState("")
     const [tags, setTags] = useState("")
-
   
     const uploadFile = (file, location) => {
       const selectedFile = document.getElementById(file).files[0];
