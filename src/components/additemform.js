@@ -10,6 +10,7 @@ const AddItemForm = () => {
     const [category, setCategory] = useState("")
     const [level, setLevel] = useState("")
     const [tags, setTags] = useState("")
+    // const [imagePreview, setImagePreview] = useState("")
   
     const uploadFile = (file, location) => {
       const selectedFile = document.getElementById(file).files[0];
@@ -20,6 +21,14 @@ const AddItemForm = () => {
     const getUploadString = (file, location) => {
       const selectedFile = document.getElementById(file).files[0]
       return `${location}/${selectedFile.name}`
+    }
+
+    const loadFile = (e) => {
+      const output = document.getElementById("output");
+      output.src = URL.createObjectURL(e.target.files[0]);
+      output.onload = function() {
+        URL.revokeObjectURL(output.src)
+      }
     }
 
     const onSubmit = e => {
@@ -68,8 +77,10 @@ const AddItemForm = () => {
 
               <div className="form-upload-container">
               <label for="image">Upload Image</label>
-              <div className="form-preview"></div>
-              <input placeholder="Image" id="image" name="image"type="file"/>
+              <div className="form-preview">
+                <img className="image-preview" id="output"></img>
+              </div>
+              <input onChange={(e) => loadFile(e)} accept="image/*" placeholder="Image" id="image" name="image"type="file"/>
               </div>
 
               <div className="form-upload-container">
