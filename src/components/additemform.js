@@ -2,20 +2,34 @@ import React, { useState } from "react"
 import firebase from "firebase"
 import 'firebase/storage'
 
-const AddItemForm = () => {
+const AddItemForm = ({setAddResource}) => {
 
     const [name, setName] = useState("")
-    // const [image, setImage] = useState("")
     const [description, setDescription] = useState("")
     const [category, setCategory] = useState("")
     const [level, setLevel] = useState("")
     const [tags, setTags] = useState("")
-    // const [imagePreview, setImagePreview] = useState("")
+
   
     const uploadFile = (file, location) => {
       const selectedFile = document.getElementById(file).files[0];
       const storageRef = firebase.storage().ref(`${location}/${selectedFile.name}`)
       storageRef.put(selectedFile)
+      return `${location}/${selectedFile.name}`
+    }
+
+    const uploadMultipleFiles = (file, location) => {
+      const selectedFiles = document.getElementById(file).files;
+      const fileList = Array.from(selectedFiles);
+      const databaseEntry = fileList.map(file => {
+        return `${location}/${file.name}`
+      });
+      fileList.forEach(file => {
+        const storageRef = firebase.storage().ref(`${location}/${file.name}`)
+        storageRef.put(file)
+      })
+      
+      return databaseEntry
     }
 
     const getUploadString = (file, location) => {
@@ -31,15 +45,20 @@ const AddItemForm = () => {
       }
     }
 
+    const handleCancel = () => {
+      setAddResource(false);
+    }
+
     const onSubmit = e => {
       e.preventDefault()
       // Adding file to database
-      uploadFile('image', 'images')
-      uploadFile('download', 'downloads')
-      const image = getUploadString('image', 'images')
-      const download = getUploadString('download', 'downloads')
+
+      const image = uploadFile('image', 'images')
+      const download = uploadMultipleFiles('download', 'downloads')
+      console.log(download);
+      console.log(image)
       
-      //adding item to database 
+      // adding item to database 
       firebase
       .firestore()
       .collection("items")
@@ -53,6 +72,8 @@ const AddItemForm = () => {
           download
         })
       .then(() => setName(""), setDescription(''), setCategory(""), setLevel(""), setTags(""))
+    
+      setAddResource(false);
     }
  
     return (
@@ -65,7 +86,7 @@ const AddItemForm = () => {
           <div className="form-content">
 
             <div className="form-fields">
-              <div>Resource Information</div>
+              <label>Resource Information</label>
               <input placeholder="Name" value={name} name="name" onChange={e => setName(e.currentTarget.value)} type="text"/>
               <textarea className="input-description" placeholder="Description" value={description} name="Description" onChange={e => setDescription(e.currentTarget.value)} type="text"/>
               <input placeholder="Category" value={category} name="category" onChange={e => setCategory(e.currentTarget.value)} type="text"/>
@@ -75,7 +96,7 @@ const AddItemForm = () => {
 
             <div className="form-uploads">
 
-              <div className="form-upload-container">
+              <div className="image-upload-container">
               <label for="image">Upload Image</label>
               <div className="form-preview">
                 <img className="image-preview" id="output"></img>
@@ -83,17 +104,17 @@ const AddItemForm = () => {
               <input onChange={(e) => loadFile(e)} accept="image/*" placeholder="Image" id="image" name="image"type="file"/>
               </div>
 
-              <div className="form-upload-container">
+              <div className="resource-upload-container">
               <label for="download">Upload Resources</label>
-              <input type="file" id="download" name="download"/>
+              <input type="file" id="download" name="download" multiple/>
               </div>
 
             </div>
           </div>
 
           <div className="form-submit">
-            <button>Cancel</button>
-            <button className="form-submit">Submit</button>
+            <button type="submit" name="submit" onClick={() => handleCancel()} value="Cancel">Cancel</button>
+            <button type="submit" name="submit" className="form-submit">Submit</button>
           </div>
         </form>
     </div>

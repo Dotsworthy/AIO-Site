@@ -147,7 +147,7 @@ body {
     min-width: 700px;
     position: fixed;
     margin: 0 auto;
-    top: calc(50% - 200px);
+    top: calc(50% - 350px);
     left: calc(50% - 350px);
     background-color: #fafafa;
 }
@@ -216,18 +216,43 @@ body {
     flex-direction: column;
 }
 
-.form-upload-container {
+.image-upload-container {
     display: flex;
     flex-direction: column;
-    height: 240px;
+    height: 320px;
+    margin-bottom: 10px;
+}
+
+.resource-upload-container {
+    display: flex;
+    flex-direction: column;
+
+    label {
+        padding-bottom: 5px;
+    }
 }
 
 .form-preview {
-    height: 180px;
-    border: 1px solid black;
+    margin: 5px;
+    height: 280px;
+    width: 200px;
+    border: 1pt solid grey;
+    align-self: center;
 }
 
 .form-submit {
     display: flex;
     align-self: flex-end;
+    padding: 1%;
+
+    button {
+        padding: 10px;
+        margin: 5px;
+        border-radius: 10%;
+        border: none;
+    }
+}
+
+label {
+    align-self: center;
 }

@@ -64,7 +64,7 @@ const SecondPage = () => {
   <Layout>
       <button onClick={handleAddResourceClick}>Add Resource</button>
       <ItemList editItem={editItem} />
-      {addResource && <AddItemForm/>}
+      {addResource && <AddItemForm setAddResource={setAddResource}/>}
       {editing && <UpdateItem 
       setEditing={setEditing}
       currentItem={currentItem}
