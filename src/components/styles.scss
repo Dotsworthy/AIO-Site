@@ -142,3 +142,39 @@ body {
     margin: 20px;
 
 }
+
+.database-form-container {
+    width: 700px;
+    height: 400px;
+    
+    position: fixed;
+    margin: 0 auto;
+    top: calc(50% - 200px);
+    left: calc(50% - 350px);
+    background-color: white;
+}
+
+.database-form-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.form-fields {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-uploads {
+
+}
+
+.form-submit {
+    display: flex;
+    align-self: flex-end;
+}

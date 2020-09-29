@@ -12,7 +12,7 @@ function ResourceCatalogue() {
   const [tagSelected, setTagSelected] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [searchLog, setSearchLog] = useState("")
-  
+  const [page, setPage] = useState(0)
 
   useEffect(() => {
     let listTags
@@ -62,7 +62,7 @@ function ResourceCatalogue() {
     setTagSelected("")
     setSearchTerm("")
   }
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setSearchTerm(searchLog);
@@ -197,62 +197,68 @@ function ResourceCatalogue() {
   },[categorySelected, levelSelected, tagSelected]);
 
   return (
-    <div className="resource-page-container">
+    <div>
       <div>
-        <div className="resource-page-filter">
-            <h3>Categories</h3>
-            <button className="button-active" onClick={() => setCategorySelected("")}>Show All</button>  
-            {allCategories.map(category => (
-                <button style={ category.name === categorySelected ? {color: "red"} : {color: "black"}} key={category.id} className="button" 
-                onClick={() => setCategorySelected(category.name)}
-                >{category.name}</button>
-            ))}
-        </div>
-        <div className="resource-page-filter">
-            <h3>Education Level</h3>
-            <button className="button-active" onClick={() => setLevelSelected("")}>Show All</button>    
-            {allLevels.map(level => (
-                <button style={ level.name === levelSelected ? {color: "red"} : {color: "black"}} key={level.id} className="button" 
-                onClick={() => setLevelSelected(level.name)}
-                >{level.name}</button>
-            ))}
-        </div>
-        <div className="resource-page-filter">
-            <h3>Tags</h3>
-            <button className="button-active" onClick={() => setTagSelected("")}>Show All</button>    
-            {allTags.map(tag => (
-                <button style={ tag.name === tagSelected ? {color: "red"} : {color: "black"}} key={tag.id} className="button" 
-                onClick={() => setTagSelected(tag.name)}
-                >{tag.name}</button>
-            ))}
-        </div>
-        <div className="resource-page-filter">
-          <form onSubmit={(e) => handleSubmit(e)}>
-              <input type="text" value={searchLog} onChange={(e) => setSearchLog(e.target.value)}  placeholder="Search.." id="input" name="search"/>
-              <button  type="submit">Submit</button>
-          </form>
-            <button onClick={() => clearFilters()}>Clear Filter</button>
-        </div>
+        <button>Previous</button>
+        <button>Next</button>
+        <form onSubmit={(e) => handleSubmit(e)}>
+                <input type="text" value={searchLog} onChange={(e) => setSearchLog(e.target.value)}  placeholder="Search.." id="input" name="search"/>
+                <button  type="submit">Submit</button>
+        </form>
       </div>
-    <div className="resource-page-items">
-      {resources.length > 0  ? 
-      resources.map(resource => (
-      <div key={resource.id} className="catalogue-item">
-          <h3>{resource.name}</h3>
-          <div className="catalogue-image-container">
-          <img className="catalogue-image" src={resource.image} alt={resource.name}></img>
-          </div>
-          <div className="catalogue-button">
-          <button>More Info</button>
-          <button onClick={() => getDownload(resource.download)}>Download</button>
-          </div>
-      </div>      
-      ))
-        :
+      <div className="resource-page-container">
         <div>
-          <p>Sorry no results. Please try a different level or category, or press cancel filter to try a new search</p>
+          <div className="resource-page-filter">
+              <h3>Categories</h3>
+              <button className="button-active" onClick={() => setCategorySelected("")}>Show All</button>  
+              {allCategories.map(category => (
+                  <button style={ category.name === categorySelected ? {color: "red"} : {color: "black"}} key={category.id} className="button" 
+                  onClick={() => setCategorySelected(category.name)}
+                  >{category.name}</button>
+              ))}
+          </div>
+          <div className="resource-page-filter">
+              <h3>Education Level</h3>
+              <button className="button-active" onClick={() => setLevelSelected("")}>Show All</button>    
+              {allLevels.map(level => (
+                  <button style={ level.name === levelSelected ? {color: "red"} : {color: "black"}} key={level.id} className="button" 
+                  onClick={() => setLevelSelected(level.name)}
+                  >{level.name}</button>
+              ))}
+          </div>
+          <div className="resource-page-filter">
+              <h3>Tags</h3>
+              <button className="button-active" onClick={() => setTagSelected("")}>Show All</button>    
+              {allTags.map(tag => (
+                  <button style={ tag.name === tagSelected ? {color: "red"} : {color: "black"}} key={tag.id} className="button" 
+                  onClick={() => setTagSelected(tag.name)}
+                  >{tag.name}</button>
+              ))}
+          </div>
+          <div className="resource-page-filter">
+              <button onClick={() => clearFilters()}>Clear Filter</button>
+          </div>
         </div>
-      }
+      <div className="resource-page-items">
+        {resources.length > 0  ? 
+        resources.map(resource => (
+        <div key={resource.id} className="catalogue-item">
+            <h3>{resource.name}</h3>
+            <div className="catalogue-image-container">
+            <img className="catalogue-image" src={resource.image} alt={resource.name}></img>
+            </div>
+            <div className="catalogue-button">
+            <button>More Info</button>
+            <button onClick={() => getDownload(resource.download)}>Download</button>
+            </div>
+        </div>      
+        ))
+          :
+          <div>
+            <p>Sorry no results. Please try a different level or category, or press cancel filter to try a new search</p>
+          </div>
+        }
+        </div>
       </div>
     </div>
   )

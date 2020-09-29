@@ -44,7 +44,6 @@ const ItemList = ( { editItem }) => {
   <tbody>
     <tr className="header-row">
       <th className="name">Resource Name</th>
-      <th className="image">Image</th>
       <th className="description">Description</th>
       <th className="category">Category</th>
       <th className="level">Level</th>
@@ -55,7 +54,6 @@ const ItemList = ( { editItem }) => {
         <tbody key={item.id}>
           <tr className="data-row">
             <td className="resource-name">{item.name}</td>
-            <td className="image"><img className="table-image" src={item.image} alt={item.name}/></td>
             <td className="description">{item.description}</td>
             <td className="category">{item.category}</td>
             <td className="level">{item.level}</td>
