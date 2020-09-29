@@ -40,31 +40,33 @@ const useItems = () => {
 const ItemList = ( { editItem }) => {
     const listItem = useItems();
   return (
-<table className="resource-database-table">
-  <tbody>
-    <tr className="header-row">
-      <th className="name">Resource Name</th>
-      <th className="description">Description</th>
-      <th className="category">Category</th>
-      <th className="level">Level</th>
-      <th className="tags">Tags</th>
-    </tr>
-  </tbody>
-  {listItem.map(item => (
-        <tbody key={item.id}>
-          <tr className="data-row">
-            <td className="resource-name">{item.name}</td>
-            <td className="description">{item.description}</td>
-            <td className="category">{item.category}</td>
-            <td className="level">{item.level}</td>
-            <td className="tags">{item.tags}</td>
-            <td className="buttons">
-                <button onClick={() => editItem(item)}>Edit</button>
-                <button onClick={() => deleteItem(item.id, item.download)}>Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      ))}
-</table>
+    <div>
+    <table className="resource-database-table">
+      <tbody>
+        <tr className="header-row">
+          <th className="name">Resource Name</th>
+          <th className="description">Description</th>
+          <th className="category">Category</th>
+          <th className="level">Level</th>
+          <th className="tags">Tags</th>
+        </tr>
+      </tbody>
+      {listItem.map(item => (
+            <tbody key={item.id}>
+              <tr className="data-row">
+                <td className="resource-name">{item.name}</td>
+                <td className="description">{item.description}</td>
+                <td className="category">{item.category}</td>
+                <td className="level">{item.level}</td>
+                <td className="tags">{item.tags}</td>
+                <td className="buttons">
+                    <button onClick={() => editItem(item)}>Edit</button>
+                    <button onClick={() => deleteItem(item.id, item.download)}>Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          ))}
+    </table>
+    </div>
 )}
 export default ItemList

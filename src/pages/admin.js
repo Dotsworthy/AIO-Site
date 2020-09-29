@@ -5,8 +5,6 @@ import UpdateItem from "../components/updateitem"
 import AddItemForm from "../components/addItemForm"
 import Layout from "../components/layout"
 
-
-
 const SecondPage = () => {
    /*
   We don't know what is going to be edited so we set an
@@ -19,6 +17,7 @@ const SecondPage = () => {
   Make a state for whether or not edit mode is turned on.
   It will begin as false.
   */
+  const [addResource, setAddResource] = useState(false)
   const [editing, setEditing] = useState(false)
   /*
   Apply the empty initialItemState from above to a
@@ -56,22 +55,24 @@ const SecondPage = () => {
       .update(updatedItem);
   };
 
+  const handleAddResourceClick = () => {
+    setAddResource(true)
+  }
+
   return (
 
   <Layout>
+      <button onClick={handleAddResourceClick}>Add Resource</button>
       <ItemList editItem={editItem} />
+      {addResource && <AddItemForm/>}
+      {editing && <UpdateItem 
+      setEditing={setEditing}
+      currentItem={currentItem}
+      updateItem={updateItem}
+      />}
         {/* We add a ternary operator to switch
       between the UpdateItem form
       and the AddItemForm. */}
-     {editing ? 
-          <UpdateItem
-            setEditing={setEditing}
-            currentItem={currentItem}
-            updateItem={updateItem}
-          /> 
-            : 
-          <AddItemForm />
-      }
   </Layout>
   )
 }

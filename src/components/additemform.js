@@ -25,10 +25,6 @@ const AddItemForm = () => {
     const onSubmit = e => {
       e.preventDefault()
       // Adding file to database
-      // const selectedFile = document.getElementById('fileUpload').files[0];
-      // const storageRef = firebase.storage().ref(`downloads/${selectedFile.name}`)
-      // storageRef.put(selectedFile)
-      // const download = `downloads/${selectedFile.name}`
       uploadFile('image', 'images')
       uploadFile('download', 'downloads')
       const image = getUploadString('image', 'images')
@@ -51,69 +47,45 @@ const AddItemForm = () => {
     }
  
     return (
-        <div className="database-form-container">
-          <div className="database-form-content">
-        <h2>Add Resource</h2>
+      <div className="database-form-container">
+        <div className="form-header">
+          <h2>Add Resource</h2>
+        </div>
+
         <form className="form-container" onSubmit={onSubmit}>
-        
-        <div className="form-fields">
-        <input placeholder="Name"
-          value={name}
-          name="name"
-          /* onChange takes the event and set it to whatever
-          is currently in the input. 'e' is equal to the event
-          happening. currentTarget.value is what is inputted
-           */
-          onChange={e => setName(e.currentTarget.value)}
-          type="text"
-        />
+          <div className="form-content">
 
-        <input placeholder="Description"
-          value={description}
-          name="Description"
-          onChange={e => setDescription(e.currentTarget.value)}
-          type="text"
-        />
-        <input placeholder="Category"
-          value={category}
-          name="category"
-          onChange={e => setCategory(e.currentTarget.value)}
-          type="text"
-        />
-        <input placeholder="Level"
-        value={level}
-        name="level"
-        onChange={e => setLevel(e.currentTarget.value)}
-        type="level"
-        />
-        <input placeholder="Tags"
-        value={tags}
-        name="tags"
-        onChange={e => setTags(e.currentTarget.value)}
-        type="tags"
-        />
-        </div>
+            <div className="form-fields">
+              <div>Resource Information</div>
+              <input placeholder="Name" value={name} name="name" onChange={e => setName(e.currentTarget.value)} type="text"/>
+              <textarea className="input-description" placeholder="Description" value={description} name="Description" onChange={e => setDescription(e.currentTarget.value)} type="text"/>
+              <input placeholder="Category" value={category} name="category" onChange={e => setCategory(e.currentTarget.value)} type="text"/>
+              <input placeholder="Level"value={level} name="level" onChange={e => setLevel(e.currentTarget.value)} type="level"/>
+              <input placeholder="Tags" value={tags} name="tags" onChange={e => setTags(e.currentTarget.value)} type="tags"/>
+            </div>
 
-        <div className="form-uploads">
-        <input placeholder="Image"
-          id="image"
-          name="image"
-          type="file"
-        />
-        <label for="image">Upload Image</label>
+            <div className="form-uploads">
 
-        <input
-        type="file"
-        id="download"
-        name="download"
-        />
-        <label for="download">Upload teaching resources</label>
-        </div>
+              <div className="form-upload-container">
+              <label for="image">Upload Image</label>
+              <div className="form-preview"></div>
+              <input placeholder="Image" id="image" name="image"type="file"/>
+              </div>
 
-        <button className="form-submit">Submit</button>
-      </form>
-        </div>
-      </div>
+              <div className="form-upload-container">
+              <label for="download">Upload Resources</label>
+              <input type="file" id="download" name="download"/>
+              </div>
+
+            </div>
+          </div>
+
+          <div className="form-submit">
+            <button>Cancel</button>
+            <button className="form-submit">Submit</button>
+          </div>
+        </form>
+    </div>
     )
   }
 

@@ -144,34 +144,82 @@ body {
 }
 
 .database-form-container {
-    width: 700px;
-    height: 400px;
-    
+    min-width: 700px;
     position: fixed;
     margin: 0 auto;
     top: calc(50% - 200px);
     left: calc(50% - 350px);
-    background-color: white;
+    background-color: #fafafa;
 }
 
-.database-form-content {
+
+.form-header {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffc800;
+    padding: 2%;
+
+
+    button {
+        height: 25px;
+        width: 25px;
+        border-radius: 50%;
+        border: none;
+    }
+    
 }
 
 .form-container {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    padding: 2%;
+}
+
+.form-content {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
 }
 
 .form-fields {
     display: flex;
     flex-direction: column;
+
+    input {
+        padding: 8px;
+        margin: 10px;
+    }
+
+    textarea {
+        padding: 8px;
+        margin: 10px;
+    }
+
+    .input-description {
+        height: 200px;
+        width: 320px;
+    }
 }
 
 .form-uploads {
+    display: flex;
+    flex-direction: column;
+}
 
+.form-upload-container {
+    display: flex;
+    flex-direction: column;
+    height: 240px;
+}
+
+.form-preview {
+    height: 180px;
+    border: 1px solid black;
 }
 
 .form-submit {
