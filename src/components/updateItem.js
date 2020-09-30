@@ -4,6 +4,7 @@ import 'firebase/storage'
 
 const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   const [item, setItem] = useState(currentItem);
+  const [oldImage, setOldImage] = useState(item.image)
   // const [imageURL, setImageURL] = useState("");
 
   useEffect(() => {
@@ -12,12 +13,35 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
 
   const onSubmit = e => {
     e.preventDefault();
+    deleteFile(oldImage)
+    const image = uploadFile('image', 'images')
     updateItem({ currentItem }, item);
   };
 
   const onChange = e => {
     const { name, value } = e.target
     setItem({ ...item, [name]: value })
+  }
+
+  const changeImage = (file, location) => {
+    const name = file;
+    const value = location;
+    setItem({...item, [name]: value})
+  }
+
+  const uploadFile = (file, location) => {
+    const selectedFile = document.getElementById(file).files[0];
+    const storageRef = firebase.storage().ref(`${location}/${selectedFile.name}`)
+    storageRef.put(selectedFile)
+    return `${location}/${selectedFile.name}`
+  }
+
+  const deleteFile = (location) => {
+    const selectedFile = firebase.storage().ref(`${location}`)
+    selectedFile.delete().then(function() {
+    }).catch(function(error) {
+      console.log(error)
+    });
   }
 
   const getImageURL = (item) => {
@@ -31,9 +55,9 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   }
 
   const loadFile = (e) => {
-    // setUpdatedImage(true);
+    // console.log(e.target.files[0].name)
+    changeImage("image", `images/${e.target.files[0].name}`)
     const output = document.getElementById("output");
-    console.log(output)
     output.src = URL.createObjectURL(e.target.files[0]);
     output.onload = function() {
       URL.revokeObjectURL(output.src)
@@ -66,7 +90,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
                   {getImageURL(item)}
                   <img className="image-preview" id="output"></img>
                 </div>
-                  <input onChange={(e) => loadFile(e)} accept="image/*" placeholder="Image" id="image" name="image"type="file"/>
+                  <input onChange={(e) => loadFile(e)} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
               </div>
 
               <div className="resource-upload-container">
