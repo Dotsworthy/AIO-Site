@@ -92,6 +92,16 @@ function ResourceCatalogue() {
     });
   }
 
+  const getImageURL = (id, resource) => {
+    const storageRef = firebase.storage().ref(`${resource.image}`)
+    storageRef.getDownloadURL().then(function(url) {
+
+      const img = document.getElementById(id)
+      img.src = url;
+    }).catch(function(error) {
+    })
+  }
+
   useEffect(() => {
     if (categorySelected && levelSelected && tagSelected) {
       firebase
@@ -245,7 +255,7 @@ function ResourceCatalogue() {
         <div key={resource.id} className="catalogue-item">
             <h3>{resource.name}</h3>
             <div className="catalogue-image-container">
-            <img className="catalogue-image" src={resource.image} alt={resource.name}></img>
+            <img className="catalogue-image" src={getImageURL(resource.id, resource)}  id={resource.id} alt={resource.name}></img>
             </div>
             <div className="catalogue-button">
             <button>More Info</button>

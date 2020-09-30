@@ -26,14 +26,8 @@ const AddItemForm = ({setAddResource}) => {
       fileList.forEach(file => {
         const storageRef = firebase.storage().ref(`${location}/${file.name}`)
         storageRef.put(file)
-      })
-      
+      })   
       return databaseEntry
-    }
-
-    const getUploadString = (file, location) => {
-      const selectedFile = document.getElementById(file).files[0]
-      return `${location}/${selectedFile.name}`
     }
 
     const loadFile = (e) => {
@@ -54,8 +48,6 @@ const AddItemForm = ({setAddResource}) => {
 
       const image = uploadFile('image', 'images')
       const download = uploadMultipleFiles('download', 'downloads')
-      console.log(download);
-      console.log(image)
       
       // adding item to database 
       firebase
@@ -100,7 +92,7 @@ const AddItemForm = ({setAddResource}) => {
               <div className="form-preview">
                 <img className="image-preview" id="output"></img>
               </div>
-              <input onChange={(e) => loadFile(e)} accept="image/*" placeholder="Image" id="image" name="image"type="file"/>
+              <input onChange={(e) => loadFile(e)} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
               </div>
 
               <div className="resource-upload-container">
