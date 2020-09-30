@@ -4,8 +4,8 @@ import 'firebase/storage'
 
 const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   const [item, setItem] = useState(currentItem);
-  const [oldImage, setOldImage] = useState(item.image)
-  // const [imageURL, setImageURL] = useState("");
+  const [oldImage] = useState(item.image)
+  const [oldDownloads] = useState(item.download)
 
   useEffect(() => {
     setItem(currentItem);
@@ -13,8 +13,10 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
 
   const onSubmit = e => {
     e.preventDefault();
-    deleteFile(oldImage)
-    const image = uploadFile('image', 'images')
+    if (oldImage !== item.image) {
+      deleteFile(oldImage)
+      uploadFile('image', 'images')
+    }
     updateItem({ currentItem }, item);
   };
 

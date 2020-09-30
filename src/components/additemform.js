@@ -9,6 +9,7 @@ const AddItemForm = ({setAddResource}) => {
     const [category, setCategory] = useState("")
     const [level, setLevel] = useState("")
     const [tags, setTags] = useState("")
+    const [uploads, setUploads] = useState([])
   
     const uploadFile = (file, location) => {
       const selectedFile = document.getElementById(file).files[0];
@@ -31,12 +32,20 @@ const AddItemForm = ({setAddResource}) => {
     }
 
     const loadFile = (e) => {
-      const output = document.getElementById("output");
-      output.src = URL.createObjectURL(e.target.files[0]);
-      output.onload = function() {
-        URL.revokeObjectURL(output.src)
+      const preview = document.getElementById("preview");
+      preview.src = URL.createObjectURL(e.target.files[0]);
+      preview.onload = function() {
+        URL.revokeObjectURL(preview.src)
       }
     }
+
+    const loadAllFiles = (e) => {
+      const upload = e.target.files;
+      const allFiles = Array.from(upload)
+      console.log(allFiles)
+      setUploads([...allFiles]);
+    }
+
 
     const handleCancel = () => {
       setAddResource(false);
@@ -88,16 +97,22 @@ const AddItemForm = ({setAddResource}) => {
             <div className="form-uploads">
 
               <div className="image-upload-container">
-              <label for="image">Upload Image</label>
+              <label htmlFor="image">Upload Image</label>
               <div className="form-preview">
-                <img className="image-preview" id="output"></img>
+                <img className="image-preview" id="preview"></img>
               </div>
               <input onChange={(e) => loadFile(e)} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
               </div>
 
               <div className="resource-upload-container">
-              <label for="download">Upload Resources</label>
-              <input type="file" id="download" name="download" multiple/>
+              <label htmlFor="download">Upload Resources</label>
+              <input onChange={(e) => {loadAllFiles(e)}}type="file" id="download" name="download" multiple/>
+              {uploads ? 
+              uploads.map(file => (
+                <p>{file.name}</p>
+              ))
+              :
+              <p>No Files Uploaded</p>}
               </div>
 
             </div>
