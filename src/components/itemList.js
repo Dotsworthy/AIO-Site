@@ -21,14 +21,9 @@ const useItems = () => {
     return items;
   };
 
-  const deleteItem = (id, downloadRef) => {
-    const storageRef = firebase.storage().ref()
-    const imageRef = storageRef.child(downloadRef)
-    imageRef.delete().then(function() {
-      console.log("resource deleted successfully")
-    }).catch(function(error) {
-      console.log(error)
-    })
+  const deleteItem = (id, imageRef, downloadRef) => {
+    deleteFile(imageRef)
+    deleteAllFiles(downloadRef)
 
     firebase
       .firestore()
@@ -36,6 +31,28 @@ const useItems = () => {
       .doc(id)
       .delete()
 }  
+
+const deleteFile = (location) => {
+  const storageRef = firebase.storage().ref()
+  const fileRef = storageRef.child(location)
+  fileRef.delete().then(function() {
+    console.log("resource deleted successfully")
+  }).catch(function(error) {
+    console.log(error)
+  })
+}
+
+const deleteAllFiles = (location) => {
+  const storageRef = firebase.storage().ref()
+  location.forEach(file => {
+    const fileRef = storageRef.child(file)
+    fileRef.delete().then(function() {
+      console.log("resource deleted successfully")
+    }).catch(function(error) {
+      console.log(error)
+    })
+  })
+}
 
 const ItemList = ( { editItem }) => {
     const listItem = useItems();
@@ -61,7 +78,7 @@ const ItemList = ( { editItem }) => {
                 <td className="tags">{item.tags}</td>
                 <td className="buttons">
                     <button onClick={() => editItem(item)}>Edit</button>
-                    <button onClick={() => deleteItem(item.id, item.download)}>Delete</button>
+                    <button onClick={() => deleteItem(item.id, item.image, item.download)}>Delete</button>
                 </td>
               </tr>
             </tbody>
