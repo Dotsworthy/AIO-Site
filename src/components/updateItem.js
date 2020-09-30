@@ -98,6 +98,9 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
               <div className="resource-upload-container">
                 <label for="download">Upload Resources</label>
                 <input type="file" id="download" name="download" multiple/>
+                {oldDownloads.map(file => (
+                  <p>{file}</p>
+                ))}
               </div>
             
             </div>
