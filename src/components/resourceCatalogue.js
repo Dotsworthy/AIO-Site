@@ -10,9 +10,9 @@ function ResourceCatalogue() {
   const [categorySelected, setCategorySelected] = useState("") ;
   const [levelSelected, setLevelSelected] = useState("");
   const [tagSelected, setTagSelected] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
+  // const [searchTerm, setSearchTerm] = useState("");
   const [searchLog, setSearchLog] = useState("")
-  const [page, setPage] = useState(0)
+  // const [page, setPage] = useState(0)
 
   useEffect(() => {
     let listTags
@@ -60,13 +60,13 @@ function ResourceCatalogue() {
     setLevelSelected("")
     setCategorySelected("")
     setTagSelected("")
-    setSearchTerm("")
+    // setSearchTerm("")
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSearchTerm(searchLog);
-    setSearchLog("");
+    // setSearchTerm(searchLog);
+    // setSearchLog("");
   }
 
   const getDownload = (download) => {

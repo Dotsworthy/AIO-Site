@@ -6,6 +6,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   const [item, setItem] = useState(currentItem);
   const [oldImage] = useState(item.image)
   const [oldDownloads] = useState(item.download)
+  const [uploads, setUploads] = useState([])
 
   useEffect(() => {
     setItem(currentItem);
@@ -16,6 +17,9 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     if (oldImage !== item.image) {
       deleteFile(oldImage)
       uploadFile('image', 'images')
+    }
+    if (oldDownloads !== item.download) {
+      deleteFile(oldDownloads)
     }
     updateItem({ currentItem }, item);
   };
@@ -31,12 +35,29 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     setItem({...item, [name]: value})
   }
 
+  const changeDownloads = () => {
+
+  }
+
   const uploadFile = (file, location) => {
     const selectedFile = document.getElementById(file).files[0];
     const storageRef = firebase.storage().ref(`${location}/${selectedFile.name}`)
     storageRef.put(selectedFile)
     return `${location}/${selectedFile.name}`
   }
+
+  // const uploadMultipleFiles = (file, location) => {
+  //   const selectedFiles = document.getElementById(file).files;
+  //   const fileList = Array.from(selectedFiles);
+  //   const databaseEntry = fileList.map(file => {
+  //     return `${location}/${file.name}`
+  //   });
+  //   fileList.forEach(file => {
+  //     const storageRef = firebase.storage().ref(`${location}/${file.name}`)
+  //     storageRef.put(file)
+  //   })   
+  //   return databaseEntry
+  // }
 
   const deleteFile = (location) => {
     const selectedFile = firebase.storage().ref(`${location}`)
@@ -57,13 +78,18 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   }
 
   const loadFile = (e) => {
-    // console.log(e.target.files[0].name)
     changeImage("image", `images/${e.target.files[0].name}`)
     const output = document.getElementById("output");
     output.src = URL.createObjectURL(e.target.files[0]);
     output.onload = function() {
       URL.revokeObjectURL(output.src)
     }   
+  }
+
+  const loadAllFiles = (e) => {
+    const upload = e.target.files;
+    const allFiles = Array.from(upload)
+    setUploads([...allFiles]);
   }
   
     return (
@@ -76,7 +102,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
           <div className="form-content">
             
             <div className="form-fields">
-              <label>Resource Information</label>
+              <p>Resource Information</p>
               <input type="text" name="name" value={item.name} onChange={onChange} />
               <textarea className="input-description" type="text" name="description" value={item.description} onChange={onChange}/>
               <input type="text" name="category" value={item.category} onChange={onChange}/>
@@ -87,19 +113,25 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
             <div className="form-uploads">
 
               <div className="image-upload-container">
-                <label for="image">Upload Image</label>
+                <label htmlFor="image">Upload Image</label>
                 <div className="form-preview">
                   {getImageURL(item)}
-                  <img className="image-preview" id="output"></img>
+                  <img className="image-preview" id="output" alt=""></img>
                 </div>
                   <input onChange={(e) => loadFile(e)} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
               </div>
 
               <div className="resource-upload-container">
-                <label for="download">Upload Resources</label>
-                <input type="file" id="download" name="download" multiple/>
-                {oldDownloads.map(file => (
-                  <p>{file}</p>
+                <label htmlFor="download">Upload Resources</label>
+                <input onChange={(e) => loadAllFiles(e)} type="file" id="download" name="download" multiple/>
+                <p>Uploaded Files</p>
+                { uploads.length > 0 ?
+                  uploads.map(file => (
+                    <p key={file.name}>{file.name}</p>
+                  ))
+                :
+                oldDownloads.map(file => (
+                  <p key={file}>{file}</p>
                 ))}
               </div>
             

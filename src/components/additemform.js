@@ -86,7 +86,7 @@ const AddItemForm = ({setAddResource}) => {
           <div className="form-content">
 
             <div className="form-fields">
-              <label>Resource Information</label>
+              <p>Resource Information</p>
               <input placeholder="Name" value={name} name="name" onChange={e => setName(e.currentTarget.value)} type="text"/>
               <textarea className="input-description" placeholder="Description" value={description} name="Description" onChange={e => setDescription(e.currentTarget.value)} type="text"/>
               <input placeholder="Category" value={category} name="category" onChange={e => setCategory(e.currentTarget.value)} type="text"/>
@@ -99,7 +99,7 @@ const AddItemForm = ({setAddResource}) => {
               <div className="image-upload-container">
               <label htmlFor="image">Upload Image</label>
               <div className="form-preview">
-                <img className="image-preview" id="preview"></img>
+                <img className="image-preview" id="preview" alt=""></img>
               </div>
               <input onChange={(e) => loadFile(e)} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
               </div>
@@ -107,12 +107,13 @@ const AddItemForm = ({setAddResource}) => {
               <div className="resource-upload-container">
               <label htmlFor="download">Upload Resources</label>
               <input onChange={(e) => {loadAllFiles(e)}}type="file" id="download" name="download" multiple/>
+              <p>Files to upload:</p>
               {uploads.length > 0 ? 
               uploads.map(file => (
                 <p>{file.name}</p>
               ))
               :
-              <p>No Files Uploaded</p>}
+              <p>None</p>}
               </div>
 
             </div>
