@@ -20,6 +20,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     }
     if (oldDownloads !== item.download) {
       deleteFile(oldDownloads)
+      uploadMultipleFiles('download', 'downloads')
     }
     updateItem({ currentItem }, item);
   };
@@ -35,8 +36,13 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     setItem({...item, [name]: value})
   }
 
-  const changeDownloads = () => {
-
+  const changeDownloads = (e, entry, location) => {
+    const fileList = Array.from(e.target.files)
+    const name = entry
+    const value = fileList.map(file => {
+      return `${location}/${file.name}`
+    })
+    setItem({...item, [name]: value})
   }
 
   const uploadFile = (file, location) => {
@@ -46,18 +52,18 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     return `${location}/${selectedFile.name}`
   }
 
-  // const uploadMultipleFiles = (file, location) => {
-  //   const selectedFiles = document.getElementById(file).files;
-  //   const fileList = Array.from(selectedFiles);
-  //   const databaseEntry = fileList.map(file => {
-  //     return `${location}/${file.name}`
-  //   });
-  //   fileList.forEach(file => {
-  //     const storageRef = firebase.storage().ref(`${location}/${file.name}`)
-  //     storageRef.put(file)
-  //   })   
-  //   return databaseEntry
-  // }
+  const uploadMultipleFiles = (file, location) => {
+    const selectedFiles = document.getElementById(file).files;
+    const fileList = Array.from(selectedFiles);
+    const databaseEntry = fileList.map(file => {
+      return `${location}/${file.name}`
+    });
+    fileList.forEach(file => {
+      const storageRef = firebase.storage().ref(`${location}/${file.name}`)
+      storageRef.put(file)
+    })   
+    return databaseEntry
+  }
 
   const deleteFile = (location) => {
     const selectedFile = firebase.storage().ref(`${location}`)
@@ -87,7 +93,9 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   }
 
   const loadAllFiles = (e) => {
+    changeDownloads(e, "download", "downloads")
     const upload = e.target.files;
+    console.log(upload)
     const allFiles = Array.from(upload)
     setUploads([...allFiles]);
   }
@@ -124,11 +132,11 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
               <div className="resource-upload-container">
                 <label htmlFor="download">Upload Resources</label>
                 <input onChange={(e) => loadAllFiles(e)} type="file" id="download" name="download" multiple/>
-                <p>Uploaded Files</p>
+                <p>Files:</p>
                 { uploads.length > 0 ?
                   uploads.map(file => (
                     <p key={file.name}>{file.name}</p>
-                  ))
+                 ))
                 :
                 oldDownloads.map(file => (
                   <p key={file}>{file}</p>
