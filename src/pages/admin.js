@@ -8,7 +8,7 @@ import Layout from "../components/layout"
 const SecondPage = () => {
 
  const initialItemState = [
-  { id: null, name: "", image: "", description: "", category: "", level: "", tags: "", donwload: "" },
+  { id: null, name: "", image: "", description: "", category: "", level: "", tags: "", download: "" },
   ]
 
   const [addResource, setAddResource] = useState(false)
@@ -60,9 +60,6 @@ const SecondPage = () => {
       currentItem={currentItem}
       updateItem={updateItem}
       />}
-        {/* We add a ternary operator to switch
-      between the UpdateItem form
-      and the AddItemForm. */}
   </Layout>
   )
 }

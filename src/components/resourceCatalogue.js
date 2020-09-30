@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import firebase from "./firebase"
 import 'firebase/storage'
 
-function ResourceCatalogue() {
+const ResourceCatalogue = ( { downloadResource }) => {
   const [resources, setResources] = useState([]);
   const [allCategories, setAllCategories] = useState([]);
   const [allLevels, setAllLevels] = useState([]);
@@ -257,7 +257,7 @@ function ResourceCatalogue() {
             </div>
             <div className="catalogue-button">
             <button>More Info</button>
-            <button onClick={() => getDownload(resource.download)}>Download</button>
+            <button onClick={() => downloadResource(resource)}>Download</button>
             </div>
         </div>      
         ))

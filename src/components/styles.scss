@@ -232,6 +232,20 @@ body {
     }
 }
 
+.downloads-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.download-items {
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .form-preview {
     margin: 5px;
     height: 280px;
