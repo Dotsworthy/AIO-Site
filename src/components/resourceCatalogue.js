@@ -209,8 +209,6 @@ function ResourceCatalogue() {
   return (
     <div>
       <div>
-        <button>Previous</button>
-        <button>Next</button>
         <form onSubmit={(e) => handleSubmit(e)}>
                 <input type="text" value={searchLog} onChange={(e) => setSearchLog(e.target.value)}  placeholder="Search.." id="input" name="search"/>
                 <button  type="submit">Submit</button>
