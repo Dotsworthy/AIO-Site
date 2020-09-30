@@ -107,7 +107,7 @@ const AddItemForm = ({setAddResource}) => {
               <div className="resource-upload-container">
               <label htmlFor="download">Upload Resources</label>
               <input onChange={(e) => {loadAllFiles(e)}}type="file" id="download" name="download" multiple/>
-              {uploads ? 
+              {uploads.length > 0 ? 
               uploads.map(file => (
                 <p>{file.name}</p>
               ))
