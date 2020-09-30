@@ -4,7 +4,7 @@ import 'firebase/storage'
 
 const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   const [item, setItem] = useState(currentItem);
-  const [updatedImage, setUpdatedImage] = useState(false);
+  // const [imageURL, setImageURL] = useState("");
 
   useEffect(() => {
     setItem(currentItem);
@@ -24,12 +24,20 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     const storageRef = firebase.storage().ref(`${item.image}`)
     storageRef.getDownloadURL().then(function(url) {
 
-      const img = document.getElementById('original-image')
+      const img = document.getElementById('output')
       img.src = url;
     }).catch(function(error) {
+    })
+  }
 
-    });
-
+  const loadFile = (e) => {
+    // setUpdatedImage(true);
+    const output = document.getElementById("output");
+    console.log(output)
+    output.src = URL.createObjectURL(e.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src)
+    }   
   }
   
     return (
@@ -55,14 +63,10 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
               <div className="image-upload-container">
                 <label for="image">Upload Image</label>
                 <div className="form-preview">
-                  {updatedImage ?
+                  {getImageURL(item)}
                   <img className="image-preview" id="output"></img>
-                :
-                  <img src={getImageURL(item)} className="image-preview" id="original-image"></img>
-                }
-                  
                 </div>
-                  <input accept="image/*" placeholder="Image" id="image" name="image"type="file"/>
+                  <input onChange={(e) => loadFile(e)} accept="image/*" placeholder="Image" id="image" name="image"type="file"/>
               </div>
 
               <div className="resource-upload-container">
