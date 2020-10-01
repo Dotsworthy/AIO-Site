@@ -19,7 +19,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
       uploadFile('image', 'images')
     }
     if (oldDownloads !== item.download) {
-      deleteFile(oldDownloads)
+      deleteAllFiles(oldDownloads)
       uploadMultipleFiles('download', 'downloads')
     }
     updateItem({ currentItem }, item);
@@ -71,6 +71,17 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     }).catch(function(error) {
       console.log(error)
     });
+  }
+
+  const deleteAllFiles = (location) => {
+    location.forEach(download => {
+      const selectedFile = firebase.storage().ref(`${download}`)
+      selectedFile.delete().then(function() {
+
+      }).catch(function(error) {
+        console.log(error)
+      })
+    })
   }
 
   const getImageURL = (item) => {
