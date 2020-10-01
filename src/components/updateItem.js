@@ -7,6 +7,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   const [oldImage] = useState(item.image)
   const [oldDownloads] = useState(item.download)
   const [uploads, setUploads] = useState([])
+  const [tagString, setTagString] = useState(item.tags)
 
   useEffect(() => {
     setItem(currentItem);
@@ -14,6 +15,8 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
 
   const onSubmit = e => {
     e.preventDefault();
+    changeTags(tagString)
+    console.log(item.tags)
     if (oldImage !== item.image) {
       deleteFile(oldImage, `images`)
       uploadFile('image', 'images')
@@ -28,6 +31,15 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   const onChange = e => {
     const { name, value } = e.target
     setItem({ ...item, [name]: value })
+  }
+
+  const changeTags = (string) => {
+    let tagsList = string.replace(/\s/g,'');
+    const name = 'tags'
+    const value = tagsList.split(",")
+    console.log(value)
+    setItem({...item, [name]: value})
+    console.log(item)
   }
 
   const changeImage = (file, location) => {
@@ -126,7 +138,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
               <textarea className="input-description" type="text" name="description" value={item.description} onChange={onChange}/>
               <input type="text" name="category" value={item.category} onChange={onChange}/>
               <input type="text" name="level" value={item.level} onChange={onChange}/>
-              <input type="text" name="tags" value={item.tags} onChange={onChange}/>
+              <input type="text" name="tags" value={tagString} onChange={(e) => setTagString(e.currentTarget.value)}/>
             </div>
 
             <div className="form-uploads">
