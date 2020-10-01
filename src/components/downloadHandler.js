@@ -60,7 +60,6 @@ const DownloadHandler = ({ currentItem, setDownloading }) => {
                 saveAs(blob, `${resources.name}`);
             })
         }, 3000)
-
     }  
 
     return (
