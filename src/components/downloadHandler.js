@@ -8,10 +8,10 @@ const DownloadHandler = ({ currentItem, setDownloading }) => {
 
     const [resources] = useState(currentItem)
 
-    const getDownload = (download) => {
+    const getDownload = (download, location) => {
         const storage = firebase.storage();
         const storageRef = storage.ref()
-        const httpsReference = storageRef.child(download);
+        const httpsReference = storageRef.child(`${location}/${download}`);
       
         httpsReference.getDownloadURL().then(function(url) {
           let xhr = new XMLHttpRequest();
@@ -31,13 +31,13 @@ const DownloadHandler = ({ currentItem, setDownloading }) => {
         });
       }
 
-    const getAllDownloads = () => {
+    const getAllDownloads = (location) => {
         const storage = firebase.storage();
         const storageRef = storage.ref()
         let zip = new JSZip();
         let materials = zip.folder(`${resources.name}`)
         resources.download.forEach(resource => {
-            const httpsReference = storageRef.child(resource)
+            const httpsReference = storageRef.child(`${location}/${resource}`)
             
             httpsReference.getDownloadURL().then(function(url) {
                 let xhr = new XMLHttpRequest();
@@ -72,12 +72,12 @@ const DownloadHandler = ({ currentItem, setDownloading }) => {
             {resources.download.map(resource => (
                 <div key={resource} className="download-items">
                 <p>{resource}</p>
-                <button onClick={(e) => getDownload(resource)}>Download</button>
+                <button onClick={(e) => getDownload(resource, "downloads")}>Download</button>
                 </div>
             ))}
             <div className="download-items">
                 <p>Download All Files as Zip</p>
-                <button onClick={(e) => getAllDownloads()}>Download</button>
+                <button onClick={(e) => getAllDownloads("downloads")}>Download</button>
             </div>
             </div>
             <button onClick={()=>setDownloading(false)}>Close</button>
