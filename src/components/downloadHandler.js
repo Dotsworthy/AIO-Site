@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import firebase from "firebase"
 import 'firebase/storage'
+import JSZip from "jszip";
+import { saveAs } from 'file-saver';
 
 const DownloadHandler = ({ currentItem, setDownloading }) => {
 
-    const [resources, setResources] = useState(currentItem)
+    const [resources] = useState(currentItem)
 
     const getDownload = (download) => {
         const storage = firebase.storage();
@@ -29,6 +31,38 @@ const DownloadHandler = ({ currentItem, setDownloading }) => {
         });
       }
 
+    const getAllDownloads = () => {
+        const storage = firebase.storage();
+        const storageRef = storage.ref()
+        let zip = new JSZip();
+        let materials = zip.folder(`${resources.name}`)
+        resources.download.forEach(resource => {
+            const httpsReference = storageRef.child(resource)
+            
+            httpsReference.getDownloadURL().then(function(url) {
+                let xhr = new XMLHttpRequest();
+                xhr.responseType = 'blob';
+                console.log(xhr)
+                xhr.onload = function(event) {
+                    let blob = xhr.response;
+                    materials.file(`${resource}`, blob)
+                };
+                xhr.open('GET', url)
+                xhr.send();  
+                }).catch(function(error) {
+                    console.log(error)
+                })   
+        })
+        console.log(zip)
+        setTimeout(function() {
+            zip.generateAsync({type:"blob"})
+            .then(function (blob) {
+                saveAs(blob, `${resources.name}`);
+            })
+        }, 3000)
+
+    }  
+
     return (
         <div className="database-form-container">
             <div className="form-header">
@@ -41,6 +75,10 @@ const DownloadHandler = ({ currentItem, setDownloading }) => {
                 <button onClick={(e) => getDownload(resource)}>Download</button>
                 </div>
             ))}
+            <div className="download-items">
+                <p>Download All Files as Zip</p>
+                <button onClick={(e) => getAllDownloads()}>Download</button>
+            </div>
             </div>
             <button onClick={()=>setDownloading(false)}>Close</button>
         </div>

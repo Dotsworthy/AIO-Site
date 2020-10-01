@@ -69,29 +69,6 @@ const ResourceCatalogue = ( { downloadResource }) => {
     // setSearchLog("");
   }
 
-  const getDownload = (download) => {
-    const storage = firebase.storage();
-    const storageRef = storage.ref()
-    const httpsReference = storageRef.child(download);
-  
-    httpsReference.getDownloadURL().then(function(url) {
-      let xhr = new XMLHttpRequest();
-      xhr.responseType = 'blob';
-      xhr.onload = function(event) {
-      let a = document.createElement('a');
-          a.href = window.URL.createObjectURL(xhr.response);
-          a.download = `${download}`;
-          a.style.display = 'none';
-          document.body.appendChild(a);
-          a.click();   
-      };
-      xhr.open('GET', url);
-      xhr.send();
-    }).catch(function(error) {
-      console.log(error);
-    });
-  }
-
   const getImageURL = (id, resource) => {
     const storageRef = firebase.storage().ref(`${resource.image}`)
     storageRef.getDownloadURL().then(function(url) {
