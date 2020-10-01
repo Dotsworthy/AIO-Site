@@ -8,7 +8,7 @@ const AddItemForm = ({setAddResource}) => {
     const [description, setDescription] = useState("")
     const [category, setCategory] = useState("")
     const [level, setLevel] = useState("")
-    const [tags, setTags] = useState("")
+    const [tagString, setTagString] = useState("")
     const [uploads, setUploads] = useState([])
   
     const uploadFile = (file, location) => {
@@ -42,8 +42,14 @@ const AddItemForm = ({setAddResource}) => {
     const loadAllFiles = (e) => {
       const upload = e.target.files;
       const allFiles = Array.from(upload)
-      console.log(allFiles)
       setUploads([...allFiles]);
+    }
+
+    const handleTags = (string) => {
+      let tagsList = string.replace(/\s/g,'');
+      console.log(tagsList)
+      let output = tagsList.split(",")
+      return output
     }
 
 
@@ -54,7 +60,7 @@ const AddItemForm = ({setAddResource}) => {
     const onSubmit = e => {
       e.preventDefault()
       // Adding file to database
-
+      const tags = handleTags(tagString)
       const image = uploadFile('image', 'images')
       const download = uploadMultipleFiles('download', 'downloads')
       
@@ -71,7 +77,7 @@ const AddItemForm = ({setAddResource}) => {
           tags,
           download
         })
-      .then(() => setName(""), setDescription(''), setCategory(""), setLevel(""), setTags(""))
+      .then(() => setName(""), setDescription(''), setCategory(""), setLevel(""), setTagString(""))
     
       setAddResource(false);
     }
@@ -91,7 +97,7 @@ const AddItemForm = ({setAddResource}) => {
               <textarea className="input-description" placeholder="Description" value={description} name="Description" onChange={e => setDescription(e.currentTarget.value)} type="text"/>
               <input placeholder="Category" value={category} name="category" onChange={e => setCategory(e.currentTarget.value)} type="text"/>
               <input placeholder="Level"value={level} name="level" onChange={e => setLevel(e.currentTarget.value)} type="level"/>
-              <input placeholder="Tags" value={tags} name="tags" onChange={e => setTags(e.currentTarget.value)} type="tags"/>
+              <input placeholder="Tags" value={tagString} name="tags" onChange={e => setTagString(e.currentTarget.value)} type="tags"/>
             </div>
 
             <div className="form-uploads">
