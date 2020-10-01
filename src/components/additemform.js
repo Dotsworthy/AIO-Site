@@ -15,14 +15,14 @@ const AddItemForm = ({setAddResource}) => {
       const selectedFile = document.getElementById(file).files[0];
       const storageRef = firebase.storage().ref(`${location}/${selectedFile.name}`)
       storageRef.put(selectedFile)
-      return `${location}/${selectedFile.name}`
+      return `${selectedFile.name}`
     }
 
     const uploadMultipleFiles = (file, location) => {
       const selectedFiles = document.getElementById(file).files;
       const fileList = Array.from(selectedFiles);
       const databaseEntry = fileList.map(file => {
-        return `${location}/${file.name}`
+        return `${file.name}`
       });
       fileList.forEach(file => {
         const storageRef = firebase.storage().ref(`${location}/${file.name}`)

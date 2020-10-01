@@ -15,11 +15,11 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   const onSubmit = e => {
     e.preventDefault();
     if (oldImage !== item.image) {
-      deleteFile(oldImage)
+      deleteFile(oldImage, `images`)
       uploadFile('image', 'images')
     }
     if (oldDownloads !== item.download) {
-      deleteAllFiles(oldDownloads)
+      deleteAllFiles(oldDownloads, `downloads`)
       uploadMultipleFiles('download', 'downloads')
     }
     updateItem({ currentItem }, item);
@@ -36,11 +36,11 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     setItem({...item, [name]: value})
   }
 
-  const changeDownloads = (e, entry, location) => {
+  const changeDownloads = (e, entry) => {
     const fileList = Array.from(e.target.files)
     const name = entry
     const value = fileList.map(file => {
-      return `${location}/${file.name}`
+      return `${file.name}`
     })
     setItem({...item, [name]: value})
   }
@@ -49,14 +49,14 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     const selectedFile = document.getElementById(file).files[0];
     const storageRef = firebase.storage().ref(`${location}/${selectedFile.name}`)
     storageRef.put(selectedFile)
-    return `${location}/${selectedFile.name}`
+    return `${selectedFile.name}`
   }
 
   const uploadMultipleFiles = (file, location) => {
     const selectedFiles = document.getElementById(file).files;
     const fileList = Array.from(selectedFiles);
     const databaseEntry = fileList.map(file => {
-      return `${location}/${file.name}`
+      return `${file.name}`
     });
     fileList.forEach(file => {
       const storageRef = firebase.storage().ref(`${location}/${file.name}`)
@@ -65,17 +65,17 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     return databaseEntry
   }
 
-  const deleteFile = (location) => {
-    const selectedFile = firebase.storage().ref(`${location}`)
+  const deleteFile = (file, location) => {
+    const selectedFile = firebase.storage().ref(`${location}/${file}`)
     selectedFile.delete().then(function() {
     }).catch(function(error) {
       console.log(error)
     });
   }
 
-  const deleteAllFiles = (location) => {
-    location.forEach(download => {
-      const selectedFile = firebase.storage().ref(`${download}`)
+  const deleteAllFiles = (file, location) => {
+    file.forEach(download => {
+      const selectedFile = firebase.storage().ref(`${location}/${download}`)
       selectedFile.delete().then(function() {
 
       }).catch(function(error) {
@@ -84,8 +84,8 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     })
   }
 
-  const getImageURL = (item) => {
-    const storageRef = firebase.storage().ref(`${item.image}`)
+  const getImageURL = (item, location) => {
+    const storageRef = firebase.storage().ref(`${location}/${item.image}`)
     storageRef.getDownloadURL().then(function(url) {
 
       const img = document.getElementById('output')
@@ -95,7 +95,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   }
 
   const loadFile = (e) => {
-    changeImage("image", `images/${e.target.files[0].name}`)
+    changeImage("image", `${e.target.files[0].name}`)
     const output = document.getElementById("output");
     output.src = URL.createObjectURL(e.target.files[0]);
     output.onload = function() {
@@ -134,7 +134,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
               <div className="image-upload-container">
                 <label htmlFor="image">Upload Image</label>
                 <div className="form-preview">
-                  {getImageURL(item)}
+                  {getImageURL(item, "images")}
                   <img className="image-preview" id="output" alt=""></img>
                 </div>
                   <input onChange={(e) => loadFile(e)} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>

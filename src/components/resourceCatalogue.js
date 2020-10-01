@@ -69,8 +69,8 @@ const ResourceCatalogue = ( { downloadResource }) => {
     // setSearchLog("");
   }
 
-  const getImageURL = (id, resource) => {
-    const storageRef = firebase.storage().ref(`${resource.image}`)
+  const getImageURL = (id, location, resource) => {
+    const storageRef = firebase.storage().ref(`${location}/${resource.image}`)
     storageRef.getDownloadURL().then(function(url) {
 
       const img = document.getElementById(id)
@@ -230,7 +230,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
         <div key={resource.id} className="catalogue-item">
             <h3>{resource.name}</h3>
             <div className="catalogue-image-container">
-            <img className="catalogue-image" src={getImageURL(resource.id, resource)}  id={resource.id} alt={resource.name}></img>
+            <img className="catalogue-image" src={getImageURL(resource.id, "images", resource)}  id={resource.id} alt={resource.name}></img>
             </div>
             <div className="catalogue-button">
             <button>More Info</button>
