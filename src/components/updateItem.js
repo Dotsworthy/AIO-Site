@@ -15,8 +15,10 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
 
   const onSubmit = e => {
     e.preventDefault();
-    changeTags(tagString)
-    console.log(item.tags)
+    if(tagString !== item.tags) {
+      changeTags(tagString)
+    }
+    // changeTags(tagString)
     if (oldImage !== item.image) {
       deleteFile(oldImage, `images`)
       uploadFile('image', 'images')
@@ -35,8 +37,8 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
 
   const changeTags = (string) => {
     let tagsList = string.replace(/\s/g,'');
-    const name = 'tags'
-    const value = tagsList.split(",")
+    const name = "tags";
+    const value = tagsList.split(",");
     console.log(value)
     setItem({...item, [name]: value})
     console.log(item)
@@ -54,6 +56,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     const value = fileList.map(file => {
       return `${file.name}`
     })
+    
     setItem({...item, [name]: value})
   }
 
@@ -139,6 +142,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
               <input type="text" name="category" value={item.category} onChange={onChange}/>
               <input type="text" name="level" value={item.level} onChange={onChange}/>
               <input type="text" name="tags" value={tagString} onChange={(e) => setTagString(e.currentTarget.value)}/>
+              <button type="button" onClick={() => changeTags(tagString)}>Update Tags</button>
             </div>
 
             <div className="form-uploads">
@@ -171,7 +175,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
 
           <div className="form-submit">
             <button onClick={()=>setEditing(false)}>Cancel</button>
-            <button>Update</button>
+            <button type="submit" >Update</button>
           </div>
         </form>
         

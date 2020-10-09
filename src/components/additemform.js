@@ -47,8 +47,8 @@ const AddItemForm = ({setAddResource}) => {
 
     const handleTags = (string) => {
       let tagsList = string.replace(/\s/g,'');
-      console.log(tagsList)
-      let output = tagsList.split(",")
+      let output = tagsList.split(",");
+      console.log(output);
       return output
     }
 
