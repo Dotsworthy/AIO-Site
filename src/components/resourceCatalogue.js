@@ -28,19 +28,19 @@ const ResourceCatalogue = ( { downloadResource }) => {
     })
   },[])
 
-  useEffect(() => {
-    let listCategories
-    firebase
-    .firestore()
-    .collection("categories")
-    .onSnapshot(snapshot => {
-      listCategories = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-    }))
-      setAllCategories(listCategories)
-    })
-  },[])
+  // useEffect(() => {
+  //   let listCategories
+  //   firebase
+  //   .firestore()
+  //   .collection("categories")
+  //   .onSnapshot(snapshot => {
+  //     listCategories = snapshot.docs.map(doc => ({
+  //       id: doc.id,
+  //       ...doc.data()
+  //   }))
+  //     setAllCategories(listCategories)
+  //   })
+  // },[])
 
   useEffect(() => {
     let listLevels
@@ -179,6 +179,16 @@ const ResourceCatalogue = ( { downloadResource }) => {
         ...doc.data()
       }));
       setResources(listResources);
+      const categories = [];
+      listResources.forEach(resource => {
+        if (categories.includes(resource.category)) {
+          return;
+        } else {
+          categories.push(resource.category)
+        }
+      })
+      console.log(categories);
+      setAllCategories(categories);
     })
   }
   },[categorySelected, levelSelected, tagSelected]);
@@ -197,9 +207,9 @@ const ResourceCatalogue = ( { downloadResource }) => {
               <h3>Categories</h3>
               <button className="button-active" onClick={() => setCategorySelected("")}>Show All</button>  
               {allCategories.map(category => (
-                  <button style={ category.name === categorySelected ? {color: "red"} : {color: "black"}} key={category.id} className="button" 
-                  onClick={() => setCategorySelected(category.name)}
-                  >{category.name}</button>
+                  <button style={ category === categorySelected ? {color: "red"} : {color: "black"}} key={category.id} className="button" 
+                  onClick={() => setCategorySelected(category)}
+                  >{category}</button>
               ))}
           </div>
           <div className="resource-page-filter">
