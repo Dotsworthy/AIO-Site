@@ -9,9 +9,12 @@ const AddItemForm = ({setAddResource}) => {
     const [category, setCategory] = useState("")
     const [level, setLevel] = useState("")
     const [tagString, setTagString] = useState("")
-    const [uploads, setUploads] = useState([])
+    const [imageUpload, setImageUpload] = useState("")
+    const [fileUploads, setFileUploads] = useState([])
+
     const [allCategories, setAllCategories] = useState([])
     const [allLevels, setAllLevels] = useState([])
+    const [warning, setWarning] = useState(false);
 
     useEffect(() => {
       let listLevels
@@ -68,29 +71,45 @@ const AddItemForm = ({setAddResource}) => {
       preview.onload = function() {
         URL.revokeObjectURL(preview.src)
       }
+      const file = e.target.files;
+      setImageUpload(file);
     }
 
     const loadAllFiles = (e) => {
       const upload = e.target.files;
       const allFiles = Array.from(upload)
-      setUploads([...allFiles]);
+      setFileUploads([...allFiles]);
     }
 
     const handleTags = (string) => {
       let tagsList = string.replace(/\s/g,'');
       let output = tagsList.split(",");
-      console.log(output);
       return output
     }
-
 
     const handleCancel = () => {
       setAddResource(false);
     }
 
+    const addDatabaseField = (name, location) => {
+      firebase
+      .firestore()
+      .collection(location)
+      .add({
+        name
+      })
+    }
+
     const onSubmit = e => {
       e.preventDefault()
-      // Adding file to database
+      if (name && description && category && level && tagString && imageUpload && fileUploads) {
+      const categorySearch = allCategories.find(singleCategory => singleCategory.name == category);
+
+      if (categorySearch == undefined) {
+        addDatabaseField(category, "categories")
+      }
+      
+        // Adding file to database
       const tags = handleTags(tagString)
       const image = uploadFile('image', 'images')
       const download = uploadMultipleFiles('download', 'downloads')
@@ -111,6 +130,12 @@ const AddItemForm = ({setAddResource}) => {
       .then(() => setName(""), setDescription(''), setCategory(""), setLevel(""), setTagString(""))
     
       setAddResource(false);
+      } else {
+        setWarning(true);
+        let search = allCategories.find(singleCategory => singleCategory.name == category);
+        console.log(search);
+      }
+
     }
  
     return (
@@ -120,26 +145,29 @@ const AddItemForm = ({setAddResource}) => {
         </div>
 
         <form className="form-container" onSubmit={onSubmit}>
+          {warning && <div>Not all fields are complete. Please complete all fields before submitting the form</div>}
           <div className="form-content">
 
             <div className="form-fields">
               <p>Resource Information</p>
               <input placeholder="Name" value={name} name="name" onChange={e => setName(e.currentTarget.value)} type="text"/>
               <textarea className="input-description" placeholder="Description" value={description} name="Description" onChange={e => setDescription(e.currentTarget.value)} type="text"/>
-              <select name="category" onChange={e => setCategory(e.currentTarget.value)} type="text" required>
-               <option selected disabled hidden>Category</option>
+              
+              <input placeholder="Category" type="text" name="category" value={category} list="categoryList" onChange={e => setCategory(e.currentTarget.value)} type="text"/>
+               <datalist id="categoryList">
                 {allCategories.map(singleCategory => {
-                  return <option value={singleCategory.name}>{singleCategory.name}</option>
+                  return <option key={singleCategory.id} value={singleCategory.name}>{singleCategory.name}</option>
                 })}  
-                <option>Add a new category</option>
-              </select>
+                </datalist>
+              
               <select placeholder="Level"value={level} name="level" onChange={e => setLevel(e.currentTarget.value)} type="level">
                 
               {allLevels.map(singleLevel => {
-                  return <option value={singleLevel.name}>{singleLevel.name}</option>
+                  return <option key={singleLevel.id} value={singleLevel.name}>{singleLevel.name}</option>
                 })}  
                 <option>Add a new category</option>
-                </select>
+              </select>
+
               <input placeholder="Tags" value={tagString} name="tags" onChange={e => setTagString(e.currentTarget.value)} type="tags"/>
             </div>
 
@@ -157,8 +185,8 @@ const AddItemForm = ({setAddResource}) => {
               <label htmlFor="download">Upload Resources</label>
               <input onChange={(e) => {loadAllFiles(e)}}type="file" id="download" name="download" multiple/>
               <p>Files to upload:</p>
-              {uploads.length > 0 ? 
-              uploads.map(file => (
+              {fileUploads.length > 0 ? 
+              fileUploads.map(file => (
                 <p>{file.name}</p>
               ))
               :
