@@ -80,6 +80,13 @@ const AddItemForm = ({setAddResource}) => {
       newTags.splice(index, 1)
       setAddedTags([...newTags])
     }
+
+    const removeFile = (e, index) => {
+      e.preventDefault()
+      const newFiles = fileUploads
+      newFiles.splice(index, 1)
+      setFileUploads([...newFiles])
+    }
   
     const uploadFile = (file, location) => {
       const selectedFile = document.getElementById(file).files[0];
@@ -89,7 +96,7 @@ const AddItemForm = ({setAddResource}) => {
     }
 
     const uploadMultipleFiles = (file, location) => {
-      const selectedFiles = document.getElementById(file).files;
+      const selectedFiles = fileUploads;
       const fileList = Array.from(selectedFiles);
       const databaseEntry = fileList.map(file => {
         return `${file.name}`
@@ -117,12 +124,6 @@ const AddItemForm = ({setAddResource}) => {
       setFileUploads([...allFiles]);
     }
 
-    const handleTags = (string) => {
-      let tagsList = string.replace(/\s/g,'');
-      let output = tagsList.split(",");
-      return output
-    }
-
     const handleCancel = () => {
       setAddResource(false);
     }
@@ -141,7 +142,6 @@ const AddItemForm = ({setAddResource}) => {
       if (name && description && category && level && addedTags && imageUpload && fileUploads) {
       const categorySearch = allCategories.find(singleCategory => singleCategory.name === category);
       const levelSearch = allLevels.find(singleLevel => singleLevel.name === level)
-      // const tagSearch = allTags.find(singleTag => singleTag.name == tags)
 
       if (categorySearch == undefined) {
         addDatabaseField(category, "categories")
@@ -159,12 +159,6 @@ const AddItemForm = ({setAddResource}) => {
         }
       }) 
       
-      // if (tagSearch == undefined) {
-      //   addDatabaseField(tags, "tags")
-      // }
-      
-        // Adding file to database
-      // const tags = handleTags(tagString)
       const tags = addedTags;
       const image = uploadFile('image', 'images')
       const download = uploadMultipleFiles('download', 'downloads')
@@ -251,7 +245,10 @@ const AddItemForm = ({setAddResource}) => {
               <p>Files to upload:</p>
               {fileUploads.length > 0 ? 
               fileUploads.map(file => (
-                <p>{file.name}</p>
+                <div>
+                <label>{file.name}</label>
+                <button onClick={(e) => removeFile(e, fileUploads.indexOf(file))}>Remove File</button>
+                </div>
               ))
               :
               <p>None</p>}
