@@ -9,11 +9,13 @@ const AddItemForm = ({setAddResource}) => {
     const [category, setCategory] = useState("")
     const [level, setLevel] = useState("")
     const [tagString, setTagString] = useState("")
+    const [tags, setTags] = useState("");
     const [imageUpload, setImageUpload] = useState("")
     const [fileUploads, setFileUploads] = useState([])
 
     const [allCategories, setAllCategories] = useState([])
     const [allLevels, setAllLevels] = useState([])
+    const [allTags, setAllTags] = useState([])
     const [warning, setWarning] = useState(false);
 
     useEffect(() => {
@@ -41,6 +43,20 @@ const AddItemForm = ({setAddResource}) => {
           ...doc.data()
       }))
         setAllCategories(listCategories)
+      })
+    },[])
+
+    useEffect(() => {
+      let listTags
+      firebase
+      .firestore()
+      .collection("tags")
+      .onSnapshot(snapshot => {
+        listTags = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+        setAllTags(listTags)
       })
     },[])
 
@@ -102,9 +118,10 @@ const AddItemForm = ({setAddResource}) => {
 
     const onSubmit = e => {
       e.preventDefault()
-      if (name && description && category && level && tagString && imageUpload && fileUploads) {
+      if (name && description && category && level && tags && imageUpload && fileUploads) {
       const categorySearch = allCategories.find(singleCategory => singleCategory.name == category);
       const levelSearch = allLevels.find(singleLevel => singleLevel.name == level)
+      const tagSearch = allTags.find(singleTag => singleTag.name == tags)
 
       if (categorySearch == undefined) {
         addDatabaseField(category, "categories")
@@ -113,9 +130,13 @@ const AddItemForm = ({setAddResource}) => {
       if (levelSearch == undefined) {
         addDatabaseField(level, "levels")
       }
+
+      if (tagSearch == undefined) {
+        addDatabaseField(tags, "tags")
+      }
       
         // Adding file to database
-      const tags = handleTags(tagString)
+      // const tags = handleTags(tagString)
       const image = uploadFile('image', 'images')
       const download = uploadMultipleFiles('download', 'downloads')
       
@@ -140,7 +161,6 @@ const AddItemForm = ({setAddResource}) => {
         let search = allCategories.find(singleCategory => singleCategory.name == category);
         console.log(search);
       }
-
     }
  
     return (
@@ -166,13 +186,18 @@ const AddItemForm = ({setAddResource}) => {
                 </datalist>
               
               <input placeholder="Level"value={level} name="level" list="levelList" onChange={e => setLevel(e.currentTarget.value)} type="level"/>
-              <datalist id="levelList">
-              {allLevels.map(singleLevel => {
-                  return <option key={singleLevel.id} value={singleLevel.name}>{singleLevel.name}</option>
-                })}  
-              </datalist>  
+                <datalist id="levelList">
+                {allLevels.map(singleLevel => {
+                    return <option key={singleLevel.id} value={singleLevel.name}>{singleLevel.name}</option>
+                  })}  
+                </datalist>  
 
-              <input placeholder="Tags" value={tagString} name="tags" onChange={e => setTagString(e.currentTarget.value)} type="tags"/>
+              <input placeholder="Tags" value={tags} name="tags" list="tagsList" onChange={e => setTags(e.currentTarget.value)} type="tags"/>
+              <datalist id="tagsList">
+                {allTags.map(singleTag => {
+                  return <option ket={singleTag.id} value={singleTag.name}>{singleTag.name}</option>
+                })}
+              </datalist>
             </div>
 
             <div className="form-uploads">
