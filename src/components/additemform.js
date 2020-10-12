@@ -66,8 +66,12 @@ const AddItemForm = ({setAddResource}) => {
 
     const addTag = (e, tag) => {
       e.preventDefault()
-      addedTags.push(tag)
-      setTags("");
+      if (tag == "") {
+        return
+      } else {
+        addedTags.push(tag)
+        setTags("");
+      }
     }
 
     const deleteTag = (e, index) => {
