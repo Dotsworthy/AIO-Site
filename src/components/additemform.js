@@ -8,15 +8,19 @@ const AddItemForm = ({setAddResource}) => {
     const [description, setDescription] = useState("")
     const [category, setCategory] = useState("")
     const [level, setLevel] = useState("")
-    const [tagString, setTagString] = useState("")
-    const [tags, setTags] = useState("");
+    
+    const [tag, setTags] = useState("");
+
     const [imageUpload, setImageUpload] = useState("")
+    
     const [fileUploads, setFileUploads] = useState([])
 
     const [allCategories, setAllCategories] = useState([])
     const [allLevels, setAllLevels] = useState([])
     const [allTags, setAllTags] = useState([])
     const [warning, setWarning] = useState(false);
+
+    const [addedTags, setAddedTags] = useState([])
 
     useEffect(() => {
       let listLevels
@@ -60,6 +64,16 @@ const AddItemForm = ({setAddResource}) => {
       })
     },[])
 
+    const addTag = (e, tag) => {
+      e.preventDefault()
+      addedTags.push(tag)
+      setTags("");
+    }
+
+    const deleteTag = (e, index) => {
+      e.preventDefault()
+      addedTags.splice(index, 1)
+    }
   
     const uploadFile = (file, location) => {
       const selectedFile = document.getElementById(file).files[0];
@@ -118,10 +132,10 @@ const AddItemForm = ({setAddResource}) => {
 
     const onSubmit = e => {
       e.preventDefault()
-      if (name && description && category && level && tags && imageUpload && fileUploads) {
-      const categorySearch = allCategories.find(singleCategory => singleCategory.name == category);
-      const levelSearch = allLevels.find(singleLevel => singleLevel.name == level)
-      const tagSearch = allTags.find(singleTag => singleTag.name == tags)
+      if (name && description && category && level && addedTags && imageUpload && fileUploads) {
+      const categorySearch = allCategories.find(singleCategory => singleCategory.name === category);
+      const levelSearch = allLevels.find(singleLevel => singleLevel.name === level)
+      // const tagSearch = allTags.find(singleTag => singleTag.name == tags)
 
       if (categorySearch == undefined) {
         addDatabaseField(category, "categories")
@@ -131,12 +145,13 @@ const AddItemForm = ({setAddResource}) => {
         addDatabaseField(level, "levels")
       }
 
-      if (tagSearch == undefined) {
-        addDatabaseField(tags, "tags")
-      }
+      // if (tagSearch == undefined) {
+      //   addDatabaseField(tags, "tags")
+      // }
       
         // Adding file to database
       // const tags = handleTags(tagString)
+      const tags = addedTags;
       const image = uploadFile('image', 'images')
       const download = uploadMultipleFiles('download', 'downloads')
       
@@ -153,7 +168,7 @@ const AddItemForm = ({setAddResource}) => {
           tags,
           download
         })
-      .then(() => setName(""), setDescription(''), setCategory(""), setLevel(""), setTagString(""))
+      .then(() => setName(""), setDescription(''), setCategory(""), setLevel(""))
     
       setAddResource(false);
       } else {
@@ -192,12 +207,20 @@ const AddItemForm = ({setAddResource}) => {
                   })}  
                 </datalist>  
 
-              <input placeholder="Tags" value={tags} name="tags" list="tagsList" onChange={e => setTags(e.currentTarget.value)} type="tags"/>
+              <input placeholder="Add a tag" value={tag} name="tags" list="tagsList" onChange={e => setTags(e.currentTarget.value)} type="tags"/>
+              <button onClick={(e) => addTag(e, tag)}>Add Tag</button>
               <datalist id="tagsList">
                 {allTags.map(singleTag => {
                   return <option ket={singleTag.id} value={singleTag.name}>{singleTag.name}</option>
                 })}
               </datalist>
+              <p>Tags added:</p>
+              {addedTags.map(singleTag => {
+                return <div>
+                  <label for={singleTag} key={addedTags.indexOf(singleTag)} id={addedTags.indexOf(singleTag)} name={singleTag}>{singleTag}</label>
+                  <button name={singleTag} onClick={(e) => deleteTag(e, addedTags.indexOf(singleTag))}>Delete Tag</button>
+                  </div>
+              })}
             </div>
 
             <div className="form-uploads">
