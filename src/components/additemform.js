@@ -18,7 +18,11 @@ const AddItemForm = ({setAddResource}) => {
     const [allCategories, setAllCategories] = useState([])
     const [allLevels, setAllLevels] = useState([])
     const [allTags, setAllTags] = useState([])
+    
+    
+    
     const [warning, setWarning] = useState(false);
+    const [tagWarning, setTagWarning] = useState(false);
 
     const [addedTags, setAddedTags] = useState([])
 
@@ -68,10 +72,12 @@ const AddItemForm = ({setAddResource}) => {
       e.preventDefault()
       if (tag == "") {
         return
+      } else if (addedTags.length == 4) {
+        setTagWarning(true);
       } else {
         addedTags.push(tag)
         setTags("");
-      }
+      } 
     }
 
     const deleteTag = (e, index) => {
@@ -79,6 +85,7 @@ const AddItemForm = ({setAddResource}) => {
       const newTags = addedTags
       newTags.splice(index, 1)
       setAddedTags([...newTags])
+      setTagWarning(false);
     }
 
     const removeFile = (e, index) => {
@@ -231,6 +238,7 @@ const AddItemForm = ({setAddResource}) => {
                   <button name={singleTag} onClick={(e) => deleteTag(e, addedTags.indexOf(singleTag))}>Delete Tag</button>
                   </div>
               })}
+              {tagWarning && <p>Maximum of four tags. Please delete a tag before adding a new one</p>}
             </div>
 
             <div className="form-uploads">
