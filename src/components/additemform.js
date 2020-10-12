@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import firebase from "firebase"
 import 'firebase/storage'
 
@@ -10,6 +10,37 @@ const AddItemForm = ({setAddResource}) => {
     const [level, setLevel] = useState("")
     const [tagString, setTagString] = useState("")
     const [uploads, setUploads] = useState([])
+    const [allCategories, setAllCategories] = useState([])
+    const [allLevels, setAllLevels] = useState([])
+
+    useEffect(() => {
+      let listLevels
+      firebase
+      .firestore()
+      .collection("levels")
+      .onSnapshot(snapshot => {
+        listLevels = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+      }))
+        setAllLevels(listLevels)
+      })
+    },[])
+
+    useEffect(() => {
+      let listCategories
+      firebase
+      .firestore()
+      .collection("categories")
+      .onSnapshot(snapshot => {
+        listCategories = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+      }))
+        setAllCategories(listCategories)
+      })
+    },[])
+
   
     const uploadFile = (file, location) => {
       const selectedFile = document.getElementById(file).files[0];
@@ -95,8 +126,20 @@ const AddItemForm = ({setAddResource}) => {
               <p>Resource Information</p>
               <input placeholder="Name" value={name} name="name" onChange={e => setName(e.currentTarget.value)} type="text"/>
               <textarea className="input-description" placeholder="Description" value={description} name="Description" onChange={e => setDescription(e.currentTarget.value)} type="text"/>
-              <input placeholder="Category" value={category} name="category" onChange={e => setCategory(e.currentTarget.value)} type="text"/>
-              <input placeholder="Level"value={level} name="level" onChange={e => setLevel(e.currentTarget.value)} type="level"/>
+              <select name="category" onChange={e => setCategory(e.currentTarget.value)} type="text" required>
+               <option selected disabled hidden>Category</option>
+                {allCategories.map(singleCategory => {
+                  return <option value={singleCategory.name}>{singleCategory.name}</option>
+                })}  
+                <option>Add a new category</option>
+              </select>
+              <select placeholder="Level"value={level} name="level" onChange={e => setLevel(e.currentTarget.value)} type="level">
+                
+              {allLevels.map(singleLevel => {
+                  return <option value={singleLevel.name}>{singleLevel.name}</option>
+                })}  
+                <option>Add a new category</option>
+                </select>
               <input placeholder="Tags" value={tagString} name="tags" onChange={e => setTagString(e.currentTarget.value)} type="tags"/>
             </div>
 
