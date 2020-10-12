@@ -179,7 +179,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
         ...doc.data()
       }));
       setResources(listResources);
-      const categories = [];
+      // const categories = [];
       // listResources.forEach(resource => {
       //   if (categories.includes(resource.category)) {
       //     return;
@@ -193,9 +193,9 @@ const ResourceCatalogue = ( { downloadResource }) => {
   }
   },[categorySelected, levelSelected, tagSelected]);
 
-  const getList = () => {
+  // const getList = () => {
 
-  }
+  // }
 
   return (
     <div>

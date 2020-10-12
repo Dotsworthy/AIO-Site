@@ -19,10 +19,9 @@ const AddItemForm = ({setAddResource}) => {
     const [allLevels, setAllLevels] = useState([])
     const [allTags, setAllTags] = useState([])
     
-    
-    
     const [warning, setWarning] = useState(false);
     const [tagWarning, setTagWarning] = useState(false);
+    const [imageWarning, setImageWarning] = useState(false);
 
     const [addedTags, setAddedTags] = useState([])
 
@@ -70,9 +69,9 @@ const AddItemForm = ({setAddResource}) => {
 
     const addTag = (e, tag) => {
       e.preventDefault()
-      if (tag == "") {
+      if (tag === "") {
         return
-      } else if (addedTags.length == 4) {
+      } else if (addedTags.length === 4) {
         setTagWarning(true);
       } else {
         addedTags.push(tag)
@@ -130,7 +129,7 @@ const AddItemForm = ({setAddResource}) => {
       const allFiles = Array.from(upload)
       const existingFiles = fileUploads;
       allFiles.map(file => {
-        existingFiles.push(file)
+        return existingFiles.push(file)
       })
       setFileUploads([...existingFiles])
     }
@@ -148,48 +147,60 @@ const AddItemForm = ({setAddResource}) => {
       })
     }
 
+    const fileCheck = (file, location) => {
+      const selectedFile = document.getElementById(file).files[0];
+      const storageRef = firebase.storage().ref(`${location}/${selectedFile.name}`)
+      return storageRef
+    }
+
     const onSubmit = e => {
       e.preventDefault()
       if (name && description && category && level && addedTags && imageUpload && fileUploads) {
       const categorySearch = allCategories.find(singleCategory => singleCategory.name === category);
       const levelSearch = allLevels.find(singleLevel => singleLevel.name === level)
 
-      if (categorySearch == undefined) {
-        addDatabaseField(category, "categories")
-      }
+      const fileChecker = fileCheck("image", "images");
 
-      if (levelSearch == undefined) {
-        addDatabaseField(level, "levels")
-      }
-
-      addedTags.forEach(addedTag => {
-        const tagSearch = allTags.find(singleTag => singleTag.name == addedTag)
-
-        if (tagSearch == undefined) {
-          addDatabaseField(addedTag, "tags")
-        }
-      }) 
-      
-      const tags = addedTags;
-      const image = uploadFile('image', 'images')
-      const download = uploadMultipleFiles('download', 'downloads')
-      
-      // adding item to database 
-      firebase
-      .firestore()
-      .collection("items")
-      .add({
-          name,
-          image,
-          description,
-          category,
-          level,
-          tags,
-          download
-        })
-      .then(() => setName(""), setDescription(''), setCategory(""), setLevel(""))
+        if (fileChecker === undefined) {
+          if (categorySearch === undefined) {
+            addDatabaseField(category, "categories")
+          }
     
-      setAddResource(false);
+          if (levelSearch === undefined) {
+            addDatabaseField(level, "levels")
+          }
+    
+          addedTags.forEach(addedTag => {
+            const tagSearch = allTags.find(singleTag => singleTag.name === addedTag)
+    
+            if (tagSearch === undefined) {
+              addDatabaseField(addedTag, "tags")
+            }
+          }) 
+          
+          const tags = addedTags;
+          const image = uploadFile('image', 'images')
+          const download = uploadMultipleFiles('download', 'downloads')
+          
+          // adding item to database 
+          firebase
+          .firestore()
+          .collection("items")
+          .add({
+              name,
+              image,
+              description,
+              category,
+              level,
+              tags,
+              download
+            })
+          .then(() => setName(""), setDescription(''), setCategory(""), setLevel(""))
+        
+          setAddResource(false);
+        } else {
+          setImageWarning(true);
+        }
       } else {
         setWarning(true);
       }
@@ -203,6 +214,7 @@ const AddItemForm = ({setAddResource}) => {
 
         <form className="form-container" onSubmit={onSubmit}>
           {warning && <div>Not all fields are complete. Please complete all fields before submitting the form</div>}
+          {imageWarning && <div>An image with the same name already exists in the database. Please rename the image before resubmitting</div>}
           <div className="form-content">
 
             <div className="form-fields">
@@ -210,7 +222,7 @@ const AddItemForm = ({setAddResource}) => {
               <input placeholder="Name" value={name} name="name" onChange={e => setName(e.currentTarget.value)} type="text"/>
               <textarea className="input-description" placeholder="Description" value={description} name="Description" onChange={e => setDescription(e.currentTarget.value)} type="text"/>
               
-              <input placeholder="Category" type="text" name="category" value={category} list="categoryList" onChange={e => setCategory(e.currentTarget.value)} type="text"/>
+              <input placeholder="Category" type="text" name="category" value={category} list="categoryList" onChange={e => setCategory(e.currentTarget.value)}/>
                <datalist id="categoryList">
                 {allCategories.map(singleCategory => {
                   return <option key={singleCategory.id} value={singleCategory.name}>{singleCategory.name}</option>
