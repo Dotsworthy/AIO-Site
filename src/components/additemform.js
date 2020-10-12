@@ -104,9 +104,14 @@ const AddItemForm = ({setAddResource}) => {
       e.preventDefault()
       if (name && description && category && level && tagString && imageUpload && fileUploads) {
       const categorySearch = allCategories.find(singleCategory => singleCategory.name == category);
+      const levelSearch = allLevels.find(singleLevel => singleLevel.name == level)
 
       if (categorySearch == undefined) {
         addDatabaseField(category, "categories")
+      }
+
+      if (levelSearch == undefined) {
+        addDatabaseField(level, "levels")
       }
       
         // Adding file to database
@@ -160,13 +165,12 @@ const AddItemForm = ({setAddResource}) => {
                 })}  
                 </datalist>
               
-              <select placeholder="Level"value={level} name="level" onChange={e => setLevel(e.currentTarget.value)} type="level">
-                
+              <input placeholder="Level"value={level} name="level" list="levelList" onChange={e => setLevel(e.currentTarget.value)} type="level"/>
+              <datalist id="levelList">
               {allLevels.map(singleLevel => {
                   return <option key={singleLevel.id} value={singleLevel.name}>{singleLevel.name}</option>
                 })}  
-                <option>Add a new category</option>
-              </select>
+              </datalist>  
 
               <input placeholder="Tags" value={tagString} name="tags" onChange={e => setTagString(e.currentTarget.value)} type="tags"/>
             </div>
