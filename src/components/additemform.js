@@ -76,7 +76,9 @@ const AddItemForm = ({setAddResource}) => {
 
     const deleteTag = (e, index) => {
       e.preventDefault()
-      addedTags.splice(index, 1)
+      const newTags = addedTags
+      newTags.splice(index, 1)
+      setAddedTags([...newTags])
     }
   
     const uploadFile = (file, location) => {
