@@ -151,6 +151,14 @@ const AddItemForm = ({setAddResource}) => {
         addDatabaseField(level, "levels")
       }
 
+      addedTags.forEach(addedTag => {
+        const tagSearch = allTags.find(singleTag => singleTag.name == addedTag)
+
+        if (tagSearch == undefined) {
+          addDatabaseField(addedTag, "tags")
+        }
+      }) 
+      
       // if (tagSearch == undefined) {
       //   addDatabaseField(tags, "tags")
       // }
@@ -179,8 +187,6 @@ const AddItemForm = ({setAddResource}) => {
       setAddResource(false);
       } else {
         setWarning(true);
-        let search = allCategories.find(singleCategory => singleCategory.name == category);
-        console.log(search);
       }
     }
  
