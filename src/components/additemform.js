@@ -21,7 +21,6 @@ const AddItemForm = ({setAddResource}) => {
     
     const [warning, setWarning] = useState(false);
     const [tagWarning, setTagWarning] = useState(false);
-    const [imageWarning, setImageWarning] = useState(false);
 
     const [addedTags, setAddedTags] = useState([])
 
@@ -94,21 +93,21 @@ const AddItemForm = ({setAddResource}) => {
       setFileUploads([...newFiles])
     }
   
-    const uploadFile = (file, location) => {
+    const uploadFile = (name, file, location) => {
       const selectedFile = document.getElementById(file).files[0];
-      const storageRef = firebase.storage().ref(`${location}/${selectedFile.name}`)
+      const storageRef = firebase.storage().ref(`${location}/${name}/${selectedFile.name}`)
       storageRef.put(selectedFile)
       return `${selectedFile.name}`
     }
 
-    const uploadMultipleFiles = (file, location) => {
+    const uploadMultipleFiles = (name, file, location) => {
       const selectedFiles = fileUploads;
       const fileList = Array.from(selectedFiles);
       const databaseEntry = fileList.map(file => {
         return `${file.name}`
       });
       fileList.forEach(file => {
-        const storageRef = firebase.storage().ref(`${location}/${file.name}`)
+        const storageRef = firebase.storage().ref(`${location}/${name}/${file.name}`)
         storageRef.put(file)
       })   
       return databaseEntry
@@ -147,21 +146,12 @@ const AddItemForm = ({setAddResource}) => {
       })
     }
 
-    const fileCheck = (file, location) => {
-      const selectedFile = document.getElementById(file).files[0];
-      const storageRef = firebase.storage().ref(`${location}/${selectedFile.name}`)
-      return storageRef
-    }
-
     const onSubmit = e => {
       e.preventDefault()
       if (name && description && category && level && addedTags && imageUpload && fileUploads) {
       const categorySearch = allCategories.find(singleCategory => singleCategory.name === category);
       const levelSearch = allLevels.find(singleLevel => singleLevel.name === level)
 
-      const fileChecker = fileCheck("image", "images");
-
-        if (fileChecker === undefined) {
           if (categorySearch === undefined) {
             addDatabaseField(category, "categories")
           }
@@ -179,8 +169,8 @@ const AddItemForm = ({setAddResource}) => {
           }) 
           
           const tags = addedTags;
-          const image = uploadFile('image', 'images')
-          const download = uploadMultipleFiles('download', 'downloads')
+          const image = uploadFile(name, 'image', 'images')
+          const download = uploadMultipleFiles(name, 'download', 'downloads')
           
           // adding item to database 
           firebase
@@ -198,9 +188,6 @@ const AddItemForm = ({setAddResource}) => {
           .then(() => setName(""), setDescription(''), setCategory(""), setLevel(""))
         
           setAddResource(false);
-        } else {
-          setImageWarning(true);
-        }
       } else {
         setWarning(true);
       }
@@ -214,7 +201,6 @@ const AddItemForm = ({setAddResource}) => {
 
         <form className="form-container" onSubmit={onSubmit}>
           {warning && <div>Not all fields are complete. Please complete all fields before submitting the form</div>}
-          {imageWarning && <div>An image with the same name already exists in the database. Please rename the image before resubmitting</div>}
           <div className="form-content">
 
             <div className="form-fields">
