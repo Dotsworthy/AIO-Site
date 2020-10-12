@@ -121,7 +121,11 @@ const AddItemForm = ({setAddResource}) => {
     const loadAllFiles = (e) => {
       const upload = e.target.files;
       const allFiles = Array.from(upload)
-      setFileUploads([...allFiles]);
+      const existingFiles = fileUploads;
+      allFiles.map(file => {
+        existingFiles.push(file)
+      })
+      setFileUploads([...existingFiles])
     }
 
     const handleCancel = () => {
