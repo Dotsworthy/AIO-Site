@@ -44,14 +44,14 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     if(addedTags !== item.tags) {
       changeTags(addedTags)
     }
-    // if (oldImage !== item.image) {
-    //   deleteFile(oldImage, `images`)
-    //   uploadFile('image', 'images')
-    // }
-    // if (oldDownloads !== item.download) {
-    //   deleteAllFiles(oldDownloads, `downloads`)
-    //   uploadMultipleFiles('download', 'downloads')
-    // }
+    if (oldImage !== item.image) {
+      deleteFile(oldImage, item.id, `images`)
+      uploadFile('image', item.id, 'images')
+    }
+    if (oldDownloads !== item.download) {
+      deleteAllFiles(oldDownloads, item.id, `downloads`)
+      uploadMultipleFiles('download', item.id, 'downloads')
+    }
     updateItem({ currentItem }, item);
   };
 
@@ -105,37 +105,37 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     setItem({...item, [name]: value})
   }
 
-  const uploadFile = (file, location) => {
+  const uploadFile = (file, id, location) => {
     const selectedFile = document.getElementById(file).files[0];
-    const storageRef = firebase.storage().ref(`${location}/${selectedFile.name}`)
+    const storageRef = firebase.storage().ref(`${location}/${id}/${selectedFile.name}`)
     storageRef.put(selectedFile)
     return `${selectedFile.name}`
   }
 
-  const uploadMultipleFiles = (file, location) => {
+  const uploadMultipleFiles = (file, id, location) => {
     const selectedFiles = document.getElementById(file).files;
     const fileList = Array.from(selectedFiles);
     const databaseEntry = fileList.map(file => {
       return `${file.name}`
     });
     fileList.forEach(file => {
-      const storageRef = firebase.storage().ref(`${location}/${file.name}`)
+      const storageRef = firebase.storage().ref(`${location}/${id}/${file.name}`)
       storageRef.put(file)
     })   
     return databaseEntry
   }
 
-  const deleteFile = (file, location) => {
-    const selectedFile = firebase.storage().ref(`${location}/${file}`)
+  const deleteFile = (file, id, location) => {
+    const selectedFile = firebase.storage().ref(`${location}/${id}/${file}`)
     selectedFile.delete().then(function() {
     }).catch(function(error) {
       console.log(error)
     });
   }
 
-  const deleteAllFiles = (file, location) => {
+  const deleteAllFiles = (file, id, location) => {
     file.forEach(download => {
-      const selectedFile = firebase.storage().ref(`${location}/${download}`)
+      const selectedFile = firebase.storage().ref(`${location}/${id}/${download}`)
       selectedFile.delete().then(function() {
 
       }).catch(function(error) {
