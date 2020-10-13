@@ -8,10 +8,37 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   const [oldDownloads] = useState(item.download)
   const [uploads, setUploads] = useState([])
   const [tagString, setTagString] = useState(item.tags)
+  const [tag, setTag] = useState("");
+  const [addedTags] = useState(item.tags)
+
+  const [tagWarning, setTagWarning] = useState(false);
 
   useEffect(() => {
     setItem(currentItem);
   }, [currentItem]);
+
+  const useItems = (location) => {
+    const [items, setItems] = useState([]);
+    useEffect(() => {
+      firebase
+        .firestore()
+        .collection(location)
+        .onSnapshot(snapshot => {
+          const listItems = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+          }));
+          setItems(listItems);
+        });
+        //called the unsubscribe--closing connection to Firestore.
+        // return () => unsubscribe()
+    }, []);
+    return items;
+  };
+  
+  const allCategories = useItems("categories");
+  const allLevels = useItems("levels");
+  const allTags = useItems("tags");
 
   const onSubmit = e => {
     e.preventDefault();
@@ -33,6 +60,18 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   const onChange = e => {
     const { name, value } = e.target
     setItem({ ...item, [name]: value })
+  }
+
+  const addTag = (e, tag) => {
+    e.preventDefault()
+    if (tag === "") {
+      return
+    } else if (addedTags.length === 4) {
+      setTagWarning(true);
+    } else {
+      addedTags.push(tag)
+      setTag("");
+    } 
   }
 
   const changeTags = (string) => {
@@ -139,10 +178,52 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
               <p>Resource Information</p>
               <input type="text" name="name" value={item.name} onChange={onChange} />
               <textarea className="input-description" type="text" name="description" value={item.description} onChange={onChange}/>
-              <input type="text" name="category" value={item.category} onChange={onChange}/>
-              <input type="text" name="level" value={item.level} onChange={onChange}/>
-              <input type="text" name="tags" value={tagString} onChange={(e) => setTagString(e.currentTarget.value)}/>
-              <button type="button" onClick={() => changeTags(tagString)}>Update Tags</button>
+              
+              <input placeholder="Category" type="text" name="category" value={item.category} list="categoryList" onChange={onChange}/>
+               <datalist id="categoryList">
+                
+                {allCategories.map(singleCategory => {
+                  return <option key={singleCategory.id} value={singleCategory.name}>{singleCategory.name}</option>
+                })}  
+                </datalist>
+              
+              <input placeholder="Level"value={item.level} name="level" list="levelList" onChange={onChange} type="level"/>
+                <datalist id="levelList">
+                {allLevels.map(singleLevel => {
+                    return <option key={singleLevel.id} value={singleLevel.name}>{singleLevel.name}</option>
+                  })}  
+                </datalist>  
+
+              <input placeholder="Add a tag" value={tag} name="tags" list="tagsList" onChange={e => setTag(e.currentTarget.value)} type="tags"/>
+              <button onClick={(e) => addTag(e, tag)}>Add Tag</button>
+              <datalist id="tagsList">
+                {addedTags.map(singleTag => {
+                  return <option key={singleTag.id} value={singleTag.name}>{singleTag.name}</option>
+                })}
+              </datalist>
+              <p>Tags added:</p>
+              {addedTags.map(singleTag => {
+                return <div>
+                  <label for={singleTag} key={addedTags.indexOf(singleTag)} id={addedTags.indexOf(singleTag)} name={singleTag}>{singleTag}</label>
+                  {/* <button name={singleTag} onClick={(e) => deleteTag(e, item.tags.indexOf(singleTag))}>Delete Tag</button> */}
+                  </div>
+              })}
+              {tagWarning && <p>Maximum of four tags. Please delete a tag before adding a new one</p>}
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              {/* <input type="text" name="category" value={item.category} onChange={onChange}/>
+              <input type="text" name="level" value={item.level} onChange={onChange}/> */}
+              {/* <input type="text" name="tags" value={tagString} onChange={(e) => setTagString(e.currentTarget.value)}/>
+              <button type="button" onClick={() => changeTags(tagString)}>Update Tags</button> */}
+
             </div>
 
             <div className="form-uploads">
