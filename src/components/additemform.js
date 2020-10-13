@@ -27,48 +27,6 @@ const AddItemForm = ({setAddResource}) => {
 
     const [addedTags, setAddedTags] = useState([])
 
-    useEffect(() => {
-      let listLevels
-      firebase
-      .firestore()
-      .collection("levels")
-      .onSnapshot(snapshot => {
-        listLevels = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-      }))
-        setAllLevels(listLevels)
-      })
-    },[])
-
-    useEffect(() => {
-      let listCategories
-      firebase
-      .firestore()
-      .collection("categories")
-      .onSnapshot(snapshot => {
-        listCategories = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-      }))
-        setAllCategories(listCategories)
-      })
-    },[])
-
-    useEffect(() => {
-      let listTags
-      firebase
-      .firestore()
-      .collection("tags")
-      .onSnapshot(snapshot => {
-        listTags = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }))
-        setAllTags(listTags)
-      })
-    },[])
-
     const addTag = (e, tag) => {
       e.preventDefault()
       if (tag === "") {
@@ -189,25 +147,25 @@ const AddItemForm = ({setAddResource}) => {
       e.preventDefault()
       if (name && description && category && level && addedTags && imageUpload && fileUploads) {
       const nameCheck = await databaseCheck(name, "items")
-      const categorySearch = allCategories.find(singleCategory => singleCategory.name === category);
-      const levelSearch = allLevels.find(singleLevel => singleLevel.name === level)
+      const categoryCheck = await databaseCheck(category, "categories")
+      const levelCheck = await databaseCheck(level, "levels")
 
       if (nameCheck.length > 0) {
         setEntryWarning(true);
       } else {
 
-          if (categorySearch === undefined) {
+          if (categoryCheck == 0) {
             addDatabaseField(category, "categories")
           }
     
-          if (levelSearch === undefined) {
+          if (levelCheck == 0) {
             addDatabaseField(level, "levels")
           }
     
-          addedTags.forEach(addedTag => {
-            const tagSearch = allTags.find(singleTag => singleTag.name === addedTag)
-    
-            if (tagSearch === undefined) {
+          addedTags.forEach(async addedTag => {
+            const tagCheck = await databaseCheck(tag, "tags")
+                
+            if (tagCheck == 0) {
               addDatabaseField(addedTag, "tags")
             }
           }) 
@@ -224,19 +182,6 @@ const AddItemForm = ({setAddResource}) => {
           console.log(download)
           
           updateResource(image, download, "items", databaseEntry[0].id)
-          // adding item to database 
-          // firebase
-          // .firestore()
-          // .collection("items")
-          // .add({
-          //     name,
-          //     image,
-          //     description,
-          //     category,
-          //     level,
-          //     tags,
-          //     download
-          //   })
           setAddResource(false);
         }
       } else {
