@@ -99,8 +99,8 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     })
   }
 
-  const getImageURL = (item, location) => {
-    const storageRef = firebase.storage().ref(`${location}/${item.image}`)
+  const getImageURL = (item, id, location) => {
+    const storageRef = firebase.storage().ref(`${location}/${id}/${item.image}`)
     storageRef.getDownloadURL().then(function(url) {
 
       const img = document.getElementById('output')
@@ -150,7 +150,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
               <div className="image-upload-container">
                 <label htmlFor="image">Upload Image</label>
                 <div className="form-preview">
-                  {getImageURL(item, "images")}
+                  {getImageURL(item, item.id, "images")}
                   <img className="image-preview" id="output" alt=""></img>
                 </div>
                   <input onChange={(e) => loadFile(e)} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>

@@ -13,12 +13,7 @@ const AddItemForm = ({setAddResource}) => {
     const [tag, setTag] = useState("");
 
     const [imageUpload, setImageUpload] = useState("")
-    const [fileUploads, setFileUploads] = useState([])
-
-    // const [allCategories, setAllCategories] = useState([])
-    // const [allLevels, setAllLevels] = useState([])
-    // const [allTags, setAllTags] = useState([])
-    
+    const [fileUploads, setFileUploads] = useState([])    
     const [warning, setWarning] = useState(false);
     const [tagWarning, setTagWarning] = useState(false);
     const [nameWarning, setEntryWarning] = useState(false);
@@ -171,20 +166,6 @@ const AddItemForm = ({setAddResource}) => {
       snapshot.forEach((doc) =>  query.push(doc.data()))
       return query
     }
-
-    // const createDatabaseEntries = async () => {
-    //   const categories = await getData("categories")
-    //   const levels = await getData("levels")
-    //   const tags = await getData("tags")
-
-    //   setAllCategories(categories)
-    //   setAllLevels(levels)
-    //   setAllTags(tags)
-
-    //   return
-    // }
-
-    // createDatabaseEntries()
 
     const onSubmit = async e => {
       e.preventDefault()
