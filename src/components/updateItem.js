@@ -44,16 +44,17 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   const allLevels = useItems("levels");
   const allTags = useItems("tags");
 
-  const onSubmit =  async e => {
+  const onSubmit = e => {
     e.preventDefault();
+    findDownloadsToDelete(item.download, oldDownloads)
 
     if (oldImage !== item.image) {
       deleteFile(oldImage, item.id, `images`)
       uploadFile('image', item.id, 'images')
     }
     if (fileUploads !== item.download) {
-      changeDownloads(fileUploads)
-      deleteAllFiles(filesToDelete, item.id, `downloads`)
+      // changeDownloads(fileUploads)
+      // deleteAllFiles(filesToDelete, item.id, `downloads`)
       // uploadMultipleFiles('download', item.id, 'downloads')
       
     }
@@ -79,6 +80,11 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     } 
   }
 
+  const findDownloadsToDelete = (array1, array2) => {
+    const difference = array1.filter(x => !array2.includes(x))
+    console.log(difference);
+  }
+
   const deleteTag = (e, index) => {
     e.preventDefault()
     const newTags = addedTags
@@ -94,7 +100,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     const newFiles = fileUploads
     newFiles.splice(index, 1)
     setFileUploads([...newFiles])
-    changeDownloads(newFiles)
+    changeDownloads("download", newFiles)
   }
 
   const changeTags = (tags) => {
@@ -109,8 +115,8 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     setItem({...item, [name]: value})
   }
 
-  const changeDownloads = (entry) => {
-    const name = entry
+  const changeDownloads = (field, entry) => {
+    const name = field
     const value = entry.map(file => {
       return `${file}`
     })

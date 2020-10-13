@@ -2,24 +2,41 @@ import React, { useState, useEffect } from "react"
 import firebase from "./firebase"
 import 'firebase/storage'
 
-const useItems = () => {
-    const [items, setItems] = useState([]);
-    useEffect(() => {
-      firebase
-        .firestore()
-        .collection("items")
-        .onSnapshot(snapshot => {
-          const listItems = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-          }));
-          setItems(listItems);
-        });
-        //called the unsubscribe--closing connection to Firestore.
-        // return () => unsubscribe()
-    }, []);
-    return items;
-  };
+// const useItems = () => {
+//     const [items, setItems] = useState([]);
+//     useEffect(() => {
+//       firebase
+//         .firestore()
+//         .collection("items")
+//         .onSnapshot(snapshot => {
+//           const listItems = snapshot.docs.map(doc => ({
+//             id: doc.id,
+//             ...doc.data()
+//           }));
+//           setItems(listItems);
+//         });
+//         //called the unsubscribe--closing connection to Firestore.
+//         // return () => unsubscribe()
+//     }, []);
+//     return items;
+//   };
+
+const ItemList = ( { editItem } ) => {
+  const [resources, setResources] = useState([]);
+
+  useEffect(() => {
+    firebase
+    .firestore()
+    .collection("items")
+    .onSnapshot(snapshot => {
+      const listResources = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }))
+      setResources(listResources);
+    })
+  }, [resources])
+  
 
   const deleteItem = (id, imageRef, downloadRef, imageLocation, downloadLocation) => {
     deleteFile(imageRef, imageLocation)
@@ -30,32 +47,30 @@ const useItems = () => {
       .collection("items")
       .doc(id)
       .delete()
-}  
+  }  
 
-const deleteFile = (file, location) => {
-  const storageRef = firebase.storage().ref()
-  const fileRef = storageRef.child(`${location}/${file}`)
-  fileRef.delete().then(function() {
-    console.log("resource deleted successfully")
-  }).catch(function(error) {
-    console.log(error)
-  })
-}
-
-const deleteAllFiles = (file, location) => {
-  const storageRef = firebase.storage().ref()
-  file.forEach(download => {
-    const fileRef = storageRef.child(`${location}/${download}`)
+  const deleteFile = (file, location) => {
+    const storageRef = firebase.storage().ref()
+    const fileRef = storageRef.child(`${location}/${file}`)
     fileRef.delete().then(function() {
       console.log("resource deleted successfully")
     }).catch(function(error) {
       console.log(error)
     })
-  })
-}
+  }
 
-const ItemList = ( { editItem }) => {
-    const listItem = useItems();
+  const deleteAllFiles = (file, location) => {
+    const storageRef = firebase.storage().ref()
+    file.forEach(download => {
+      const fileRef = storageRef.child(`${location}/${download}`)
+      fileRef.delete().then(function() {
+        console.log("resource deleted successfully")
+      }).catch(function(error) {
+        console.log(error)
+      })
+    })
+  }
+  
   return (
     <div>
     <table className="resource-database-table">
@@ -68,7 +83,7 @@ const ItemList = ( { editItem }) => {
           <th className="tags">Tags</th>
         </tr>
       </tbody>
-      {listItem.map(item => (
+      {resources.map(item => (
             <tbody key={item.id}>
               <tr className="data-row">
                 <td className="resource-name">{item.name}</td>
@@ -85,5 +100,7 @@ const ItemList = ( { editItem }) => {
           ))}
     </table>
     </div>
-)}
+  )
+}
+
 export default ItemList
