@@ -96,21 +96,21 @@ const AddItemForm = ({setAddResource}) => {
       setFileUploads([...newFiles])
     }
   
-    const uploadFile = (name, file, location) => {
+    const uploadFile = (file, id, location) => {
       const selectedFile = document.getElementById(file).files[0];
-      const storageRef = firebase.storage().ref(`${location}/${name}/${selectedFile.name}`)
+      const storageRef = firebase.storage().ref(`${location}/${id}/${selectedFile.name}`)
       storageRef.put(selectedFile)
       return `${selectedFile.name}`
     }
 
-    const uploadMultipleFiles = (name, file, location) => {
+    const uploadMultipleFiles = (file, id, location) => {
       const selectedFiles = fileUploads;
       const fileList = Array.from(selectedFiles);
       const databaseEntry = fileList.map(file => {
         return `${file.name}`
       });
       fileList.forEach(file => {
-        const storageRef = firebase.storage().ref(`${location}/${name}/${file.name}`)
+        const storageRef = firebase.storage().ref(`${location}/${id}/${file.name}`)
         storageRef.put(file)
       })   
       return databaseEntry
@@ -149,6 +149,19 @@ const AddItemForm = ({setAddResource}) => {
       })
     }
 
+    const addResource = (name, description, category, level, tags, location) => {
+      firebase
+      .firestore()
+      .collection(location)
+      .add({
+        name,
+        description,
+        category,
+        level,
+        tags
+      })
+    }
+
     const databaseCheck = async (name, location) => {
         let query = []
         const snapshot = await database
@@ -165,8 +178,6 @@ const AddItemForm = ({setAddResource}) => {
       e.preventDefault()
       if (name && description && category && level && addedTags && imageUpload && fileUploads) {
       const nameCheck = await databaseCheck(name, "items")
-      console.log(nameCheck)
-      console.log(nameCheck.length);
       const categorySearch = allCategories.find(singleCategory => singleCategory.name === category);
       const levelSearch = allLevels.find(singleLevel => singleLevel.name === level)
 
@@ -191,24 +202,29 @@ const AddItemForm = ({setAddResource}) => {
           }) 
           
           const tags = addedTags;
-          const image = uploadFile(name, 'image', 'images')
-          const download = uploadMultipleFiles(name, 'download', 'downloads')
+          
+          addResource(name, description, category, level, tags, "items")
+          const databaseEntry = await databaseCheck(name, "items")
+
+          const image = uploadFile('image', databaseEntry[0].id, 'images')
+          const download = uploadMultipleFiles('download', databaseEntry[0].id, 'downloads')
+          
+          console.log(image)
+          console.log(download)
           
           // adding item to database 
-          firebase
-          .firestore()
-          .collection("items")
-          .add({
-              name,
-              image,
-              description,
-              category,
-              level,
-              tags,
-              download
-            })
-          .then(() => setName(""), setDescription(''), setCategory(""), setLevel(""))
-        
+          // firebase
+          // .firestore()
+          // .collection("items")
+          // .add({
+          //     name,
+          //     image,
+          //     description,
+          //     category,
+          //     level,
+          //     tags,
+          //     download
+          //   })
           setAddResource(false);
         }
       } else {
