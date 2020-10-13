@@ -6,6 +6,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   const [item, setItem] = useState(currentItem);
   const [oldImage] = useState(item.image)
   const [oldDownloads] = useState(item.download)
+  const [fileUploads, setFileUploads] = useState(item.download)
   const [uploads, setUploads] = useState([])
   const [tag, setTag] = useState("");
   const [addedTags, setAddedTags] = useState(item.tags)
@@ -70,6 +71,13 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
       addedTags.push(tag)
       setTag("");
     } 
+  }
+
+  const removeFile = (e, index) => {
+    e.preventDefault()
+    const newFiles = fileUploads
+    newFiles.splice(index, 1)
+    setFileUploads([...newFiles])
   }
 
   const deleteTag = (e, index) => {
@@ -252,8 +260,11 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
                     <p key={file.name}>{file.name}</p>
                  ))
                 :
-                oldDownloads.map(file => (
-                  <p key={file}>{file}</p>
+                fileUploads.map(file => (
+                  <div>
+                <label>{file}</label>
+                <button onClick={(e) => removeFile(e, fileUploads.indexOf(file))}>Remove File</button>
+                </div>
                 ))}
               </div>
             
