@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import firebase from "firebase"
 import 'firebase/storage'
 
@@ -15,15 +15,38 @@ const AddItemForm = ({setAddResource}) => {
     const [imageUpload, setImageUpload] = useState("")
     const [fileUploads, setFileUploads] = useState([])
 
-    const [allCategories, setAllCategories] = useState([])
-    const [allLevels, setAllLevels] = useState([])
-    const [allTags, setAllTags] = useState([])
+    // const [allCategories, setAllCategories] = useState([])
+    // const [allLevels, setAllLevels] = useState([])
+    // const [allTags, setAllTags] = useState([])
     
     const [warning, setWarning] = useState(false);
     const [tagWarning, setTagWarning] = useState(false);
     const [nameWarning, setEntryWarning] = useState(false);
 
     const [addedTags, setAddedTags] = useState([])
+
+    const useItems = (location) => {
+      const [items, setItems] = useState([]);
+      useEffect(() => {
+        firebase
+          .firestore()
+          .collection(location)
+          .onSnapshot(snapshot => {
+            const listItems = snapshot.docs.map(doc => ({
+              id: doc.id,
+              ...doc.data()
+            }));
+            setItems(listItems);
+          });
+          //called the unsubscribe--closing connection to Firestore.
+          // return () => unsubscribe()
+      }, []);
+      return items;
+    };
+    
+    const allCategories = useItems("categories");
+    const allLevels = useItems("levels");
+    const allTags = useItems("tags");
 
     const addTag = (e, tag) => {
       e.preventDefault()
@@ -149,17 +172,19 @@ const AddItemForm = ({setAddResource}) => {
       return query
     }
 
-    const createDatabaseEntries = async () => {
-      const categories = await getData("categories")
-      const levels = await getData("levels")
-      const tags = await getData("tags")
+    // const createDatabaseEntries = async () => {
+    //   const categories = await getData("categories")
+    //   const levels = await getData("levels")
+    //   const tags = await getData("tags")
 
-      setAllCategories(categories)
-      setAllLevels(levels)
-      setAllTags(tags)
-    }
+    //   setAllCategories(categories)
+    //   setAllLevels(levels)
+    //   setAllTags(tags)
 
-    createDatabaseEntries()
+    //   return
+    // }
+
+    // createDatabaseEntries()
 
     const onSubmit = async e => {
       e.preventDefault()
@@ -168,6 +193,9 @@ const AddItemForm = ({setAddResource}) => {
       const categoryCheck = await databaseCheck(category, "categories")
       const levelCheck = await databaseCheck(level, "levels")
 
+      console.log(nameCheck);
+      console.log(categoryCheck);
+      console.log(levelCheck);
       if (nameCheck.length > 0) {
         setEntryWarning(true);
       } else {
@@ -182,7 +210,6 @@ const AddItemForm = ({setAddResource}) => {
     
           addedTags.forEach(async addedTag => {
             const tagCheck = await databaseCheck(addedTag, "tags")
-            // console.log(tagCheck.length);
             if (tagCheck.length == 0) {
               addDatabaseField(addedTag, "tags")
             }
@@ -195,6 +222,8 @@ const AddItemForm = ({setAddResource}) => {
 
           const image = uploadFile('image', databaseEntry[0].id, 'images')
           const download = uploadMultipleFiles('download', databaseEntry[0].id, 'downloads')
+          console.log(image);
+          console.log(download);
           
           updateResource(image, download, "items", databaseEntry[0].id)
           setAddResource(false);
