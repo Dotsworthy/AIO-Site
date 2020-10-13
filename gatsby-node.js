@@ -9,6 +9,9 @@
 exports.onCreateWebpackConfig = ({ stage, actions }) => {
     if (stage.startsWith("develop")) {
       actions.setWebpackConfig({
+        node: {
+          fs: "empty",
+        },
         resolve: {
           alias: {
             "react-dom": "@hot-loader/react-dom",

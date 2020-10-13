@@ -4,6 +4,8 @@ import 'firebase/storage'
 
 const AddItemForm = ({setAddResource}) => {
 
+    const database = firebase.firestore()
+
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [category, setCategory] = useState("")
@@ -21,6 +23,7 @@ const AddItemForm = ({setAddResource}) => {
     
     const [warning, setWarning] = useState(false);
     const [tagWarning, setTagWarning] = useState(false);
+    const [nameWarning, setEntryWarning] = useState(false);
 
     const [addedTags, setAddedTags] = useState([])
 
@@ -146,11 +149,30 @@ const AddItemForm = ({setAddResource}) => {
       })
     }
 
-    const onSubmit = e => {
+    const databaseCheck = async (name, location) => {
+        let query = []
+        const snapshot = await database
+        .collection(location)
+        .where("name", "==", name)
+        .get()
+        
+        snapshot.forEach((doc) => query.push(doc))
+        console.log(query);
+        return query
+    }
+
+    const onSubmit = async e => {
       e.preventDefault()
       if (name && description && category && level && addedTags && imageUpload && fileUploads) {
+      const nameCheck = await databaseCheck(name, "items")
+      console.log(nameCheck)
+      console.log(nameCheck.length);
       const categorySearch = allCategories.find(singleCategory => singleCategory.name === category);
       const levelSearch = allLevels.find(singleLevel => singleLevel.name === level)
+
+      if (nameCheck.length > 0) {
+        setEntryWarning(true);
+      } else {
 
           if (categorySearch === undefined) {
             addDatabaseField(category, "categories")
@@ -188,6 +210,7 @@ const AddItemForm = ({setAddResource}) => {
           .then(() => setName(""), setDescription(''), setCategory(""), setLevel(""))
         
           setAddResource(false);
+        }
       } else {
         setWarning(true);
       }
@@ -201,6 +224,7 @@ const AddItemForm = ({setAddResource}) => {
 
         <form className="form-container" onSubmit={onSubmit}>
           {warning && <div>Not all fields are complete. Please complete all fields before submitting the form</div>}
+          {nameWarning && <div>{name} already refers to an resource in the database. Either update the original resource, delete the original resource first, or choose a different name for the resource</div>}
           <div className="form-content">
 
             <div className="form-fields">
