@@ -9,7 +9,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   const [uploads, setUploads] = useState([])
   const [tagString, setTagString] = useState(item.tags)
   const [tag, setTag] = useState("");
-  const [addedTags] = useState(item.tags)
+  const [addedTags, setAddedTags] = useState(item.tags)
 
   const [tagWarning, setTagWarning] = useState(false);
 
@@ -72,6 +72,14 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
       addedTags.push(tag)
       setTag("");
     } 
+  }
+
+  const deleteTag = (e, index) => {
+    e.preventDefault()
+    const newTags = addedTags
+    newTags.splice(index, 1)
+    setAddedTags([...newTags])
+    setTagWarning(false);
   }
 
   const changeTags = (string) => {
@@ -197,7 +205,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
               <input placeholder="Add a tag" value={tag} name="tags" list="tagsList" onChange={e => setTag(e.currentTarget.value)} type="tags"/>
               <button onClick={(e) => addTag(e, tag)}>Add Tag</button>
               <datalist id="tagsList">
-                {addedTags.map(singleTag => {
+                {allTags.map(singleTag => {
                   return <option key={singleTag.id} value={singleTag.name}>{singleTag.name}</option>
                 })}
               </datalist>
@@ -205,7 +213,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
               {addedTags.map(singleTag => {
                 return <div>
                   <label for={singleTag} key={addedTags.indexOf(singleTag)} id={addedTags.indexOf(singleTag)} name={singleTag}>{singleTag}</label>
-                  {/* <button name={singleTag} onClick={(e) => deleteTag(e, item.tags.indexOf(singleTag))}>Delete Tag</button> */}
+                  <button name={singleTag} onClick={(e) => deleteTag(e, item.tags.indexOf(singleTag))}>Delete Tag</button>
                   </div>
               })}
               {tagWarning && <p>Maximum of four tags. Please delete a tag before adding a new one</p>}
