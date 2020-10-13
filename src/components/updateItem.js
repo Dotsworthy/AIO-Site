@@ -5,6 +5,7 @@ import 'firebase/storage'
 const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   const [item, setItem] = useState(currentItem);
   const [oldImage] = useState(item.image)
+  const [oldDownloads] = useState(item.download)
   const [fileUploads, setFileUploads] = useState(item.download)
 
   const [newUploads, setNewUploads] = useState([])
@@ -93,6 +94,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     const newFiles = fileUploads
     newFiles.splice(index, 1)
     setFileUploads([...newFiles])
+    changeDownloads(newFiles)
   }
 
   const changeTags = (tags) => {
@@ -183,6 +185,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
       newUploads.push(file.name)
     })
     setFileUploads([...existingFiles])
+    changeDownloads([...existingFiles])
   }
   
     return (
