@@ -162,6 +162,17 @@ const AddItemForm = ({setAddResource}) => {
       })
     }
 
+    const updateResource = (image, download, location, id) => {
+      firebase
+      .firestore()
+      .collection(location)
+      .doc(id)
+      .update({
+        image,
+        download
+      })
+    }
+
     const databaseCheck = async (name, location) => {
         let query = []
         const snapshot = await database
@@ -212,6 +223,7 @@ const AddItemForm = ({setAddResource}) => {
           console.log(image)
           console.log(download)
           
+          updateResource(image, download, "items", databaseEntry[0].id)
           // adding item to database 
           // firebase
           // .firestore()
