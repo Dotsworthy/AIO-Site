@@ -5,8 +5,11 @@ import 'firebase/storage'
 const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   const [item, setItem] = useState(currentItem);
   const [oldImage] = useState(item.image)
-  // const [oldDownloads] = useState(item.download)
   const [fileUploads, setFileUploads] = useState(item.download)
+
+  const [newUploads, setNewUploads] = useState([])
+  const [filesToDelete, setFilesToDelete] = useState([])
+
   const [uploads, setUploads] = useState([])
   const [tag, setTag] = useState("");
   const [addedTags, setAddedTags] = useState(item.tags)
@@ -49,10 +52,11 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
       deleteFile(oldImage, item.id, `images`)
       uploadFile('image', item.id, 'images')
     }
-    // if (oldDownloads !== item.download) {
-    //   deleteAllFiles(oldDownloads, item.id, `downloads`)
-    //   uploadMultipleFiles('download', item.id, 'downloads')
-    // }
+    if (fileUploads !== item.download) {
+      deleteAllFiles(filesToDelete, item.id, `downloads`)
+      // uploadMultipleFiles('download', item.id, 'downloads')
+      changeDownloads(fileUploads)
+    }
     updateItem({ currentItem }, item);
   };
 
@@ -73,13 +77,6 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     } 
   }
 
-  const removeFile = (e, index) => {
-    e.preventDefault()
-    const newFiles = fileUploads
-    newFiles.splice(index, 1)
-    setFileUploads([...newFiles])
-  }
-
   const deleteTag = (e, index) => {
     e.preventDefault()
     const newTags = addedTags
@@ -87,6 +84,16 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     setAddedTags([...newTags])
     setTagWarning(false);
   }
+
+  const removeFile = (e, index) => {
+    e.preventDefault()
+    filesToDelete.push(fileUploads[index])
+    const newFiles = fileUploads
+    newFiles.splice(index, 1)
+    setFileUploads([...newFiles])
+  }
+
+  
 
   const changeTags = (tags) => {
     console.log(item.tags);
@@ -103,11 +110,10 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     setItem({...item, [name]: value})
   }
 
-  const changeDownloads = (e, entry) => {
-    const fileList = Array.from(e.target.files)
+  const changeDownloads = (entry) => {
     const name = entry
-    const value = fileList.map(file => {
-      return `${file.name}`
+    const value = entry.map(file => {
+      return `${file}`
     })
     
     setItem({...item, [name]: value})
@@ -171,20 +177,13 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     }   
   }
 
-  // const loadAllFiles = (e) => {
-  //   changeDownloads(e, "download", "downloads")
-  //   const upload = e.target.files;
-  //   console.log(upload)
-  //   const allFiles = Array.from(upload)
-  //   setUploads([...allFiles]);
-  // }
-
   const loadAllFiles = (e) => {
     const upload = e.target.files;
     const allFiles = Array.from(upload)
     const existingFiles = fileUploads;
     allFiles.map(file => {
-      return existingFiles.push(file.name)
+      existingFiles.push(file.name)
+      newUploads.push(file.name)
     })
     setFileUploads([...existingFiles])
   }
@@ -265,11 +264,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
                 <label htmlFor="download">Upload Resources</label>
                 <input onChange={(e) => loadAllFiles(e)} type="file" id="download" name="download" multiple/>
                 <p>Files:</p>
-                { uploads.length > 0 ?
-                  uploads.map(file => (
-                    <p key={file.name}>{file.name}</p>
-                 ))
-                :
+                {
                 fileUploads.map(file => (
                   <div>
                 <label>{file}</label>
