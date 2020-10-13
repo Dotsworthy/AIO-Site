@@ -10,11 +10,9 @@ const AddItemForm = ({setAddResource}) => {
     const [description, setDescription] = useState("")
     const [category, setCategory] = useState("")
     const [level, setLevel] = useState("")
-    
-    const [tag, setTags] = useState("");
+    const [tag, setTag] = useState("");
 
     const [imageUpload, setImageUpload] = useState("")
-    
     const [fileUploads, setFileUploads] = useState([])
 
     const [allCategories, setAllCategories] = useState([])
@@ -35,7 +33,7 @@ const AddItemForm = ({setAddResource}) => {
         setTagWarning(true);
       } else {
         addedTags.push(tag)
-        setTags("");
+        setTag("");
       } 
     }
 
@@ -143,6 +141,26 @@ const AddItemForm = ({setAddResource}) => {
         return query
     }
 
+    const getData = async (location) => {
+      let query = []
+      const snapshot = await database.collection(location).get()
+    
+      snapshot.forEach((doc) =>  query.push(doc.data()))
+      return query
+    }
+
+    const createDatabaseEntries = async () => {
+      const categories = await getData("categories")
+      const levels = await getData("levels")
+      const tags = await getData("tags")
+
+      setAllCategories(categories)
+      setAllLevels(levels)
+      setAllTags(tags)
+    }
+
+    createDatabaseEntries()
+
     const onSubmit = async e => {
       e.preventDefault()
       if (name && description && category && level && addedTags && imageUpload && fileUploads) {
@@ -187,7 +205,7 @@ const AddItemForm = ({setAddResource}) => {
     }
  
     return (
-      <div className="database-form-container">
+      <div className="database-form-container">        
         <div className="form-header">
           <h2>Add Resource</h2>
         </div>
@@ -204,6 +222,7 @@ const AddItemForm = ({setAddResource}) => {
               
               <input placeholder="Category" type="text" name="category" value={category} list="categoryList" onChange={e => setCategory(e.currentTarget.value)}/>
                <datalist id="categoryList">
+                
                 {allCategories.map(singleCategory => {
                   return <option key={singleCategory.id} value={singleCategory.name}>{singleCategory.name}</option>
                 })}  
@@ -216,7 +235,7 @@ const AddItemForm = ({setAddResource}) => {
                   })}  
                 </datalist>  
 
-              <input placeholder="Add a tag" value={tag} name="tags" list="tagsList" onChange={e => setTags(e.currentTarget.value)} type="tags"/>
+              <input placeholder="Add a tag" value={tag} name="tags" list="tagsList" onChange={e => setTag(e.currentTarget.value)} type="tags"/>
               <button onClick={(e) => addTag(e, tag)}>Add Tag</button>
               <datalist id="tagsList">
                 {allTags.map(singleTag => {
