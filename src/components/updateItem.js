@@ -43,19 +43,18 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   const allLevels = useItems("levels");
   const allTags = useItems("tags");
 
-  const onSubmit = e => {
+  const onSubmit =  async e => {
     e.preventDefault();
-    if(addedTags !== item.tags) {
-      changeTags(addedTags)
-    }
+
     if (oldImage !== item.image) {
       deleteFile(oldImage, item.id, `images`)
       uploadFile('image', item.id, 'images')
     }
     if (fileUploads !== item.download) {
+      changeDownloads(fileUploads)
       deleteAllFiles(filesToDelete, item.id, `downloads`)
       // uploadMultipleFiles('download', item.id, 'downloads')
-      changeDownloads(fileUploads)
+      
     }
     updateItem({ currentItem }, item);
   };
@@ -73,7 +72,9 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
       setTagWarning(true);
     } else {
       addedTags.push(tag)
+      changeTags(addedTags)
       setTag("");
+      
     } 
   }
 
@@ -82,6 +83,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     const newTags = addedTags
     newTags.splice(index, 1)
     setAddedTags([...newTags])
+    changeTags(addedTags)
     setTagWarning(false);
   }
 
@@ -93,15 +95,10 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     setFileUploads([...newFiles])
   }
 
-  
-
   const changeTags = (tags) => {
-    console.log(item.tags);
     const name = "tags";
     const value = tags;
-    console.log(value);
     setItem({...item, [name]: value})
-    console.log(item);
   }
 
   const changeImage = (file, location) => {
