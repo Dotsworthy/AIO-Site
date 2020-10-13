@@ -154,18 +154,18 @@ const AddItemForm = ({setAddResource}) => {
         setEntryWarning(true);
       } else {
 
-          if (categoryCheck == 0) {
+          if (categoryCheck.length == 0) {
             addDatabaseField(category, "categories")
           }
     
-          if (levelCheck == 0) {
+          if (levelCheck.length == 0) {
             addDatabaseField(level, "levels")
           }
     
           addedTags.forEach(async addedTag => {
-            const tagCheck = await databaseCheck(tag, "tags")
-                
-            if (tagCheck == 0) {
+            const tagCheck = await databaseCheck(addedTag, "tags")
+            // console.log(tagCheck.length);
+            if (tagCheck.length == 0) {
               addDatabaseField(addedTag, "tags")
             }
           }) 
@@ -177,9 +177,6 @@ const AddItemForm = ({setAddResource}) => {
 
           const image = uploadFile('image', databaseEntry[0].id, 'images')
           const download = uploadMultipleFiles('download', databaseEntry[0].id, 'downloads')
-          
-          console.log(image)
-          console.log(download)
           
           updateResource(image, download, "items", databaseEntry[0].id)
           setAddResource(false);
