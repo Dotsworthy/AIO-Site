@@ -5,7 +5,7 @@ import 'firebase/storage'
 const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   const [item, setItem] = useState(currentItem);
   const [oldImage] = useState(item.image)
-  const [oldDownloads] = useState(item.download)
+  // const [oldDownloads] = useState(item.download)
   const [fileUploads, setFileUploads] = useState(item.download)
   const [uploads, setUploads] = useState([])
   const [tag, setTag] = useState("");
@@ -49,10 +49,10 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
       deleteFile(oldImage, item.id, `images`)
       uploadFile('image', item.id, 'images')
     }
-    if (oldDownloads !== item.download) {
-      deleteAllFiles(oldDownloads, item.id, `downloads`)
-      uploadMultipleFiles('download', item.id, 'downloads')
-    }
+    // if (oldDownloads !== item.download) {
+    //   deleteAllFiles(oldDownloads, item.id, `downloads`)
+    //   uploadMultipleFiles('download', item.id, 'downloads')
+    // }
     updateItem({ currentItem }, item);
   };
 
@@ -171,12 +171,22 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     }   
   }
 
+  // const loadAllFiles = (e) => {
+  //   changeDownloads(e, "download", "downloads")
+  //   const upload = e.target.files;
+  //   console.log(upload)
+  //   const allFiles = Array.from(upload)
+  //   setUploads([...allFiles]);
+  // }
+
   const loadAllFiles = (e) => {
-    changeDownloads(e, "download", "downloads")
     const upload = e.target.files;
-    console.log(upload)
     const allFiles = Array.from(upload)
-    setUploads([...allFiles]);
+    const existingFiles = fileUploads;
+    allFiles.map(file => {
+      return existingFiles.push(file.name)
+    })
+    setFileUploads([...existingFiles])
   }
   
     return (
