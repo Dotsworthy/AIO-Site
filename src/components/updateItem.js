@@ -7,7 +7,6 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   const [oldImage] = useState(item.image)
   const [oldDownloads] = useState(item.download)
   const [uploads, setUploads] = useState([])
-  const [tagString, setTagString] = useState(item.tags)
   const [tag, setTag] = useState("");
   const [addedTags, setAddedTags] = useState(item.tags)
 
@@ -42,18 +41,17 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
 
   const onSubmit = e => {
     e.preventDefault();
-    if(tagString !== item.tags) {
-      changeTags(tagString)
+    if(addedTags !== item.tags) {
+      changeTags(addedTags)
     }
-    // changeTags(tagString)
-    if (oldImage !== item.image) {
-      deleteFile(oldImage, `images`)
-      uploadFile('image', 'images')
-    }
-    if (oldDownloads !== item.download) {
-      deleteAllFiles(oldDownloads, `downloads`)
-      uploadMultipleFiles('download', 'downloads')
-    }
+    // if (oldImage !== item.image) {
+    //   deleteFile(oldImage, `images`)
+    //   uploadFile('image', 'images')
+    // }
+    // if (oldDownloads !== item.download) {
+    //   deleteAllFiles(oldDownloads, `downloads`)
+    //   uploadMultipleFiles('download', 'downloads')
+    // }
     updateItem({ currentItem }, item);
   };
 
@@ -82,13 +80,13 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     setTagWarning(false);
   }
 
-  const changeTags = (string) => {
-    let tagsList = string.replace(/\s/g,'');
+  const changeTags = (tags) => {
+    console.log(item.tags);
     const name = "tags";
-    const value = tagsList.split(",");
-    console.log(value)
+    const value = tags;
+    console.log(value);
     setItem({...item, [name]: value})
-    console.log(item)
+    console.log(item);
   }
 
   const changeImage = (file, location) => {
@@ -213,7 +211,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
               {addedTags.map(singleTag => {
                 return <div>
                   <label for={singleTag} key={addedTags.indexOf(singleTag)} id={addedTags.indexOf(singleTag)} name={singleTag}>{singleTag}</label>
-                  <button name={singleTag} onClick={(e) => deleteTag(e, item.tags.indexOf(singleTag))}>Delete Tag</button>
+                  <button name={singleTag} onClick={(e) => deleteTag(e, addedTags.indexOf(singleTag))}>Delete Tag</button>
                   </div>
               })}
               {tagWarning && <p>Maximum of four tags. Please delete a tag before adding a new one</p>}
