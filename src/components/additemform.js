@@ -18,8 +18,10 @@ const AddItemForm = ({setAddResource}) => {
     const [tagWarning, setTagWarning] = useState(false);
     const [nameWarning, setEntryWarning] = useState(false);
     const [duplicateWarning, setDuplicateWarning] = useState(false);
+    const [duplicateFileWarning, setDuplicateFileWarning] = useState(false);
 
     const [addedTags, setAddedTags] = useState([])
+    const [duplicateFiles, setDuplicateFiles] = useState([])
 
     const useItems = (location) => {
       const [items, setItems] = useState([]);
@@ -106,11 +108,23 @@ const AddItemForm = ({setAddResource}) => {
     }
 
     const loadAllFiles = (e) => {
+      setDuplicateFileWarning(false)
+      setDuplicateFiles([])
       const upload = e.target.files;
       const allFiles = Array.from(upload)
       const existingFiles = fileUploads;
+      console.log(existingFiles)
       allFiles.map(file => {
-        return existingFiles.push(file)
+        console.log(file.name)
+        const duplicate = existingFiles.filter(existingFile => existingFile.name === file.name)
+        console.log(duplicate);
+        if (duplicate.length > 0) {
+          // console.log(existingFiles)
+          setDuplicateFileWarning(true)
+          duplicateFiles.push(file)
+        } else {
+          return existingFiles.push(file)
+        }
       })
       setFileUploads([...existingFiles])
     }
@@ -291,6 +305,10 @@ const AddItemForm = ({setAddResource}) => {
               ))
               :
               <p>None</p>}
+              {duplicateFileWarning && <p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>}
+              {duplicateFiles.length > 0 && duplicateFiles.map(file => (
+                <p>{file.name}</p>
+              ))}
               </div>
 
             </div>
