@@ -16,6 +16,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   const [addedTags, setAddedTags] = useState(item.tags)
 
   const [tagWarning, setTagWarning] = useState(false);
+  const [duplicateWarning, setDuplicateWarning] = useState(false);
 
   useEffect(() => {
     setItem(currentItem);
@@ -68,15 +69,18 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
 
   const addTag = (e, tag) => {
     e.preventDefault()
+    setTagWarning(false)
+    setDuplicateWarning(false)
     if (tag === "") {
       return
+    } else if (addedTags.includes(tag)) {
+      setDuplicateWarning(true);
     } else if (addedTags.length === 4) {
       setTagWarning(true);
     } else {
       addedTags.push(tag)
       changeTags(addedTags)
       setTag("");
-      
     } 
   }
 
@@ -238,7 +242,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
                   </div>
               })}
               {tagWarning && <p>Maximum of four tags. Please delete a tag before adding a new one</p>}
-              
+              {duplicateWarning && <p>Tag already selected. Please select a different tag</p>}
               
               
               

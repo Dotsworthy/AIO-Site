@@ -17,6 +17,7 @@ const AddItemForm = ({setAddResource}) => {
     const [warning, setWarning] = useState(false);
     const [tagWarning, setTagWarning] = useState(false);
     const [nameWarning, setEntryWarning] = useState(false);
+    const [duplicateWarning, setDuplicateWarning] = useState(false);
 
     const [addedTags, setAddedTags] = useState([])
 
@@ -45,8 +46,12 @@ const AddItemForm = ({setAddResource}) => {
 
     const addTag = (e, tag) => {
       e.preventDefault()
+      setTagWarning(false)
+      setDuplicateWarning(false)
       if (tag === "") {
         return
+      } else if (addedTags.includes(tag)) {
+        setDuplicateWarning(true);
       } else if (addedTags.length === 4) {
         setTagWarning(true);
       } else {
@@ -260,6 +265,7 @@ const AddItemForm = ({setAddResource}) => {
                   </div>
               })}
               {tagWarning && <p>Maximum of four tags. Please delete a tag before adding a new one</p>}
+              {duplicateWarning && <p>Tag already selected. Please select a different tag</p>}
             </div>
 
             <div className="form-uploads">

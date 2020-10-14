@@ -2,25 +2,6 @@ import React, { useState, useEffect } from "react"
 import firebase from "./firebase"
 import 'firebase/storage'
 
-// const useItems = () => {
-//     const [items, setItems] = useState([]);
-//     useEffect(() => {
-//       firebase
-//         .firestore()
-//         .collection("items")
-//         .onSnapshot(snapshot => {
-//           const listItems = snapshot.docs.map(doc => ({
-//             id: doc.id,
-//             ...doc.data()
-//           }));
-//           setItems(listItems);
-//         });
-//         //called the unsubscribe--closing connection to Firestore.
-//         // return () => unsubscribe()
-//     }, []);
-//     return items;
-//   };
-
 const ItemList = ( { editItem } ) => {
   const [resources, setResources] = useState([]);
 
