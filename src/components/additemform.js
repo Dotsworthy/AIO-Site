@@ -113,20 +113,21 @@ const AddItemForm = ({setAddResource}) => {
       const upload = e.target.files;
       const allFiles = Array.from(upload)
       const existingFiles = fileUploads;
+      const duplicates = [];
       console.log(existingFiles)
       allFiles.map(file => {
         console.log(file.name)
         const duplicate = existingFiles.filter(existingFile => existingFile.name === file.name)
         console.log(duplicate);
         if (duplicate.length > 0) {
-          // console.log(existingFiles)
           setDuplicateFileWarning(true)
-          duplicateFiles.push(file)
+          duplicates.push(file)
         } else {
           return existingFiles.push(file)
         }
       })
       setFileUploads([...existingFiles])
+      setDuplicateFiles([...duplicates])
     }
 
     const handleCancel = () => {
@@ -306,6 +307,7 @@ const AddItemForm = ({setAddResource}) => {
               :
               <p>None</p>}
               {duplicateFileWarning && <p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>}
+              {duplicateFiles.length > 0 && <p>Duplicate files:</p>}
               {duplicateFiles.length > 0 && duplicateFiles.map(file => (
                 <p>{file.name}</p>
               ))}
