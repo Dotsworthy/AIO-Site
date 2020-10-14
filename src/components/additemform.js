@@ -116,11 +116,8 @@ const AddItemForm = ({setAddResource}) => {
       const allFiles = Array.from(upload)
       const existingFiles = fileUploads;
       const duplicates = [];
-      console.log(existingFiles)
       allFiles.map(file => {
-        console.log(file.name)
         const duplicate = existingFiles.filter(existingFile => existingFile.name === file.name)
-        console.log(duplicate);
         if (duplicate.length > 0) {
           setDuplicateFileWarning(true)
           duplicates.push(file)

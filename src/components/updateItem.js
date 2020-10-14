@@ -17,6 +17,9 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
 
   const [tagWarning, setTagWarning] = useState(false);
   const [duplicateWarning, setDuplicateWarning] = useState(false);
+  const [duplicateFileWarning, setDuplicateFileWarning] = useState(false);
+
+  const [duplicateFiles, setDuplicateFiles] = useState([])
 
   useEffect(() => {
     setItem(currentItem);
@@ -190,12 +193,21 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     const upload = e.target.files;
     const allFiles = Array.from(upload)
     const existingFiles = fileUploads;
+    console.log(existingFiles);
+    const duplicates = [];
     allFiles.map(file => {
-      existingFiles.push(file.name)
-      newUploads.push(file.name)
+      const duplicate = existingFiles.includes(file.name)
+      if (duplicate === true) {
+        setDuplicateFileWarning(true)
+        duplicateFiles.push(file.name)
+      } else {
+        existingFiles.push(file.name)
+        newUploads.push(file.name)
+      }
     })
+    console.log(existingFiles)
     setFileUploads([...existingFiles])
-    changeDownloads([...existingFiles])
+    // changeDownloads([...existingFiles])
   }
   
     return (
@@ -281,6 +293,11 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
                 <button onClick={(e) => removeFile(e, fileUploads.indexOf(file))}>Remove File</button>
                 </div>
                 ))}
+                {duplicateFileWarning && <p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>}
+                {duplicateFiles.length > 0 && <p>Duplicate files:</p>}
+                {duplicateFiles.length > 0 && duplicateFiles.map(file => (
+                <p>{file}</p>
+              ))}
               </div>
             
             </div>
