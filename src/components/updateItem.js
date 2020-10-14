@@ -103,7 +103,8 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
 
   const removeFile = (e, index) => {
     e.preventDefault()
-    filesToDelete.push(fileUploads[index])
+    setDuplicateFiles([])
+    // filesToDelete.push(fileUploads[index])
     const newFiles = fileUploads
     newFiles.splice(index, 1)
     setFileUploads([...newFiles])
@@ -190,10 +191,10 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   }
 
   const loadAllFiles = (e) => {
+    setDuplicateFiles([]);
     const upload = e.target.files;
     const allFiles = Array.from(upload)
     const existingFiles = fileUploads;
-    console.log(existingFiles);
     const duplicates = [];
     allFiles.map(file => {
       const duplicate = existingFiles.includes(file.name)
@@ -207,7 +208,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     })
     console.log(existingFiles)
     setFileUploads([...existingFiles])
-    // changeDownloads([...existingFiles])
+    changeDownloads("download", existingFiles)
   }
   
     return (
