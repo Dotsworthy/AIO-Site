@@ -5,7 +5,7 @@ import 'firebase/storage'
 const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   const [item, setItem] = useState(currentItem);
   const [oldImage] = useState(item.image)
-  const [oldDownloads] = useState(item.download)
+  
   const [fileUploads, setFileUploads] = useState(item.download)
 
   const [newUploads, setNewUploads] = useState([])
@@ -20,6 +20,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   const [duplicateFileWarning, setDuplicateFileWarning] = useState(false);
 
   const [duplicateFiles, setDuplicateFiles] = useState([])
+  const originalDownloads = item.download
 
   useEffect(() => {
     setItem(currentItem);
@@ -50,7 +51,6 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
 
   const onSubmit = e => {
     e.preventDefault();
-    findDownloadsToDelete(item.download, oldDownloads)
 
     if (oldImage !== item.image) {
       deleteFile(oldImage, item.id, `images`)
@@ -65,50 +65,10 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     updateItem({ currentItem }, item);
   };
 
+  // changing item state
   const onChange = e => {
     const { name, value } = e.target
     setItem({ ...item, [name]: value })
-  }
-
-  const addTag = (e, tag) => {
-    e.preventDefault()
-    setTagWarning(false)
-    setDuplicateWarning(false)
-    if (tag === "") {
-      return
-    } else if (addedTags.includes(tag)) {
-      setDuplicateWarning(true);
-    } else if (addedTags.length === 4) {
-      setTagWarning(true);
-    } else {
-      addedTags.push(tag)
-      changeTags(addedTags)
-      setTag("");
-    } 
-  }
-
-  const findDownloadsToDelete = (array1, array2) => {
-    const difference = array1.filter(x => !array2.includes(x))
-    console.log(difference);
-  }
-
-  const deleteTag = (e, index) => {
-    e.preventDefault()
-    const newTags = addedTags
-    newTags.splice(index, 1)
-    setAddedTags([...newTags])
-    changeTags(addedTags)
-    setTagWarning(false);
-  }
-
-  const removeFile = (e, index) => {
-    e.preventDefault()
-    setDuplicateFiles([])
-    // filesToDelete.push(fileUploads[index])
-    const newFiles = fileUploads
-    newFiles.splice(index, 1)
-    setFileUploads([...newFiles])
-    changeDownloads("download", newFiles)
   }
 
   const changeTags = (tags) => {
@@ -130,6 +90,45 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     })
     
     setItem({...item, [name]: value})
+  }
+
+  // changing tags
+  const addTag = (e, tag) => {
+    e.preventDefault()
+    setTagWarning(false)
+    setDuplicateWarning(false)
+    if (tag === "") {
+      return
+    } else if (addedTags.includes(tag)) {
+      setDuplicateWarning(true);
+    } else if (addedTags.length === 4) {
+      setTagWarning(true);
+    } else {
+      addedTags.push(tag)
+      changeTags(addedTags)
+      setTag("");
+    } 
+  }
+
+  const deleteTag = (e, index) => {
+    e.preventDefault()
+    const newTags = addedTags
+    newTags.splice(index, 1)
+    setAddedTags([...newTags])
+    changeTags(addedTags)
+    setTagWarning(false);
+  }
+
+  // changing downloads
+  const removeFile = (e, index) => {
+    e.preventDefault()
+    setDuplicateFiles([])
+    setDuplicateFileWarning(false);
+    // filesToDelete.push(fileUploads[index])
+    const newFiles = fileUploads
+    newFiles.splice(index, 1)
+    setFileUploads([...newFiles])
+    changeDownloads("download", newFiles)
   }
 
   const uploadFile = (file, id, location) => {
@@ -191,22 +190,25 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   }
 
   const loadAllFiles = (e) => {
+    setDuplicateFileWarning(false)
     setDuplicateFiles([]);
     const upload = e.target.files;
     const allFiles = Array.from(upload)
     const existingFiles = fileUploads;
     const duplicates = [];
+    console.log(allFiles)
     allFiles.map(file => {
       const duplicate = existingFiles.includes(file.name)
       if (duplicate === true) {
-        setDuplicateFileWarning(true)
-        duplicateFiles.push(file.name)
+        duplicates.push(file.name);
+        setDuplicateFileWarning(true);
       } else {
         existingFiles.push(file.name)
-        newUploads.push(file.name)
+        // newUploads.push(file)
       }
     })
     console.log(existingFiles)
+    setDuplicateFiles([...duplicates])
     setFileUploads([...existingFiles])
     changeDownloads("download", existingFiles)
   }
