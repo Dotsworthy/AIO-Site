@@ -72,6 +72,8 @@ const AddItemForm = ({setAddResource}) => {
 
     const removeFile = (e, index) => {
       e.preventDefault()
+      setDuplicateFileWarning(false);
+      setDuplicateFiles([])
       const newFiles = fileUploads
       newFiles.splice(index, 1)
       setFileUploads([...newFiles])
