@@ -6,11 +6,8 @@ const UpdateItem = ({ setEditing, currentItem }) => {
   // item information to update the database
   const [item, setItem] = useState(currentItem);
     
-  const [fileUploads, setFileUploads] = useState(item.download)
-
   const [uploads, setUploads] = useState([])
   const [tag, setTag] = useState("");
-  const [addedTags, setAddedTags] = useState(item.tags)
 
   // warnings for duplicate entries and maximum entries
   const [tagWarning, setTagWarning] = useState(false);
@@ -19,19 +16,9 @@ const UpdateItem = ({ setEditing, currentItem }) => {
   const [duplicateFiles, setDuplicateFiles] = useState([])
   
   // original variables for checking whether to upload/download
-  const [originalDownloads] = useState(item.download);
-  
-  const oldImage = currentItem.image;
-
-  const logVariables = () => {
-    console.log(oldImage)
-  }
-
-  logVariables()
-
-  // useEffect(() => {
-  //   setItem(currentItem);
-  // }, []);
+ 
+  const originalImage = currentItem.image;
+  const originalDownloads = currentItem.download;
 
   const useItems = (location) => {
     const [items, setItems] = useState([]);
@@ -60,10 +47,10 @@ const UpdateItem = ({ setEditing, currentItem }) => {
   const onSubmit = e => {
     e.preventDefault();
     console.log(originalDownloads)
-    console.log(oldImage);
+    console.log(item.download)
 
-    if (oldImage !== item.image) {
-      deleteFile(oldImage, item.id, `images`)
+    if (originalImage !== item.image) {
+      deleteFile(originalImage, item.id, `images`)
       uploadFile('image', item.id, 'images')
     }
     // if (originalDownloads !== item.download) {
@@ -123,23 +110,23 @@ const UpdateItem = ({ setEditing, currentItem }) => {
     setDuplicateWarning(false)
     if (tag === "") {
       return
-    } else if (addedTags.includes(tag)) {
+    } else if (item.tags.includes(tag)) {
       setDuplicateWarning(true);
-    } else if (addedTags.length === 4) {
+    } else if (item.tags.length === 4) {
       setTagWarning(true);
     } else {
-      addedTags.push(tag)
-      changeTags(addedTags)
+      const newTags = item.tags
+      newTags.push(tag)
+      changeTags(newTags)
       setTag("");
     } 
   }
 
   const deleteTag = (e, index) => {
     e.preventDefault()
-    const newTags = addedTags
+    const newTags = item.tags
     newTags.splice(index, 1)
-    setAddedTags([...newTags])
-    changeTags(addedTags)
+    changeTags(newTags)
     setTagWarning(false);
   }
 
@@ -148,10 +135,10 @@ const UpdateItem = ({ setEditing, currentItem }) => {
     e.preventDefault()
     setDuplicateFiles([])
     setDuplicateFileWarning(false);
-    const newFiles = fileUploads
+    const newFiles = item.download
     newFiles.splice(index, 1)
-    setFileUploads([...newFiles])
     changeDownloads("download", newFiles)
+    console.log(originalDownloads);
   }
 
   const uploadFile = (file, id, location) => {
@@ -221,7 +208,7 @@ const UpdateItem = ({ setEditing, currentItem }) => {
     setDuplicateFiles([]);
     const upload = e.target.files;
     const allFiles = Array.from(upload)
-    const existingFiles = fileUploads;
+    const existingFiles = item.download;
     const existingUploads = uploads;
     const duplicates = [];
     console.log(allFiles)
@@ -237,7 +224,6 @@ const UpdateItem = ({ setEditing, currentItem }) => {
     })
     console.log(existingFiles)
     setDuplicateFiles([...duplicates])
-    setFileUploads([...existingFiles])
     // setUploads([...existingUploads])
     changeDownloads("download", existingFiles)
   }
@@ -279,10 +265,10 @@ const UpdateItem = ({ setEditing, currentItem }) => {
                 })}
               </datalist>
               <p>Tags added:</p>
-              {addedTags.map(singleTag => {
+              {item.tags.map(singleTag => {
                 return <div>
-                  <label for={singleTag} key={addedTags.indexOf(singleTag)} id={addedTags.indexOf(singleTag)} name={singleTag}>{singleTag}</label>
-                  <button name={singleTag} onClick={(e) => deleteTag(e, addedTags.indexOf(singleTag))}>Delete Tag</button>
+                  <label for={singleTag} key={item.tags.indexOf(singleTag)} id={item.tags.indexOf(singleTag)} name={singleTag}>{singleTag}</label>
+                  <button name={singleTag} onClick={(e) => deleteTag(e, item.tags.indexOf(singleTag))}>Delete Tag</button>
                   </div>
               })}
               {tagWarning && <p>Maximum of four tags. Please delete a tag before adding a new one</p>}
@@ -311,10 +297,10 @@ const UpdateItem = ({ setEditing, currentItem }) => {
                 <input onChange={(e) => loadAllFiles(e)} type="file" id="download" name="download" multiple/>
                 <p>Files:</p>
                 {
-                fileUploads.map(file => (
+                item.download.map(file => (
                   <div>
                 <label>{file}</label>
-                <button onClick={(e) => removeFile(e, fileUploads.indexOf(file))}>Remove File</button>
+                <button onClick={(e) => removeFile(e, item.download.indexOf(file))}>Remove File</button>
                 </div>
                 ))}
                 {duplicateFileWarning && <p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>}
