@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import firebase from "firebase"
 import 'firebase/storage'
 
 const DeleteItem = ({ currentItem, setDeleting }) => {
 
-    const [item] = useState(currentItem)
+    const item = currentItem
 
     const deleteItem = (id, imageRef, downloadRef, imageLocation, downloadLocation) => {
         deleteFile(imageRef, id, imageLocation)
@@ -15,7 +15,7 @@ const DeleteItem = ({ currentItem, setDeleting }) => {
           .collection("items")
           .doc(id)
           .delete()
-      }  
+      } 
     
       const deleteFile = (file, id, location) => {
         const storageRef = firebase.storage().ref()

@@ -60,7 +60,8 @@ const SecondPage = () => {
       .collection("items")
       .doc(currentItem.id)
       .update(updatedItem);
-  };
+
+    };
 
   const handleAddResourceClick = () => {
     setAddResource(true)
