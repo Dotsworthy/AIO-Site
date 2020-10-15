@@ -49,11 +49,8 @@ const UpdateItem = ({ setEditing, currentItem }) => {
 
     if (originalImage !== item.image) {
       deleteFile(originalImage, item.id, `images`)
-      uploadFile('image', item.id, 'images', 0)
+      uploadFile('image', item.id, 'images')
     }
-
-    const originalDownloads = await downloadCheck(item.id, "downloads")
-    console.log(originalDownloads);
 
     filesToDelete.forEach(file => {
       if (item.download.includes(file) == true) {
@@ -62,15 +59,9 @@ const UpdateItem = ({ setEditing, currentItem }) => {
         deleteFile(file, item.id, "downloads")
       }
     })
-    
-    filesToUpload.forEach(file => {
-      console.log(file.name)
-      if (item.download.includes(file.name) == true) {
-        return
-      } else {
-        uploadFile(file, item.id, 'downloads', filesToUpload.indexOf(file))
-      }
-    })
+
+    uploadMultipleFiles(filesToUpload, item.id, "downloads")
+
     // if (originalDownloads !== item.download) {
     //   originalDownloads.map(download => {
     //     const fileDelete = item.download.filter(item => item === download)
@@ -93,22 +84,6 @@ const UpdateItem = ({ setEditing, currentItem }) => {
 
     setEditing(false);
   };
-
-  const downloadCheck = async (id, location) => {
-    const fileList = [];
-    const storageRef = firebase.storage().ref(`${location}/${id}`)
-    
-    storageRef.listAll().then(function(result) {
-      result.items.forEach(function(itemRef) {
-        fileList.push(itemRef)
-      })
-    })
-    // This needs completing, maybe loop through array?
-    const result = fileList.map(reference => {
-      result.push(reference.name)
-    })
-    return result
-  }
 
   // changing item state
   const onChange = e => {
@@ -175,15 +150,15 @@ const UpdateItem = ({ setEditing, currentItem }) => {
     changeDownloads("download", newFiles)
   }
 
-  const uploadFile = (file, id, location, index) => {
-    const selectedFile = document.getElementById(file).files[index];
+  const uploadFile = (file, id, location) => {
+    const selectedFile = document.getElementById(file).files[0];
     console.log(selectedFile);
     const storageRef = firebase.storage().ref(`${location}/${id}/${selectedFile.name}`)
     storageRef.put(selectedFile)
   }
 
   const uploadMultipleFiles = (file, id, location) => {
-    const selectedFiles = document.getElementById(file).files;
+    const selectedFiles = file;
     const fileList = Array.from(selectedFiles);
     const databaseEntry = fileList.map(file => {
       return `${file.name}`
