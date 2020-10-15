@@ -7,6 +7,7 @@ const UpdateItem = ({ setEditing, currentItem }) => {
   const [item, setItem] = useState(currentItem);
     
   const [uploads, setUploads] = useState([])
+  const [filesToDelete] = useState([])
   const [tag, setTag] = useState("");
 
   // warnings for duplicate entries and maximum entries
@@ -17,8 +18,8 @@ const UpdateItem = ({ setEditing, currentItem }) => {
   
   // original variables for checking whether to upload/download
  
+  // const originalItem = Object.assign(currentItem)
   const originalImage = currentItem.image;
-  const originalDownloads = currentItem.download;
 
   const useItems = (location) => {
     const [items, setItems] = useState([]);
@@ -46,13 +47,19 @@ const UpdateItem = ({ setEditing, currentItem }) => {
   // submission form
   const onSubmit = e => {
     e.preventDefault();
-    console.log(originalDownloads)
-    console.log(item.download)
 
     if (originalImage !== item.image) {
       deleteFile(originalImage, item.id, `images`)
       uploadFile('image', item.id, 'images')
     }
+
+    filesToDelete.forEach(file => {
+      if (item.download.includes(file) == true) {
+        return
+      } else {
+        deleteFile(file, item.id, "downloads")
+      }
+    })
     // if (originalDownloads !== item.download) {
     //   originalDownloads.map(download => {
     //     const fileDelete = item.download.filter(item => item === download)
@@ -131,14 +138,14 @@ const UpdateItem = ({ setEditing, currentItem }) => {
   }
 
   // changing downloads
-  const removeFile = (e, index) => {
+  const removeFile = (e, file, index) => {
     e.preventDefault()
     setDuplicateFiles([])
     setDuplicateFileWarning(false);
     const newFiles = item.download
     newFiles.splice(index, 1)
+    filesToDelete.push(file)
     changeDownloads("download", newFiles)
-    console.log(originalDownloads);
   }
 
   const uploadFile = (file, id, location) => {
@@ -300,7 +307,7 @@ const UpdateItem = ({ setEditing, currentItem }) => {
                 item.download.map(file => (
                   <div>
                 <label>{file}</label>
-                <button onClick={(e) => removeFile(e, item.download.indexOf(file))}>Remove File</button>
+                <button onClick={(e) => removeFile(e, file, item.download.indexOf(file))}>Remove File</button>
                 </div>
                 ))}
                 {duplicateFileWarning && <p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>}
