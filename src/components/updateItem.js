@@ -80,10 +80,9 @@ const UpdateItem = ({ setEditing, currentItem }) => {
       console.log(item.name);
       console.log(nameCheck.length);
       
-      if (nameCheck.length > 0) {
+      if (originalName !== item.name && nameCheck.length > 0) {
         setNameWarning(true);
       } else {
-
           if (categoryCheck.length == 0) {
             addDatabaseField(item.category, "categories")
           }
@@ -98,7 +97,7 @@ const UpdateItem = ({ setEditing, currentItem }) => {
               addDatabaseField(tag, "tags")
             }
           })
-        }
+        
         
         if (originalImage !== item.image) {
           deleteFile(originalImage, item.id, `images`)
@@ -122,11 +121,10 @@ const UpdateItem = ({ setEditing, currentItem }) => {
         .update(item)
     
         setEditing(false);
-        
+      }
     } else {
       setWarning(true)
     }   
-    console.log(nameWarning);
   };
 
   // changing item state
@@ -290,7 +288,7 @@ const UpdateItem = ({ setEditing, currentItem }) => {
 
         <form className="form-container" onSubmit={onSubmit}>
         {warning && <div>Some fields have been left blank. Please complete all fields (including downloads) before submitting the form</div>}
-
+        {nameWarning && <div>Resource name is already being used by another resource in the database. Please edit or delete this resource first, or choose another name for this resource.</div>}
           <div className="form-content">
             
             <div className="form-fields">
