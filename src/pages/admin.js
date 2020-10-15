@@ -47,22 +47,6 @@ const SecondPage = () => {
     })
   }
 
-  const updateItem = ({ currentItem }, updatedItem) => {
-    console.log(
-      "It sends the item to the updated item function:",
-      updatedItem,
-      currentItem.id
-    );
-    //When the Update button is pressed, it turns off editing
-    setEditing(false)
-    firebase
-      .firestore()
-      .collection("items")
-      .doc(currentItem.id)
-      .update(updatedItem);
-
-    };
-
   const handleAddResourceClick = () => {
     setAddResource(true)
   }
@@ -76,7 +60,6 @@ const SecondPage = () => {
       {editing && <UpdateItem 
       setEditing={setEditing}
       currentItem={currentItem}
-      updateItem={updateItem}
       />}
       {deleting && <DeleteItem
       setDeleting={setDeleting}

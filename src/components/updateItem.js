@@ -54,24 +54,31 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     e.preventDefault();
     console.log(originalDownloads)
 
-    if (oldImage !== item.image) {
-      deleteFile(oldImage, item.id, `images`)
-      uploadFile('image', item.id, 'images')
-    }
-    if (originalDownloads !== item.download) {
-      originalDownloads.map(download => {
-        const fileDelete = item.download.filter(item => item === download)
-        if (fileDelete == 0) {
-          console.log("no file")
-        } else {
-          console.log("file")
-        }
-      })
-      // deleteAllFiles(filesToDelete, item.id, `downloads`)
-      // uploadMultipleFiles('download', item.id, 'downloads')
+    // if (oldImage !== item.image) {
+    //   deleteFile(oldImage, item.id, `images`)
+    //   uploadFile('image', item.id, 'images')
+    // }
+    // if (originalDownloads !== item.download) {
+    //   originalDownloads.map(download => {
+    //     const fileDelete = item.download.filter(item => item === download)
+    //     if (fileDelete == 0) {
+    //       console.log("no file")
+    //     } else {
+    //       console.log("file")
+    //     }
+    //   })
+    //   // deleteAllFiles(filesToDelete, item.id, `downloads`)
+    //   // uploadMultipleFiles('download', item.id, 'downloads')
       
-    }
-    updateItem({ currentItem }, item);
+    // }
+
+    firebase
+    .firestore()
+    .collection("items")
+    .doc(item.id)
+    .update(item)
+
+    setEditing(false);
   };
 
   // changing item state
