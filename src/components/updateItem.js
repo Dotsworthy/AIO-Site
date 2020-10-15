@@ -3,24 +3,24 @@ import firebase from "firebase"
 import 'firebase/storage'
 
 const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
+  // item information to update the database
   const [item, setItem] = useState(currentItem);
-  const [oldImage] = useState(item.image)
-  
+    
   const [fileUploads, setFileUploads] = useState(item.download)
-
-  const [newUploads, setNewUploads] = useState([])
-  const [filesToDelete, setFilesToDelete] = useState([])
 
   const [uploads, setUploads] = useState([])
   const [tag, setTag] = useState("");
   const [addedTags, setAddedTags] = useState(item.tags)
 
+  // warnings for duplicate entries and maximum entries
   const [tagWarning, setTagWarning] = useState(false);
   const [duplicateWarning, setDuplicateWarning] = useState(false);
   const [duplicateFileWarning, setDuplicateFileWarning] = useState(false);
-
   const [duplicateFiles, setDuplicateFiles] = useState([])
-  const originalDownloads = item.download
+  
+  // original variables for checking whether to upload/download
+  const [originalDownloads] = useState(item.download);
+  const [oldImage] = useState(item.image);
 
   useEffect(() => {
     setItem(currentItem);
@@ -49,15 +49,24 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   const allLevels = useItems("levels");
   const allTags = useItems("tags");
 
+  // submission form
   const onSubmit = e => {
     e.preventDefault();
+    console.log(originalDownloads)
 
     if (oldImage !== item.image) {
       deleteFile(oldImage, item.id, `images`)
       uploadFile('image', item.id, 'images')
     }
-    if (fileUploads !== item.download) {
-      // changeDownloads(fileUploads)
+    if (originalDownloads !== item.download) {
+      originalDownloads.map(download => {
+        const fileDelete = item.download.filter(item => item === download)
+        if (fileDelete == 0) {
+          console.log("no file")
+        } else {
+          console.log("file")
+        }
+      })
       // deleteAllFiles(filesToDelete, item.id, `downloads`)
       // uploadMultipleFiles('download', item.id, 'downloads')
       
@@ -124,7 +133,6 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     e.preventDefault()
     setDuplicateFiles([])
     setDuplicateFileWarning(false);
-    // filesToDelete.push(fileUploads[index])
     const newFiles = fileUploads
     newFiles.splice(index, 1)
     setFileUploads([...newFiles])
@@ -181,12 +189,14 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   }
 
   const loadFile = (e) => {
-    changeImage("image", `${e.target.files[0].name}`)
+    if (e) {
+      changeImage("image", `${e.target.files[0].name}`)
     const output = document.getElementById("output");
     output.src = URL.createObjectURL(e.target.files[0]);
     output.onload = function() {
       URL.revokeObjectURL(output.src)
-    }   
+    }
+    }
   }
 
   const loadAllFiles = (e) => {
@@ -195,6 +205,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     const upload = e.target.files;
     const allFiles = Array.from(upload)
     const existingFiles = fileUploads;
+    const existingUploads = uploads;
     const duplicates = [];
     console.log(allFiles)
     allFiles.map(file => {
@@ -204,12 +215,13 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
         setDuplicateFileWarning(true);
       } else {
         existingFiles.push(file.name)
-        // newUploads.push(file)
+        existingUploads.push(file)
       }
     })
     console.log(existingFiles)
     setDuplicateFiles([...duplicates])
     setFileUploads([...existingFiles])
+    // setUploads([...existingUploads])
     changeDownloads("download", existingFiles)
   }
   
