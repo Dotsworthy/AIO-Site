@@ -6,7 +6,8 @@ const UpdateItem = ({ setEditing, currentItem }) => {
   // item information to update the database
   const [item, setItem] = useState(currentItem);
     
-  const [uploads, setUploads] = useState([])
+  // states for changed data that needs processing
+  const [filesToUpload, setFilesToUpload] = useState([])
   const [filesToDelete] = useState([])
   const [tag, setTag] = useState("");
 
@@ -17,9 +18,7 @@ const UpdateItem = ({ setEditing, currentItem }) => {
   const [duplicateFiles, setDuplicateFiles] = useState([])
   
   // original variables for checking whether to upload/download
- 
-  // const originalItem = Object.assign(currentItem)
-  const originalImage = currentItem.image;
+   const originalImage = currentItem.image;
 
   const useItems = (location) => {
     const [items, setItems] = useState([]);
@@ -45,19 +44,31 @@ const UpdateItem = ({ setEditing, currentItem }) => {
   const allTags = useItems("tags");
 
   // submission form
-  const onSubmit = e => {
+  const onSubmit = async e => {
     e.preventDefault();
 
     if (originalImage !== item.image) {
       deleteFile(originalImage, item.id, `images`)
-      uploadFile('image', item.id, 'images')
+      uploadFile('image', item.id, 'images', 0)
     }
+
+    const originalDownloads = await downloadCheck(item.id, "downloads")
+    console.log(originalDownloads);
 
     filesToDelete.forEach(file => {
       if (item.download.includes(file) == true) {
         return
       } else {
         deleteFile(file, item.id, "downloads")
+      }
+    })
+    
+    filesToUpload.forEach(file => {
+      console.log(file.name)
+      if (item.download.includes(file.name) == true) {
+        return
+      } else {
+        uploadFile(file, item.id, 'downloads', filesToUpload.indexOf(file))
       }
     })
     // if (originalDownloads !== item.download) {
@@ -82,6 +93,22 @@ const UpdateItem = ({ setEditing, currentItem }) => {
 
     setEditing(false);
   };
+
+  const downloadCheck = async (id, location) => {
+    const fileList = [];
+    const storageRef = firebase.storage().ref(`${location}/${id}`)
+    
+    storageRef.listAll().then(function(result) {
+      result.items.forEach(function(itemRef) {
+        fileList.push(itemRef)
+      })
+    })
+    // This needs completing, maybe loop through array?
+    const result = fileList.map(reference => {
+      result.push(reference.name)
+    })
+    return result
+  }
 
   // changing item state
   const onChange = e => {
@@ -148,8 +175,9 @@ const UpdateItem = ({ setEditing, currentItem }) => {
     changeDownloads("download", newFiles)
   }
 
-  const uploadFile = (file, id, location) => {
-    const selectedFile = document.getElementById(file).files[0];
+  const uploadFile = (file, id, location, index) => {
+    const selectedFile = document.getElementById(file).files[index];
+    console.log(selectedFile);
     const storageRef = firebase.storage().ref(`${location}/${id}/${selectedFile.name}`)
     storageRef.put(selectedFile)
   }
@@ -216,7 +244,7 @@ const UpdateItem = ({ setEditing, currentItem }) => {
     const upload = e.target.files;
     const allFiles = Array.from(upload)
     const existingFiles = item.download;
-    const existingUploads = uploads;
+    const existingUploads = filesToUpload;
     const duplicates = [];
     console.log(allFiles)
     allFiles.map(file => {
@@ -230,8 +258,8 @@ const UpdateItem = ({ setEditing, currentItem }) => {
       }
     })
     console.log(existingFiles)
+    console.log(filesToUpload)
     setDuplicateFiles([...duplicates])
-    // setUploads([...existingUploads])
     changeDownloads("download", existingFiles)
   }
   
