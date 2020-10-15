@@ -5,20 +5,25 @@ import 'firebase/storage'
 const UpdateItem = ({ setEditing, currentItem }) => {
   // item information to update the database
   const [item, setItem] = useState(currentItem);
+  const database = firebase.firestore()
     
   // states for changed data that needs processing
-  const [filesToUpload, setFilesToUpload] = useState([])
+  const [filesToUpload] = useState([])
   const [filesToDelete] = useState([])
   const [tag, setTag] = useState("");
 
   // warnings for duplicate entries and maximum entries
+  const [warning, setWarning] = useState(false)
+  const [nameWarning, setNameWarning] = useState(false);
   const [tagWarning, setTagWarning] = useState(false);
   const [duplicateWarning, setDuplicateWarning] = useState(false);
   const [duplicateFileWarning, setDuplicateFileWarning] = useState(false);
+  
   const [duplicateFiles, setDuplicateFiles] = useState([])
   
   // original variables for checking whether to upload/download
-   const originalImage = currentItem.image;
+  const originalImage = currentItem.image;
+  const originalName = currentItem.name;
 
   const useItems = (location) => {
     const [items, setItems] = useState([]);
@@ -43,46 +48,85 @@ const UpdateItem = ({ setEditing, currentItem }) => {
   const allLevels = useItems("levels");
   const allTags = useItems("tags");
 
+  const databaseCheck = async (name, location) => {
+    let query = []
+    const snapshot = await database
+    .collection(location)
+    .where("name", "==", name)
+    .get()
+    
+    snapshot.forEach((doc) => query.push(doc))
+    return query
+  }
+
+  const addDatabaseField = (name, location) => {
+    firebase
+    .firestore()
+    .collection(location)
+    .add({
+      name
+    })
+  }
+
   // submission form
   const onSubmit = async e => {
     e.preventDefault();
+    if (item.name && item.description && item.category && item.level && item.tags.length > 0 && item.image && item.download.length > 0) {
+      const nameCheck = await databaseCheck(item.name, "items")
+      const categoryCheck = await databaseCheck(item.category, "categories")
+      const levelCheck = await databaseCheck(item.level, "levels")
 
-    if (originalImage !== item.image) {
-      deleteFile(originalImage, item.id, `images`)
-      uploadFile('image', item.id, 'images')
-    }
-
-    filesToDelete.forEach(file => {
-      if (item.download.includes(file) == true) {
-        return
-      } else {
-        deleteFile(file, item.id, "downloads")
-      }
-    })
-
-    uploadMultipleFiles(filesToUpload, item.id, "downloads")
-
-    // if (originalDownloads !== item.download) {
-    //   originalDownloads.map(download => {
-    //     const fileDelete = item.download.filter(item => item === download)
-    //     if (fileDelete == 0) {
-    //       console.log("no file")
-    //     } else {
-    //       console.log("file")
-    //     }
-    //   })
-    //   // deleteAllFiles(filesToDelete, item.id, `downloads`)
-    //   // uploadMultipleFiles('download', item.id, 'downloads')
+      console.log(originalName);
+      console.log(item.name);
+      console.log(nameCheck.length);
       
-    // }
+      if (nameCheck.length > 0) {
+        setNameWarning(true);
+      } else {
 
-    firebase
-    .firestore()
-    .collection("items")
-    .doc(item.id)
-    .update(item)
+          if (categoryCheck.length == 0) {
+            addDatabaseField(item.category, "categories")
+          }
+    
+          if (levelCheck.length == 0) {
+            addDatabaseField(item.level, "levels")
+          }
 
-    setEditing(false);
+          item.tags.forEach(async tag => {
+            const tagCheck = await databaseCheck(tag, "tags")
+            if (tagCheck.length == 0) {
+              addDatabaseField(tag, "tags")
+            }
+          })
+        }
+        
+        if (originalImage !== item.image) {
+          deleteFile(originalImage, item.id, `images`)
+          uploadFile('image', item.id, 'images')
+        }
+  
+        filesToDelete.forEach(file => {
+          if (item.download.includes(file) == true) {
+            return
+          } else {
+            deleteFile(file, item.id, "downloads")
+          }
+        })
+  
+        uploadMultipleFiles(filesToUpload, item.id, "downloads")
+  
+        firebase
+        .firestore()
+        .collection("items")
+        .doc(item.id)
+        .update(item)
+    
+        setEditing(false);
+        
+    } else {
+      setWarning(true)
+    }   
+    console.log(nameWarning);
   };
 
   // changing item state
@@ -245,6 +289,8 @@ const UpdateItem = ({ setEditing, currentItem }) => {
         </div>
 
         <form className="form-container" onSubmit={onSubmit}>
+        {warning && <div>Some fields have been left blank. Please complete all fields (including downloads) before submitting the form</div>}
+
           <div className="form-content">
             
             <div className="form-fields">

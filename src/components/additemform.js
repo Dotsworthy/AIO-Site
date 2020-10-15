@@ -16,7 +16,7 @@ const AddItemForm = ({setAddResource}) => {
     const [fileUploads, setFileUploads] = useState([])    
     const [warning, setWarning] = useState(false);
     const [tagWarning, setTagWarning] = useState(false);
-    const [nameWarning, setEntryWarning] = useState(false);
+    const [nameWarning, setNameWarning] = useState(false);
     const [duplicateWarning, setDuplicateWarning] = useState(false);
     const [duplicateFileWarning, setDuplicateFileWarning] = useState(false);
 
@@ -192,12 +192,9 @@ const AddItemForm = ({setAddResource}) => {
       const nameCheck = await databaseCheck(name, "items")
       const categoryCheck = await databaseCheck(category, "categories")
       const levelCheck = await databaseCheck(level, "levels")
-
-      console.log(nameCheck);
-      console.log(categoryCheck);
-      console.log(levelCheck);
+      
       if (nameCheck.length > 0) {
-        setEntryWarning(true);
+        setNameWarning(true);
       } else {
 
           if (categoryCheck.length == 0) {
