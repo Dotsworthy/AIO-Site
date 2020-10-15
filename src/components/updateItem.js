@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import firebase from "firebase"
 import 'firebase/storage'
 
-const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
+const UpdateItem = ({ setEditing, currentItem }) => {
   // item information to update the database
   const [item, setItem] = useState(currentItem);
     
@@ -20,11 +20,18 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   
   // original variables for checking whether to upload/download
   const [originalDownloads] = useState(item.download);
-  const [oldImage] = useState(item.image);
+  
+  const oldImage = currentItem.image;
 
-  useEffect(() => {
-    setItem(currentItem);
-  }, [currentItem]);
+  const logVariables = () => {
+    console.log(oldImage)
+  }
+
+  logVariables()
+
+  // useEffect(() => {
+  //   setItem(currentItem);
+  // }, []);
 
   const useItems = (location) => {
     const [items, setItems] = useState([]);
@@ -53,11 +60,12 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
   const onSubmit = e => {
     e.preventDefault();
     console.log(originalDownloads)
+    console.log(oldImage);
 
-    // if (oldImage !== item.image) {
-    //   deleteFile(oldImage, item.id, `images`)
-    //   uploadFile('image', item.id, 'images')
-    // }
+    if (oldImage !== item.image) {
+      deleteFile(oldImage, item.id, `images`)
+      uploadFile('image', item.id, 'images')
+    }
     // if (originalDownloads !== item.download) {
     //   originalDownloads.map(download => {
     //     const fileDelete = item.download.filter(item => item === download)
@@ -150,7 +158,6 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
     const selectedFile = document.getElementById(file).files[0];
     const storageRef = firebase.storage().ref(`${location}/${id}/${selectedFile.name}`)
     storageRef.put(selectedFile)
-    return `${selectedFile.name}`
   }
 
   const uploadMultipleFiles = (file, id, location) => {
@@ -193,7 +200,10 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
       img.src = url;
     }).catch(function(error) {
     })
+    console.log("image-loaded");
   }
+
+  getImageURL(item, item.id, "images")
 
   const loadFile = (e) => {
     if (e) {
@@ -278,14 +288,7 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
               {tagWarning && <p>Maximum of four tags. Please delete a tag before adding a new one</p>}
               {duplicateWarning && <p>Tag already selected. Please select a different tag</p>}
               
-              
-              
-              
-              
-              
-              
-              
-              
+             
               {/* <input type="text" name="category" value={item.category} onChange={onChange}/>
               <input type="text" name="level" value={item.level} onChange={onChange}/> */}
               {/* <input type="text" name="tags" value={tagString} onChange={(e) => setTagString(e.currentTarget.value)}/>
@@ -298,7 +301,6 @@ const UpdateItem = ({ setEditing, currentItem, updateItem }) => {
               <div className="image-upload-container">
                 <label htmlFor="image">Upload Image</label>
                 <div className="form-preview">
-                  {getImageURL(item, item.id, "images")}
                   <img className="image-preview" id="output" alt=""></img>
                 </div>
                   <input onChange={(e) => loadFile(e)} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
