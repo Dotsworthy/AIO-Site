@@ -1,13 +1,21 @@
 @font-face {
-    font-family: 'Alternate Gothic No3 D Regular';
-    src: "fonts/Alternate Gothic No3 D Regular.otf";
+    font-family: 'CodeDemo-Light';
+    src: url("../fonts/CodeDemo-Light.otf");
 }
+
+
+@font-face {
+    font-family: 'CodeDemo-Bold';
+    font-weight: bold;
+    src: url("../fonts/CodeDemo-Bold.otf");
+}
+
 
 * {
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
-    font-family: 'Alternate Gothic No3 D Regular', Fallback, sans-serif;
+    font-family: 'Arial', Fallback, sans-serif;
     letter-spacing: 0em;
     font-size: 1rem;
 }
