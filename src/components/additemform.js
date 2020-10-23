@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react"
 import firebase from "firebase"
+import { navigate } from "gatsby"
 import 'firebase/storage'
 
-const AddItemForm = ({setAddResource}) => {
+const AddItemForm = () => {
 
     // database location
     const database = firebase.firestore()
@@ -113,14 +114,14 @@ const AddItemForm = ({setAddResource}) => {
       setResourceUploads([...newFiles])
     }
   
-    const uploadFile = (file, id, location) => {
+    const uploadSingleFile = (file, id, location) => {
       const selectedFile = document.getElementById(file).files[0];
       const storageRef = firebase.storage().ref(`${location}/${id}/${selectedFile.name}`)
       storageRef.put(selectedFile)
       return `${selectedFile.name}`
     }
 
-    const uploadMultipleFiles = (file, id, location) => {
+    const uploadAllFiles = (file, id, location) => {
       const selectedFiles = resourceUploads;
       const fileList = Array.from(selectedFiles);
       const databaseEntry = fileList.map(file => {
@@ -131,10 +132,6 @@ const AddItemForm = ({setAddResource}) => {
         storageRef.put(file)
       })   
       return databaseEntry
-    }
-
-    const handleCancel = () => {
-      setAddResource(false);
     }
 
     const addDatabaseField = (name, location) => {
@@ -170,6 +167,10 @@ const AddItemForm = ({setAddResource}) => {
       })
     }
 
+    const handleCancel = () => {
+      navigate("/admin")
+    }
+
     const databaseCheck = async (name, location) => {
         let query = []
         const snapshot = await database
@@ -180,14 +181,6 @@ const AddItemForm = ({setAddResource}) => {
         snapshot.forEach((doc) => query.push(doc))
         console.log(query);
         return query
-    }
-
-    const getData = async (location) => {
-      let query = []
-      const snapshot = await database.collection(location).get()
-    
-      snapshot.forEach((doc) =>  query.push(doc.data()))
-      return query
     }
 
     const onSubmit = async e => {
@@ -221,13 +214,11 @@ const AddItemForm = ({setAddResource}) => {
           addResource(name, description, category, level, tags, "items")
           const databaseEntry = await databaseCheck(name, "items")
 
-          const image = uploadFile('image', databaseEntry[0].id, 'images')
-          const download = uploadMultipleFiles('download', databaseEntry[0].id, 'downloads')
-          console.log(image);
-          console.log(download);
+          const image = uploadSingleFile('image', databaseEntry[0].id, 'images')
+          const download = uploadAllFiles('download', databaseEntry[0].id, 'downloads')
           
           updateResource(image, download, "items", databaseEntry[0].id)
-          setAddResource(false);
+          navigate("/admin")
         }
       } else {
         setWarning(true);

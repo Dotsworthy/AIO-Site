@@ -5,6 +5,7 @@ import UpdateItem from "../components/updateitem"
 import AddItemForm from "../components/addItemForm"
 import DeleteItem from "../components/deleteItem"
 import Layout from "../components/layout"
+import { navigate } from "gatsby"
 
 const SecondPage = () => {
 
@@ -64,7 +65,7 @@ const SecondPage = () => {
   //   };
 
   const handleAddResourceClick = () => {
-    setAddResource(true)
+    navigate("/addSubject")
   }
 
   return (
