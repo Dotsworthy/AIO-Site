@@ -21,7 +21,22 @@
 }
 
 body {
-    background-color: #cbd9bf;
+    background-color: #F2B749;
+}
+
+.database-navigation-bar {
+    padding: 15px;
+}
+
+.database-navigation-button {
+    background: url("../images/brush-stroke-banner-5.png");
+    background-repeat: no-repeat;
+    background-size: auto 40px;
+    background-position: 50% 50%;
+    border: none;
+    background-color: transparent;
+    color: white;
+    padding: 12px;
 }
 
 .navigation-bar-container {
@@ -29,12 +44,15 @@ body {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    background-color: #869679;
-    font-size: 1.2rem;
+    background-color: #0B6BBF;
+    // font-size: 1.2rem;
 
     a, a:visited {
      text-decoration: none;
-     color: #ffc800;
+     color: white;
+     font-size: 1em;
+     font-family: 'CodeDemo-Bold';
+     letter-spacing: 2px;
     }
 }
 
@@ -133,6 +151,10 @@ body {
     margin: 20px;
 }
 
+td, th {
+    padding: 2px;
+}
+
 .data-row {
     height: 30px;
 }
@@ -152,8 +174,8 @@ body {
 }
 
 .database-form-container {
-    // min-width: 700px;
-    // position: fixed;
+    min-width: 700px;
+    position: fixed;
     margin: 0 auto;
     top: calc(50% - 350px);
     left: calc(50% - 350px);
@@ -166,7 +188,7 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background-color: #ffc800;
+    background-color: white;
     padding: 2%;
 
 
@@ -177,6 +199,10 @@ body {
         border: none;
     }
     
+}
+
+.form-warning {
+    color: red;
 }
 
 .image-preview {
@@ -191,12 +217,19 @@ body {
     padding: 2%;
 }
 
+.warning-container {
+    height: 50px;
+}
+
+.tags-added-container {
+    // height: 80px;
+}
+
 .form-content {
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
 }
 
 .form-fields {

@@ -70,7 +70,9 @@ const SecondPage = () => {
   return (
 
   <Layout>
-      <button onClick={handleAddResourceClick}>Add Resource</button>
+      <div className="database-navigation-bar">
+      <button className="database-navigation-button" onClick={handleAddResourceClick}>Add Resource</button>
+      </div>
       <ItemList editItem={editItem} deleteItem={deleteItem}/>
       {addResource && <AddItemForm setAddResource={setAddResource}/>}
       {editing && <UpdateItem 

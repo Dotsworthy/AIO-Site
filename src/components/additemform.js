@@ -4,14 +4,18 @@ import 'firebase/storage'
 
 const AddItemForm = ({setAddResource}) => {
 
+    // database location
     const database = firebase.firestore()
 
+    // fields for updating database
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [category, setCategory] = useState("")
     const [level, setLevel] = useState("")
     const [tag, setTag] = useState("");
+    const [addedTags, setAddedTags] = useState([])
 
+    // validation hooks for form.
     const [imageUpload, setImageUpload] = useState("")
     const [fileUploads, setFileUploads] = useState([])    
     const [warning, setWarning] = useState(false);
@@ -19,25 +23,19 @@ const AddItemForm = ({setAddResource}) => {
     const [nameWarning, setNameWarning] = useState(false);
     const [duplicateWarning, setDuplicateWarning] = useState(false);
     const [duplicateFileWarning, setDuplicateFileWarning] = useState(false);
-
-    const [addedTags, setAddedTags] = useState([])
     const [duplicateFiles, setDuplicateFiles] = useState([])
 
+    // This React hook generates lists for the item form.
     const useItems = (location) => {
       const [items, setItems] = useState([]);
       useEffect(() => {
-        firebase
-          .firestore()
-          .collection(location)
-          .onSnapshot(snapshot => {
+        database.collection(location).onSnapshot(snapshot => {
             const listItems = snapshot.docs.map(doc => ({
               id: doc.id,
               ...doc.data()
             }));
             setItems(listItems);
           });
-          //called the unsubscribe--closing connection to Firestore.
-          // return () => unsubscribe()
       }, []);
       return items;
     };
@@ -46,6 +44,7 @@ const AddItemForm = ({setAddResource}) => {
     const allLevels = useItems("levels");
     const allTags = useItems("tags");
 
+    // Prepares and validates tags for addition to the database
     const addTag = (e, tag) => {
       e.preventDefault()
       setTagWarning(false)
@@ -68,6 +67,52 @@ const AddItemForm = ({setAddResource}) => {
       newTags.splice(index, 1)
       setAddedTags([...newTags])
       setTagWarning(false);
+    }
+
+    // Loads profile image to display on the form and prepares them for addition to the database
+    const loadProfileImage = (e, htmlLocation) => {
+      createPreview(e, htmlLocation)
+      const file = e.target.files;
+      setImageUpload(file)
+    }
+
+    const createPreview = (e, htmlLocation) => {
+      const htmlElement = document.getElementById(htmlLocation);
+      htmlElement.src = URL.createObjectURL(e.target.files[0]);
+      htmlElement.onload = function() {
+        URL.revokeObjectURL(htmlElement.src)
+      }
+    }
+
+
+    // const loadSingleFile = (e) => {
+    //   const preview = document.getElementById("preview");
+    //   preview.src = URL.createObjectURL(e.target.files[0]);
+    //   preview.onload = function() {
+    //     URL.revokeObjectURL(preview.src)
+    //   }
+    //   const file = e.target.files;
+    //   return file;
+    // }
+
+    const loadAllFiles = (e) => {
+      setDuplicateFileWarning(false)
+      setDuplicateFiles([])
+      const upload = e.target.files;
+      const allFiles = Array.from(upload)
+      const existingFiles = fileUploads;
+      const duplicates = [];
+      allFiles.map(file => {
+        const duplicate = existingFiles.filter(existingFile => existingFile.name === file.name)
+        if (duplicate.length > 0) {
+          setDuplicateFileWarning(true)
+          duplicates.push(file)
+        } else {
+          return existingFiles.push(file)
+        }
+      })
+      setFileUploads([...existingFiles])
+      setDuplicateFiles([...duplicates])
     }
 
     const removeFile = (e, index) => {
@@ -99,35 +144,7 @@ const AddItemForm = ({setAddResource}) => {
       return databaseEntry
     }
 
-    const loadFile = (e) => {
-      const preview = document.getElementById("preview");
-      preview.src = URL.createObjectURL(e.target.files[0]);
-      preview.onload = function() {
-        URL.revokeObjectURL(preview.src)
-      }
-      const file = e.target.files;
-      setImageUpload(file);
-    }
-
-    const loadAllFiles = (e) => {
-      setDuplicateFileWarning(false)
-      setDuplicateFiles([])
-      const upload = e.target.files;
-      const allFiles = Array.from(upload)
-      const existingFiles = fileUploads;
-      const duplicates = [];
-      allFiles.map(file => {
-        const duplicate = existingFiles.filter(existingFile => existingFile.name === file.name)
-        if (duplicate.length > 0) {
-          setDuplicateFileWarning(true)
-          duplicates.push(file)
-        } else {
-          return existingFiles.push(file)
-        }
-      })
-      setFileUploads([...existingFiles])
-      setDuplicateFiles([...duplicates])
-    }
+    
 
     const handleCancel = () => {
       setAddResource(false);
@@ -237,8 +254,10 @@ const AddItemForm = ({setAddResource}) => {
         </div>
 
         <form className="form-container" onSubmit={onSubmit}>
-          {warning && <div>Not all fields are complete. Please complete all fields before submitting the form</div>}
-          {nameWarning && <div>{name} already refers to an resource in the database. Either update the original resource, delete the original resource first, or choose a different name for the resource</div>}
+          <div className="warning-container">
+          {warning && <div className="form-warning">Not all fields are complete. Please complete all fields before submitting the form</div>}
+          {nameWarning && <div className="form-warning">{name} already refers to an resource in the database. Either update the original resource, delete the original resource first, or choose a different name for the resource</div>}
+          </div>
           <div className="form-content">
 
             <div className="form-fields">
@@ -270,13 +289,15 @@ const AddItemForm = ({setAddResource}) => {
               </datalist>
               <p>Tags added:</p>
               {addedTags.map(singleTag => {
-                return <div>
+                return <div className="tags-added-container">
                   <label for={singleTag} key={addedTags.indexOf(singleTag)} id={addedTags.indexOf(singleTag)} name={singleTag}>{singleTag}</label>
                   <button name={singleTag} onClick={(e) => deleteTag(e, addedTags.indexOf(singleTag))}>Delete Tag</button>
                   </div>
               })}
-              {tagWarning && <p>Maximum of four tags. Please delete a tag before adding a new one</p>}
-              {duplicateWarning && <p>Tag already selected. Please select a different tag</p>}
+              {/* <div className="warning-container"> */}
+              {tagWarning && <div className="form-warning">Maximum of four tags. Please delete a tag before adding a new one</div>}
+              {duplicateWarning && <div className="form-warning">Tag already selected. Please select a different tag</div>}
+              {/* </div> */}
             </div>
 
             <div className="form-uploads">
@@ -286,7 +307,7 @@ const AddItemForm = ({setAddResource}) => {
               <div className="form-preview">
                 <img className="image-preview" id="preview" alt=""></img>
               </div>
-              <input onChange={(e) => loadFile(e)} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
+              <input onChange={(e) => loadProfileImage(e, "preview")} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
               </div>
 
               <div className="resource-upload-container">

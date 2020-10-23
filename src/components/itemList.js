@@ -24,20 +24,18 @@ const ItemList = ( { editItem, deleteItem } ) => {
       <tbody>
         <tr className="header-row">
           <th className="name">Resource Name</th>
-          {/* <th className="description">Description</th> */}
-          {/* <th className="category">Category</th>
+          <th className="category">Category</th>
           <th className="level">Level</th>
-          <th className="tags">Tags</th> */}
+          <th className="tags">Tags</th>
         </tr>
       </tbody>
       {resources.map(item => (
             <tbody key={item.id}>
               <tr className="data-row">
                 <td className="resource-name">{item.name}</td>
-                {/* <td className="description">{item.description}</td> */}
-                {/* <td className="category">{item.category}</td>
-                <td className="level">{item.level}</td> */}
-                {/* <td className="tags">{item.tags}</td> */}
+                <td className="category">{item.category}</td>
+                <td className="level">{item.level}</td>
+                <td className="tags">{item.tags.toString()}</td>
                 <td className="buttons">
                     <button onClick={() => editItem(item)}>Edit</button>
                     <button onClick={() => deleteItem(item)}>Delete</button>
