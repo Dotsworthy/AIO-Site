@@ -14,10 +14,10 @@ const AddItemForm = ({setAddResource}) => {
     const [level, setLevel] = useState("")
     const [tag, setTag] = useState("");
     const [addedTags, setAddedTags] = useState([])
+    const [imageUpload, setImageUpload] = useState("")
+    const [resourceUploads, setResourceUploads] = useState([])   
 
     // validation hooks for form.
-    const [imageUpload, setImageUpload] = useState("")
-    const [fileUploads, setFileUploads] = useState([])    
     const [warning, setWarning] = useState(false);
     const [tagWarning, setTagWarning] = useState(false);
     const [nameWarning, setNameWarning] = useState(false);
@@ -70,7 +70,7 @@ const AddItemForm = ({setAddResource}) => {
     }
 
     // Loads profile image to display on the form and prepares them for addition to the database
-    const loadProfileImage = (e, htmlLocation) => {
+    const prepareProfileImage = (e, htmlLocation) => {
       createPreview(e, htmlLocation)
       const file = e.target.files;
       setImageUpload(file)
@@ -84,23 +84,12 @@ const AddItemForm = ({setAddResource}) => {
       }
     }
 
-
-    // const loadSingleFile = (e) => {
-    //   const preview = document.getElementById("preview");
-    //   preview.src = URL.createObjectURL(e.target.files[0]);
-    //   preview.onload = function() {
-    //     URL.revokeObjectURL(preview.src)
-    //   }
-    //   const file = e.target.files;
-    //   return file;
-    // }
-
-    const loadAllFiles = (e) => {
+    // Loads and validates file uploads and prepares them for adding to the database 
+    const prepareAllFiles = (e) => {
       setDuplicateFileWarning(false)
       setDuplicateFiles([])
-      const upload = e.target.files;
-      const allFiles = Array.from(upload)
-      const existingFiles = fileUploads;
+      const allFiles = Array.from(e.target.files)
+      const existingFiles = resourceUploads;
       const duplicates = [];
       allFiles.map(file => {
         const duplicate = existingFiles.filter(existingFile => existingFile.name === file.name)
@@ -111,7 +100,7 @@ const AddItemForm = ({setAddResource}) => {
           return existingFiles.push(file)
         }
       })
-      setFileUploads([...existingFiles])
+      setResourceUploads([...existingFiles])
       setDuplicateFiles([...duplicates])
     }
 
@@ -119,9 +108,9 @@ const AddItemForm = ({setAddResource}) => {
       e.preventDefault()
       setDuplicateFileWarning(false);
       setDuplicateFiles([])
-      const newFiles = fileUploads
+      const newFiles = resourceUploads
       newFiles.splice(index, 1)
-      setFileUploads([...newFiles])
+      setResourceUploads([...newFiles])
     }
   
     const uploadFile = (file, id, location) => {
@@ -132,7 +121,7 @@ const AddItemForm = ({setAddResource}) => {
     }
 
     const uploadMultipleFiles = (file, id, location) => {
-      const selectedFiles = fileUploads;
+      const selectedFiles = resourceUploads;
       const fileList = Array.from(selectedFiles);
       const databaseEntry = fileList.map(file => {
         return `${file.name}`
@@ -143,8 +132,6 @@ const AddItemForm = ({setAddResource}) => {
       })   
       return databaseEntry
     }
-
-    
 
     const handleCancel = () => {
       setAddResource(false);
@@ -205,7 +192,7 @@ const AddItemForm = ({setAddResource}) => {
 
     const onSubmit = async e => {
       e.preventDefault()
-      if (name && description && category && level && addedTags && imageUpload && fileUploads) {
+      if (name && description && category && level && addedTags && imageUpload && resourceUploads) {
       const nameCheck = await databaseCheck(name, "items")
       const categoryCheck = await databaseCheck(category, "categories")
       const levelCheck = await databaseCheck(level, "levels")
@@ -307,18 +294,18 @@ const AddItemForm = ({setAddResource}) => {
               <div className="form-preview">
                 <img className="image-preview" id="preview" alt=""></img>
               </div>
-              <input onChange={(e) => loadProfileImage(e, "preview")} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
+              <input onChange={(e) => prepareProfileImage(e, "preview")} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
               </div>
 
               <div className="resource-upload-container">
               <label htmlFor="download">Upload Resources</label>
-              <input onChange={(e) => {loadAllFiles(e)}}type="file" id="download" name="download" multiple/>
+              <input onChange={(e) => {prepareAllFiles(e)}}type="file" id="download" name="download" multiple/>
               <p>Files to upload:</p>
-              {fileUploads.length > 0 ? 
-              fileUploads.map(file => (
+              {resourceUploads.length > 0 ? 
+              resourceUploads.map(file => (
                 <div>
                 <label>{file.name}</label>
-                <button onClick={(e) => removeFile(e, fileUploads.indexOf(file))}>Remove File</button>
+                <button onClick={(e) => removeFile(e, resourceUploads.indexOf(file))}>Remove File</button>
                 </div>
               ))
               :
