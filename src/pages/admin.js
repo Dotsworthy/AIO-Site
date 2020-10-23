@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import firebase from "../components/firebase"
 import ItemList from "../components/itemList"
 import UpdateItem from "../components/updateitem"
-import AddItemForm from "../components/addItemForm"
+// import AddItemForm from "../components/addItemForm"
 import DeleteItem from "../components/deleteItem"
 import Layout from "../components/layout"
 import { navigate } from "gatsby"
@@ -14,12 +14,12 @@ const SecondPage = () => {
   ]
 
   const [addResource, setAddResource] = useState(false)
-  const [editing, setEditing] = useState(false)
+  // const [editing, setEditing] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const [currentItem, setCurrentItem] = useState(initialItemState)
 
   const editItem = item => {
-    setEditing(true)
+    // setEditing(true)
     setCurrentItem({
       id: item.id,
       name: item.name,
@@ -30,6 +30,9 @@ const SecondPage = () => {
       tags: item.tags,
       download: item.download
 
+    })
+    navigate(`/updateSubject/`, {
+      state: currentItem
     })
   }
 
@@ -75,11 +78,12 @@ const SecondPage = () => {
       <button className="database-navigation-button" onClick={handleAddResourceClick}>Add Resource</button>
       </div>
       <ItemList editItem={editItem} deleteItem={deleteItem}/>
-      {addResource && <AddItemForm setAddResource={setAddResource}/>}
-      {editing && <UpdateItem 
+      {/* {addResource && <AddItemForm setAddResource={setAddResource}/>} */}
+
+      {/* {editing && <UpdateItem 
       setEditing={setEditing}
       currentItem={currentItem}
-      />}
+      />} */}
       {deleting && <DeleteItem
       setDeleting={setDeleting}
       currentItem={currentItem}
