@@ -226,12 +226,12 @@ const AddItemForm = () => {
     }
  
     return (
-      <div className="database-form-container">        
-        <div className="form-header">
+      <div>        
+        <div>
           <h2>Add Resource</h2>
         </div>
 
-        <form className="form-container" onSubmit={onSubmit}>
+        <form onSubmit={onSubmit}>
           <div className="warning-container">
           {warning && <div className="form-warning">Not all fields are complete. Please complete all fields before submitting the form</div>}
           {nameWarning && <div className="form-warning">{name} already refers to an resource in the database. Either update the original resource, delete the original resource first, or choose a different name for the resource</div>}
