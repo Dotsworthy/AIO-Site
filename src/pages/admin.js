@@ -6,8 +6,16 @@ import UpdateItem from "../components/updateitem"
 import DeleteItem from "../components/deleteItem"
 import Layout from "../components/layout"
 import { navigate } from "gatsby"
+import { Router, Link } from "@reach/router"
+import AddSubject from "./addSubject"
 
 const SecondPage = () => {
+
+  let AddNewSubject = () => <div>Add Subject</div>
+  let ManageCategories = () => <div>Manage Categories</div>
+  let ManageEducationLevels = () => <div>Manage Educational Level</div>
+  let ManageTags = () => <div>Manage Tags</div>
+  let UpdateSubject = () => <div>Update Item</div>
 
  const initialItemState = [
   { id: null, name: "", image: "", description: "", category: "", level: "", tags: "", download: "" },
@@ -74,8 +82,15 @@ const SecondPage = () => {
   return (
 
   <Layout>
+    <Router>
+      <AddNewSubject path="addSubject"/>
+      {/* <UpdateSubject path="updateSubject/:subjectId"/> */}
+    </Router>
       <div className="database-navigation-bar">
-      <button className="database-navigation-button" onClick={handleAddResourceClick}>Add Resource</button>
+        <nav>
+          <Link className="database-navigation-button" to="addSubject">Add Subject</Link>
+        </nav>
+      {/* <button className="database-navigation-button" onClick={handleAddResourceClick}>Add Resource</button> */}
       </div>
       <ItemList editItem={editItem} deleteItem={deleteItem}/>
       {/* {addResource && <AddItemForm setAddResource={setAddResource}/>} */}
