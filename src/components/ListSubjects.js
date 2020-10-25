@@ -33,12 +33,13 @@ const ListSubjects = () => {
       level: item.level,
       tags: item.tags,
       download: item.download
-
     })
   }
   
   return (
     <div>
+    <Link to="/admin/subjectList/addSubject">Add Subject</Link>
+
     <table className="resource-database-table">
       <tbody>
         <tr className="header-row">
