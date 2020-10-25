@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import firebase from "../components/firebase"
-import ItemList from "../components/itemList"
+import ListSubjects from "../components/ListSubjects"
 import UpdateItem from "../components/updateitem"
 // import AddItemForm from "../components/addItemForm"
 import DeleteItem from "../components/deleteItem"
@@ -8,14 +8,18 @@ import Layout from "../components/layout"
 import { navigate } from "gatsby"
 import { Router, Link } from "@reach/router"
 import AddSubject from "./addSubject"
+import UpdateSubject from "./updateSubject"
+// import SubjectList from "./subjectList"
 
-const SecondPage = () => {
+const AdminPage = () => {
 
-  let AddNewSubject = () => <div>Add Subject</div>
-  let ManageCategories = () => <div>Manage Categories</div>
-  let ManageEducationLevels = () => <div>Manage Educational Level</div>
-  let ManageTags = () => <div>Manage Tags</div>
-  let UpdateSubject = () => <div>Update Item</div>
+  const SubjectList = () => <ListSubjects deleteItem={deleteItem}></ListSubjects>
+
+  // let AddSubject = () => <div>Add Subject</div>
+  // let ManageCategories = () => <div>Manage Categories</div>
+  // let ManageEducationLevels = () => <div>Manage Educational Level</div>
+  // let ManageTags = () => <div>Manage Tags</div>
+  // let UpdateSubject = () => <div>Update Item</div>
 
  const initialItemState = [
   { id: null, name: "", image: "", description: "", category: "", level: "", tags: "", download: "" },
@@ -39,9 +43,7 @@ const SecondPage = () => {
       download: item.download
 
     })
-    navigate(`/updateSubject/`, {
-      state: currentItem
-    })
+    navigate("/updateSubject")
   }
 
   const deleteItem = item => {
@@ -75,36 +77,36 @@ const SecondPage = () => {
 
   //   };
 
-  const handleAddResourceClick = () => {
-    navigate("/addSubject")
-  }
+  // const handleAddResourceClick = () => {
+  //   navigate("/addSubject")
+  // }
 
   return (
 
   <Layout>
     <Router>
-      <AddNewSubject path="addSubject"/>
-      {/* <UpdateSubject path="updateSubject/:subjectId"/> */}
+        <SubjectList path="subjectList">
+          <AddSubject path="addSubject"/>
+          <UpdateSubject path="updateSubject/:subjectId"/>
+        </SubjectList>
     </Router>
-      <div className="database-navigation-bar">
-        <nav>
-          <Link className="database-navigation-button" to="addSubject">Add Subject</Link>
-        </nav>
-      {/* <button className="database-navigation-button" onClick={handleAddResourceClick}>Add Resource</button> */}
-      </div>
-      <ItemList editItem={editItem} deleteItem={deleteItem}/>
-      {/* {addResource && <AddItemForm setAddResource={setAddResource}/>} */}
 
-      {/* {editing && <UpdateItem 
-      setEditing={setEditing}
-      currentItem={currentItem}
-      />} */}
-      {deleting && <DeleteItem
+    <Link to="/subjectList">Subject List</Link>
+
+
+      {/* <div className="database-navigation-bar">
+        <nav> */}
+          {/* <Link className="database-navigation-button" to="addSubject">Add Subject</Link> */}
+        {/* </nav>
+      </div> */}
+      {/* <ItemList editItem={editItem} deleteItem={deleteItem}/> */}
+
+      {/* {deleting && <DeleteItem
       setDeleting={setDeleting}
       currentItem={currentItem}
-      />}
+      />} */}
   </Layout>
   )
 }
 
-export default SecondPage
+export default AdminPage

@@ -1,12 +1,15 @@
 import React from "react"
-import UpdateItem from "../components/additemform"
+// import UpdateItem from "../components/additemform"
 import Layout from "../components/layout"
+import { useParams } from "@reach/router"
 
-const updateSubject = ({currentItem}) => {
+const updateSubject = () => {
+    // const params = useParams()
 
     return (
         <Layout>
-            <UpdateItem currentItem ={currentItem}/>
+            {/* <h1>{params.id}</h1> */}
+            {/* <UpdateItem currentItem ={currentItem}/> */}
         </Layout>
     )
 }

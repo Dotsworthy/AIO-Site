@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react"
+import DeleteItem from "./deleteItem"
+import { Router, Link } from "@reach/router"
 import firebase from "./firebase"
 import 'firebase/storage'
 
-const ItemList = ( { editItem, deleteItem } ) => {
+const ListSubjects = () => {
   const [resources, setResources] = useState([]);
+  const [deleting, setDeleting] = useState(false)
+  const [currentItem, setCurrentItem] = useState([])
 
   useEffect(() => {
     firebase
@@ -17,6 +21,21 @@ const ItemList = ( { editItem, deleteItem } ) => {
       setResources(listResources);
     })
   }, [])
+
+  const deleteItem = (item) => {
+    setDeleting(true)
+    setCurrentItem({
+      id: item.id,
+      name: item.name,
+      image: item.image,
+      description: item.description,
+      category: item.category,
+      level: item.level,
+      tags: item.tags,
+      download: item.download
+
+    })
+  }
   
   return (
     <div>
@@ -37,7 +56,7 @@ const ItemList = ( { editItem, deleteItem } ) => {
                 <td className="level">{item.level}</td>
                 <td className="tags">{item.tags.toString()}</td>
                 <td className="buttons">
-                    <button onClick={() => editItem(item)}>Edit</button>
+                    <Link to={`updateSubject/${item.id}`}>Edit</Link>
                     <button onClick={() => deleteItem(item)}>Delete</button>
                     
                     
@@ -46,8 +65,14 @@ const ItemList = ( { editItem, deleteItem } ) => {
             </tbody>
           ))}
     </table>
+
+    {deleting && <DeleteItem
+      setDeleting={setDeleting}
+      currentItem={currentItem}
+    />}
+
     </div>
   )
 }
 
-export default ItemList
+export default ListSubjects
