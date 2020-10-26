@@ -37,7 +37,7 @@ const AddItemForm = () => {
             }));
             setItems(listItems);
           });
-      }, []);
+      }, [location]);
       return items;
     };
     
@@ -96,7 +96,7 @@ const AddItemForm = () => {
         const duplicate = existingFiles.filter(existingFile => existingFile.name === file.name)
         if (duplicate.length > 0) {
           setDuplicateFileWarning(true)
-          duplicates.push(file)
+          return duplicates.push(file)
         } else {
           return existingFiles.push(file)
         }
@@ -194,17 +194,17 @@ const AddItemForm = () => {
         setNameWarning(true);
       } else {
 
-          if (categoryCheck.length == 0) {
+          if (categoryCheck.length === 0) {
             addDatabaseField(category, "categories")
           }
     
-          if (levelCheck.length == 0) {
+          if (levelCheck.length === 0) {
             addDatabaseField(level, "levels")
           }
     
           addedTags.forEach(async addedTag => {
             const tagCheck = await databaseCheck(addedTag, "tags")
-            if (tagCheck.length == 0) {
+            if (tagCheck.length === 0) {
               addDatabaseField(addedTag, "tags")
             }
           }) 
@@ -218,7 +218,7 @@ const AddItemForm = () => {
           const download = uploadAllFiles('download', databaseEntry[0].id, 'downloads')
           
           updateResource(image, download, "items", databaseEntry[0].id)
-          navigate("/admin")
+          navigate("/admin/subjectList")
         }
       } else {
         setWarning(true);
@@ -262,13 +262,13 @@ const AddItemForm = () => {
               <button onClick={(e) => addTag(e, tag)}>Add Tag</button>
               <datalist id="tagsList">
                 {allTags.map(singleTag => {
-                  return <option ket={singleTag.id} value={singleTag.name}>{singleTag.name}</option>
+                  return <option key={singleTag.id} value={singleTag.name}>{singleTag.name}</option>
                 })}
               </datalist>
               <p>Tags added:</p>
               {addedTags.map(singleTag => {
                 return <div className="tags-added-container">
-                  <label for={singleTag} key={addedTags.indexOf(singleTag)} id={addedTags.indexOf(singleTag)} name={singleTag}>{singleTag}</label>
+                  <label htmlFor={singleTag} key={addedTags.indexOf(singleTag)} id={addedTags.indexOf(singleTag)} name={singleTag}>{singleTag}</label>
                   <button name={singleTag} onClick={(e) => deleteTag(e, addedTags.indexOf(singleTag))}>Delete Tag</button>
                   </div>
               })}
