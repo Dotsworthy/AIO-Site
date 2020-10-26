@@ -6,7 +6,10 @@ const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
     <div className="content-container">
+    <div className="content-tag"> 
     <h1>EDUCATION DONE - ALL IN ONE.</h1>
+    <h1>THE HISTORY OF BRITAIN IS COMPLEX AND DIVERSE - AND OUR EDUCATION SYSTEM SHOULD REFLECT THIS.</h1>
+    </div> 
     <br/>
     <p>Our mission is to encourage and enhance intersectional learning in UK classrooms, exploring a range of viewpoints on our shared past through the provision of premade, easy to use lesson plans, discussion materials, homework suggestions, and teaching aids for educators of all stages and faculties.</p>
     <br/>

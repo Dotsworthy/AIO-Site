@@ -24,10 +24,15 @@
 
 h1 {
     font-family: 'CodeDemo-bold';
-    font-size: 36px;
-    letter-spacing: 2px;
+    // font-size: 36px;
+    // letter-spacing: 2px;
 }
 
+.content-tag {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 body {
     background-color: #F2B749;
 }
