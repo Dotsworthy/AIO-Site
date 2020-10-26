@@ -56,7 +56,7 @@ const UpdateItem = ({ currentItem }) => {
         });
         //called the unsubscribe--closing connection to Firestore.
         // return () => unsubscribe()
-    }, []);
+    }, [location]);
     return items;
   };
   
@@ -99,17 +99,17 @@ const UpdateItem = ({ currentItem }) => {
       if (originalName !== item.name && nameCheck.length > 0) {
         setNameWarning(true);
       } else {
-          if (categoryCheck.length == 0) {
+          if (categoryCheck.length === 0) {
             addDatabaseField(item.category, "categories")
           }
     
-          if (levelCheck.length == 0) {
+          if (levelCheck.length === 0) {
             addDatabaseField(item.level, "levels")
           }
 
           item.tags.forEach(async tag => {
             const tagCheck = await databaseCheck(tag, "tags")
-            if (tagCheck.length == 0) {
+            if (tagCheck.length === 0) {
               addDatabaseField(tag, "tags")
             }
           })
@@ -121,7 +121,7 @@ const UpdateItem = ({ currentItem }) => {
         }
   
         filesToDelete.forEach(file => {
-          if (item.download.includes(file) == true) {
+          if (item.download.includes(file) === true) {
             return
           } else {
             deleteFile(file, item.id, "downloads")
@@ -136,6 +136,7 @@ const UpdateItem = ({ currentItem }) => {
         .doc(item.id)
         .update(item)
 
+        navigate("/admin/subjectList")
       }
     } else {
       setWarning(true)
@@ -235,16 +236,16 @@ const UpdateItem = ({ currentItem }) => {
     });
   }
 
-  const deleteAllFiles = (file, id, location) => {
-    file.forEach(download => {
-      const selectedFile = firebase.storage().ref(`${location}/${id}/${download}`)
-      selectedFile.delete().then(function() {
+  // const deleteAllFiles = (file, id, location) => {
+  //   file.forEach(download => {
+  //     const selectedFile = firebase.storage().ref(`${location}/${id}/${download}`)
+  //     selectedFile.delete().then(function() {
 
-      }).catch(function(error) {
-        console.log(error)
-      })
-    })
-  }
+  //     }).catch(function(error) {
+  //       console.log(error)
+  //     })
+  //   })
+  // }
 
   const getImageURL = (item, id, location) => {
     const storageRef = firebase.storage().ref(`${location}/${id}/${item.image}`)
@@ -282,11 +283,10 @@ const UpdateItem = ({ currentItem }) => {
     allFiles.map(file => {
       const duplicate = existingFiles.includes(file.name)
       if (duplicate === true) {
-        duplicates.push(file.name);
         setDuplicateFileWarning(true);
+        return duplicates.push(file.name);
       } else {
-        existingFiles.push(file.name)
-        existingUploads.push(file)
+        return (existingFiles.push(file.name), existingUploads.push(file)) 
       }
     })
     console.log(existingFiles)

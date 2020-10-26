@@ -167,10 +167,6 @@ const AddItemForm = () => {
       })
     }
 
-    const handleCancel = () => {
-      navigate("/admin/subjectList")
-    }
-
     const databaseCheck = async (name, location) => {
         let query = []
         const snapshot = await database
@@ -223,6 +219,10 @@ const AddItemForm = () => {
       } else {
         setWarning(true);
       }
+    }
+
+    const handleCancel = () => {
+      navigate("/admin/subjectList")
     }
  
     return (
