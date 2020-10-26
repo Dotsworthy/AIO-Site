@@ -20,6 +20,8 @@ const ListSubjects = ({ editItem }) => {
       }))
       setResources(listResources);
     })
+            // return () => unsubscribe()
+
   })
 
   const deleteItem = (item) => {
