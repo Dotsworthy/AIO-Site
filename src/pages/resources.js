@@ -24,6 +24,7 @@ const ResourcePage = () => {
 
     return (
         <Layout>
+            <h1>Resources</h1>
             {/* <input type="text" id="myInput" onKeyUp="myFunction()" placeholder="Search for names.."/> */}
             <div className="resource-page-container">
             <ResourceCatalogue downloadResource={downloadResource} />
