@@ -1,3 +1,5 @@
+
+
 @font-face {
     font-family: 'CodeDemo-Light';
     src: url("../fonts/CodeDemo-Light.otf");
@@ -230,6 +232,30 @@ td, th {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+a, a:visited {
+    text-decoration: none;
+    font-family: 'CodeDemo-Bold';
+    color: white;
+    letter-spacing: 2px;
+}
+
+nav {
+    background-color: #D93030;
+    display: flex;
+    height: 60px;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.sub-level-navigation {
+    background-color: #FF6A93;
+    display: flex;
+    height: 60px;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 10px;
 }
 
 .form-fields {

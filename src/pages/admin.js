@@ -8,12 +8,11 @@ import Layout from "../components/layout"
 import { navigate } from "gatsby"
 import { Router, Link } from "@reach/router"
 
-import UpdateSubject from "./updateSubject"
-
 const AdminPage = () => {
 
   const SubjectList = () => <ListSubjects/>
   const AddSubject = () => <AddItemForm/>
+  const UpdateSubject = () => <UpdateItem />
 
  const initialItemState = [
   { id: null, name: "", image: "", description: "", category: "", level: "", tags: "", download: "" },
@@ -25,7 +24,6 @@ const AdminPage = () => {
   const [currentItem, setCurrentItem] = useState(initialItemState)
 
   const editItem = item => {
-    // setEditing(true)
     setCurrentItem({
       id: item.id,
       name: item.name,
@@ -37,20 +35,20 @@ const AdminPage = () => {
       download: item.download
 
     })
-    navigate("/updateSubject")
+    navigate(`/updateSubject/${item.id}`)
   }
 
   return (
 
-    
-
   <Layout>
+    <nav>
     <Link to="/admin/subjectList">Subject List</Link>
-
+    </nav>
     <Router>
-        <SubjectList path="/admin/subjectList"/>
+        <SubjectList path="/admin/subjectList">
           <AddSubject path="/admin/subjectList/addSubject"/>
           <UpdateSubject path="/admin/updateSubject/:subjectId"/>
+        </SubjectList>
     </Router>
 
     

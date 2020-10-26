@@ -168,7 +168,7 @@ const AddItemForm = () => {
     }
 
     const handleCancel = () => {
-      navigate("/admin")
+      navigate("/admin/subjectList")
     }
 
     const databaseCheck = async (name, location) => {

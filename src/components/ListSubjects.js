@@ -38,8 +38,9 @@ const ListSubjects = () => {
   
   return (
     <div>
+    <nav className="sub-level-navigation">
     <Link to="/admin/subjectList/addSubject">Add Subject</Link>
-
+    </nav>  
     <table className="resource-database-table">
       <tbody>
         <tr className="header-row">
