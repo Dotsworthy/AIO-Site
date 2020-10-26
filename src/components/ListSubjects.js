@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import DeleteItem from "./deleteItem"
-import { Router, Link } from "@reach/router"
+import { Link } from "@reach/router"
 import firebase from "./firebase"
 import 'firebase/storage'
 
@@ -10,19 +10,15 @@ const ListSubjects = ({ editItem }) => {
   const [currentItem, setCurrentItem] = useState([])
 
   useEffect(() => {
-    firebase
-    .firestore()
-    .collection("items")
-    .onSnapshot(snapshot => {
+    const unsubscribe = firebase.firestore().collection("items").onSnapshot(snapshot => {
       const listResources = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       }))
       setResources(listResources);
-    })
-            // return () => unsubscribe()
-
-  })
+    });
+    return unsubscribe
+  }, [])
 
   const deleteItem = (item) => {
     setDeleting(true)

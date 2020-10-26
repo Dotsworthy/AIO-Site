@@ -14,13 +14,8 @@ const AdminPage = () => {
   const AddSubject = () => <AddItemForm/>
   const UpdateSubject = () => <UpdateItem  currentItem={currentItem}/>
 
- const initialItemState = [
-  { id: null, name: "", image: "", description: "", category: "", level: "", tags: "", download: "" },
-  ]
+ const initialItemState = [{ id: null, name: "", image: "", description: "", category: "", level: "", tags: "", download: "" }]
 
-  const [addResource, setAddResource] = useState(false)
-  // const [editing, setEditing] = useState(false)
-  const [deleting, setDeleting] = useState(false)
   const [currentItem, setCurrentItem] = useState(initialItemState)
 
   const editItem = item => {
@@ -49,21 +44,6 @@ const AdminPage = () => {
         <AddSubject path="/admin/subjectList/addSubject"/>
         <UpdateSubject path="/admin/updateSubject"/>
     </Router>
-
-    
-
-
-      {/* <div className="database-navigation-bar">
-        <nav> */}
-          {/* <Link className="database-navigation-button" to="addSubject">Add Subject</Link> */}
-        {/* </nav>
-      </div> */}
-      {/* <ItemList editItem={editItem} deleteItem={deleteItem}/> */}
-
-      {/* {deleting && <DeleteItem
-      setDeleting={setDeleting}
-      currentItem={currentItem}
-      />} */}
   </Layout>
   )
 }
