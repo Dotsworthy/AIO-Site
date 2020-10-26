@@ -4,7 +4,7 @@ import { Router, Link } from "@reach/router"
 import firebase from "./firebase"
 import 'firebase/storage'
 
-const ListSubjects = () => {
+const ListSubjects = ({ editItem }) => {
   const [resources, setResources] = useState([]);
   const [deleting, setDeleting] = useState(false)
   const [currentItem, setCurrentItem] = useState([])
@@ -20,7 +20,7 @@ const ListSubjects = () => {
       }))
       setResources(listResources);
     })
-  }, [])
+  })
 
   const deleteItem = (item) => {
     setDeleting(true)
@@ -58,7 +58,7 @@ const ListSubjects = () => {
                 <td className="level">{item.level}</td>
                 <td className="tags">{item.tags.toString()}</td>
                 <td className="buttons">
-                    <Link to={`updateSubject/${item.id}`}>Edit</Link>
+                    <button onClick={() => editItem(item)}>Edit</button>
                     <button onClick={() => deleteItem(item)}>Delete</button>
                     
                     

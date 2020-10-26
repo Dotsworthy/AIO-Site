@@ -10,9 +10,9 @@ import { Router, Link } from "@reach/router"
 
 const AdminPage = () => {
 
-  const SubjectList = () => <ListSubjects/>
+  const SubjectList = () => <ListSubjects editItem={editItem}/>
   const AddSubject = () => <AddItemForm/>
-  const UpdateSubject = () => <UpdateItem />
+  const UpdateSubject = () => <UpdateItem  currentItem={currentItem}/>
 
  const initialItemState = [
   { id: null, name: "", image: "", description: "", category: "", level: "", tags: "", download: "" },
@@ -35,7 +35,7 @@ const AdminPage = () => {
       download: item.download
 
     })
-    navigate(`/updateSubject/${item.id}`)
+    navigate(`/admin/updateSubject`)
   }
 
   return (
@@ -45,10 +45,9 @@ const AdminPage = () => {
     <Link to="/admin/subjectList">Subject List</Link>
     </nav>
     <Router>
-        <SubjectList path="/admin/subjectList">
-          <AddSubject path="/admin/subjectList/addSubject"/>
-          <UpdateSubject path="/admin/updateSubject/:subjectId"/>
-        </SubjectList>
+        <SubjectList path="/admin/subjectList"/>
+        <AddSubject path="/admin/subjectList/addSubject"/>
+        <UpdateSubject path="/admin/updateSubject"/>
     </Router>
 
     

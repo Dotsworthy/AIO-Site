@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router";
+import { navigate } from "gatsby"
 
 import firebase from "firebase"
 import 'firebase/storage'
 
-const UpdateItem = () => {
-  const params = useParams()
+const UpdateItem = ({ currentItem }) => {
+
+
+
   // item information to update the database
-  const [item, setItem] = useState();
+  const [item, setItem] = useState(currentItem);
   const database = firebase.firestore()
     
   // states for changed data that needs processing
@@ -25,19 +27,19 @@ const UpdateItem = () => {
   const [duplicateFiles, setDuplicateFiles] = useState([])
   
   // original variables for checking whether to upload/download
-  // const originalImage = currentItem.image;
-  // const originalName = currentItem.name;
+  const originalImage = currentItem.image;
+  const originalName = currentItem.name;
 
-  useEffect(() => {
-    firebase
-    .firestore()
-    .collection("items")
-    .doc(params.id)
-    .get()
-    .then(function(doc) {
-      setItem(doc.id, ...doc.data())
-    })
-  }, [])
+  // useEffect(() => {
+  //   firebase
+  //   .firestore()
+  //   .collection("items")
+  //   .doc(props.id)
+  //   .get()
+  //   .then(function(doc) {
+  //     setItem(doc.id, ...doc.data())
+  //   })
+  // }, [])
 
   const useItems = (location) => {
     const [items, setItems] = useState([]);
@@ -94,47 +96,47 @@ const UpdateItem = () => {
       console.log(item.name);
       console.log(nameCheck.length);
       
-      // if (originalName !== item.name && nameCheck.length > 0) {
-      //   setNameWarning(true);
-      // } else {
-      //     if (categoryCheck.length == 0) {
-      //       addDatabaseField(item.category, "categories")
-      //     }
+      if (originalName !== item.name && nameCheck.length > 0) {
+        setNameWarning(true);
+      } else {
+          if (categoryCheck.length == 0) {
+            addDatabaseField(item.category, "categories")
+          }
     
-      //     if (levelCheck.length == 0) {
-      //       addDatabaseField(item.level, "levels")
-      //     }
+          if (levelCheck.length == 0) {
+            addDatabaseField(item.level, "levels")
+          }
 
-      //     item.tags.forEach(async tag => {
-      //       const tagCheck = await databaseCheck(tag, "tags")
-      //       if (tagCheck.length == 0) {
-      //         addDatabaseField(tag, "tags")
-      //       }
-      //     })
+          item.tags.forEach(async tag => {
+            const tagCheck = await databaseCheck(tag, "tags")
+            if (tagCheck.length == 0) {
+              addDatabaseField(tag, "tags")
+            }
+          })
         
         
-      //   // if (originalImage !== item.image) {
-      //   //   deleteFile(originalImage, item.id, `images`)
-      //   //   uploadFile('image', item.id, 'images')
-      //   // }
+        if (originalImage !== item.image) {
+          deleteFile(originalImage, item.id, `images`)
+          uploadFile('image', item.id, 'images')
+        }
   
-      //   filesToDelete.forEach(file => {
-      //     if (item.download.includes(file) == true) {
-      //       return
-      //     } else {
-      //       deleteFile(file, item.id, "downloads")
-      //     }
-      //   })
+        filesToDelete.forEach(file => {
+          if (item.download.includes(file) == true) {
+            return
+          } else {
+            deleteFile(file, item.id, "downloads")
+          }
+        })
   
-      //   uploadMultipleFiles(filesToUpload, item.id, "downloads")
+        uploadMultipleFiles(filesToUpload, item.id, "downloads")
   
-      //   firebase
-      //   .firestore()
-      //   .collection("items")
-      //   .doc(item.id)
-      //   .update(item)
+        firebase
+        .firestore()
+        .collection("items")
+        .doc(item.id)
+        .update(item)
 
-      // }
+      }
     } else {
       setWarning(true)
     }   
@@ -292,10 +294,14 @@ const UpdateItem = () => {
     setDuplicateFiles([...duplicates])
     changeDownloads("download", existingFiles)
   }
+
+  const handleCancel = () => {
+    navigate("/admin/subjectList")
+  }
   
     return (
-      <div className="database-form-container">
-        <div className="form-header">
+      <div>
+        <div>
           <h2>Update Resource</h2>
         </div>
 
@@ -381,7 +387,7 @@ const UpdateItem = () => {
           </div>
 
           <div className="form-submit">
-            {/* <button onClick={()=>setEditing(false)}>Cancel</button> */}
+            <button type="button" onClick={() => handleCancel()}>Cancel</button>
             <button type="submit" >Update</button>
           </div>
         </form>
