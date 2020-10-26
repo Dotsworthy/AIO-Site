@@ -18,7 +18,7 @@
     padding: 0px;
     box-sizing: border-box;
     font-family: 'Arial', Fallback, sans-serif;
-    letter-spacing: 0em;
+    // letter-spacing: 0em;
     font-size: 1rem;
 }
 
@@ -26,315 +26,108 @@ body {
     background-color: #F2B749;
 }
 
-.database-navigation-bar {
-    padding: 15px;
-}
-
-.database-navigation-button {
-    background: url("../images/brush-stroke-banner-5.png");
-    background-repeat: no-repeat;
-    background-size: auto 40px;
-    background-position: 50% 50%;
-    border: none;
-    background-color: transparent;
-    color: white;
-    padding: 12px;
-}
-
-.navigation-bar-container {
+.header-container {
+    background-color: #0B6BBF;
     height: 100px;
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    background-color: #0B6BBF;
-    // font-size: 1.2rem;
-
-    a, a:visited {
-     text-decoration: none;
-     color: white;
-     font-size: 1em;
-     font-family: 'CodeDemo-Bold';
-     letter-spacing: 2px;
-    }
-}
-
-.catalogue-image-container {
-    height: 200px;
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-}
-
-.catalogue-image {
-    max-height: 100%;
-    max-width: 100%;
-}
-
-.resource-page-container {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    margin: 20px;
-
-    h3 {
-        font-size: 1rem;
-    }
-}
-
-.resource-page-items {
-    display: flex;
-    flex-wrap: wrap;
-    flex-grow: 2;
-
-    h3 {
-      height: 50px;  
-    }
-}
-
-.resource-page-filter {
-    width: 200px;
-    margin-bottom: 10px;
-    display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    align-items: flex-start;
-
-    button {
-      margin: 1px;  
-      font-family: inherit;
-      font-size: 0.6em;
-      border: 0;
-      padding: 0;
-      background-color: transparent;
-    }
-
-    button:focus {
-        outline: none;
-        color: white;
-    }
-}
-
-.resource-page-categories {
-    display: flex;
-    flex-wrap: wrap;
-
-    p {
-        padding: 3px;
-    }
-}
-
-// .no-result-feedback {
-//     transition-delay: 5s;
-// }
-
-.catalogue-item {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    max-width: 200px;
-    height: 300px;
-
-}
-
-.catalogue-button {
-    display: flex;
-    padding: 10px;
-    justify-content: center;
-
-    button {
-        margin: 0 5px;
-        padding: 0 3px;
-        font-size: 0.7rem;
-    }
-}
-
-.resource-database-table {
-    margin: 20px;
-}
-
-td, th {
-    padding: 2px;
-}
-
-.data-row {
-    height: 30px;
-}
-
-.data-item {
-    margin: 0 2px;
-}
-
-.table-image {
-    max-height: 30px;
-    max-width: 30px;
-}
-
-.content-container {
-    margin: 20px;
-
-}
-
-.database-form-container {
-    min-width: 700px;
-    position: fixed;
-    margin: 0 auto;
-    top: calc(50% - 350px);
-    left: calc(50% - 350px);
-    background-color: #fafafa;
-}
-
-
-.form-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    background-color: white;
-    padding: 2%;
-
-
-    button {
-        height: 25px;
-        width: 25px;
-        border-radius: 50%;
-        border: none;
-    }
-    
-}
-
-.form-warning {
-    color: red;
-}
-
-.image-preview {
-    max-height: 100%;
-    max-width: 100%;
-}
-
-.form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 2%;
-}
-
-.warning-container {
-    height: 50px;
-}
-
-.tags-added-container {
-    // height: 80px;
-}
-
-.form-content {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-a, a:visited {
-    text-decoration: none;
-    font-family: 'CodeDemo-Bold';
-    color: white;
-    letter-spacing: 2px;
-}
-
-nav {
-    background-color: #D93030;
-    display: flex;
-    height: 60px;
     align-items: center;
     justify-content: space-around;
 }
 
-.sub-level-navigation {
-    background-color: #FF6A93;
-    display: flex;
+.header-title {
+    a, a:visited {
+        font-size: 32px;
+    }
+}
+
+.admin-navigation-container {
+    background-color: #D93030;
     height: 60px;
+    display: flex;
     align-items: center;
-    justify-content: flex-start;
-    padding-left: 10px;
+}
+
+a, a:visited {
+    font-family: 'CodeDemo-Bold';
+    color: white;
+    text-decoration: white;
+    letter-spacing: 2px;
+    padding: 0 10px;
+}
+
+.database-navigation-container {
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.database-form {
+    padding: 10px;
+    margin: 10px;
+    background-color: #F4F5F5;
+    border-radius: 2px;
 }
 
 .form-fields {
     display: flex;
     flex-direction: column;
-
-    input {
-        padding: 8px;
-        margin: 10px;
-    }
-
-    textarea {
-        padding: 8px;
-        margin: 10px;
-    }
-
-    .input-description {
-        height: 200px;
-        width: 320px;
-    }
+    align-items: flex-start;
+    width: 300px;
 }
 
-.form-uploads {
+.form-downloads {
     display: flex;
     flex-direction: column;
+    margin: 0 5px;
+    width: 400px;
 }
 
-.image-upload-container {
+.form-warning {
+    height: 35px;
+}
+
+.form-container {
     display: flex;
-    flex-direction: column;
-    height: 320px;
-    margin-bottom: 10px;
+    // align-items: flex-start;
 }
 
-.resource-upload-container {
-    display: flex;
-    flex-direction: column;
-
-    label {
-        padding-bottom: 5px;
-    }
-}
-
-.downloads-container {
+.image-container {
+    height: 250px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
 }
 
-.download-items {
-    padding: 2%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.tags-container {
+    height: 150px;
 }
 
-.form-preview {
-    margin: 5px;
-    height: 280px;
-    width: 200px;
-    border: 1pt solid grey;
-    align-self: center;
+#preview {
+    height: 250px;
+    width: 155px;
+    border: 1px solid black;
 }
 
-.form-submit {
-    display: flex;
-    align-self: flex-end;
-    padding: 1%;
-
-    button {
-        padding: 10px;
-        margin: 5px;
-        border-radius: 10%;
-        border: none;
-    }
+#output {
+    height: 250px;
+    width: 155px;
+    border: 1px solid black;
 }
 
-label {
-    align-self: center;
+table {
+    padding: 10px;
+    width: 100%;
+}
+
+input {
+    margin: 5px 0px;
+    padding: 5px 0px;
+    width: 100%;
+}
+
+textarea {
+    margin: 5px 0px;
+    padding: 5px 0px;
+    width: 100%;
+    height: 200px;
 }

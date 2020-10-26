@@ -6,8 +6,6 @@ import 'firebase/storage'
 
 const UpdateItem = ({ currentItem }) => {
 
-
-
   // item information to update the database
   const [item, setItem] = useState(currentItem);
   const database = firebase.firestore()
@@ -29,17 +27,6 @@ const UpdateItem = ({ currentItem }) => {
   // original variables for checking whether to upload/download
   const originalImage = currentItem.image;
   const originalName = currentItem.name;
-
-  // useEffect(() => {
-  //   firebase
-  //   .firestore()
-  //   .collection("items")
-  //   .doc(props.id)
-  //   .get()
-  //   .then(function(doc) {
-  //     setItem(doc.id, ...doc.data())
-  //   })
-  // }, [])
 
   const useItems = (location) => {
     const [items, setItems] = useState([]);
@@ -300,18 +287,21 @@ const UpdateItem = ({ currentItem }) => {
   }
   
     return (
-      <div>
+      <div className="database-form">
         <div>
           <h2>Update Resource</h2>
         </div>
 
-        <form className="form-container" onSubmit={onSubmit}>
+        <form onSubmit={onSubmit}>
+        <div className="form-warning">
         {warning && <div>Some fields have been left blank. Please complete all fields (including downloads) before submitting the form</div>}
         {nameWarning && <div>Resource name is already being used by another resource in the database. Please edit or delete this resource first, or choose another name for this resource.</div>}
-          <div className="form-content">
+          </div>
+          
+          <div className="form-container">
             
             <div className="form-fields">
-              <p>Resource Information</p>
+              <h2>Resource Information</h2>
               <input type="text" name="name" value={item.name} onChange={onChange} />
               <textarea className="input-description" type="text" name="description" value={item.description} onChange={onChange}/>
               
@@ -338,6 +328,7 @@ const UpdateItem = ({ currentItem }) => {
                 })}
               </datalist>
               <p>Tags added:</p>
+              <div className="tags-container">
               {item.tags.map(singleTag => {
                 return <div>
                   <label for={singleTag} key={item.tags.indexOf(singleTag)} id={item.tags.indexOf(singleTag)} name={singleTag}>{singleTag}</label>
@@ -346,7 +337,7 @@ const UpdateItem = ({ currentItem }) => {
               })}
               {tagWarning && <p>Maximum of four tags. Please delete a tag before adding a new one</p>}
               {duplicateWarning && <p>Tag already selected. Please select a different tag</p>}
-              
+              </div>
              
               {/* <input type="text" name="category" value={item.category} onChange={onChange}/>
               <input type="text" name="level" value={item.level} onChange={onChange}/> */}
@@ -355,17 +346,17 @@ const UpdateItem = ({ currentItem }) => {
 
             </div>
 
-            <div className="form-uploads">
+            <div className="form-downloads">
 
-              <div className="image-upload-container">
-                <label htmlFor="image">Upload Image</label>
-                <div className="form-preview">
-                  <img className="image-preview" id="output" alt=""></img>
+              <div>
+                <h2>Upload Image</h2>
+                <div className="image-container">
+                  <img className="preview" id="output" alt=""></img>
                 </div>
                   <input onChange={(e) => loadFile(e)} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
               </div>
 
-              <div className="resource-upload-container">
+              <div>
                 <label htmlFor="download">Upload Resources</label>
                 <input onChange={(e) => loadAllFiles(e)} type="file" id="download" name="download" multiple/>
                 <p>Files:</p>
@@ -386,7 +377,7 @@ const UpdateItem = ({ currentItem }) => {
             </div>
           </div>
 
-          <div className="form-submit">
+          <div>
             <button type="button" onClick={() => handleCancel()}>Cancel</button>
             <button type="submit" >Update</button>
           </div>

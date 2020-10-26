@@ -36,10 +36,10 @@ const ListSubjects = ({ editItem }) => {
   
   return (
     <div>
-    <nav className="sub-level-navigation">
+    <nav className="database-navigation-container">
     <Link to="/admin/subjectList/addSubject">Add Subject</Link>
     </nav>  
-    <table className="resource-database-table">
+    <table className="database-table">
       <tbody>
         <tr className="header-row">
           <th className="name">Resource Name</th>

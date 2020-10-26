@@ -226,22 +226,22 @@ const AddItemForm = () => {
     }
  
     return (
-      <div>        
+      <div className="database-form">        
         <div>
           <h2>Add Resource</h2>
         </div>
 
         <form onSubmit={onSubmit}>
-          <div className="warning-container">
-          {warning && <div className="form-warning">Not all fields are complete. Please complete all fields before submitting the form</div>}
-          {nameWarning && <div className="form-warning">{name} already refers to an resource in the database. Either update the original resource, delete the original resource first, or choose a different name for the resource</div>}
+          <div className="form-warning">
+          {warning && <div>Not all fields are complete. Please complete all fields before submitting the form</div>}
+          {nameWarning && <div>{name} already refers to an resource in the database. Either update the original resource, delete the original resource first, or choose a different name for the resource</div>}
           </div>
-          <div className="form-content">
+          <div className="form-container">
 
             <div className="form-fields">
-              <p>Resource Information</p>
+              <h2>Resource Information</h2>
               <input placeholder="Name" value={name} name="name" onChange={e => setName(e.currentTarget.value)} type="text"/>
-              <textarea className="input-description" placeholder="Description" value={description} name="Description" onChange={e => setDescription(e.currentTarget.value)} type="text"/>
+              <textarea placeholder="Description" value={description} name="Description" onChange={e => setDescription(e.currentTarget.value)} type="text"/>
               
               <input placeholder="Category" type="text" name="category" value={category} list="categoryList" onChange={e => setCategory(e.currentTarget.value)}/>
                <datalist id="categoryList">
@@ -266,30 +266,32 @@ const AddItemForm = () => {
                 })}
               </datalist>
               <p>Tags added:</p>
+              <div className="tags-container">
               {addedTags.map(singleTag => {
-                return <div className="tags-added-container">
+                return <div >
                   <label htmlFor={singleTag} key={addedTags.indexOf(singleTag)} id={addedTags.indexOf(singleTag)} name={singleTag}>{singleTag}</label>
                   <button name={singleTag} onClick={(e) => deleteTag(e, addedTags.indexOf(singleTag))}>Delete Tag</button>
                   </div>
               })}
               {/* <div className="warning-container"> */}
-              {tagWarning && <div className="form-warning">Maximum of four tags. Please delete a tag before adding a new one</div>}
-              {duplicateWarning && <div className="form-warning">Tag already selected. Please select a different tag</div>}
+              {tagWarning && <div>Maximum of four tags. Please delete a tag before adding a new one</div>}
+              {duplicateWarning && <div>Tag already selected. Please select a different tag</div>}
               {/* </div> */}
+              </div>
             </div>
 
-            <div className="form-uploads">
+            <div className="form-downloads">
 
-              <div className="image-upload-container">
-              <label htmlFor="image">Upload Image</label>
-              <div className="form-preview">
-                <img className="image-preview" id="preview" alt=""></img>
+              <div>
+              <h2>Upload Image</h2>
+              <div className="image-container">
+                <img id="preview" alt=""></img>
               </div>
               <input onChange={(e) => prepareProfileImage(e, "preview")} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
               </div>
 
-              <div className="resource-upload-container">
-              <label htmlFor="download">Upload Resources</label>
+              <div>
+              <h2>Upload Resources</h2>
               <input onChange={(e) => {prepareAllFiles(e)}}type="file" id="download" name="download" multiple/>
               <p>Files to upload:</p>
               {resourceUploads.length > 0 ? 
@@ -311,7 +313,7 @@ const AddItemForm = () => {
             </div>
           </div>
 
-          <div className="form-submit">
+          <div>
             <button type="submit" name="submit" onClick={() => handleCancel()} value="Cancel">Cancel</button>
             <button type="submit" name="submit" className="form-submit">Submit</button>
           </div>

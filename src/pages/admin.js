@@ -34,7 +34,7 @@ const AdminPage = () => {
   return (
 
   <Layout>
-    <nav>
+    <nav className="admin-navigation-container">
     <Link to="/admin/subjectList">Subject List</Link>
     </nav>
     <Router>

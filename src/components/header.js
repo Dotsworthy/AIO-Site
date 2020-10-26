@@ -4,10 +4,18 @@ import React from "react"
 
 const Header = ({ siteTitle }) => (
   <header>
-    <div className="navigation-bar-container">
-        <Link to="/">{siteTitle}</Link>
-        <Link className="header-link" to="/admin/">Admin Page</Link>
+    <div className="header-container">
+        <div className="header-title">
+        <Link className="link-title" to="/">{siteTitle}</Link>
+        </div>
+
+        <div className="header-links">
+        <Link to="/about-us">About Us</Link>
+        <Link to="/take-action">Take Action</Link>
         <Link className="header-link" to="/resources/">Resources</Link>
+        <Link to="/contact-us">Contact Us</Link>
+        <Link className="header-link" to="/admin/">Admin Login</Link>
+        </div>
     </div>
   </header>
 )
