@@ -5,6 +5,8 @@ import AddItemForm from "../components/addItemForm"
 import Layout from "../components/layout"
 import { navigate } from "gatsby"
 import { Router, Link } from "@reach/router"
+import firebase from 'firebase';
+import SignInManager from "../components/signInManager"
 
 const AdminPage = () => {
 
@@ -15,6 +17,16 @@ const AdminPage = () => {
  const initialItemState = [{ id: null, name: "", image: "", description: "", category: "", level: "", tags: "", download: "" }]
 
   const [currentItem, setCurrentItem] = useState(initialItemState)
+
+  const signIn = (email, password) => {
+    firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .catch(function(error) {
+      let errorCode = error.errorCode;
+      let errorMessage = error.message;
+    })
+  }
 
   const editItem = item => {
     setCurrentItem({
@@ -37,6 +49,7 @@ const AdminPage = () => {
     <nav className="admin-navigation-container">
     <Link to="/admin/subjectList">Subject List</Link>
     </nav>
+    <SignInManager/>
     <Router>
         <SubjectList path="/admin/subjectList"/>
         <AddSubject path="/admin/subjectList/addSubject"/>
