@@ -38,17 +38,22 @@ const AdminPage = () => {
 
   <Layout>
     {loggedIn ? 
-    <nav className="admin-navigation-container">
-    <Link to="/admin/subjectList">Subject List</Link>
-    </nav>
-  :
-  <SignInManager setLoggedIn={setLoggedIn}/>
-  }
-    <Router>
+    <div>
+      <nav className="admin-navigation-container">
+        <Link to="/admin/subjectList">Subject List</Link>
+      </nav>
+
+      <Router>
         <SubjectList path="/admin/subjectList"/>
         <AddSubject path="/admin/subjectList/addSubject"/>
         <UpdateSubject path="/admin/updateSubject"/>
-    </Router>
+      </Router>
+
+    </div>
+  :
+  <SignInManager setLoggedIn={setLoggedIn}/>
+  }
+    
   </Layout>
   )
 }
