@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import firebase from 'firebase';
 
-const SignInManager = ({ loggedIn }) => {
+const SignInManager = ({ setLoggedIn }) => {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -24,13 +24,16 @@ const SignInManager = ({ loggedIn }) => {
           console.log(errorCode)
           console.log(errorMessage)
         })
+        setLoggedIn(true);
       }
 
     return (
         <div className="small-form-container">
+            <form>
             <input placeholder="email" type="text" id="email" value={email} onChange={e => setEmail(e.currentTarget.value)}></input>
             <input placeholder="password" type="password" id="password" value={password} onChange={e => setPassword(e.currentTarget.value)}></input>
             <button onClick={() => signIn(email, password)}>Sign In</button>
+            </form>
         </div>
     )
 }

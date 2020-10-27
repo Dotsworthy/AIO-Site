@@ -42,7 +42,7 @@ const AdminPage = () => {
     <Link to="/admin/subjectList">Subject List</Link>
     </nav>
   :
-  <SignInManager loggedIn={loggedIn}/>
+  <SignInManager setLoggedIn={setLoggedIn}/>
   }
     <Router>
         <SubjectList path="/admin/subjectList"/>
