@@ -1,11 +1,12 @@
 import React from 'react';
 
-const SignInManager = () => {
+const SignInManager = ({ loggedIn }) => {
 
     return (
-        <div>
+        <div className="small-form-container">
             <input type="text" id="email" placeholder="Email"></input>
             <input type="password" id="password" placeholder="Password"></input>
+            <button>Sign In</button>
         </div>
     )
 }

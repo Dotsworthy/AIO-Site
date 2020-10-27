@@ -17,16 +17,7 @@ const AdminPage = () => {
  const initialItemState = [{ id: null, name: "", image: "", description: "", category: "", level: "", tags: "", download: "" }]
 
   const [currentItem, setCurrentItem] = useState(initialItemState)
-
-  const signIn = (email, password) => {
-    firebase
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .catch(function(error) {
-      let errorCode = error.errorCode;
-      let errorMessage = error.message;
-    })
-  }
+  const [loggedIn, setLoggedIn] = useState (false)
 
   const editItem = item => {
     setCurrentItem({
@@ -46,10 +37,13 @@ const AdminPage = () => {
   return (
 
   <Layout>
+    {loggedIn ? 
     <nav className="admin-navigation-container">
     <Link to="/admin/subjectList">Subject List</Link>
     </nav>
-    <SignInManager/>
+  :
+  <SignInManager loggedIn={loggedIn}/>
+  }
     <Router>
         <SubjectList path="/admin/subjectList"/>
         <AddSubject path="/admin/subjectList/addSubject"/>
