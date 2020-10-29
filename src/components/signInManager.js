@@ -1,21 +1,10 @@
 import React, { useState } from 'react';
 import firebase from 'firebase';
-import { navigate } from 'gatsby';
-import { Redirect } from '@reach/router';
 
-
-const SignInManager = ( setLoggedIn ) => {
+const SignInManager = () => {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-
-    // const ui = new firebaseui.auth.AuthUI(firebase.auth())
-
-    // ui.start('#firebaseui-auth-container', {
-    //     signInOptions: [
-    //         // firebase.auth.EmailAuthProvider.Provider_ID
-    //     ],
-    // });
 
     const onSubmit = async e => {
         e.preventDefault()
@@ -28,8 +17,6 @@ const SignInManager = ( setLoggedIn ) => {
           return firebase.auth().signInWithEmailAndPassword(email, password)
         })     
         .catch(function(error) {
-            console.log('error code reached')
-            console.log(error.code)
           let errorCode = error.code;
           if (errorCode === 'auth/wrong-password') {
               alert('The password you entered is incorrect');

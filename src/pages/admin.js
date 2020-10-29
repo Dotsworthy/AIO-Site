@@ -3,11 +3,10 @@ import ListSubjects from "../components/ListSubjects"
 import UpdateItem from "../components/updateitem"
 import AddItemForm from "../components/addItemForm"
 import Layout from "../components/layout"
-import { navigate } from "gatsby"
 import { Router, Link } from "@reach/router"
 import firebase from 'firebase';
 import SignInManager from "../components/signInManager"
-import { Redirect } from '@reach/router'
+import { navigate } from "gatsby"
 
 const AdminPage = () => {
 
@@ -34,7 +33,7 @@ const AdminPage = () => {
       download: item.download
 
     })
-
+    navigate("/admin/subjectList/updateSubject")
   }
 
   const logout = () => {
@@ -67,7 +66,7 @@ const AdminPage = () => {
       <Router>
         <SubjectList path="/admin/subjectList"/>
         <AddSubject path="/admin/subjectList/addSubject"/>
-        <UpdateSubject path="/admin/updateSubject"/>
+        <UpdateSubject path="/admin/subjectList/updateSubject"/>
       </Router>
 
     </div>
