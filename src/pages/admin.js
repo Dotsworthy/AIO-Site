@@ -45,6 +45,13 @@ const AdminPage = () => {
       console.log(errorCode)
     })
 
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        return
+      } else {
+        window.location.replace("/admin")
+      }
+    })
   }
 
   return (
