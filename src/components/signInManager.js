@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import firebase from 'firebase';
 import { navigate } from 'gatsby';
+import { Redirect } from '@reach/router';
 
 
-
-const SignInManager = ({ setLoggedIn }) => {
+const SignInManager = ( setLoggedIn ) => {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -17,15 +17,19 @@ const SignInManager = ({ setLoggedIn }) => {
     //     ],
     // });
 
-    const onSubmit = e => {
+    const onSubmit = async e => {
         e.preventDefault()
+
+
         firebase
         .auth()
-        .signInWithEmailAndPassword(email, password)
-        .then(function() {
-            setLoggedIn(true)
-        })
+        .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+            .then(function() {
+          return firebase.auth().signInWithEmailAndPassword(email, password)
+        })     
         .catch(function(error) {
+            console.log('error code reached')
+            console.log(error.code)
           let errorCode = error.code;
           if (errorCode === 'auth/wrong-password') {
               alert('The password you entered is incorrect');
@@ -36,6 +40,14 @@ const SignInManager = ({ setLoggedIn }) => {
           if (errorCode === 'auth/invalid-email') {
               alert('The email address provided is invalid.')
           }
+        })
+        
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                window.location.replace("/admin")
+            } else {
+                return
+            }
         })
       }
 

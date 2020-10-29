@@ -7,6 +7,7 @@ import { navigate } from "gatsby"
 import { Router, Link } from "@reach/router"
 import firebase from 'firebase';
 import SignInManager from "../components/signInManager"
+import { Redirect } from '@reach/router'
 
 const AdminPage = () => {
 
@@ -14,10 +15,12 @@ const AdminPage = () => {
   const AddSubject = () => <AddItemForm/>
   const UpdateSubject = () => <UpdateItem  currentItem={currentItem}/>
 
- const initialItemState = [{ id: null, name: "", image: "", description: "", category: "", level: "", tags: "", download: "" }]
+  const initialItemState = [{ id: null, name: "", image: "", description: "", category: "", level: "", tags: "", download: "" }]
 
   const [currentItem, setCurrentItem] = useState(initialItemState)
-  const [loggedIn, setLoggedIn] = useState (false)
+  
+  const user = firebase.auth().currentUser
+  console.log(user);
 
   const editItem = item => {
     setCurrentItem({
@@ -31,16 +34,27 @@ const AdminPage = () => {
       download: item.download
 
     })
-    navigate(`/admin/updateSubject`)
+
+  }
+
+  const logout = () => {
+    firebase.auth().signOut().then(function() {
+      console.log("code reached signout")
+    }).catch(function(error) {
+      const errorCode = error.code
+      console.log(errorCode)
+    })
+
   }
 
   return (
 
   <Layout>
-    {loggedIn ? 
+    {user ? 
     <div>
       <nav className="admin-navigation-container">
         <Link to="/admin/subjectList">Subject List</Link>
+        <button onClick={() => logout()}>Logout</button>
       </nav>
 
       <Router>
@@ -51,7 +65,7 @@ const AdminPage = () => {
 
     </div>
   :
-  <SignInManager setLoggedIn={setLoggedIn}/>
+  <SignInManager/>
   }
     
   </Layout>
