@@ -60,7 +60,7 @@ const AdminPage = () => {
     <div>
       <nav className="admin-navigation-container">
         <Link to="/admin/subjectList">Subject List</Link>
-        <button onClick={() => logout()}>Logout</button>
+        <button className="link-button" onClick={() => logout()}>Logout</button>
       </nav>
 
       <Router>
