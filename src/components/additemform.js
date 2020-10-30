@@ -181,7 +181,7 @@ const AddItemForm = () => {
 
     const onSubmit = async e => {
       e.preventDefault()
-      if (name && description && category && level && addedTags && imageUpload && resourceUploads) {
+      if (name && description && category && level && addedTags && imageUpload && resourceUploads.length > 0) {
       const nameCheck = await databaseCheck(name, "items")
       const categoryCheck = await databaseCheck(category, "categories")
       const levelCheck = await databaseCheck(level, "levels")

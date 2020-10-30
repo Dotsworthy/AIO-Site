@@ -1,12 +1,14 @@
 import React from "react"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import Image from "../components/image"
+import Img from "gatsby-image"
 
 const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
     <div className="content-container">
-    <img src="../images/42271167_m.jpg" alt="Home Image"></img>
+    <Image className="index-image"/>
     <div className="content-tag"> 
     
     <h1>EDUCATION DONE - ALL IN ONE.</h1>

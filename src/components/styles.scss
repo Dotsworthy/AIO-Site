@@ -119,25 +119,23 @@ a, a:visited {
 }
 
 .image-container {
-    height: 250px;
+    height: 300px;
     display: flex;
     justify-content: center;
+    background-color: white;
+    border-radius: 5px;
+    margin: 5px 0px;
 }
 
 .tags-container {
     height: 150px;
 }
 
-#preview {
-    height: 250px;
-    width: 155px;
-    border: 1px solid black;
-}
-
 #output {
-    height: 250px;
-    width: 155px;
-    border: 1px solid black;
+    height: 300px;
+    max-width: auto;
+    // border: 1px solid black;
+    object-fit: contain;
 }
 
 table {
@@ -156,4 +154,8 @@ textarea {
     padding: 5px 0px;
     width: 100%;
     height: 200px;
+}
+
+h1 {
+    font-size: 36px;
 }

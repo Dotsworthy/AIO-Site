@@ -250,12 +250,13 @@ const UpdateItem = ({ currentItem }) => {
   const loadFile = (e) => {
     if (e) {
       changeImage("image", `${e.target.files[0].name}`)
-    const output = document.getElementById("output");
-    output.src = URL.createObjectURL(e.target.files[0]);
-    output.onload = function() {
+      const output = document.getElementById("output");
+      output.src = URL.createObjectURL(e.target.files[0]);
+      output.onload = function() {
       URL.revokeObjectURL(output.src)
     }
     }
+
   }
 
   const loadAllFiles = (e) => {
@@ -280,6 +281,7 @@ const UpdateItem = ({ currentItem }) => {
     console.log(filesToUpload)
     setDuplicateFiles([...duplicates])
     changeDownloads("download", existingFiles)
+    document.getElementById("download").value = "";
   }
 
   const handleCancel = () => {
@@ -357,7 +359,7 @@ const UpdateItem = ({ currentItem }) => {
               </div>
 
               <div>
-                <label htmlFor="download">Upload Resources</label>
+                <h2>Upload Resources</h2>
                 <input onChange={(e) => loadAllFiles(e)} type="file" id="download" name="download" multiple/>
                 <p>Files:</p>
                 {
