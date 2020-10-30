@@ -54,27 +54,37 @@ const AdminPage = () => {
   }
 
   return (
+  <div>
+      {user ?     
+      <div>
+        <nav className="admin-header">
 
-  <Layout>
-    {user ? 
-    <div>
-      <nav className="admin-navigation-container">
-        <Link to="/admin/subjectList">Subject List</Link>
-        <button className="link-button" onClick={() => logout()}>Logout</button>
+          <div>
+            <h1>All In One Education</h1>
+          </div>
+
+          <div>
+          <Link to="/admin/subjectList">Subject List</Link>
+          <button className="link-button" onClick={() => logout()}>Logout</button>
+        </div>
+
       </nav>
-
-      <Router>
-        <SubjectList path="/admin/subjectList"/>
-        <AddSubject path="/admin/subjectList/addSubject"/>
-        <UpdateSubject path="/admin/subjectList/updateSubject"/>
-      </Router>
-
-    </div>
-  :
-  <SignInManager/>
-  }
+        <div className="admin-layout">
+        <Router>
+          <SubjectList path="/admin/subjectList"/>
+          <AddSubject path="/admin/subjectList/addSubject"/>
+          <UpdateSubject path="/admin/subjectList/updateSubject"/>
+        </Router> 
+        </div>
+      </div>
+    :
+    <Layout>
+    <SignInManager/>
+    </Layout>
+    }
+      
     
-  </Layout>
+  </div>
   )
 }
 

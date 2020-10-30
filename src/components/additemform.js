@@ -79,8 +79,8 @@ const AddItemForm = () => {
 
     const createPreview = (e, htmlLocation) => {
       const htmlElement = document.getElementById(htmlLocation);
-      htmlElement.src = URL.createObjectURL(e.target.files[0]);
-      htmlElement.onload = function() {
+        htmlElement.src = URL.createObjectURL(e.target.files[0]);
+        htmlElement.onload = function() {
         URL.revokeObjectURL(htmlElement.src)
       }
     }
