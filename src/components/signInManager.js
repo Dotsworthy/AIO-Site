@@ -29,14 +29,6 @@ const SignInManager = () => {
               alert('The email address provided is invalid.')
           }
         })
-        
-        // firebase.auth().onAuthStateChanged(function(user) {
-        //     if (user) {
-        //         window.location.reload();
-        //     } else {
-        //         return
-        //     }
-        // })
       }
 
     return (
