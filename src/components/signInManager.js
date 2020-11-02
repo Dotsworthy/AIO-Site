@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import firebase from 'firebase';
+import { navigate } from 'gatsby';
 
 const SignInManager = () => {
 
@@ -29,13 +30,13 @@ const SignInManager = () => {
           }
         })
         
-        firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                window.location.replace("/admin")
-            } else {
-                return
-            }
-        })
+        // firebase.auth().onAuthStateChanged(function(user) {
+        //     if (user) {
+        //         window.location.reload();
+        //     } else {
+        //         return
+        //     }
+        // })
       }
 
     return (

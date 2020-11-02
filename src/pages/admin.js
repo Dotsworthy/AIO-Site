@@ -8,6 +8,7 @@ import firebase from 'firebase';
 import SignInManager from "../components/signInManager"
 import { navigate } from "gatsby"
 
+
 const AdminPage = () => {
 
   const SubjectList = () => <ListSubjects editItem={editItem}/>
@@ -17,9 +18,16 @@ const AdminPage = () => {
   const initialItemState = [{ id: null, name: "", image: "", description: "", category: "", level: "", tags: "", download: "" }]
 
   const [currentItem, setCurrentItem] = useState(initialItemState)
+  const [user, setUser] = useState();
   
-  const user = firebase.auth().currentUser
-  console.log(user);
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      setUser(user)
+    } else {
+      setUser(user)
+    }
+  })
+
 
   const editItem = item => {
     setCurrentItem({
@@ -42,14 +50,6 @@ const AdminPage = () => {
     }).catch(function(error) {
       const errorCode = error.code
       console.log(errorCode)
-    })
-
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        return
-      } else {
-        window.location.replace("/admin")
-      }
     })
   }
 
