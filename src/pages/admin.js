@@ -47,11 +47,12 @@ const AdminPage = () => {
     navigate("/admin/subjectList/updateSubject")
   }
 
-  const editDatabaseItem = (item, location) => {
+  const editDatabaseItem = (item, collection, location) => {
     setCurrentItem({
       id: item.id,
       name: item.name,
-      location: location
+      location: location,
+      collection: collection
     })
 
     navigate("/admin/categoryList/updateCategory")
