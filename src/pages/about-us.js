@@ -36,7 +36,7 @@ const AboutUs = () => {
 
         <div>
         <p>Read our full mission statement to find out more:</p>    
-        <a>Mission Statement</a>
+        <a href="./public/All-In-One-Education-Our-Mission.pdf" target="_blank" download>Mission Statement</a>
         </div>
         </Layout>
     )
