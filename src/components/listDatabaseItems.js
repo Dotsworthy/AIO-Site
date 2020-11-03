@@ -3,6 +3,8 @@ import firebase from "./firebase"
 
 const ListDatabaseItems = ( { collection } ) => {
     const [items, setItems] = useState([])
+    const [deleting, setDeleting] = useState(false)
+    const [editing, setEditing] = useState(false)
 
     useEffect(() => {
         const unsubscribe = firebase.firestore().collection(`${collection}`).onSnapshot(snapshot => {
@@ -14,7 +16,16 @@ const ListDatabaseItems = ( { collection } ) => {
         });
         return unsubscribe
       }, [])
+
     
+
+    const editItem = (item) => {
+        setEditing(true)
+    }  
+    
+    const deleteItem = (item) => {
+      setDeleting(true)  
+    }
     
     return (
     <div>
@@ -29,8 +40,8 @@ const ListDatabaseItems = ( { collection } ) => {
               <tr className="data-row">
                 <td className="resource-name">{item.name}</td>
                 <td className="buttons">
-                    {/* <button onClick={() => editItem(item)}>Edit</button>
-                    <button onClick={() => deleteItem(item)}>Delete</button> */}
+                    <button onClick={() => editItem(item)}>Edit</button>
+                    <button onClick={() => deleteItem(item)}>Delete</button>
                 </td>
               </tr>
             </tbody>
