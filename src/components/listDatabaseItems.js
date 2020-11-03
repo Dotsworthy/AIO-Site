@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import firebase from "./firebase"
 
-const ListDatabaseItems = ( { collection } ) => {
+const ListDatabaseItems = ( { collection, editItem } ) => {
     const [items, setItems] = useState([])
     const [deleting, setDeleting] = useState(false)
     const [editing, setEditing] = useState(false)
@@ -16,12 +16,6 @@ const ListDatabaseItems = ( { collection } ) => {
         });
         return unsubscribe
       }, [])
-
-    
-
-    const editItem = (item) => {
-        setEditing(true)
-    }  
     
     const deleteItem = (item) => {
       setDeleting(true)  

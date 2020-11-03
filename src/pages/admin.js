@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import ListSubjects from "../components/ListSubjects"
 import UpdateItem from "../components/updateitem"
+import UpdateDatabaseItem from "../components/updateDatabaseItem"
 import AddItemForm from "../components/addItemForm"
 import ListDatabaseItems from "../components/listDatabaseItems";
 import Layout from "../components/layout"
@@ -15,7 +16,8 @@ const AdminPage = () => {
   const SubjectList = () => <ListSubjects editItem={editItem}/>
   const AddSubject = () => <AddItemForm/>
   const UpdateSubject = () => <UpdateItem  currentItem={currentItem}/>
-  const CategoryList = () => <ListDatabaseItems collection={"categories"}/>
+  const CategoryList = () => <ListDatabaseItems collection={"categories"} editItem={editDatabaseItem}/>
+  const UpdateCategory = () => <UpdateDatabaseItem currentItem={currentItem}/>
 
   const initialItemState = [{ id: null, name: "", image: "", description: "", category: "", level: "", tags: "", download: "" }]
 
@@ -30,7 +32,6 @@ const AdminPage = () => {
     }
   })
 
-
   const editItem = item => {
     setCurrentItem({
       id: item.id,
@@ -44,6 +45,15 @@ const AdminPage = () => {
 
     })
     navigate("/admin/subjectList/updateSubject")
+  }
+
+  const editDatabaseItem = item => {
+    setCurrentItem({
+      id: item.id,
+      name: item.name
+    })
+
+    navigate("/admin/categoryList/updateCategory")
   }
 
   const logout = () => {
@@ -78,6 +88,7 @@ const AdminPage = () => {
           <AddSubject path="/admin/subjectList/addSubject"/>
           <UpdateSubject path="/admin/subjectList/updateSubject"/>
           <CategoryList path="/admin/categoryList"/>
+          <UpdateCategory path="/admin/categoryList/updateCategory"/>
         </Router> 
         </div>
       </div>
