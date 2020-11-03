@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import ListSubjects from "../components/ListSubjects"
 import UpdateItem from "../components/updateitem"
 import AddItemForm from "../components/addItemForm"
+import ListDatabaseItems from "../components/listDatabaseItems";
 import Layout from "../components/layout"
 import { Router, Link } from "@reach/router"
 import firebase from 'firebase';
@@ -14,6 +15,7 @@ const AdminPage = () => {
   const SubjectList = () => <ListSubjects editItem={editItem}/>
   const AddSubject = () => <AddItemForm/>
   const UpdateSubject = () => <UpdateItem  currentItem={currentItem}/>
+  const CategoryList = () => <ListDatabaseItems collection={"categories"}/>
 
   const initialItemState = [{ id: null, name: "", image: "", description: "", category: "", level: "", tags: "", download: "" }]
 
@@ -65,6 +67,7 @@ const AdminPage = () => {
 
           <div>
           <Link to="/admin/subjectList">Subject List</Link>
+          <Link to="/admin/categories">Categories</Link>
           <button className="link-button" onClick={() => logout()}>Logout</button>
         </div>
 
@@ -74,6 +77,7 @@ const AdminPage = () => {
           <SubjectList path="/admin/subjectList"/>
           <AddSubject path="/admin/subjectList/addSubject"/>
           <UpdateSubject path="/admin/subjectList/updateSubject"/>
+          <CategoryList path="/admin/categoryList"/>
         </Router> 
         </div>
       </div>
