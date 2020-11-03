@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import firebase from "./firebase"
 
-const ListDatabaseItems = ( { collection, editItem } ) => {
+const ListDatabaseItems = ( { collection, resourceEntry, editItem } ) => {
     const [items, setItems] = useState([])
     const [deleting, setDeleting] = useState(false)
     const [editing, setEditing] = useState(false)
@@ -34,7 +34,7 @@ const ListDatabaseItems = ( { collection, editItem } ) => {
               <tr className="data-row">
                 <td className="resource-name">{item.name}</td>
                 <td className="buttons">
-                    <button onClick={() => editItem(item)}>Edit</button>
+                    <button onClick={() => editItem(item, resourceEntry)}>Edit</button>
                     <button onClick={() => deleteItem(item)}>Delete</button>
                 </td>
               </tr>

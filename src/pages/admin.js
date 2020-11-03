@@ -16,7 +16,7 @@ const AdminPage = () => {
   const SubjectList = () => <ListSubjects editItem={editItem}/>
   const AddSubject = () => <AddItemForm/>
   const UpdateSubject = () => <UpdateItem  currentItem={currentItem}/>
-  const CategoryList = () => <ListDatabaseItems collection={"categories"} editItem={editDatabaseItem}/>
+  const CategoryList = () => <ListDatabaseItems collection={"categories"} resourceEntry={"category"} editItem={editDatabaseItem}/>
   const UpdateCategory = () => <UpdateDatabaseItem currentItem={currentItem}/>
 
   const initialItemState = [{ id: null, name: "", image: "", description: "", category: "", level: "", tags: "", download: "" }]
@@ -47,10 +47,11 @@ const AdminPage = () => {
     navigate("/admin/subjectList/updateSubject")
   }
 
-  const editDatabaseItem = item => {
+  const editDatabaseItem = (item, location) => {
     setCurrentItem({
       id: item.id,
-      name: item.name
+      name: item.name,
+      location: location
     })
 
     navigate("/admin/categoryList/updateCategory")
