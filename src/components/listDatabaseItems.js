@@ -1,8 +1,44 @@
 import React, { useState, useEffect } from "react"
+import firebase from "./firebase"
 
-const ListDatabaseItems = () => {
+const ListDatabaseItems = ( { collection } ) => {
+    const [items, setItems] = useState([])
 
-    return
+    useEffect(() => {
+        const unsubscribe = firebase.firestore().collection(`${collection}`).onSnapshot(snapshot => {
+          const listItems = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+          }))
+          setItems(listItems);
+        });
+        return unsubscribe
+      }, [])
+    
+    
+    return (
+    <div>
+        <table className="database-table">
+      <tbody>
+        <tr className="header-row">
+          <th className="name">Name</th>
+        </tr>
+      </tbody>
+      {items.map(item => (
+            <tbody key={item.id}>
+              <tr className="data-row">
+                <td className="resource-name">{item.name}</td>
+                <td className="buttons">
+                    {/* <button onClick={() => editItem(item)}>Edit</button>
+                    <button onClick={() => deleteItem(item)}>Delete</button> */}
+                </td>
+              </tr>
+            </tbody>
+          ))}
+    </table>
+
+    </div>
+    )
 }
 
 export default ListDatabaseItems

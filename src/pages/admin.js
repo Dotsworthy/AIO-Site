@@ -67,7 +67,7 @@ const AdminPage = () => {
 
           <div>
           <Link to="/admin/subjectList">Subject List</Link>
-          <Link to="/admin/categories">Categories</Link>
+          <Link to="/admin/categoryList">Categories</Link>
           <button className="link-button" onClick={() => logout()}>Logout</button>
         </div>
 
