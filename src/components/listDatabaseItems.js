@@ -9,6 +9,8 @@ const ListDatabaseItems = ( { collection, resourceEntry, editItem } ) => {
     // const [deleting, setDeleting] = useState(false)
     // const [editing, setEditing] = useState(false)
 
+    const resources = []
+
     useEffect(() => {
         const unsubscribe = firebase.firestore().collection(`${collection}`).onSnapshot(snapshot => {
           const listItems = snapshot.docs.map(doc => ({
@@ -20,38 +22,40 @@ const ListDatabaseItems = ( { collection, resourceEntry, editItem } ) => {
         return unsubscribe
       }, [collection])
     
-    useEffect(() => {
-        
-    })  
     // const deleteItem = (item) => {
     //   setDeleting(true)  
     // }
 
-    // items.map(function(item) {
-    //     const length = useItems(item)
-    //     const name = "resourcesAttached"
-    //     const value = length
+    const addResourcesAttached = async (item) => {
 
-    //     setItems({...items[item.id], [name]: value})
-    // })
-
-
-    // const getResourcesAttached = async (item) => {
-    //     const resources = [];
-
-    //     const resourcesRef = db.collection("items")
-    //     const snapshot = await resourcesRef.where(`${resourceEntry}`, "==", `${item}`).get();
-    //     if (snapshot.empty) {
-    //         return
-    //     }
-
-    //     snapshot.forEach(doc => {
-    //         resources.push(doc.data())
-    //     })
+        const resourcesRef = db.collection("items")
+        const snapshot = await resourcesRef.where(`${resourceEntry}`, "==", `${item.name}`).get();
         
-    //     console.log(resources);
-    //     return resources
-    // }
+        if (snapshot.empty) {
+            return
+        } else {
+            
+            snapshot.forEach(doc => {
+            resources.push({...doc.data()})
+            })
+        }
+    }
+
+    items.map(item => {
+        addResourcesAttached(item);
+    })
+
+    const getResourcesAttached = (category) => {
+        const result = resources.filter(resource => {
+            // console.log("code reached")
+            // console.log(resource);
+            return resource.category == category;
+        })
+        // console.log(resources)
+        // console.log(result)
+        return result.length;
+    }
+
 
     
     return (
@@ -68,7 +72,7 @@ const ListDatabaseItems = ( { collection, resourceEntry, editItem } ) => {
               <tr className="data-row">
                 <td className="item-name">{item.name}</td>
                 
-                <td className="item-resources-attached">placeholder</td>
+                <td className="item-resources-attached">{getResourcesAttached(item.name)}</td>
                 <td className="buttons">
                     <button onClick={() => editItem(item, collection, resourceEntry)}>Edit</button>
                     {/* <button onClick={() => deleteItem(item)}>Delete</button> */}
