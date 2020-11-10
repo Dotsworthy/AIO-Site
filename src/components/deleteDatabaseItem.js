@@ -42,7 +42,7 @@ const DeleteDatabaseItem = ({currentItem}) => {
         <form onSubmit={onSubmit}>
             <div>
                 <h2>Delete Item</h2>
-            {resources > 0 ? 
+            {resources.length > 0 ? 
                 <div>
                     <h3>Items attached to resources!</h3>
                     <p>You cannot delete this database item as it is attached to resources in the database. You must first assign new items to these resources:</p>
