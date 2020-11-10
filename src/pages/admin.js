@@ -4,6 +4,7 @@ import UpdateItem from "../components/updateitem"
 import UpdateDatabaseItem from "../components/updateDatabaseItem"
 import AddItemForm from "../components/addItemForm"
 import ListDatabaseItems from "../components/listDatabaseItems";
+import DeleteDatabaseItem from "../components/deleteDatabaseItem";
 import Layout from "../components/layout"
 import { Router, Link } from "@reach/router"
 import firebase from 'firebase';
@@ -16,8 +17,9 @@ const AdminPage = () => {
   const SubjectList = () => <ListSubjects editItem={editItem}/>
   const AddSubject = () => <AddItemForm/>
   const UpdateSubject = () => <UpdateItem  currentItem={currentItem}/>
-  const CategoryList = () => <ListDatabaseItems collection={"categories"} resourceEntry={"category"} editItem={editDatabaseItem}/>
+  const CategoryList = () => <ListDatabaseItems collection={"categories"} resourceEntry={"category"} editItem={editDatabaseItem} deleteItem={deleteDatabaseItem}/>
   const UpdateCategory = () => <UpdateDatabaseItem currentItem={currentItem}/>
+  const DeleteCategory = () => <DeleteDatabaseItem currentItem={currentItem}/>
 
   const initialItemState = [{ id: null, name: "", image: "", description: "", category: "", level: "", tags: "", download: "" }]
 
@@ -58,6 +60,17 @@ const AdminPage = () => {
     navigate("/admin/categoryList/updateCategory")
   }
 
+  const deleteDatabaseItem = (item, collection, location) => {
+    setCurrentItem({
+      id: item.id,
+      name: item.name,
+      location: location,
+      collection: collection
+    })
+
+    navigate("/admin/categoryList/deleteCategory")
+  }
+
   const logout = () => {
     firebase.auth().signOut().then(function() {
       console.log("code reached signout")
@@ -91,6 +104,7 @@ const AdminPage = () => {
           <UpdateSubject path="/admin/subjectList/updateSubject"/>
           <CategoryList path="/admin/categoryList"/>
           <UpdateCategory path="/admin/categoryList/updateCategory"/>
+          <DeleteCategory path="/admin/categoryList/deleteCategory"/>
         </Router> 
         </div>
       </div>

@@ -3,7 +3,7 @@ import firebase from "./firebase"
 
 const db = firebase.firestore()
 
-const ListDatabaseItems = ( { collection, resourceEntry, editItem } ) => {
+const ListDatabaseItems = ( { collection, resourceEntry, editItem, deleteItem } ) => {
     const [items, setItems] = useState([])
     // const [resources, setResources] = useState([])
     // const [deleting, setDeleting] = useState(false)
@@ -77,7 +77,7 @@ const ListDatabaseItems = ( { collection, resourceEntry, editItem } ) => {
                 <td className="item-resources-attached">0</td>
                 <td className="buttons">
                     <button onClick={() => editItem(item, collection, resourceEntry)}>Edit</button>
-                    {/* <button onClick={() => deleteItem(item)}>Delete</button> */}
+                    <button onClick={() => deleteItem(item, collection, resourceEntry)}>Delete</button>
                 </td>
               </tr>
             </tbody>
