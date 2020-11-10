@@ -9,8 +9,6 @@ const ListDatabaseItems = ( { collection, resourceEntry, editItem } ) => {
     // const [deleting, setDeleting] = useState(false)
     // const [editing, setEditing] = useState(false)
 
-    const resources = []
-
     useEffect(() => {
         const unsubscribe = firebase.firestore().collection(`${collection}`).onSnapshot(snapshot => {
           const listItems = snapshot.docs.map(doc => ({
@@ -25,11 +23,16 @@ const ListDatabaseItems = ( { collection, resourceEntry, editItem } ) => {
     // const deleteItem = (item) => {
     //   setDeleting(true)  
     // }
+  
+    const resources = []  
+
+
 
     const addResourcesAttached = async (item) => {
 
+        const resources = []
         const resourcesRef = db.collection("items")
-        const snapshot = await resourcesRef.where(`${resourceEntry}`, "==", `${item.name}`).get();
+        const snapshot = await resourcesRef.where(`${resourceEntry}`, "==", `${item}`).get();
         
         if (snapshot.empty) {
             return
@@ -39,24 +42,23 @@ const ListDatabaseItems = ( { collection, resourceEntry, editItem } ) => {
             resources.push({...doc.data()})
             })
         }
+        // console.log(resources)
+        return resources
+    }
+
+    const getResourcesAttached = async (category) => {
+      const result = await
+      addResourcesAttached(category).then(value => {
+        return value
+      })
+      return result
     }
 
     items.map(item => {
-        addResourcesAttached(item);
+      const result = getResourcesAttached(item.name)
     })
 
-    const getResourcesAttached = (category) => {
-        const result = resources.filter(resource => {
-            // console.log("code reached")
-            // console.log(resource);
-            return resource.category == category;
-        })
-        // console.log(resources)
-        // console.log(result)
-        return result.length;
-    }
-
-
+    console.log(resources)
     
     return (
     <div>
@@ -72,7 +74,7 @@ const ListDatabaseItems = ( { collection, resourceEntry, editItem } ) => {
               <tr className="data-row">
                 <td className="item-name">{item.name}</td>
                 
-                <td className="item-resources-attached">{getResourcesAttached(item.name)}</td>
+                <td className="item-resources-attached">0</td>
                 <td className="buttons">
                     <button onClick={() => editItem(item, collection, resourceEntry)}>Edit</button>
                     {/* <button onClick={() => deleteItem(item)}>Delete</button> */}
