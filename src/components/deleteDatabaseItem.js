@@ -27,18 +27,19 @@ const DeleteDatabaseItem = ({currentItem}) => {
 
     const resources = useItems();
 
-    const deleteItem = () => {
+    const onSubmit = e => {
+        e.preventDefault()
         firebase
         .firestore()
         .collection("categories")
-        .item(item.id)
+        .doc(item.id)
         .delete()
 
         navigate("/admin/categoryList")
     }
     
     return (
-        <form>
+        <form onSubmit={onSubmit}>
             <div>
                 <h2>Delete Item</h2>
             {resources > 0 ? 
@@ -52,7 +53,7 @@ const DeleteDatabaseItem = ({currentItem}) => {
                
                 </div>
             : 
-            <button onClick={()=>deleteItem()}>Delete Item</button>   
+            <button type="submit">Delete Item</button>   
         }  
         </div> 
         </form>
