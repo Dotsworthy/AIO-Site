@@ -5,6 +5,8 @@ import 'firebase/storage'
 const DeleteResource = ({ currentResource, setDeleting }) => {
 
   const resource = currentResource
+
+  // generates notification for user that resource is in process of deletion
   const [waiting, setWaiting] = useState(false)
 
   const onSubmit = async e => {

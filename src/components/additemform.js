@@ -72,9 +72,13 @@ const AddItemForm = () => {
 
     // Loads profile image to display on the form and prepares them for addition to the database
     const prepareProfileImage = (e, htmlLocation) => {
-      createPreview(e, htmlLocation)
-      const file = e.target.files;
-      setImageUpload(file)
+      console.log(e.target.files)
+
+      if (e.target.files.length > 0) {
+        createPreview(e, htmlLocation)
+        const file = e.target.files;
+        setImageUpload(file)
+      } 
     }
 
     const createPreview = (e, htmlLocation) => {
