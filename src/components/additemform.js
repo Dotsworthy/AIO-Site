@@ -26,8 +26,7 @@ const AddItemForm = () => {
     const [duplicateFileWarning, setDuplicateFileWarning] = useState(false);
     const [duplicateFiles, setDuplicateFiles] = useState([])
     
-    
-    // file uploading
+    // file uploading and confirmation
     const [submit, setSubmit] = useState(false)
 
     // This React hook generates lists for the item form.
@@ -45,11 +44,12 @@ const AddItemForm = () => {
       return items;
     };
     
+    // Auto-complete for forms.
     const allCategories = useItems("categories");
     const allLevels = useItems("levels");
     const allTags = useItems("tags");
 
-    // Prepares and validates tags for addition to the database
+    // Prepares and validates tags for addition to the database.
     const addTag = (e, tag) => {
       e.preventDefault()
       setTagWarning(false)
@@ -66,6 +66,7 @@ const AddItemForm = () => {
       } 
     }
 
+    // Deletes a tag from the list of tags to be created.
     const deleteTag = (e, index) => {
       e.preventDefault()
       const newTags = addedTags
@@ -74,7 +75,7 @@ const AddItemForm = () => {
       setTagWarning(false);
     }
 
-    // Loads profile image to display on the form and prepares them for addition to the database
+    // Loads profile image to display on the form and prepares them for addition to the database.
     const prepareProfileImage = (e, htmlLocation) => {
       if (e.target.files.length > 0) {
         createPreview(e, htmlLocation)
@@ -138,16 +139,7 @@ const AddItemForm = () => {
           uploadTask.on('state_changed', 
           function progress(snapshot) {
             let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log('Upload is ' + progress + '% done');
-            switch (snapshot.state) {
-              case firebase.storage.TaskState.PAUSED: 
-              console.log('Upload is paused')
-              break;
-              case firebase.storage.TaskState.RUNNING:
-                console.log('Upload is running');
-              break;
-            }
-  
+            document.getElementById(file.name).innerHTML = `${file.name} ${progress}% complete`;
           }, function error(err) {
             reject(err);
           }, function complete() {
@@ -359,8 +351,10 @@ const AddItemForm = () => {
         </form>
 
         {submit && <div>
+          <h2>Submitting Resource</h2>
+          <p>Creating entry on Firebase. Do NOT refresh or leave the page while a file is uploading</p>
           {resourceUploads.map(resource => {
-            return <p>{resource.name}</p>
+            return <p id={resource.name}>Uploading...{resource.name}</p>
           })
         }
           </div>}
