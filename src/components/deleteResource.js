@@ -2,20 +2,34 @@ import React from "react";
 import firebase from "firebase"
 import 'firebase/storage'
 
-const DeleteItem = ({ currentItem, setDeleting }) => {
+const DeleteResource = ({ currentResource, setDeleting }) => {
 
-    const item = currentItem
+    const resource = currentResource
 
-    const deleteItem = (id, imageRef, downloadRef, imageLocation, downloadLocation) => {
-        deleteFile(imageRef, id, imageLocation)
-        deleteAllFiles(downloadRef, id, downloadLocation)
+    // const deleteItem = (id, imageRef, downloadRef, imageLocation, downloadLocation) => {
+    //     deleteFile(imageRef, id, imageLocation)
+    //     deleteAllFiles(downloadRef, id, downloadLocation)
     
-        firebase
-          .firestore()
-          .collection("items")
-          .doc(id)
-          .delete()
-      } 
+    //     firebase
+    //       .firestore()
+    //       .collection("items")
+    //       .doc(id)
+    //       .delete()
+    //   } 
+
+    const onSubmit = e => {
+      e.preventDefault()
+      deleteFile(resource.image, resource.id, "images")
+      deleteAllFiles(resource.download, resource.id, "downloads")
+
+      firebase
+      .firestore()
+      .collection("items")
+      .doc(resource.id)
+      .delete()
+
+      setDeleting(false)
+    }  
     
       const deleteFile = (file, id, location) => {
         const storageRef = firebase.storage().ref()
@@ -42,12 +56,12 @@ const DeleteItem = ({ currentItem, setDeleting }) => {
       }
 
     return (
-        <div>
+        <form onSubmit={onSubmit}>
         <p>Are you sure you want to delete this resource? This cannot be reversed!</p>
-        <button onClick={() => setDeleting(false)}>Cancel</button>
-        <button onClick={() => deleteItem(item.id, item.image, item.download, "images", "downloads")}>Confirm</button>
-        </div>
+        <button type="button" onClick={() => setDeleting(false)}>Cancel</button>
+        <button type="submit">Confirm</button>
+        </form>
     )
 }
 
-export default DeleteItem
+export default DeleteResource

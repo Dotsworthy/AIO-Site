@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react"
-import DeleteItem from "./deleteItem"
+import DeleteResource from "./deleteResource"
 import { Link } from "@reach/router"
 import firebase from "./firebase"
 import 'firebase/storage'
 
 const ListSubjects = ({ editItem }) => {
+  
   const [resources, setResources] = useState([]);
-  const [deleting, setDeleting] = useState(false)
-  const [currentItem, setCurrentItem] = useState([])
 
+  // used for deleting resources
+  const [deleting, setDeleting] = useState(false)
+  const [currentResource, setCurrentResource] = useState([])
+
+  // renders the list of resources
   useEffect(() => {
     const unsubscribe = firebase.firestore().collection("items").onSnapshot(snapshot => {
       const listResources = snapshot.docs.map(doc => ({
@@ -20,9 +24,10 @@ const ListSubjects = ({ editItem }) => {
     return unsubscribe
   }, [])
 
-  const deleteItem = (item) => {
+  // sets Resource to be passed to deleteResource component
+  const deleteResource = (item) => {
     setDeleting(true)
-    setCurrentItem({
+    setCurrentResource({
       id: item.id,
       name: item.name,
       image: item.image,
@@ -48,27 +53,25 @@ const ListSubjects = ({ editItem }) => {
           <th className="tags">Tags</th>
         </tr>
       </tbody>
-      {resources.map(item => (
-            <tbody key={item.id}>
+      {resources.map(resource => (
+            <tbody key={resource.id}>
               <tr className="data-row">
-                <td className="resource-name">{item.name}</td>
-                <td className="category">{item.category}</td>
-                <td className="level">{item.level}</td>
-                <td className="tags">{item.tags.toString()}</td>
+                <td className="resource-name">{resource.name}</td>
+                <td className="category">{resource.category}</td>
+                <td className="level">{resource.level}</td>
+                <td className="tags">{resource.tags.toString()}</td>
                 <td className="buttons">
-                    <button onClick={() => editItem(item)}>Edit</button>
-                    <button onClick={() => deleteItem(item)}>Delete</button>
-                    
-                    
+                    <button onClick={() => editItem(resource)}>Edit</button>
+                    <button onClick={() => deleteResource(resource)}>Delete</button>
                 </td>
               </tr>
             </tbody>
           ))}
     </table>
 
-    {deleting && <DeleteItem
+    {deleting && <DeleteResource
       setDeleting={setDeleting}
-      currentItem={currentItem}
+      currentResource={currentResource}
     />}
 
     </div>
