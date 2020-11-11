@@ -72,8 +72,6 @@ const AddItemForm = () => {
 
     // Loads profile image to display on the form and prepares them for addition to the database
     const prepareProfileImage = (e, htmlLocation) => {
-      console.log(e.target.files)
-
       if (e.target.files.length > 0) {
         createPreview(e, htmlLocation)
         const file = e.target.files;
@@ -94,6 +92,7 @@ const AddItemForm = () => {
       setDuplicateFileWarning(false)
       setDuplicateFiles([])
       const allFiles = Array.from(e.target.files)
+      console.log(allFiles);
       const existingFiles = resourceUploads;
       const duplicates = [];
       allFiles.map(file => {
@@ -118,14 +117,14 @@ const AddItemForm = () => {
       setResourceUploads([...newFiles])
     }
   
-    const uploadSingleFile = (file, id, location) => {
+    const uploadSingleFile = async (file, id, location) => {
       const selectedFile = document.getElementById(file).files[0];
       const storageRef = firebase.storage().ref(`${location}/${id}/${selectedFile.name}`)
       storageRef.put(selectedFile)
       return `${selectedFile.name}`
     }
 
-    const uploadAllFiles = (file, id, location) => {
+    const uploadAllFiles = async (file, id, location) => {
       const selectedFiles = resourceUploads;
       const fileList = Array.from(selectedFiles);
       const databaseEntry = fileList.map(file => {
@@ -133,7 +132,25 @@ const AddItemForm = () => {
       });
       fileList.forEach(file => {
         const storageRef = firebase.storage().ref(`${location}/${id}/${file.name}`)
-        storageRef.put(file)
+        const uploadTask = storageRef.put(file);
+
+        uploadTask.on('state_changed', function(snapshot) {
+          let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+          switch (snapshot.state) {
+            case firebase.storage.TaskState.PAUSED: 
+            console.log('Upload is paused')
+            break;
+            case firebase.storage.TaskState.RUNNING:
+              console.log('Upload is running');
+            break;
+          }
+
+        }, function(error) {
+          console.log('Upload unsuccessful')
+        }, function() {
+          return console.log('Upload successful')
+        })
       })   
       return databaseEntry
     }
@@ -214,8 +231,8 @@ const AddItemForm = () => {
           addResource(name, description, category, level, tags, "items")
           const databaseEntry = await databaseCheck(name, "items")
 
-          const image = uploadSingleFile('image', databaseEntry[0].id, 'images')
-          const download = uploadAllFiles('download', databaseEntry[0].id, 'downloads')
+          const image = await uploadSingleFile('image', databaseEntry[0].id, 'images')
+          const download = await uploadAllFiles('download', databaseEntry[0].id, 'downloads')
           
           updateResource(image, download, "items", databaseEntry[0].id)
           navigate("/admin/subjectList")
