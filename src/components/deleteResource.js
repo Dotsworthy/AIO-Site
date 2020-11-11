@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import firebase from "firebase"
 import 'firebase/storage'
 
 const DeleteResource = ({ currentResource, setDeleting }) => {
 
   const resource = currentResource
+  const [waiting, setWaiting] = useState(false)
 
   const onSubmit = async e => {
     e.preventDefault()
+    setWaiting(true);
+
+    // function waits for these to complete before continuing.
     await deleteFile(resource.image, resource.id, "images")
     await deleteAllFiles(resource.download, resource.id, "downloads")
 
@@ -46,7 +50,11 @@ const DeleteResource = ({ currentResource, setDeleting }) => {
 
   return (
       <form onSubmit={onSubmit}>
+      { waiting ? 
+      <p>Deleting Resource...</p>  
+      :
       <p>Are you sure you want to delete this resource? This cannot be reversed!</p>
+      }
       <button type="button" onClick={() => setDeleting(false)}>Cancel</button>
       <button type="submit">Confirm</button>
       </form>
