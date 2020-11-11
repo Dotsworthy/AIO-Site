@@ -139,7 +139,8 @@ const AddItemForm = () => {
           uploadTask.on('state_changed', 
           function progress(snapshot) {
             let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            document.getElementById(file.name).innerHTML = `${file.name} ${progress}% complete`;
+            let result = progress.toFixed(0);
+            document.getElementById(file.name).innerHTML = `${file.name} ${result}% complete`;
           }, function error(err) {
             reject(err);
           }, function complete() {
