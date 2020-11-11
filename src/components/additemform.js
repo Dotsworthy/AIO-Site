@@ -25,6 +25,10 @@ const AddItemForm = () => {
     const [duplicateWarning, setDuplicateWarning] = useState(false);
     const [duplicateFileWarning, setDuplicateFileWarning] = useState(false);
     const [duplicateFiles, setDuplicateFiles] = useState([])
+    
+    
+    // file uploading
+    const [submit, setSubmit] = useState(false)
 
     // This React hook generates lists for the item form.
     const useItems = (location) => {
@@ -117,11 +121,43 @@ const AddItemForm = () => {
       setResourceUploads([...newFiles])
     }
   
-    const uploadSingleFile = async (file, id, location) => {
+    const uploadSingleFile = (file, id, location) => {
       const selectedFile = document.getElementById(file).files[0];
       const storageRef = firebase.storage().ref(`${location}/${id}/${selectedFile.name}`)
       storageRef.put(selectedFile)
       return `${selectedFile.name}`
+    }
+
+    const fileUploader = async (fileList, file, id, location) => {
+
+      await Promise.all(fileList.map(file => {
+        return new Promise(function (resolve, reject) {
+          const storageRef = firebase.storage().ref(`${location}/${id}/${file.name}`)
+          const uploadTask = storageRef.put(file)
+
+          uploadTask.on('state_changed', 
+          function progress(snapshot) {
+            let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state) {
+              case firebase.storage.TaskState.PAUSED: 
+              console.log('Upload is paused')
+              break;
+              case firebase.storage.TaskState.RUNNING:
+                console.log('Upload is running');
+              break;
+            }
+  
+          }, function error(err) {
+            reject(err);
+          }, function complete() {
+            resolve(uploadTask);
+          });
+        }).then(function() {
+          return
+        })
+      }))
+
     }
 
     const uploadAllFiles = async (file, id, location) => {
@@ -130,28 +166,9 @@ const AddItemForm = () => {
       const databaseEntry = fileList.map(file => {
         return `${file.name}`
       });
-      fileList.forEach(file => {
-        const storageRef = firebase.storage().ref(`${location}/${id}/${file.name}`)
-        const uploadTask = storageRef.put(file);
 
-        uploadTask.on('state_changed', function(snapshot) {
-          let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log('Upload is ' + progress + '% done');
-          switch (snapshot.state) {
-            case firebase.storage.TaskState.PAUSED: 
-            console.log('Upload is paused')
-            break;
-            case firebase.storage.TaskState.RUNNING:
-              console.log('Upload is running');
-            break;
-          }
+      await fileUploader(fileList, file, id, location)
 
-        }, function(error) {
-          console.log('Upload unsuccessful')
-        }, function() {
-          return console.log('Upload successful')
-        })
-      })   
       return databaseEntry
     }
 
@@ -210,6 +227,7 @@ const AddItemForm = () => {
       if (nameCheck.length > 0) {
         setNameWarning(true);
       } else {
+        setSubmit(true);
 
           if (categoryCheck.length === 0) {
             addDatabaseField(category, "categories")
@@ -339,6 +357,13 @@ const AddItemForm = () => {
             <button type="submit" name="submit" className="form-submit">Submit</button>
           </div>
         </form>
+
+        {submit && <div>
+          {resourceUploads.map(resource => {
+            return <p>{resource.name}</p>
+          })
+        }
+          </div>}
     </div>
     )
   }
