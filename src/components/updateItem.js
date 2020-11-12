@@ -313,27 +313,36 @@ const UpdateItem = ({ currentItem }) => {
               <textarea className="input-description" type="text" name="description" value={item.description} onChange={onChange}/>
               
               <input placeholder="Category" type="text" name="category" value={item.category} list="categoryList" onChange={onChange}/>
+               
+               {allCategories && 
                <datalist id="categoryList">
                 
                 {allCategories.map(singleCategory => {
                   return <option key={singleCategory.id} value={singleCategory.name}>{singleCategory.name}</option>
                 })}  
                 </datalist>
+              }
+
               
               <input placeholder="Level"value={item.level} name="level" list="levelList" onChange={onChange} type="level"/>
+              {allLevels && 
                 <datalist id="levelList">
                 {allLevels.map(singleLevel => {
                     return <option key={singleLevel.id} value={singleLevel.name}>{singleLevel.name}</option>
                   })}  
                 </datalist>  
-
+              }
               <input placeholder="Add a tag" value={tag} name="tags" list="tagsList" onChange={e => setTag(e.currentTarget.value)} type="tags"/>
               <button onClick={(e) => addTag(e, tag)}>Add Tag</button>
+              
+              {allTags &&
               <datalist id="tagsList">
                 {allTags.map(singleTag => {
                   return <option key={singleTag.id} value={singleTag.name}>{singleTag.name}</option>
                 })}
               </datalist>
+              }
+                
               <p>Tags added:</p>
               <div className="tags-container">
               {item.tags == "" ?

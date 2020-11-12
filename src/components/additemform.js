@@ -49,6 +49,10 @@ const AddItemForm = () => {
     const allLevels = useItems("levels");
     const allTags = useItems("tags");
 
+    // let allCategories;
+    // let allLevels
+    // let allTags;
+
     // Prepares and validates tags for addition to the database.
     const addTag = (e, tag) => {
       e.preventDefault()
@@ -281,27 +285,36 @@ const AddItemForm = () => {
               <textarea placeholder="Description" value={description} name="Description" onChange={e => setDescription(e.currentTarget.value)} type="text"/>
               
               <input placeholder="Category" type="text" name="category" value={category} list="categoryList" onChange={e => setCategory(e.currentTarget.value)}/>
-               <datalist id="categoryList">
-                
+               
+               {allCategories &&
+                <datalist id="categoryList">  
                 {allCategories.map(singleCategory => {
                   return <option key={singleCategory.id} value={singleCategory.name}>{singleCategory.name}</option>
                 })}  
                 </datalist>
+              }
               
               <input placeholder="Level"value={level} name="level" list="levelList" onChange={e => setLevel(e.currentTarget.value)} type="level"/>
+                
+                {allLevels &&
                 <datalist id="levelList">
                 {allLevels.map(singleLevel => {
                     return <option key={singleLevel.id} value={singleLevel.name}>{singleLevel.name}</option>
                   })}  
                 </datalist>  
+              }
 
               <input placeholder="Add a tag" value={tag} name="tags" list="tagsList" onChange={e => setTag(e.currentTarget.value)} type="tags"/>
               <button onClick={(e) => addTag(e, tag)}>Add Tag</button>
+              
+              {allTags &&
               <datalist id="tagsList">
                 {allTags.map(singleTag => {
                   return <option key={singleTag.id} value={singleTag.name}>{singleTag.name}</option>
                 })}
               </datalist>
+              }
+
               <p>Tags added:</p>
               <div className="tags-container">
                 {addedTags.length == 0 ?
