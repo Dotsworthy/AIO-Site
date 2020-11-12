@@ -101,12 +101,17 @@ const UpdateItem = ({ currentItem }) => {
             }
           })
         
-        
-        if (originalImage !== item.image) {
-          deleteFile(originalImage, item.id, `images`)
-          uploadFile('image', item.id, 'images')
-        }
-  
+          if (originalImage !== item.image) {
+            deleteFile(originalImage, item.id, `images`)
+            uploadFile('image', item.id, 'images')
+          }
+
+          firebase
+          .firestore()
+          .collection("items")
+          .doc(item.id)
+          .update(item)
+
         filesToDelete.forEach(file => {
           if (item.download.includes(file) === true) {
             return
@@ -117,11 +122,7 @@ const UpdateItem = ({ currentItem }) => {
   
         uploadMultipleFiles(filesToUpload, item.id, "downloads")
   
-        firebase
-        .firestore()
-        .collection("items")
-        .doc(item.id)
-        .update(item)
+
 
         navigate("/admin/subjectList")
       }
@@ -193,6 +194,30 @@ const UpdateItem = ({ currentItem }) => {
     newFiles.splice(index, 1)
     filesToDelete.push(file)
     changeDownloads("download", newFiles)
+  }
+
+  const fileUploader = async (fileList, file, id, location) => {
+
+    await Promise.all(fileList.map(file => {
+      return new Promise(function (resolve, reject) {
+        const storageRef = firebase.storage().ref(`${location}/${id}/${file.name}`)
+        const uploadTask = storageRef.put(file)
+
+        uploadTask.on('state_changed', 
+        function progress(snapshot) {
+          let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          let result = progress.toFixed(0);
+          document.getElementById(file.name).innerHTML = `${file.name} ${result}% complete`;
+        }, function error(err) {
+          reject(err);
+        }, function complete() {
+          resolve(uploadTask);
+        });
+      }).then(function() {
+        return
+      })
+    }))
+
   }
 
   const uploadFile = (file, id, location) => {

@@ -49,10 +49,6 @@ const AddItemForm = () => {
     const allLevels = useItems("levels");
     const allTags = useItems("tags");
 
-    // let allCategories;
-    // let allLevels
-    // let allTags;
-
     // Prepares and validates tags for addition to the database.
     const addTag = (e, tag) => {
       e.preventDefault()
@@ -83,8 +79,7 @@ const AddItemForm = () => {
     const prepareProfileImage = (e, htmlLocation) => {
       if (e.target.files.length > 0) {
         createPreview(e, htmlLocation)
-        const file = e.target.files;
-        setImageUpload(file)
+        setImageUpload(e.target.files)
       } 
     }
 
@@ -255,7 +250,7 @@ const AddItemForm = () => {
           const download = await uploadAllFiles('download', databaseEntry[0].id, 'downloads')
           
           updateResource(image, download, "items", databaseEntry[0].id)
-          
+
           navigate("/admin/subjectList")
         }
       } else {
