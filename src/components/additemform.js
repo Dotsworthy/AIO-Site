@@ -54,13 +54,13 @@ const AddItemForm = () => {
       e.preventDefault()
       setTagWarning(false)
       setDuplicateWarning(false)
-      if (tag === "") {
-        return
-      } else if (addedTags.includes(tag)) {
-        setDuplicateWarning(true);
-      } else if (addedTags.length === 4) {
-        setTagWarning(true);
-      } else {
+      if (tag === "") { return } 
+      else if (addedTags.includes(tag)) { 
+        setDuplicateWarning(true)
+        setTag("")
+      } 
+      else if (addedTags.length === 4) { setTagWarning(true);} 
+      else {
         addedTags.push(tag)
         setTag("");
       } 
@@ -96,7 +96,6 @@ const AddItemForm = () => {
       setDuplicateFileWarning(false)
       setDuplicateFiles([])
       const allFiles = Array.from(e.target.files)
-      console.log(allFiles);
       const existingFiles = resourceUploads;
       const duplicates = [];
       allFiles.map(file => {
@@ -210,7 +209,6 @@ const AddItemForm = () => {
         .get()
         
         snapshot.forEach((doc) => query.push(doc))
-        console.log(query);
         return query
     }
 
@@ -270,28 +268,33 @@ const AddItemForm = () => {
 
         <form onSubmit={onSubmit}>
           <div className="form-warning">
-          {warning && <div>Not all fields are complete. Please complete all fields before submitting the form</div>}
-          {nameWarning && <div>{name} already refers to an resource in the database. Either update the original resource, delete the original resource first, or choose a different name for the resource</div>}
+            {warning && <div>Not all fields are complete. Please complete all fields before submitting the form</div>}
+            {nameWarning && <div>{name} already refers to an resource in the database. Either update the original resource, delete the original resource first, or choose a different name for the resource</div>}
           </div>
-          <div className="form-container">
 
+          <div className="form-container">
             <div className="form-fields">
               <h2>Resource Information</h2>
+              
+              {/* NAME */}
               <input placeholder="Name" value={name} name="name" onChange={e => setName(e.currentTarget.value)} type="text"/>
+              
+              {/* DESCRIPTION */}
               <textarea placeholder="Description" value={description} name="Description" onChange={e => setDescription(e.currentTarget.value)} type="text"/>
               
+              {/* CATEGORY */}
               <input placeholder="Category" type="text" name="category" value={category} list="categoryList" onChange={e => setCategory(e.currentTarget.value)}/>
-               
                {allCategories &&
                 <datalist id="categoryList">  
                 {allCategories.map(singleCategory => {
                   return <option key={singleCategory.id} value={singleCategory.name}>{singleCategory.name}</option>
-                })}  
+                })
+                }  
                 </datalist>
               }
               
+              {/* LEVEL */}
               <input placeholder="Level"value={level} name="level" list="levelList" onChange={e => setLevel(e.currentTarget.value)} type="level"/>
-                
                 {allLevels &&
                 <datalist id="levelList">
                 {allLevels.map(singleLevel => {
@@ -300,9 +303,11 @@ const AddItemForm = () => {
                 </datalist>  
               }
 
+              {/* TAGS */}
+              <div className="tag-container">
               <input placeholder="Add a tag" value={tag} name="tags" list="tagsList" onChange={e => setTag(e.currentTarget.value)} type="tags"/>
               <button onClick={(e) => addTag(e, tag)}>Add Tag</button>
-              
+              </div>
               {allTags &&
               <datalist id="tagsList">
                 {allTags.map(singleTag => {
@@ -310,11 +315,10 @@ const AddItemForm = () => {
                 })}
               </datalist>
               }
-
-              <p>Tags added:</p>
               <div className="tags-container">
+                <p>Tags added:</p>
                 {addedTags.length == 0 ?
-                <p>No tags added</p>
+                <p>None</p>
                 :
                 addedTags.map(singleTag => {
                   return <div >
@@ -324,10 +328,10 @@ const AddItemForm = () => {
                 })
                 }
               
-              {/* <div className="warning-container"> */}
+              <div className="warning-container">
               {tagWarning && <div>Maximum of four tags. Please delete a tag before adding a new one</div>}
               {duplicateWarning && <div>Tag already selected. Please select a different tag</div>}
-              {/* </div> */}
+              </div>
               </div>
             </div>
 
