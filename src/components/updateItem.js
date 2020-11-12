@@ -336,12 +336,17 @@ const UpdateItem = ({ currentItem }) => {
               </datalist>
               <p>Tags added:</p>
               <div className="tags-container">
-              {item.tags.map(singleTag => {
+              {item.tags == "" ?
+              <p>No tags to display</p>
+              :  
+              item.tags.map(singleTag => {
                 return <div>
                   <label for={singleTag} key={item.tags.indexOf(singleTag)} id={item.tags.indexOf(singleTag)} name={singleTag}>{singleTag}</label>
                   <button name={singleTag} onClick={(e) => deleteTag(e, item.tags.indexOf(singleTag))}>Delete Tag</button>
                   </div>
-              })}
+              })
+              }
+              
               {tagWarning && <p>Maximum of four tags. Please delete a tag before adding a new one</p>}
               {duplicateWarning && <p>Tag already selected. Please select a different tag</p>}
               </div>
