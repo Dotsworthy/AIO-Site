@@ -44,7 +44,7 @@ const AddItemForm = () => {
       return items;
     };
     
-    // Auto-complete for forms.
+    // Auto-complete for form fields.
     const allCategories = useItems("categories");
     const allLevels = useItems("levels");
     const allTags = useItems("tags");
@@ -307,7 +307,7 @@ const AddItemForm = () => {
               <div className="tag-container">
               <input placeholder="Add a tag" value={tag} name="tags" list="tagsList" onChange={e => setTag(e.currentTarget.value)} type="tags"/>
               <button onClick={(e) => addTag(e, tag)}>Add Tag</button>
-              </div>
+
               {allTags &&
               <datalist id="tagsList">
                 {allTags.map(singleTag => {
@@ -315,23 +315,24 @@ const AddItemForm = () => {
                 })}
               </datalist>
               }
-              <div className="tags-container">
+              <div className="added-tags-container">
                 <p>Tags added:</p>
                 {addedTags.length == 0 ?
                 <p>None</p>
                 :
                 addedTags.map(singleTag => {
-                  return <div >
+                  return <div>
                     <label htmlFor={singleTag} key={addedTags.indexOf(singleTag)} id={addedTags.indexOf(singleTag)} name={singleTag}>{singleTag}</label>
                     <button name={singleTag} onClick={(e) => deleteTag(e, addedTags.indexOf(singleTag))}>Delete Tag</button>
                     </div>
                 })
                 }
-              
+              </div>
               <div className="warning-container">
               {tagWarning && <div>Maximum of four tags. Please delete a tag before adding a new one</div>}
               {duplicateWarning && <div>Tag already selected. Please select a different tag</div>}
               </div>
+              
               </div>
             </div>
 
@@ -358,11 +359,13 @@ const AddItemForm = () => {
               ))
               :
               <p>None</p>}
+              <div className="warning-container">
               {duplicateFileWarning && <p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>}
               {duplicateFiles.length > 0 && <p>Duplicate files:</p>}
               {duplicateFiles.length > 0 && duplicateFiles.map(file => (
                 <p>{file.name}</p>
               ))}
+              </div>
               </div>
 
             </div>
@@ -374,9 +377,10 @@ const AddItemForm = () => {
           </div>
         </form>
 
-        {submit && <div>
+        {submit && <div className="popup-container">
           <h2>Submitting Resource</h2>
-          <p>Creating entry on Firebase. Do NOT refresh or leave the page while a file is uploading</p>
+          <p>Uploading files. Do NOT refresh or leave the page while files are uploading.</p>
+          <p>If your upload has failed you can try again by updating the resource</p>
           {resourceUploads.map(resource => {
             return <p id={resource.name}>Uploading...{resource.name}</p>
           })
