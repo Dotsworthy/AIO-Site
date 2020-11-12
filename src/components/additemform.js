@@ -175,6 +175,9 @@ const AddItemForm = () => {
     }
 
     const addResource = (name, description, category, level, tags, location) => {
+      // creates placeholder database fields in case of download issues.
+      let download = "";
+      let image = "";
       firebase
       .firestore()
       .collection(location)
@@ -183,7 +186,9 @@ const AddItemForm = () => {
         description,
         category,
         level,
-        tags
+        tags,
+        image,
+        download
       })
     }
 

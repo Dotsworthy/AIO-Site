@@ -362,7 +362,11 @@ const UpdateItem = ({ currentItem }) => {
                 <h2>Upload Resources</h2>
                 <input onChange={(e) => loadAllFiles(e)} type="file" id="download" name="download" multiple/>
                 <p>Files:</p>
-                {
+                { item.download == "" ?
+                <div>
+                  <p>No files added</p>
+                </div>
+                :
                 item.download.map(file => (
                   <div>
                 <label>{file}</label>
