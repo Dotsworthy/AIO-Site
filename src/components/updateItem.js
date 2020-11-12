@@ -269,7 +269,7 @@ const UpdateItem = ({ currentItem }) => {
     setDuplicateFiles([]);
     const upload = e.target.files;
     const allFiles = Array.from(upload)
-    const existingFiles = item.download;
+    const existingFiles = Array.from(item.download);
     const existingUploads = filesToUpload;
     const duplicates = [];
     console.log(allFiles)
@@ -342,7 +342,7 @@ const UpdateItem = ({ currentItem }) => {
                 })}
               </datalist>
               }
-                
+
               <p>Tags added:</p>
               <div className="tags-container">
               {item.tags == "" ?

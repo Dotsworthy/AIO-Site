@@ -255,6 +255,7 @@ const AddItemForm = () => {
           const download = await uploadAllFiles('download', databaseEntry[0].id, 'downloads')
           
           updateResource(image, download, "items", databaseEntry[0].id)
+          
           navigate("/admin/subjectList")
         }
       } else {
