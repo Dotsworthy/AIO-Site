@@ -443,7 +443,7 @@ const UpdateItem = ({ currentItem }) => {
         
         {submit && <div>
           <h2>Submitting Resource</h2>
-          <p>Creating entry on Firebase. Do NOT refresh or leave the page while a file is uploading</p>
+          <p>Updating entry on Firebase. Do NOT refresh or leave the page while a file is uploading</p>
           {filesToUpload.map(resource => {
             return <p id={resource.name}>Uploading...{resource.name}</p>
           })

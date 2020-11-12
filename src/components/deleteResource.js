@@ -40,14 +40,20 @@ const DeleteResource = ({ currentResource, setDeleting }) => {
   // deletes all files within a folder in firebase storage
   const deleteAllFiles = async (file, id, location) => {
     const storageRef = firebase.storage().ref()
-    file.forEach(download => {
-      const fileRef = storageRef.child(`${location}/${id}/${download}`)
-      fileRef.delete().then(function() {
-        console.log("resource deleted successfully")
-      }).catch(function(error) {
-        console.log(error)
+    if (file = "") {
+      return
+    } else if (file.length == 0) {
+      return
+    } else {
+      file.forEach(download => {
+        const fileRef = storageRef.child(`${location}/${id}/${download}`)
+        fileRef.delete().then(function() {
+          console.log("resource deleted successfully")
+        }).catch(function(error) {
+          console.log(error)
+        })
       })
-    })
+    }
   }
 
   return (
