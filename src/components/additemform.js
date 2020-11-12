@@ -83,6 +83,7 @@ const AddItemForm = () => {
       } 
     }
 
+    // sends selected image file to JSX to render image.
     const createPreview = (e, htmlLocation) => {
       const htmlElement = document.getElementById(htmlLocation);
         htmlElement.src = URL.createObjectURL(e.target.files[0]);
@@ -111,15 +112,7 @@ const AddItemForm = () => {
       setDuplicateFiles([...duplicates])
     }
 
-    const removeFile = (e, index) => {
-      e.preventDefault()
-      setDuplicateFileWarning(false);
-      setDuplicateFiles([])
-      const newFiles = resourceUploads
-      newFiles.splice(index, 1)
-      setResourceUploads([...newFiles])
-    }
-  
+    // Uploads a single file to the database. Used for profile images.
     const uploadSingleFile = (file, id, location) => {
       const selectedFile = document.getElementById(file).files[0];
       const storageRef = firebase.storage().ref(`${location}/${id}/${selectedFile.name}`)
@@ -127,8 +120,8 @@ const AddItemForm = () => {
       return `${selectedFile.name}`
     }
 
+    // Uploads each download to the database and renders html to show download progress
     const fileUploader = async (fileList, file, id, location) => {
-
       await Promise.all(fileList.map(file => {
         return new Promise(function (resolve, reject) {
           const storageRef = firebase.storage().ref(`${location}/${id}/${file.name}`)
@@ -151,6 +144,18 @@ const AddItemForm = () => {
 
     }
 
+
+    // removes download from list of downloads to be updated.
+    const removeFile = (e, index) => {
+      e.preventDefault()
+      setDuplicateFileWarning(false);
+      setDuplicateFiles([])
+      const newFiles = resourceUploads
+      newFiles.splice(index, 1)
+      setResourceUploads([...newFiles])
+    }
+
+    // uploads all files to the database
     const uploadAllFiles = async (file, id, location) => {
       const selectedFiles = resourceUploads;
       const fileList = Array.from(selectedFiles);
@@ -159,10 +164,10 @@ const AddItemForm = () => {
       });
 
       await fileUploader(fileList, file, id, location)
-
       return databaseEntry
     }
 
+    // adds newly created categories, levels and tags to the database
     const addDatabaseField = (name, location) => {
       firebase
       .firestore()
@@ -172,6 +177,7 @@ const AddItemForm = () => {
       })
     }
 
+    // Initial creation of resource in firebase database. Image and Download are added seperately on upload.
     const addResource = (name, description, category, level, tags, location) => {
       // creates placeholder database fields in case of download issues.
       let download = "";
@@ -190,6 +196,7 @@ const AddItemForm = () => {
       })
     }
 
+    // Updates the newly created resource. Used once profile image and downloads have been uploaded to Firebase.
     const updateResource = (image, download, location, id) => {
       firebase
       .firestore()
@@ -201,6 +208,7 @@ const AddItemForm = () => {
       })
     }
 
+    // Looks for resources in the database with the same name on the form.
     const databaseCheck = async (name, location) => {
         let query = []
         const snapshot = await database
