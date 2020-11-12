@@ -23,6 +23,9 @@ const UpdateItem = ({ currentItem }) => {
   const [duplicateFileWarning, setDuplicateFileWarning] = useState(false);
   
   const [duplicateFiles, setDuplicateFiles] = useState([])
+
+  const [submit, setSubmit] = useState(false)
+
   
   // original variables for checking whether to upload/download
   const originalImage = currentItem.image;
@@ -83,9 +86,12 @@ const UpdateItem = ({ currentItem }) => {
       console.log(item.name);
       console.log(nameCheck.length);
       
+      
       if (originalName !== item.name && nameCheck.length > 0) {
         setNameWarning(true);
       } else {
+          setSubmit(true)
+
           if (categoryCheck.length === 0) {
             addDatabaseField(item.category, "categories")
           }
@@ -101,27 +107,26 @@ const UpdateItem = ({ currentItem }) => {
             }
           })
         
-          if (originalImage !== item.image) {
-            deleteFile(originalImage, item.id, `images`)
-            uploadFile('image', item.id, 'images')
-          }
-
-          firebase
-          .firestore()
-          .collection("items")
-          .doc(item.id)
-          .update(item)
-
+        await uploadMultipleFiles(filesToUpload, item.id, "downloads")
+        
         filesToDelete.forEach(file => {
           if (item.download.includes(file) === true) {
             return
           } else {
             deleteFile(file, item.id, "downloads")
           }
-        })
-  
-        uploadMultipleFiles(filesToUpload, item.id, "downloads")
-  
+        })  
+
+        if (originalImage !== item.image) {
+          deleteFile(originalImage, item.id, `images`)
+          uploadFile('image', item.id, 'images')
+        }
+
+      firebase
+      .firestore()
+      .collection("items")
+      .doc(item.id)
+      .update(item)
 
 
         navigate("/admin/subjectList")
@@ -227,16 +232,15 @@ const UpdateItem = ({ currentItem }) => {
     storageRef.put(selectedFile)
   }
 
-  const uploadMultipleFiles = (file, id, location) => {
+  const uploadMultipleFiles = async (file, id, location) => {
     const selectedFiles = file;
     const fileList = Array.from(selectedFiles);
     const databaseEntry = fileList.map(file => {
       return `${file.name}`
     });
-    fileList.forEach(file => {
-      const storageRef = firebase.storage().ref(`${location}/${id}/${file.name}`)
-      storageRef.put(file)
-    })   
+
+    await fileUploader(fileList, file, id, location)
+
     return databaseEntry
   }
 
@@ -437,6 +441,14 @@ const UpdateItem = ({ currentItem }) => {
           </div>
         </form>
         
+        {submit && <div>
+          <h2>Submitting Resource</h2>
+          <p>Creating entry on Firebase. Do NOT refresh or leave the page while a file is uploading</p>
+          {filesToUpload.map(resource => {
+            return <p id={resource.name}>Uploading...{resource.name}</p>
+          })
+        }
+          </div>}
       </div>
   )
 }
