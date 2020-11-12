@@ -304,12 +304,17 @@ const AddItemForm = () => {
               </datalist>
               <p>Tags added:</p>
               <div className="tags-container">
-              {addedTags.map(singleTag => {
-                return <div >
-                  <label htmlFor={singleTag} key={addedTags.indexOf(singleTag)} id={addedTags.indexOf(singleTag)} name={singleTag}>{singleTag}</label>
-                  <button name={singleTag} onClick={(e) => deleteTag(e, addedTags.indexOf(singleTag))}>Delete Tag</button>
-                  </div>
-              })}
+                {addedTags.length == 0 ?
+                <p>No tags added</p>
+                :
+                addedTags.map(singleTag => {
+                  return <div >
+                    <label htmlFor={singleTag} key={addedTags.indexOf(singleTag)} id={addedTags.indexOf(singleTag)} name={singleTag}>{singleTag}</label>
+                    <button name={singleTag} onClick={(e) => deleteTag(e, addedTags.indexOf(singleTag))}>Delete Tag</button>
+                    </div>
+                })
+                }
+              
               {/* <div className="warning-container"> */}
               {tagWarning && <div>Maximum of four tags. Please delete a tag before adding a new one</div>}
               {duplicateWarning && <div>Tag already selected. Please select a different tag</div>}
