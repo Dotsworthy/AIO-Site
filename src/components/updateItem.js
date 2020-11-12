@@ -248,13 +248,18 @@ const UpdateItem = ({ currentItem }) => {
   getImageURL(item, item.id, "images")
 
   const loadFile = (e) => {
+    e.persist()
     if (e) {
-      changeImage("image", `${e.target.files[0].name}`)
-      const output = document.getElementById("output");
-      output.src = URL.createObjectURL(e.target.files[0]);
-      output.onload = function() {
-      URL.revokeObjectURL(output.src)
-    }
+      if (e.target.files.length > 0) {
+        changeImage("image", `${e.target.files[0].name}`)
+        setTimeout(function(){
+          const output = document.getElementById("output");
+          output.src = URL.createObjectURL(e.target.files[0]);
+          output.onload = function() {
+          URL.revokeObjectURL(output.src)
+          }
+        }, 1000)
+      }
     }
 
   }
@@ -353,7 +358,11 @@ const UpdateItem = ({ currentItem }) => {
               <div>
                 <h2>Upload Image</h2>
                 <div className="image-container">
-                  <img className="preview" id="output" alt=""></img>
+                  { item.image == "" ?
+                  <p>No Profile Image</p>
+                :
+                  <img className="preview" id="output" alt="Loading Image..."></img>
+                }
                 </div>
                   <input onChange={(e) => loadFile(e)} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
               </div>
