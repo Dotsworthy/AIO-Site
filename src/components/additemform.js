@@ -208,7 +208,7 @@ const AddItemForm = () => {
       })
     }
 
-    // Looks for resources in the database with the same name on the form.
+    // Looks for resources, categories, levels or tags in the database with the same name on the form.
     const databaseCheck = async (name, location) => {
         let query = []
         const snapshot = await database
@@ -250,8 +250,8 @@ const AddItemForm = () => {
           const tags = addedTags;
           
           addResource(name, description, category, level, tags, "items")
-          const databaseEntry = await databaseCheck(name, "items")
 
+          const databaseEntry = await databaseCheck(name, "items")
           const image = await uploadSingleFile('image', databaseEntry[0].id, 'images')
           const download = await uploadAllFiles('download', databaseEntry[0].id, 'downloads')
           
@@ -344,8 +344,10 @@ const AddItemForm = () => {
               </div>
             </div>
 
+            
             <div className="form-downloads">
 
+              {/* IMAGE */}  
               <div>
               <h2>Upload Image</h2>
               <div className="image-container">
@@ -354,6 +356,7 @@ const AddItemForm = () => {
               <input onChange={(e) => prepareProfileImage(e, "preview")} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
               </div>
 
+              {/* DOWNLOADS */}
               <div>
               <h2>Upload Resources</h2>
               <input onChange={(e) => {prepareAllFiles(e)}}type="file" id="download" name="download" multiple/>
