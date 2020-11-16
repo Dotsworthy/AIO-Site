@@ -6,7 +6,9 @@ import 'firebase/storage'
 
 const ListSubjects = ({ editItem }) => {
   
+  // used for rendering resources
   const [resources, setResources] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(null)
 
   // used for deleting resources
   const [deleting, setDeleting] = useState(false)
@@ -14,15 +16,26 @@ const ListSubjects = ({ editItem }) => {
 
   // renders the list of resources
   useEffect(() => {
-    const unsubscribe = firebase.firestore().collection("items").onSnapshot(snapshot => {
-      const listResources = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }))
-      setResources(listResources);
-    });
-    return unsubscribe
-  }, [])
+    if (searchTerm) {
+      const unsubscribe = firebase.firestore().collection("items").where("name", "==", searchTerm).onSnapshot(snapshot => {
+        const listResources = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+        setResources(listResources);
+      });
+      return unsubscribe
+    } else {
+      const unsubscribe = firebase.firestore().collection("items").orderBy("name").onSnapshot(snapshot => {
+        const listResources = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+        setResources(listResources);
+      });
+      return unsubscribe
+    }
+  }, [searchTerm])
 
   // sets Resource to be passed to deleteResource component
   const deleteResource = (item) => {
@@ -39,10 +52,20 @@ const ListSubjects = ({ editItem }) => {
     })
   }
   
+  const onSubmit = e => {
+    e.preventDefault()
+    const element = document.getElementById("search").value
+    setSearchTerm(element);
+  }
+
   return (
     <div>
     <nav className="database-navigation-container">
     <Link to="/admin/subjectList/addSubject">Add Subject</Link>
+    <form onSubmit={onSubmit} className="nav-bar-form">
+    <input type="text" id="search" name="search"/>
+    <button type="submit">Search</button>
+    </form>
     </nav>  
     <table className="database-table">
       <tbody>

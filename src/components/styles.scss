@@ -120,7 +120,12 @@ a, a:visited {
 }
 
 .database-navigation-container {
-    height: 30px;
+    height: 75px;
+    display: flex;
+    align-items: center;
+}
+
+.nav-bar-form {
     display: flex;
     align-items: center;
 }
