@@ -27,7 +27,7 @@ const ListSubjects = ({ editItem }) => {
       });
       return unsubscribe
     } else {
-      const unsubscribe = firebase.firestore().collection("items").orderBy("name").onSnapshot(snapshot => {
+      const unsubscribe = firebase.firestore().collection("items").orderBy(orderBy).onSnapshot(snapshot => {
         const listResources = snapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
@@ -36,7 +36,7 @@ const ListSubjects = ({ editItem }) => {
       });
       return unsubscribe
     }
-  }, [searchTerm])
+  }, [searchTerm, orderBy])
 
   // sets Resource to be passed to deleteResource component
   const deleteResource = (item) => {
@@ -73,10 +73,18 @@ const ListSubjects = ({ editItem }) => {
     <table className="database-table">
       <tbody>
         <tr className="header-row">
-          <th className="name">Resource Name</th>
-          <th className="category">Category</th>
-          <th className="level">Level</th>
-          <th className="tags">Tags</th>
+          <th className="name">
+            <button onClick={() => setOrderBy("name")}>Resource Name</button>
+          </th>
+          <th className="category">
+          <button onClick={() => setOrderBy("category")}>Category</button>
+            </th>
+          <th className="level">
+          <button onClick={() => setOrderBy("level")}>Level</button>
+            </th>
+          <th className="tags">
+          <button onClick={() => setOrderBy("tags")}>Tags</button>
+          </th>
         </tr>
       </tbody>
       {resources.map(resource => (
