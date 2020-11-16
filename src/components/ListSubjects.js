@@ -6,7 +6,7 @@ import 'firebase/storage'
 
 const ListSubjects = ({ editItem }) => {
   
-  // used for rendering resources
+  // used for rendering and filtering resources
   const [resources, setResources] = useState([]);
   const [searchTerm, setSearchTerm] = useState(null)
   const [searchLocation, setSearchLocation] = useState()
@@ -79,7 +79,7 @@ const ListSubjects = ({ editItem }) => {
     <nav className="database-navigation-container">
     <Link to="/admin/subjectList/addSubject">Add Subject</Link>
     <form onSubmit={onSubmit} className="nav-bar-form">
-    <input type="text" id="search" name="search" placeholder="Search by Name"/>
+    <input type="text" id="search" name="search" placeholder="Search"/>
     <select id="location" name="location">
       <option value="name">Resource Name</option>
       <option value="category">Category</option>
