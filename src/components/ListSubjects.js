@@ -9,6 +9,7 @@ const ListSubjects = ({ editItem }) => {
   // used for rendering resources
   const [resources, setResources] = useState([]);
   const [searchTerm, setSearchTerm] = useState(null)
+  const [orderBy, setOrderBy] = useState("name")
 
   // used for deleting resources
   const [deleting, setDeleting] = useState(false)
@@ -52,6 +53,7 @@ const ListSubjects = ({ editItem }) => {
     })
   }
   
+  // search form
   const onSubmit = e => {
     e.preventDefault()
     const element = document.getElementById("search").value
@@ -63,7 +65,7 @@ const ListSubjects = ({ editItem }) => {
     <nav className="database-navigation-container">
     <Link to="/admin/subjectList/addSubject">Add Subject</Link>
     <form onSubmit={onSubmit} className="nav-bar-form">
-    <input type="text" id="search" name="search"/>
+    <input type="text" id="search" name="search" placeholder="Search by Name"/>
     <button type="submit">Search</button>
     <button type="reset" onClick={() => setSearchTerm(null)}>Clear</button>
     </form>
