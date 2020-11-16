@@ -9,6 +9,7 @@ const ListSubjects = ({ editItem }) => {
   // used for rendering resources
   const [resources, setResources] = useState([]);
   const [searchTerm, setSearchTerm] = useState(null)
+  const [searchLocation, setSearchLocation] = useState()
   const [orderBy, setOrderBy] = useState("name")
 
   // used for deleting resources
@@ -18,14 +19,25 @@ const ListSubjects = ({ editItem }) => {
   // renders the list of resources
   useEffect(() => {
     if (searchTerm) {
-      const unsubscribe = firebase.firestore().collection("items").where("name", "==", searchTerm).onSnapshot(snapshot => {
-        const listResources = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }))
-        setResources(listResources);
-      });
-      return unsubscribe
+      if (searchLocation == "tags") {
+        const unsubscribe = firebase.firestore().collection("items").where(searchLocation, "array-contains", searchTerm).onSnapshot(snapshot => {
+          const listResources = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+          }))
+          setResources(listResources);
+        });
+        return unsubscribe
+      } else {
+        const unsubscribe = firebase.firestore().collection("items").where(searchLocation, "==", searchTerm).onSnapshot(snapshot => {
+          const listResources = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+          }))
+          setResources(listResources);
+        });
+        return unsubscribe
+      }
     } else {
       const unsubscribe = firebase.firestore().collection("items").orderBy(orderBy).onSnapshot(snapshot => {
         const listResources = snapshot.docs.map(doc => ({
@@ -58,6 +70,8 @@ const ListSubjects = ({ editItem }) => {
     e.preventDefault()
     const element = document.getElementById("search").value
     setSearchTerm(element);
+    const category = document.getElementById("location").value
+    setSearchLocation(category)
   }
 
   return (
@@ -66,6 +80,12 @@ const ListSubjects = ({ editItem }) => {
     <Link to="/admin/subjectList/addSubject">Add Subject</Link>
     <form onSubmit={onSubmit} className="nav-bar-form">
     <input type="text" id="search" name="search" placeholder="Search by Name"/>
+    <select id="location" name="location">
+      <option value="name">Resource Name</option>
+      <option value="category">Category</option>
+      <option value="level">Level</option>
+      <option value="tags">Tags</option>
+    </select>
     <button type="submit">Search</button>
     <button type="reset" onClick={() => setSearchTerm(null)}>Clear</button>
     </form>
