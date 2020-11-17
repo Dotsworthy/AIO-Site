@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react"
 import firebase from "./firebase"
 
-const db = firebase.firestore()
+// const db = firebase.firestore()
 
 const ListDatabaseItems = ( { collection, resourceEntry, editItem, deleteItem } ) => {
     const [items, setItems] = useState([])
-
-    // const resources = []
 
     useEffect(() => {
         const unsubscribe = firebase.firestore().collection(`${collection}`).orderBy("name").onSnapshot(snapshot => {
@@ -19,7 +17,10 @@ const ListDatabaseItems = ( { collection, resourceEntry, editItem, deleteItem } 
         return unsubscribe
       }, [collection])
 
-    // These functions were used to render the number of resources attached. Currently non-operational
+    // The functions below were used to render the number of resources attached. Currently non-working.
+
+    // const resources = []
+    
     // const addResourcesAttached = async (item) => {
     //   const resources = []
     //   const resourcesRef = db.collection("items")
