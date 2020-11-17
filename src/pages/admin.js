@@ -26,6 +26,10 @@ const AdminPage = () => {
   const UpdateLevel = () => <UpdateDatabaseItem currentItem={currentItem}/>
   const DeleteLevel = () => <DeleteDatabaseItem currentItem={currentItem}/>
 
+  const TagList = () => <ListDatabaseItems collection={"tags"} resourceEntry={"tags"} editItem={editDatabaseItem} deleteItem={deleteDatabaseItem}/>
+  const UpdateTag = () => <UpdateDatabaseItem currentItem={currentItem}/>
+  const DeleteTag = () => <DeleteDatabaseItem currentItem={currentItem}/>
+
   const initialItemState = [{ id: null, name: "", image: "", description: "", category: "", level: "", tags: "", download: "" }]
 
   const [currentItem, setCurrentItem] = useState(initialItemState)
@@ -99,21 +103,30 @@ const AdminPage = () => {
           <Link to="/admin/subjectList">Subject List</Link>
           <Link to="/admin/categoryList">Categories</Link>
           <Link to="/admin/levelList">Levels</Link>
+          <Link to="/admin/tagList">Tags</Link>
           <button className="link-button" onClick={() => logout()}>Logout</button>
         </div>
 
       </nav>
         <div className="admin-layout">
         <Router>
+
           <SubjectList path="/admin/subjectList"/>
           <AddSubject path="/admin/subjectList/addSubject"/>
           <UpdateSubject path="/admin/subjectList/updateSubject"/>
+
           <CategoryList path="/admin/categoryList"/>
           <UpdateCategory path="/admin/categoryList/updateCategory"/>
           <DeleteCategory path="/admin/categoryList/deleteCategory"/>
+
           <LevelList path="/admin/levelList"/>
-          <UpdateLevel path="/admin/categoryList/updateLevel"/>
-          <DeleteLevel path="/admin/categoryList/deleteLevel"/>
+          <UpdateLevel path="/admin/levelList/updateLevel"/>
+          <DeleteLevel path="/admin/levelList/deleteLevel"/>
+
+          <TagList path="/admin/tagList"/>
+          <UpdateTag path="/admin/tagList/updateTag"/>
+          <DeleteLevel path="/admin/tagList/deleteTag"/>
+
         </Router> 
         </div>
       </div>

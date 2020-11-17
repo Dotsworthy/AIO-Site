@@ -9,21 +9,37 @@ const DeleteDatabaseItem = ({currentItem}) => {
     const useItems = () => {
         const [items, setItems] = useState([])
         useEffect(() => {
-            const unsubscribe = firebase
-            .firestore()
-            .collection("items")
-            .where(`${item.location}`, "==", `${item.name}`)
-            .onSnapshot(function(snapshot) {
-                const listItems = snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }))
-                setItems(listItems)
-            });
-            return unsubscribe;
+        if (item.location === "tags") {
+            
+                const unsubscribe = firebase
+                .firestore()
+                .collection("items")
+                .where(`${item.location}`, "array-contains", `${item.name}`)
+                .onSnapshot(function(snapshot) {
+                    const listItems = snapshot.docs.map(doc => ({
+                        id: doc.id,
+                        ...doc.data()
+                    }))
+                    setItems(listItems)
+                });
+                return unsubscribe;
+            } else {
+                const unsubscribe = firebase
+                .firestore()
+                .collection("items")
+                .where(`${item.location}`, "==", `${item.name}`)
+                .onSnapshot(function(snapshot) {
+                    const listItems = snapshot.docs.map(doc => ({
+                        id: doc.id,
+                        ...doc.data()
+                    }))
+                    setItems(listItems)
+                });
+                return unsubscribe;
+            }
         },[])    
-        return items    
-    }  
+        return items      
+    } 
 
     const resources = useItems();
 

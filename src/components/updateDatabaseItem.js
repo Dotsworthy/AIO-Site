@@ -22,34 +22,53 @@ const UpdateDatabaseItem = ( { currentItem }) => {
     const useItems = () => {
         const [items, setItems] = useState([])
         useEffect(() => {
-            const unsubscribe = firebase
-            .firestore()
-            .collection("items")
-            .where(`${item.location}`, "==", `${item.name}`)
-            .onSnapshot(function(snapshot) {
-                const listItems = snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }))
-                setItems(listItems)
-            });
-            return unsubscribe;
+        if (item.location === "tags") {
+            
+                const unsubscribe = firebase
+                .firestore()
+                .collection("items")
+                .where(`${item.location}`, "array-contains", `${item.name}`)
+                .onSnapshot(function(snapshot) {
+                    const listItems = snapshot.docs.map(doc => ({
+                        id: doc.id,
+                        ...doc.data()
+                    }))
+                    setItems(listItems)
+                });
+                return unsubscribe;
+            } else {
+                const unsubscribe = firebase
+                .firestore()
+                .collection("items")
+                .where(`${item.location}`, "==", `${item.name}`)
+                .onSnapshot(function(snapshot) {
+                    const listItems = snapshot.docs.map(doc => ({
+                        id: doc.id,
+                        ...doc.data()
+                    }))
+                    setItems(listItems)
+                });
+                return unsubscribe;
+            }
         },[])    
-        return items    
-    }  
+        return items      
+    } 
 
     const resources = useItems();
-    console.log(resources)
-
+    console.log(resources);
+    
     const updateResource = (resource, location) => {
 
         if (item.location === "category") {
-            console.log("code reached")
             firebase.firestore().collection(location).doc(resource.id).update({category: item.name})
         }
 
         if (item.location === "level") {
             firebase.firestore().collection(location).doc(resource.id).update({level: item.name})
+        }
+
+        if (item.location === "tag") {
+            return
         }
 
         if (item.location === undefined) {
@@ -67,7 +86,17 @@ const UpdateDatabaseItem = ( { currentItem }) => {
 
         firebase.firestore().collection(item.collection).doc(item.id).update({name: item.name})
         
-        navigate("/admin/categoryList")
+        if (item.location === "category") {
+            navigate("/admin/categoryList")
+        }
+        
+        if (item.location === "level") {
+            navigate("/admin/levelList")
+        }
+
+        if (item.location ==="tag") {
+            navigate("/admin/tagList")
+        }
     }
 
     const onChange = e => {
