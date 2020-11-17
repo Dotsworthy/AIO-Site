@@ -4,8 +4,10 @@ import { navigate } from "gatsby";
 
 const DeleteDatabaseItem = ({currentItem}) => {
     
-    const [item, setItem] = useState(currentItem)
+    // Resource for deletion
+    const item = currentItem;
     
+    // Looks for resources that contain the selected database item.
     const useItems = () => {
         const [items, setItems] = useState([])
         useEffect(() => {
@@ -41,6 +43,7 @@ const DeleteDatabaseItem = ({currentItem}) => {
         return items      
     } 
 
+    // Collects and stores resources that contain the selected database item.
     const resources = useItems();
 
     const onSubmit = e => {
@@ -69,6 +72,7 @@ const DeleteDatabaseItem = ({currentItem}) => {
         <form onSubmit={onSubmit}>
             <div>
                 <h2>Delete Item</h2>
+            {/* If there are resources in the database with the selected database item, it prevents the user from deleting the resource. */}
             {resources.length > 0 ? 
                 <div>
                     <h3>Items attached to resources!</h3>
