@@ -4,6 +4,7 @@ import 'firebase/storage'
 
 const DeleteResource = ({ currentResource, setDeleting }) => {
 
+  // Resource for deletion
   const resource = currentResource
 
   // generates notification for user that resource is in process of deletion
