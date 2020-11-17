@@ -47,11 +47,22 @@ const DeleteDatabaseItem = ({currentItem}) => {
         e.preventDefault()
         firebase
         .firestore()
-        .collection("categories")
+        .collection(`${item.collection}`)
         .doc(item.id)
         .delete()
 
-        navigate("/admin/categoryList")
+        if (item.collection === "categories") {
+            navigate("/admin/categoryList")
+        }
+
+        if (item.collection === "levels") {
+            navigate("/admin/levelList")
+        }
+
+        if (item.collection === "tags") {
+            navigate("/admin/tagList")
+        }
+        
     }
     
     return (
