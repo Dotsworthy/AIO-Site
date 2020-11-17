@@ -20,6 +20,7 @@ const AdminPage = () => {
   const CategoryList = () => <ListDatabaseItems collection={"categories"} resourceEntry={"category"} editItem={editDatabaseItem} deleteItem={deleteDatabaseItem}/>
   const UpdateCategory = () => <UpdateDatabaseItem currentItem={currentItem}/>
   const DeleteCategory = () => <DeleteDatabaseItem currentItem={currentItem}/>
+  const LevelList = () => <ListDatabaseItems collection={"levels"} resourceEntry={"level"} editItem={editDatabaseItem} deleteItem={deleteDatabaseItem}/>
 
   const initialItemState = [{ id: null, name: "", image: "", description: "", category: "", level: "", tags: "", download: "" }]
 
@@ -93,6 +94,7 @@ const AdminPage = () => {
           <div>
           <Link to="/admin/subjectList">Subject List</Link>
           <Link to="/admin/categoryList">Categories</Link>
+          <Link to="/admin/levelList">Levels</Link>
           <button className="link-button" onClick={() => logout()}>Logout</button>
         </div>
 
@@ -105,6 +107,7 @@ const AdminPage = () => {
           <CategoryList path="/admin/categoryList"/>
           <UpdateCategory path="/admin/categoryList/updateCategory"/>
           <DeleteCategory path="/admin/categoryList/deleteCategory"/>
+          <LevelList path="/admin/levelList"/>
         </Router> 
         </div>
       </div>
