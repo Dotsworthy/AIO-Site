@@ -125,7 +125,7 @@ const AdminPage = () => {
 
           <TagList path="/admin/tagList"/>
           <UpdateTag path="/admin/tagList/updateTag"/>
-          <DeleteLevel path="/admin/tagList/deleteTag"/>
+          <DeleteTag path="/admin/tagList/deleteTag"/>
 
         </Router> 
         </div>
