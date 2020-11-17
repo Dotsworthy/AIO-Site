@@ -5,7 +5,8 @@ import firebase from "./firebase";
 
 const UpdateDatabaseItem = ( { currentItem }) => {
     
-    const [item, setItem] = useState(currentItem)
+    const [item, setItem] = useState(currentItem);
+    const originalTag = currentItem.name;
     // const [resources, setResources] = useState([])
 
     // useEffect(() => {
@@ -67,8 +68,9 @@ const UpdateDatabaseItem = ( { currentItem }) => {
             firebase.firestore().collection(location).doc(resource.id).update({level: item.name})
         }
 
-        if (item.location === "tag") {
-            return
+        if (item.location === "tags") {
+            firebase.firestore().collection(location).doc(resource.id).update({tags: firebase.firestore.FieldValue.arrayRemove(`${originalTag}`)})
+            firebase.firestore().collection(location).doc(resource.id).update({tags: firebase.firestore.FieldValue.arrayUnion(`${item.name}`)})
         }
 
         if (item.location === undefined) {
@@ -94,7 +96,7 @@ const UpdateDatabaseItem = ( { currentItem }) => {
             navigate("/admin/levelList")
         }
 
-        if (item.location ==="tag") {
+        if (item.location ==="tags") {
             navigate("/admin/tagList")
         }
     }
