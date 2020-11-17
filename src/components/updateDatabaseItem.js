@@ -5,21 +5,11 @@ import firebase from "./firebase";
 
 const UpdateDatabaseItem = ( { currentItem }) => {
     
+    // Used for updating the database item.
     const [item, setItem] = useState(currentItem);
     const originalTag = currentItem.name;
-    // const [resources, setResources] = useState([])
 
-    // useEffect(() => {
-    //     const unsubscribe = firebase.firestore().collection("items").where(`${item.location}`, "==", `${item.name}`).onSnapshot(snapshot => {
-    //       const listResources = snapshot.docs.map(doc => ({
-    //         id: doc.id,
-    //         ...doc.data()
-    //       }))
-    //       setResources(listResources);
-    //     });
-    //     return unsubscribe
-    //   }) 
-
+    // Retrieves resources in the database that include the selected database item.
     const useItems = () => {
         const [items, setItems] = useState([])
         useEffect(() => {
@@ -55,11 +45,13 @@ const UpdateDatabaseItem = ( { currentItem }) => {
         return items      
     } 
 
+    // Collects and stores the resources that include the database item.
     const resources = useItems();
-    console.log(resources);
     
+    // Updates resources in the database to include the new database item.
     const updateResource = (resource, location) => {
 
+        // Firebase cannot use variables for database entries, so we need seperate if functions for categories and levels
         if (item.location === "category") {
             firebase.firestore().collection(location).doc(resource.id).update({category: item.name})
         }
@@ -68,17 +60,19 @@ const UpdateDatabaseItem = ( { currentItem }) => {
             firebase.firestore().collection(location).doc(resource.id).update({level: item.name})
         }
 
+        // Tags are updated differently as it is an array.
         if (item.location === "tags") {
             firebase.firestore().collection(location).doc(resource.id).update({tags: firebase.firestore.FieldValue.arrayRemove(`${originalTag}`)})
             firebase.firestore().collection(location).doc(resource.id).update({tags: firebase.firestore.FieldValue.arrayUnion(`${item.name}`)})
         }
 
+        // To prevent errors
         if (item.location === undefined) {
             return
         }
-
     }
 
+    // Updates the database item.
     const onSubmit = e => {
         e.preventDefault()
 
