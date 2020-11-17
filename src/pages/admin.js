@@ -17,10 +17,14 @@ const AdminPage = () => {
   const SubjectList = () => <ListSubjects editItem={editItem}/>
   const AddSubject = () => <AddItemForm/>
   const UpdateSubject = () => <UpdateItem  currentItem={currentItem}/>
+ 
   const CategoryList = () => <ListDatabaseItems collection={"categories"} resourceEntry={"category"} editItem={editDatabaseItem} deleteItem={deleteDatabaseItem}/>
   const UpdateCategory = () => <UpdateDatabaseItem currentItem={currentItem}/>
   const DeleteCategory = () => <DeleteDatabaseItem currentItem={currentItem}/>
+  
   const LevelList = () => <ListDatabaseItems collection={"levels"} resourceEntry={"level"} editItem={editDatabaseItem} deleteItem={deleteDatabaseItem}/>
+  const UpdateLevel = () => <UpdateDatabaseItem currentItem={currentItem}/>
+  const DeleteLevel = () => <DeleteDatabaseItem currentItem={currentItem}/>
 
   const initialItemState = [{ id: null, name: "", image: "", description: "", category: "", level: "", tags: "", download: "" }]
 
@@ -108,6 +112,8 @@ const AdminPage = () => {
           <UpdateCategory path="/admin/categoryList/updateCategory"/>
           <DeleteCategory path="/admin/categoryList/deleteCategory"/>
           <LevelList path="/admin/levelList"/>
+          <UpdateLevel path="/admin/categoryList/updateLevel"/>
+          <DeleteLevel path="/admin/categoryList/deleteLevel"/>
         </Router> 
         </div>
       </div>
