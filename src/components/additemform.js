@@ -115,9 +115,13 @@ const AddItemForm = () => {
     // Uploads a single file to the database. Used for profile images.
     const uploadSingleFile = (file, id, location) => {
       const selectedFile = document.getElementById(file).files[0];
+      if (selectedFile) {
       const storageRef = firebase.storage().ref(`${location}/${id}/${selectedFile.name}`)
       storageRef.put(selectedFile)
       return `${selectedFile.name}`
+      } else {
+        return
+      }
     }
 
     // Uploads each download to the database and renders html to show download progress
@@ -222,7 +226,16 @@ const AddItemForm = () => {
 
     const onSubmit = async e => {
       e.preventDefault()
-      if (name && description && category && level && addedTags && imageUpload && resourceUploads.length > 0) {
+      if (
+        name && 
+        description && 
+        category && 
+        level && 
+        addedTags 
+        // && 
+        // imageUpload && 
+        // resourceUploads.length > 0
+        ) {
       const nameCheck = await databaseCheck(name, "items")
       const categoryCheck = await databaseCheck(category, "categories")
       const levelCheck = await databaseCheck(level, "levels")
@@ -252,8 +265,20 @@ const AddItemForm = () => {
           addResource(name, description, category, level, tags, "items")
 
           const databaseEntry = await databaseCheck(name, "items")
-          const image = await uploadSingleFile('image', databaseEntry[0].id, 'images')
-          const download = await uploadAllFiles('download', databaseEntry[0].id, 'downloads')
+          
+          let image
+          if (imageUpload == "") {
+            image = ""
+          } else {
+            image = await uploadSingleFile('image', databaseEntry[0].id, 'images')
+          }
+
+          let download
+          if (resourceUploads == []) {
+            download = ""
+          } else {
+            download = await uploadAllFiles('download', databaseEntry[0].id, 'downloads')
+          }
           
           updateResource(image, download, "items", databaseEntry[0].id)
 
