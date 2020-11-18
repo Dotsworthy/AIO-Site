@@ -75,7 +75,7 @@ const ListSubjects = ({ editItem }) => {
   }
 
   return (
-    <div>
+    <div className="database-container">
     <nav className="database-navigation-container">
     <Link to="/admin/subjectList/addSubject">Add Subject</Link>
     <form onSubmit={onSubmit} className="nav-bar-form">

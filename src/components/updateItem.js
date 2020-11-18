@@ -4,6 +4,9 @@ import { navigate } from "gatsby"
 import firebase from "firebase"
 import 'firebase/storage'
 
+// ISSUES:
+// If resource has an image assigned to the image field but no corresponding image in cloud storage. Trying to upload that image will not work. User can upload a new image with different file name however. This is not something the user should run into.
+
 const UpdateItem = ({ currentItem }) => {
 
   // item information to update the database
@@ -21,9 +24,9 @@ const UpdateItem = ({ currentItem }) => {
   const [tagWarning, setTagWarning] = useState(false);
   const [duplicateWarning, setDuplicateWarning] = useState(false);
   const [duplicateFileWarning, setDuplicateFileWarning] = useState(false);
-  
   const [duplicateFiles, setDuplicateFiles] = useState([])
 
+  // for rendering upload pop-up
   const [submit, setSubmit] = useState(false)
 
   
@@ -87,11 +90,6 @@ const UpdateItem = ({ currentItem }) => {
       const categoryCheck = await databaseCheck(item.category, "categories")
       const levelCheck = await databaseCheck(item.level, "levels")
 
-      // console.log(originalName);
-      console.log(item.name);
-      console.log(nameCheck.length);
-      
-      
       if (originalName !== item.name && nameCheck.length > 0) {
         setNameWarning(true);
       } else {
@@ -227,17 +225,18 @@ const UpdateItem = ({ currentItem }) => {
         return
       })
     }))
-
   }
 
+  // Uploads a single file. Used for Images. 
   const uploadFile = (file, id, location) => {
     const selectedFile = document.getElementById(file).files[0];
     if (selectedFile) {
       const storageRef = firebase.storage().ref(`${location}/${id}/${selectedFile.name}`)
-    storageRef.put(selectedFile)
+      storageRef.put(selectedFile)
     }
   }
 
+  // Uploads multiple files. Used for resource downloads
   const uploadMultipleFiles = async (file, id, location) => {
     const selectedFiles = file;
     const fileList = Array.from(selectedFiles);
@@ -277,7 +276,6 @@ const UpdateItem = ({ currentItem }) => {
       img.src = url;
     }).catch(function(error) {
     })
-    console.log("image-loaded");
   }
 
   getImageURL(item, item.id, "images")

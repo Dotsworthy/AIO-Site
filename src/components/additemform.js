@@ -114,7 +114,7 @@ const AddItemForm = () => {
 
     // Uploads a single file to the database. Used for profile images.
     const uploadSingleFile = (file, id, location) => {
-      const selectedFile = document.getElementById(file).files[0];
+      const selectedFile = imageUpload[0];
       if (selectedFile) {
       const storageRef = firebase.storage().ref(`${location}/${id}/${selectedFile.name}`)
       storageRef.put(selectedFile)
