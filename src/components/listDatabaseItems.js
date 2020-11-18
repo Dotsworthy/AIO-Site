@@ -5,8 +5,19 @@ import firebase from "./firebase"
 
 const ListDatabaseItems = ( { collection, resourceEntry, editItem, deleteItem } ) => {
     const [items, setItems] = useState([])
+    const [searchTerm, setSearchTerm] = useState(null)
 
     useEffect(() => {
+      if (searchTerm) {
+        const unsubscribe = firebase.firestore().collection(`${collection}`).where("name", "==", searchTerm).onSnapshot(snapshot => {
+          const listItems = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+          }))
+          setItems(listItems);
+        });
+        return unsubscribe
+      } else {
         const unsubscribe = firebase.firestore().collection(`${collection}`).orderBy("name").onSnapshot(snapshot => {
           const listItems = snapshot.docs.map(doc => ({
             id: doc.id,
@@ -15,7 +26,9 @@ const ListDatabaseItems = ( { collection, resourceEntry, editItem, deleteItem } 
           setItems(listItems);
         });
         return unsubscribe
-      }, [collection])
+      }
+        
+      }, [searchTerm])
 
     // The functions below were used to render the number of resources attached. Currently non-working.
 
@@ -46,9 +59,19 @@ const ListDatabaseItems = ( { collection, resourceEntry, editItem, deleteItem } 
     //   const resourcesAttached = result.length
     //   return resources.push({category, resourcesAttached})
     // }  
+    const onSubmit = e => {
+      e.preventDefault()
+      const element = document.getElementById("search").value
+      setSearchTerm(element);
+    }
 
     return (
     <div>
+      <form onSubmit={onSubmit} className="nav-bar-form">
+    <input type="text" id="search" name="search" placeholder="Search"/>
+    <button type="submit">Search</button>
+    <button type="reset" onClick={() => setSearchTerm(null)}>Clear</button>
+    </form>
         <table className="database-table">
       <tbody>
         <tr className="header-row">
