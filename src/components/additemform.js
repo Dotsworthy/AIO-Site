@@ -80,15 +80,22 @@ const AddItemForm = () => {
       if (e.target.files.length > 0) {
         createPreview(e, htmlLocation)
         setImageUpload(e.target.files)
-      } 
+      } else if (e.target.files.length === 0) {
+        createPreview(e, htmlLocation)
+        setImageUpload("")
+      }
     }
 
     // sends selected image file to JSX to render image.
     const createPreview = (e, htmlLocation) => {
-      const htmlElement = document.getElementById(htmlLocation);
+      if (e.target.files.length > 0) {
+        const htmlElement = document.getElementById(htmlLocation);
         htmlElement.src = URL.createObjectURL(e.target.files[0]);
         htmlElement.onload = function() {
-        URL.revokeObjectURL(htmlElement.src)
+        URL.revokeObjectURL(htmlElement.src);
+        } 
+      } else if (e.target.files === 0) {
+        document.getElementById(htmlLocation).removeAttribute('src')
       }
     }
 
