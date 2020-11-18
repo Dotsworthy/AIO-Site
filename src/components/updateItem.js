@@ -77,7 +77,12 @@ const UpdateItem = ({ currentItem }) => {
   // submission form
   const onSubmit = async e => {
     e.preventDefault();
-    if (item.name && item.description && item.category && item.level && item.tags.length > 0 && item.image && item.download.length > 0) {
+    if (item.name && item.description && item.category && item.level && 
+      item.tags.length > 0 
+      // && 
+      // item.image 
+      // && item.download.length > 0
+      ) {
       const nameCheck = await databaseCheck(item.name, "items")
       const categoryCheck = await databaseCheck(item.category, "categories")
       const levelCheck = await databaseCheck(item.level, "levels")
@@ -227,9 +232,10 @@ const UpdateItem = ({ currentItem }) => {
 
   const uploadFile = (file, id, location) => {
     const selectedFile = document.getElementById(file).files[0];
-    console.log(selectedFile);
-    const storageRef = firebase.storage().ref(`${location}/${id}/${selectedFile.name}`)
+    if (selectedFile) {
+      const storageRef = firebase.storage().ref(`${location}/${id}/${selectedFile.name}`)
     storageRef.put(selectedFile)
+    }
   }
 
   const uploadMultipleFiles = async (file, id, location) => {
