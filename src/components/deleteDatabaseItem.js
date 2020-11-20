@@ -54,22 +54,17 @@ const DeleteDatabaseItem = ({currentItem}) => {
         .doc(item.id)
         .delete()
 
-        if (item.collection === "categories") {
-            navigate("/admin/categoryList")
-        }
+        navigate(`/admin/${currentItem.location}List`)
+    }
 
-        if (item.collection === "levels") {
-            navigate("/admin/levelList")
-        }
+    const handleCancel = (e) => {
+        e.preventDefault()
 
-        if (item.collection === "tags") {
-            navigate("/admin/tagList")
-        }
-        
+        navigate(`/admin/${currentItem.location}List`)
     }
     
     return (
-        <form onSubmit={onSubmit}>
+        <form className="small-database-form" onSubmit={onSubmit}>
             <div>
                 <h2>Delete Item</h2>
             {/* If there are resources in the database with the selected database item, it prevents the user from deleting the resource. */}
@@ -84,7 +79,11 @@ const DeleteDatabaseItem = ({currentItem}) => {
                
                 </div>
             : 
-            <button type="submit">Delete Item</button>   
+            <div>
+            <p>No resources have this {currentItem.location} attached and can be safely deleted.</p>    
+            <button onClick={(e) => handleCancel(e)} >Cancel</button>
+            <button type="submit">Delete Item</button>  
+            </div> 
         }  
         </div> 
         </form>

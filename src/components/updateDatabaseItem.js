@@ -82,17 +82,7 @@ const UpdateDatabaseItem = ( { currentItem }) => {
 
         firebase.firestore().collection(item.collection).doc(item.id).update({name: item.name})
         
-        if (item.location === "category") {
-            navigate("/admin/categoryList")
-        }
-        
-        if (item.location === "level") {
-            navigate("/admin/levelList")
-        }
-
-        if (item.location ==="tags") {
-            navigate("/admin/tagList")
-        }
+        navigate(`/admin/${currentItem.location}List`)
     }
 
     const onChange = e => {
