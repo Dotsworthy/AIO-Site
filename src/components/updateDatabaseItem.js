@@ -100,6 +100,11 @@ const UpdateDatabaseItem = ( { currentItem }) => {
         setItem({ ...item, [name]: value })
       }
 
+    const handleCancel = (e) => {
+        e.preventDefault()
+        navigate(`/admin/${currentItem.location}List`)
+    }  
+
     return (
         <div className="database-container">
             
@@ -107,6 +112,7 @@ const UpdateDatabaseItem = ( { currentItem }) => {
             <h2>Update {currentItem.location}</h2>
             <div><p>Updaing this {currentItem.location} will update all resources that have this {currentItem.location} attached.</p></div>
                 <input type="text" name="name" value={item.name} onChange={onChange} />
+                <button onClick={(e) => handleCancel(e)}>Cancel</button>
                 <button type="submit" >Update</button>
             </form>
         </div>
