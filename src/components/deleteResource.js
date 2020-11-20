@@ -30,12 +30,16 @@ const DeleteResource = ({ currentResource, setDeleting }) => {
   // deletes a single file within a folder in firebase storage
   const deleteFile = async (file, id, location) => {
     const storageRef = firebase.storage().ref()
-    const fileRef = storageRef.child(`${location}/${id}/${file}`)
-    fileRef.delete().then(function() {
-      console.log("resource deleted successfully")
-    }).catch(function(error) {
-      console.log(error)
-    })
+    if (file = "") {
+      return
+    } else {
+      const fileRef = storageRef.child(`${location}/${id}/${file}`)
+      fileRef.delete().then(function() {
+        console.log("resource deleted successfully")
+      }).catch(function(error) {
+        console.log(error)
+      })
+    }
   }
   
   // deletes all files within a folder in firebase storage

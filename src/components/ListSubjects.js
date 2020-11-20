@@ -125,10 +125,13 @@ const ListSubjects = ({ editItem }) => {
           ))}
     </table>
 
-    {deleting && <DeleteResource
+    {deleting && <div className="popup-container"><DeleteResource
       setDeleting={setDeleting}
       currentResource={currentResource}
-    />}
+      
+    />
+    </div>
+    }
 
     </div>
   )

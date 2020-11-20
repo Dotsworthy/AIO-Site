@@ -222,12 +222,12 @@ h1 {
 
 .popup-container {
     width: 350px;
-    min-height: 220px;
+    // min-height: 220px;
     height: auto;
     position:absolute; 
     top: calc(50% - 110px); // half of width
     left: calc(50% - 175px); // half of height
-    background-color: white;
+    background-color: #F4F5F5;
     border: 1px solid black;
     border-radius: 2px;
     padding: 5px; 

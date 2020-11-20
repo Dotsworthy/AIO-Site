@@ -76,7 +76,7 @@ const DeleteDatabaseItem = ({currentItem}) => {
                     return <p>{resource.name}</p>
                 })
                 }
-               
+               <button onClick={(e) => handleCancel(e)} >Cancel</button>
                 </div>
             : 
             <div>
