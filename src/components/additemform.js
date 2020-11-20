@@ -3,6 +3,13 @@ import firebase from "firebase"
 import { navigate } from "gatsby"
 import 'firebase/storage'
 
+// ISSUES
+// Profile image has issues.
+// Uploads has issues.
+// Is name check working?
+
+// Changing of CSS when sumbit is pressed.
+
 const AddItemForm = () => {
 
     // database location
@@ -86,7 +93,7 @@ const AddItemForm = () => {
       }
     }
 
-    // sends selected image file to JSX to render image.
+    // sends selected image file to JSX to render image. NOTE. clicking the upload image button and pressing cancel will remove the image from image uploads but does not remove preview. To fix.
     const createPreview = (e, htmlLocation) => {
       if (e.target.files.length > 0) {
         const htmlElement = document.getElementById(htmlLocation);
@@ -166,7 +173,7 @@ const AddItemForm = () => {
       setResourceUploads([...newFiles])
     }
 
-    // uploads all files to the database
+    // uploads all files to the database. NOTE: this function needs to be refactored to prevent crash if there are no uploads.
     const uploadAllFiles = async (file, id, location) => {
       const selectedFiles = resourceUploads;
       const fileList = Array.from(selectedFiles);
@@ -231,6 +238,7 @@ const AddItemForm = () => {
         return query
     }
 
+    // is namecheck working?
     const onSubmit = async e => {
       e.preventDefault()
       if (
@@ -239,9 +247,9 @@ const AddItemForm = () => {
         category && 
         level && 
         addedTags 
-        // && 
-        // imageUpload && 
-        // resourceUploads.length > 0
+        && 
+        imageUpload && 
+        resourceUploads.length > 0
         ) {
       const nameCheck = await databaseCheck(name, "items")
       const categoryCheck = await databaseCheck(category, "categories")
@@ -421,13 +429,16 @@ const AddItemForm = () => {
         </form>
 
         {submit && <div className="popup-container">
-          <h2>Submitting Resource</h2>
-          <p>Uploading files. Do NOT refresh or leave the page while files are uploading.</p>
-          <p>If your upload has failed you can try again by updating the resource</p>
+          <div className="pop-up-content"><h2>Submitting Resource</h2></div>
+          <div className="pop-up-content">
+          <p>Uploading files. Do NOT refresh or leave the page while files are uploading. (If your upload has failed you can try again by updating the resource)</p>
+          </div>
+          <div className="pop-up-content">
           {resourceUploads.map(resource => {
             return <p id={resource.name}>Uploading...{resource.name}</p>
           })
         }
+        </div>
           </div>}
     </div>
     )

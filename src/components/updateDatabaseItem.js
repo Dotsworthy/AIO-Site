@@ -101,8 +101,11 @@ const UpdateDatabaseItem = ( { currentItem }) => {
       }
 
     return (
-        <div>
-            <form onSubmit={onSubmit}>
+        <div className="database-container">
+            
+            <form className="small-database-form" onSubmit={onSubmit}>
+            <h2>Update {currentItem.location}</h2>
+            <div><p>Updaing this {currentItem.location} will update all resources that have this {currentItem.location} attached.</p></div>
                 <input type="text" name="name" value={item.name} onChange={onChange} />
                 <button type="submit" >Update</button>
             </form>

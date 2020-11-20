@@ -80,7 +80,7 @@ body {
 
 .admin-layout {
     margin: 0 auto;
-    max-width: 960px;
+    max-width: 1280px;
     padding: 0 1.0875rem 1.45rem;
 }
 
@@ -119,15 +119,23 @@ a, a:visited {
     background-color: transparent;
 }
 
-.database-navigation-container {
-    height: 75px;
+.database-container {
     display: flex;
-    align-items: center;
 }
 
-.nav-bar-form {
+.database-navigation-container {
+    // height: 75px;
+    padding: 10px;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    // align-items: center;
+}
+
+.database-navigation-content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 2px;
 }
 
 .database-form {
@@ -135,6 +143,14 @@ a, a:visited {
     margin: 10px;
     background-color: #F4F5F5;
     border-radius: 2px;
+}
+
+.small-database-form {
+    padding: 10px;
+    margin: 10px;
+    background-color: #F4F5F5;
+    border-radius: 2px;
+    max-width: 300px;
 }
 
 .form-fields {
@@ -202,4 +218,22 @@ textarea {
 
 h1 {
     font-size: 36px;
+}
+
+.popup-container {
+    width: 350px;
+    min-height: 220px;
+    height: auto;
+    position:absolute; 
+    top: calc(50% - 110px); // half of width
+    left: calc(50% - 175px); // half of height
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 2px;
+    padding: 5px; 
+}
+
+.popup-content {
+    padding: 2px;
+    margin: 2px;
 }

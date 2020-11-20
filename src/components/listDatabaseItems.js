@@ -66,7 +66,7 @@ const ListDatabaseItems = ( { collection, resourceEntry, editItem, deleteItem } 
     }
 
     return (
-    <div>
+    <div className="database-container">
       <form onSubmit={onSubmit} className="nav-bar-form">
     <input type="text" id="search" name="search" placeholder="Search"/>
     <button type="submit">Search</button>

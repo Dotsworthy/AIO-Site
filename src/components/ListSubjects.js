@@ -76,9 +76,9 @@ const ListSubjects = ({ editItem }) => {
 
   return (
     <div className="database-container">
-    <nav className="database-navigation-container">
+    <div className="database-navigation-container">
     <Link to="/admin/subjectList/addSubject">Add Subject</Link>
-    <form onSubmit={onSubmit} className="nav-bar-form">
+    <form className="database-navigation-content" onSubmit={onSubmit}>
     <input type="text" id="search" name="search" placeholder="Search"/>
     <select id="location" name="location">
       <option value="name">Resource Name</option>
@@ -86,10 +86,12 @@ const ListSubjects = ({ editItem }) => {
       <option value="level">Level</option>
       <option value="tags">Tags</option>
     </select>
+    <div>
     <button type="submit">Search</button>
     <button type="reset" onClick={() => setSearchTerm(null)}>Clear</button>
+    </div>    
     </form>
-    </nav>  
+    </div>  
     <table className="database-table">
       <tbody>
         <tr className="header-row">
