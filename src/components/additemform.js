@@ -4,7 +4,6 @@ import { navigate } from "gatsby"
 import 'firebase/storage'
 
 // ISSUES
-// Profile image has issues.
 // Uploads has issues.
 // Is name check working?
 
@@ -260,7 +259,10 @@ const AddItemForm = () => {
       if (nameCheck.length > 0) {
         setNameWarning(true);
       } else {
-        setSubmit(true);
+        // setSubmit(true);
+        document.getElementById("add-item-form").style.visibility = "hidden";
+        document.getElementById("preview").style.visibility = "hidden";
+        document.getElementById("submit-dialog-box").style.visibility = "visible";
 
           if (categoryCheck.length === 0) {
             addDatabaseField(category, "categories")
@@ -311,10 +313,10 @@ const AddItemForm = () => {
     }
  
     return (
-      <div className="database-form">        
-        <div>
+      <div>        
+        <div className="database-form" id="add-item-form">
           <h2>Add Resource</h2>
-        </div>
+        
 
         <form onSubmit={onSubmit}>
           <div className="form-warning">
@@ -430,7 +432,8 @@ const AddItemForm = () => {
           </div>
         </form>
 
-        {submit && <div className="popup-container">
+        </div>
+        <div className="popup-container" id="submit-dialog-box">
           <div className="pop-up-content"><h2>Submitting Resource</h2></div>
           <div>
           <p>Uploading files. Do NOT refresh or leave the page while files are uploading. (If your upload has failed you can try again by updating the resource)</p>
@@ -441,7 +444,8 @@ const AddItemForm = () => {
           })
         }
         </div>
-          </div>}
+          </div>
+
     </div>
     )
   }
