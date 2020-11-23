@@ -24,12 +24,7 @@ const AddItemForm = () => {
     const [imageUpload, setImageUpload] = useState("")
     const [resourceUploads, setResourceUploads] = useState([])   
 
-    // validation hooks for form.
-    const [warning, setWarning] = useState(false);
-    const [tagWarning, setTagWarning] = useState(false);
-    const [nameWarning, setNameWarning] = useState(false);
-    const [duplicateWarning, setDuplicateWarning] = useState(false);
-    const [duplicateFileWarning, setDuplicateFileWarning] = useState(false);
+    // validation hook for form.
     const [duplicateFiles, setDuplicateFiles] = useState([])
 
     // This React hook generates lists for the item form.
@@ -55,15 +50,16 @@ const AddItemForm = () => {
     // Prepares and validates tags for addition to the database.
     const addTag = (e, tag) => {
       e.preventDefault()
-      setTagWarning(false)
-      setDuplicateWarning(false)
       if (tag === "") { return } 
       else if (addedTags.includes(tag)) { 
-        setDuplicateWarning(true)
-        document.getElementById("warning-dialog-box").style.display = "block";
+        document.getElementById("warning-dialog-box").style.visibility = "visible";
+        document.getElementById("duplicate-tags").style.display = "block";
         setTag("")
       } 
-      else if (addedTags.length === 4) { setTagWarning(true);} 
+      else if (addedTags.length === 4) { 
+        document.getElementById("warning-dialog-box").style.visibility = "visible";
+        document.getElementById("max-tags-reached").style.display = "block";
+      } 
       else {
         addedTags.push(tag)
         setTag("");
@@ -76,7 +72,6 @@ const AddItemForm = () => {
       const newTags = addedTags
       newTags.splice(index, 1)
       setAddedTags([...newTags])
-      setTagWarning(false);
     }
 
     // Loads profile image to display on the form and prepares them for addition to the database.
@@ -107,7 +102,6 @@ const AddItemForm = () => {
 
     // Loads and validates file uploads and prepares them for adding to the database 
     const prepareAllFiles = (e) => {
-      setDuplicateFileWarning(false)
       setDuplicateFiles([])
       const allFiles = Array.from(e.target.files)
       const existingFiles = resourceUploads;
@@ -115,8 +109,8 @@ const AddItemForm = () => {
       allFiles.map(file => {
         const duplicate = existingFiles.filter(existingFile => existingFile.name === file.name)
         if (duplicate.length > 0) {
-          setDuplicateFileWarning(true)
-          document.getElementById("warning-dialog-box").style.display = "block";
+          document.getElementById("warning-dialog-box").style.visibility = "visible";
+          document.getElementById("duplicate-files").style.display = "block";
           return duplicates.push(file)
         } else {
           return existingFiles.push(file)
@@ -166,7 +160,6 @@ const AddItemForm = () => {
     // removes download from list of downloads to be updated.
     const removeFile = (e, index) => {
       e.preventDefault()
-      setDuplicateFileWarning(false);
       setDuplicateFiles([])
       const newFiles = resourceUploads
       newFiles.splice(index, 1)
@@ -238,7 +231,6 @@ const AddItemForm = () => {
         return query
     }
 
-    // is namecheck working?
     const onSubmit = async e => {
       e.preventDefault()
       if (
@@ -256,11 +248,9 @@ const AddItemForm = () => {
       const levelCheck = await databaseCheck(level, "levels")
       
       if (nameCheck.length > 0) {
-        // setNameWarning(true);
         document.getElementById("warning-dialog-box").style.visibility = "visible";
         document.getElementById("duplicate-name").style.display = "block";
       } else {
-        // setSubmit(true);
         document.getElementById("add-item-form").style.visibility = "hidden";
         document.getElementById("preview").style.visibility = "hidden";
         document.getElementById("submit-dialog-box").style.visibility = "visible";
@@ -305,7 +295,6 @@ const AddItemForm = () => {
           navigate("/admin/subjectList")
         }
       } else {
-        // setWarning(true);
         document.getElementById("warning-dialog-box").style.visibility = "visible";
         document.getElementById("incomplete-form").style.display = "block";
       }
