@@ -3,12 +3,6 @@ import firebase from "firebase"
 import { navigate } from "gatsby"
 import 'firebase/storage'
 
-// ISSUES
-// Uploads has issues.
-// Is name check working?
-
-// Changing of CSS when sumbit is pressed.
-
 const AddItemForm = () => {
 
     // database location. Needed for some functions.
@@ -153,9 +147,7 @@ const AddItemForm = () => {
           return
         })
       }))
-
     }
-
 
     // removes download from list of downloads to be updated.
     const removeFile = (e, index) => {
@@ -180,10 +172,7 @@ const AddItemForm = () => {
 
     // adds newly created categories, levels and tags to the database
     const addDatabaseField = (name, location) => {
-      firebase
-      .firestore()
-      .collection(location)
-      .add({
+      firebase.firestore().collection(location).add({
         name
       })
     }
@@ -193,10 +182,7 @@ const AddItemForm = () => {
       // creates placeholder database fields in case of download issues.
       let download = "";
       let image = "";
-      firebase
-      .firestore()
-      .collection(location)
-      .add({
+      firebase.firestore().collection(location).add({
         name,
         description,
         category,
@@ -209,11 +195,7 @@ const AddItemForm = () => {
 
     // Updates the newly created resource. Used once profile image and downloads have been uploaded to Firebase.
     const updateResource = (image, download, location, id) => {
-      firebase
-      .firestore()
-      .collection(location)
-      .doc(id)
-      .update({
+      firebase.firestore().collection(location).doc(id).update({
         image,
         download
       })
@@ -222,27 +204,15 @@ const AddItemForm = () => {
     // Looks for resources, categories, levels or tags in the database with the same name on the form.
     const databaseCheck = async (name, location) => {
         let query = []
-        const snapshot = await database
-        .collection(location)
-        .where("name", "==", name)
-        .get()
-        
+        const snapshot = await database.collection(location).where("name", "==", name).get()    
         snapshot.forEach((doc) => query.push(doc))
         return query
     }
 
     const onSubmit = async e => {
       e.preventDefault()
-      if (
-        name && 
-        description && 
-        category && 
-        level && 
-        addedTags 
-        && 
-        imageUpload && 
-        resourceUploads.length > 0
-        ) {
+      if (name && description && category && level && addedTags && imageUpload &&     resourceUploads.length > 0) {
+
       const nameCheck = await databaseCheck(name, "items")
       const categoryCheck = await databaseCheck(category, "categories")
       const levelCheck = await databaseCheck(level, "levels")
@@ -311,7 +281,6 @@ const AddItemForm = () => {
       document.getElementById("max-tags-reached").style.display = "none";
       document.getElementById("duplicate-tags").style.display = "none";
       document.getElementById("duplicate-files").style.display = "none";
-
     }
  
     return (
@@ -334,10 +303,11 @@ const AddItemForm = () => {
       </div>
 
       <div className="database-form" id="add-item-form">
+        <div className="form-header">
           <h2>Add Resource</h2>
-        
+        </div>
       <form onSubmit={onSubmit}>
-          
+        
 
           <div className="form-container">
             <div className="form-fields">
@@ -398,7 +368,6 @@ const AddItemForm = () => {
               </div>
             </div>
 
-            
             <div className="form-downloads">
 
               {/* IMAGE */}  
@@ -426,12 +395,13 @@ const AddItemForm = () => {
               <p>None</p>}
               </div>
             </div>
+  
           </div>
-
-          <div>
+          <div className="form-footer">
             <button type="submit" name="submit" onClick={() => handleCancel()} value="Cancel">Cancel</button>
             <button type="submit" name="submit" className="form-submit">Submit</button>
           </div>
+          
         </form>
 
         </div>
@@ -447,7 +417,6 @@ const AddItemForm = () => {
         }
         </div>
           </div>
-
     </div>
     )
   }
