@@ -234,35 +234,17 @@ h1 {
     padding: 5px; 
 }
 
-#submit-dialog-box {
-    visibility: hidden;
-}
-
-#warning-dialog-box {
-    visibility: hidden;
-}
-
-#incomplete-form {
-    display: none;
-}
-
-#duplicate-name {
-    display: none;
-}
-
-#max-tags-reached {
-    display: none;
-}
-
-#duplicate-tags {
-    display : none;
-}
-
-#duplicate-files {
-    display: none;
-}
-
 .popup-content {
     padding: 2px;
     margin: 2px;
 }
+
+// IDs for dialog boxes made visible by JavaScript
+#submit-dialog-box { visibility: hidden; }
+#warning-dialog-box { visibility: hidden; }
+#incomplete-form { display: none; }
+#duplicate-name { display: none; }
+#max-tags-reached { display: none; }
+#duplicate-tags { display : none; }
+#duplicate-files { display: none; }
+
