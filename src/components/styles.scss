@@ -167,8 +167,9 @@ a, a:visited {
     width: 400px;
 }
 
-.form-warning {
-    height: 35px;
+.form-warning-container {
+    height: 100px;
+    overflow-y: scroll;
 }
 
 .form-container {

@@ -11,7 +11,7 @@ import 'firebase/storage'
 
 const AddItemForm = () => {
 
-    // database location
+    // database location. Needed for some functions.
     const database = firebase.firestore()
 
     // fields for updating database
@@ -31,9 +31,6 @@ const AddItemForm = () => {
     const [duplicateWarning, setDuplicateWarning] = useState(false);
     const [duplicateFileWarning, setDuplicateFileWarning] = useState(false);
     const [duplicateFiles, setDuplicateFiles] = useState([])
-    
-    // file uploading and confirmation
-    const [submit, setSubmit] = useState(false)
 
     // This React hook generates lists for the item form.
     const useItems = (location) => {
@@ -317,11 +314,20 @@ const AddItemForm = () => {
         <div className="database-form" id="add-item-form">
           <h2>Add Resource</h2>
         
-
         <form onSubmit={onSubmit}>
-          <div className="form-warning">
-            {warning && <div>Not all fields are complete. Please complete all fields before submitting the form</div>}
-            {nameWarning && <div>{name} already refers to an resource in the database. Either update the original resource, delete the original resource first, or choose a different name for the resource</div>}
+          <div className="pop-up-container" id="warning-dialog-box">
+            {warning && <div id="incomplete-form">Not all fields are complete. Please complete all fields before submitting the form</div>}
+            {nameWarning && <div id="duplicate-name">{name} already refers to an resource in the database. Either update the original resource, delete the original resource first, or choose a different name for the resource</div>}
+            {tagWarning && <div id="max-tags-reached">Maximum of four tags. Please delete a tag before adding a new one</div>}
+            {duplicateWarning && <div id="duplicate-tags">Tag already selected. Please select a different tag</div>}
+                {duplicateFileWarning && <div id="duplicate-files"><p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>
+              <p>Duplicate files:</p>
+              {duplicateFiles.map(file => (
+                <p>{file.name}</p>
+              ))
+              }
+              </div>
+              }
           </div>
 
           <div className="form-container">
@@ -380,11 +386,6 @@ const AddItemForm = () => {
                 })
                 }
               </div>
-              <div className="warning-container">
-              {tagWarning && <div>Maximum of four tags. Please delete a tag before adding a new one</div>}
-              {duplicateWarning && <div>Tag already selected. Please select a different tag</div>}
-              </div>
-              
               </div>
             </div>
 
@@ -414,15 +415,7 @@ const AddItemForm = () => {
               ))
               :
               <p>None</p>}
-              <div className="warning-container">
-              {duplicateFileWarning && <p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>}
-              {duplicateFiles.length > 0 && <p>Duplicate files:</p>}
-              {duplicateFiles.length > 0 && duplicateFiles.map(file => (
-                <p>{file.name}</p>
-              ))}
               </div>
-              </div>
-
             </div>
           </div>
 
