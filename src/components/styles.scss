@@ -238,6 +238,30 @@ h1 {
     visibility: hidden;
 }
 
+#warning-dialog-box {
+    visibility: hidden;
+}
+
+#incomplete-form {
+    display: none;
+}
+
+#duplicate-name {
+    display: none;
+}
+
+#max-tags-reached {
+    display: none;
+}
+
+#duplicate-tags {
+    display : none;
+}
+
+#duplicate-files {
+    display: none;
+}
+
 .popup-content {
     padding: 2px;
     margin: 2px;

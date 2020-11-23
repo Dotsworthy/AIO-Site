@@ -60,7 +60,7 @@ const AddItemForm = () => {
       if (tag === "") { return } 
       else if (addedTags.includes(tag)) { 
         setDuplicateWarning(true)
-        document.getElementById("warning-dialog-box").style.visibility = "visible";
+        document.getElementById("warning-dialog-box").style.display = "block";
         setTag("")
       } 
       else if (addedTags.length === 4) { setTagWarning(true);} 
@@ -116,7 +116,7 @@ const AddItemForm = () => {
         const duplicate = existingFiles.filter(existingFile => existingFile.name === file.name)
         if (duplicate.length > 0) {
           setDuplicateFileWarning(true)
-          document.getElementById("warning-dialog-box").style.visibility = "visible";
+          document.getElementById("warning-dialog-box").style.display = "block";
           return duplicates.push(file)
         } else {
           return existingFiles.push(file)
@@ -256,8 +256,9 @@ const AddItemForm = () => {
       const levelCheck = await databaseCheck(level, "levels")
       
       if (nameCheck.length > 0) {
-        setNameWarning(true);
+        // setNameWarning(true);
         document.getElementById("warning-dialog-box").style.visibility = "visible";
+        document.getElementById("duplicate-name").style.display = "block";
       } else {
         // setSubmit(true);
         document.getElementById("add-item-form").style.visibility = "hidden";
@@ -304,8 +305,9 @@ const AddItemForm = () => {
           navigate("/admin/subjectList")
         }
       } else {
-        setWarning(true);
+        // setWarning(true);
         document.getElementById("warning-dialog-box").style.visibility = "visible";
+        document.getElementById("incomplete-form").style.display = "block";
       }
     }
 
@@ -315,24 +317,29 @@ const AddItemForm = () => {
 
     const warningCancel = () => {
       document.getElementById("warning-dialog-box").style.visibility = "hidden";
+      document.getElementById("incomplete-form").style.display = "none";
+      document.getElementById("duplicate-name").style.display = "none";
+      document.getElementById("max-tags-reached").style.display = "none";
+      document.getElementById("duplicate-tags").style.display = "none";
+      document.getElementById("duplicate-files").style.display = "none";
+
     }
  
     return (
       <div>        
         <div className="popup-container" id="warning-dialog-box">
           <div className="popup-content">
-            {warning && <div id="incomplete-form">Not all fields are complete. Please complete all fields before submitting the form</div>}
-            {nameWarning && <div id="duplicate-name">{name} already refers to an resource in the database. Either update the original resource, delete the original resource first, or choose a different name for the resource</div>}
-            {tagWarning && <div id="max-tags-reached">Maximum of four tags. Please delete a tag before adding a new one</div>}
-            {duplicateWarning && <div id="duplicate-tags">Tag already selected. Please select a different tag</div>}
-                {duplicateFileWarning && <div id="duplicate-files"><p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>
+            <div id="incomplete-form">Not all fields are complete. Please complete all fields before submitting the form</div>
+            <div id="duplicate-name">{name} already refers to an resource in the database. Either update the original resource, delete the original resource first, or choose a different name for the resource</div>
+            <div id="max-tags-reached">Maximum of four tags. Please delete a tag before adding a new one</div>
+            <div id="duplicate-tags">Tag already selected. Please select a different tag</div>
+                <div id="duplicate-files"><p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>
               <p>Duplicate files:</p>
               {duplicateFiles.map(file => (
                 <p>{file.name}</p>
               ))
               }
               </div>
-              }
           </div>
           <button onClick={() => warningCancel()}>Close</button>
       </div>
