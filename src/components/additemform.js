@@ -95,14 +95,16 @@ const AddItemForm = () => {
 
     // sends selected image file to JSX to render image. NOTE. clicking the upload image button and pressing cancel will remove the image from image uploads but does not remove preview. To fix.
     const createPreview = (e, htmlLocation) => {
+      const htmlElement = document.getElementById(htmlLocation);
       if (e.target.files.length > 0) {
-        const htmlElement = document.getElementById(htmlLocation);
+        
         htmlElement.src = URL.createObjectURL(e.target.files[0]);
+        htmlElement.style.visibility = "visible";
         htmlElement.onload = function() {
         URL.revokeObjectURL(htmlElement.src);
         } 
-      } else if (e.target.files === 0) {
-        document.getElementById(htmlLocation).removeAttribute('src')
+      } else {
+        htmlElement.style.visibility = "hidden";
       }
     }
 
@@ -430,10 +432,10 @@ const AddItemForm = () => {
 
         {submit && <div className="popup-container">
           <div className="pop-up-content"><h2>Submitting Resource</h2></div>
-          <div className="pop-up-content">
+          <div>
           <p>Uploading files. Do NOT refresh or leave the page while files are uploading. (If your upload has failed you can try again by updating the resource)</p>
           </div>
-          <div className="pop-up-content">
+          <div>
           {resourceUploads.map(resource => {
             return <p id={resource.name}>Uploading...{resource.name}</p>
           })
