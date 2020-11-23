@@ -104,7 +104,7 @@ const AddItemForm = () => {
         URL.revokeObjectURL(htmlElement.src);
         } 
       } else {
-        htmlElement.style.visibility = "hidden";
+        htmlElement.src = "";
       }
     }
 
@@ -393,7 +393,7 @@ const AddItemForm = () => {
               <div>
               <h2>Upload Image</h2>
               <div className="image-container">
-                <img id="preview" alt=""></img>
+                <img id="preview" alt="No Image Loaded"></img>
               </div>
               <input onChange={(e) => prepareProfileImage(e, "preview")} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
               </div>
