@@ -60,6 +60,7 @@ const AddItemForm = () => {
       if (tag === "") { return } 
       else if (addedTags.includes(tag)) { 
         setDuplicateWarning(true)
+        document.getElementById("warning-dialog-box").style.visibility = "visible";
         setTag("")
       } 
       else if (addedTags.length === 4) { setTagWarning(true);} 
@@ -115,6 +116,7 @@ const AddItemForm = () => {
         const duplicate = existingFiles.filter(existingFile => existingFile.name === file.name)
         if (duplicate.length > 0) {
           setDuplicateFileWarning(true)
+          document.getElementById("warning-dialog-box").style.visibility = "visible";
           return duplicates.push(file)
         } else {
           return existingFiles.push(file)
@@ -255,6 +257,7 @@ const AddItemForm = () => {
       
       if (nameCheck.length > 0) {
         setNameWarning(true);
+        document.getElementById("warning-dialog-box").style.visibility = "visible";
       } else {
         // setSubmit(true);
         document.getElementById("add-item-form").style.visibility = "hidden";
@@ -302,20 +305,22 @@ const AddItemForm = () => {
         }
       } else {
         setWarning(true);
+        document.getElementById("warning-dialog-box").style.visibility = "visible";
       }
     }
 
     const handleCancel = () => {
       navigate("/admin/subjectList")
     }
+
+    const warningCancel = () => {
+      document.getElementById("warning-dialog-box").style.visibility = "hidden";
+    }
  
     return (
       <div>        
-        <div className="database-form" id="add-item-form">
-          <h2>Add Resource</h2>
-        
-        <form onSubmit={onSubmit}>
-          <div className="pop-up-container" id="warning-dialog-box">
+        <div className="popup-container" id="warning-dialog-box">
+          <div className="popup-content">
             {warning && <div id="incomplete-form">Not all fields are complete. Please complete all fields before submitting the form</div>}
             {nameWarning && <div id="duplicate-name">{name} already refers to an resource in the database. Either update the original resource, delete the original resource first, or choose a different name for the resource</div>}
             {tagWarning && <div id="max-tags-reached">Maximum of four tags. Please delete a tag before adding a new one</div>}
@@ -329,6 +334,14 @@ const AddItemForm = () => {
               </div>
               }
           </div>
+          <button onClick={() => warningCancel()}>Close</button>
+      </div>
+
+      <div className="database-form" id="add-item-form">
+          <h2>Add Resource</h2>
+        
+      <form onSubmit={onSubmit}>
+          
 
           <div className="form-container">
             <div className="form-fields">
