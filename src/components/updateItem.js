@@ -325,22 +325,34 @@ const UpdateItem = ({ currentItem }) => {
   const handleCancel = () => {
     navigate("/admin/subjectList")
   }
+
+  const warningCancel = () => {
+    document.getElementById("warning-dialog-box").style.visibility = "hidden";
+    document.getElementById("incomplete-form").style.display = "none";
+    document.getElementById("duplicate-name").style.display = "none";
+    document.getElementById("max-tags-reached").style.display = "none";
+    document.getElementById("duplicate-tags").style.display = "none";
+    document.getElementById("duplicate-files").style.display = "none";
+  }
   
     return (
       <div>
         <div className="popup-container" id="warning-dialog-box">
         <div className="popup-content">
-          {warning && <div>Some fields have been left blank. Please complete all fields (including downloads) before submitting the form</div>}
-          {nameWarning && <div>Resource name is already being used by another resource in the database. Please edit or delete this resource first, or choose another name for this resource.</div>}
-          {tagWarning && <p>Maximum of four tags. Please delete a tag before adding a new one</p>}
-          {duplicateWarning && <p>Tag already selected. Please select a different tag</p>}
-          {duplicateFileWarning && <p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>}
-          {duplicateFiles.length > 0 && <p>Duplicate files:</p>}
-          {duplicateFiles.length > 0 && duplicateFiles.map(file => (
-            <p>{file}</p>
-          ))} 
-          </div>
-          {/* <button onClick={() => warningCancel()}>Close</button> */}
+          <div id="incomplete-form">Not all fields are complete. Please complete all fields before submitting the form</div>
+          <div id="duplicate-name">{item.name} already refers to an resource in the database. Either update the original resource, delete the original resource first, or choose a different name for the resource</div>
+          <div id="max-tags-reached">Maximum of four tags. Please delete a tag before adding a new one</div>
+          <div id="duplicate-tags">Tag already selected. Please select a different tag</div>
+          <div id="duplicate-files">
+            <p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>
+            <p>Duplicate files:</p>
+            {duplicateFiles.map(file => (
+              <p>{file.name}</p>
+            ))
+            }
+            </div>
+          <button onClick={() => warningCancel()}>Close</button>
+        </div>
         </div>
         
         
@@ -464,6 +476,7 @@ const UpdateItem = ({ currentItem }) => {
         }
           </div>}
       </div>
+    
   )
 }
 
