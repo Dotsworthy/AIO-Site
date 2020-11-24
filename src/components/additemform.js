@@ -366,8 +366,10 @@ const AddItemForm = () => {
                 })}
               </datalist>
               }
-              <div className="added-tags-container">
-                <p>Tags added:</p>
+              <br></br>
+              <p>Tags added:</p>
+              <div className="form-inside-container">
+                
                 {addedTags.length == 0 ?
                 <p>None</p>
                 :
@@ -398,6 +400,7 @@ const AddItemForm = () => {
               <h2>Upload Resources</h2>
               <input onChange={(e) => {prepareAllFiles(e)}}type="file" id="download" name="download" multiple/>
               <p>Files to upload:</p>
+              <div className="form-inside-container">
               {resourceUploads.length > 0 ? 
               resourceUploads.map(file => (
                 <div>
@@ -407,6 +410,7 @@ const AddItemForm = () => {
               ))
               :
               <p>None</p>}
+              </div>
               </div>
             </div>
   

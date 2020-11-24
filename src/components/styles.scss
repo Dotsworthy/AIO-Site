@@ -24,10 +24,10 @@ h1 {
     letter-spacing: 2px;
 }
 
-.added-tags-container {
-    min-height: 114px;
-    width: 100%;
-}
+// .added-tags-container {
+//     min-height: 114px;
+//     width: 100%;
+// }
 
 
 .content-tag {
@@ -261,8 +261,12 @@ h1 {
 }
 
 .form-inside-container {
+    height: 125px;
+    width: 100%;
     background-color: white;
     border-radius: 10px;
+    padding: 10px;
+    overflow-y: auto;
 }
 
 // IDs for dialog boxes made visible by JavaScript
