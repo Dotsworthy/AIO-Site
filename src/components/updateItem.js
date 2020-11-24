@@ -77,68 +77,6 @@ const UpdateItem = ({ currentItem }) => {
     })
   }
 
-  // submission form
-  const onSubmit = async e => {
-    e.preventDefault();
-    if (item.name && item.description && item.category && item.level && 
-      item.tags.length > 0 
-      // && 
-      // item.image 
-      // && item.download.length > 0
-      ) {
-      const nameCheck = await databaseCheck(item.name, "items")
-      const categoryCheck = await databaseCheck(item.category, "categories")
-      const levelCheck = await databaseCheck(item.level, "levels")
-
-      if (originalName !== item.name && nameCheck.length > 0) {
-        setNameWarning(true);
-      } else {
-          setSubmit(true)
-
-          if (categoryCheck.length === 0) {
-            addDatabaseField(item.category, "categories")
-          }
-    
-          if (levelCheck.length === 0) {
-            addDatabaseField(item.level, "levels")
-          }
-
-          item.tags.forEach(async tag => {
-            const tagCheck = await databaseCheck(tag, "tags")
-            if (tagCheck.length === 0) {
-              addDatabaseField(tag, "tags")
-            }
-          })
-        
-        await uploadMultipleFiles(filesToUpload, item.id, "downloads")
-        
-        filesToDelete.forEach(file => {
-          if (item.download.includes(file) === true) {
-            return
-          } else {
-            deleteFile(file, item.id, "downloads")
-          }
-        })  
-
-        if (originalImage !== item.image) {
-          deleteFile(originalImage, item.id, `images`)
-          uploadFile('image', item.id, 'images')
-        }
-
-      firebase
-      .firestore()
-      .collection("items")
-      .doc(item.id)
-      .update(item)
-
-
-        navigate("/admin/subjectList")
-      }
-    } else {
-      setWarning(true)
-    }   
-  };
-
   // changing item state
   const onChange = e => {
     const { name, value } = e.target
@@ -193,7 +131,6 @@ const UpdateItem = ({ currentItem }) => {
     const newTags = item.tags
     newTags.splice(index, 1)
     changeTags(newTags)
-    setTagWarning(false);
   }
 
   // changing downloads
@@ -301,7 +238,6 @@ const UpdateItem = ({ currentItem }) => {
   }
 
   const loadAllFiles = (e) => {
-    setDuplicateFileWarning(false)
     setDuplicateFiles([]);
     const upload = e.target.files;
     const allFiles = Array.from(upload)
@@ -312,19 +248,85 @@ const UpdateItem = ({ currentItem }) => {
     allFiles.map(file => {
       const duplicate = existingFiles.includes(file.name)
       if (duplicate === true) {
-        setDuplicateFileWarning(true);
-        return duplicates.push(file.name);
+        console.log(duplicate);
+        document.getElementById("warning-dialog-box").style.visibility = "visible";
+        document.getElementById("duplicate-files").style.display = "block";
+        return duplicates.push(file);
       } else {
         return (existingFiles.push(file.name), existingUploads.push(file)) 
       }
     })
-    console.log(existingFiles)
-    console.log(filesToUpload)
     setDuplicateFiles([...duplicates])
     changeDownloads("download", existingFiles)
     document.getElementById("download").value = "";
   }
-
+  
+    // submission form
+    const onSubmit = async e => {
+      e.preventDefault();
+      if (item.name && item.description && item.category && item.level && 
+        item.tags.length > 0 
+        && 
+        item.image 
+        && item.download.length > 0
+        ) {
+        const nameCheck = await databaseCheck(item.name, "items")
+        const categoryCheck = await databaseCheck(item.category, "categories")
+        const levelCheck = await databaseCheck(item.level, "levels")
+  
+        if (originalName !== item.name && nameCheck.length > 0) {
+          document.getElementById("warning-dialog-box").style.visibility = "visible";
+          document.getElementById("duplicate-name").style.display = "block";
+        } else {
+          document.getElementById("update-item-form").style.visibility = "hidden";
+          document.getElementById("output").style.visibility = "hidden";
+          document.getElementById("submit-dialog-box").style.visibility = "visible";
+  
+            if (categoryCheck.length === 0) {
+              addDatabaseField(item.category, "categories")
+            }
+      
+            if (levelCheck.length === 0) {
+              addDatabaseField(item.level, "levels")
+            }
+  
+            item.tags.forEach(async tag => {
+              const tagCheck = await databaseCheck(tag, "tags")
+              if (tagCheck.length === 0) {
+                addDatabaseField(tag, "tags")
+              }
+            })
+          
+          await uploadMultipleFiles(filesToUpload, item.id, "downloads")
+          
+          filesToDelete.forEach(file => {
+            if (item.download.includes(file) === true) {
+              return
+            } else {
+              deleteFile(file, item.id, "downloads")
+            }
+          })  
+  
+          if (originalImage !== item.image) {
+            deleteFile(originalImage, item.id, `images`)
+            uploadFile('image', item.id, 'images')
+          }
+  
+        firebase
+        .firestore()
+        .collection("items")
+        .doc(item.id)
+        .update(item)
+  
+  
+          navigate("/admin/subjectList")
+        }
+      } else {
+        document.getElementById("warning-dialog-box").style.visibility = "visible";
+        document.getElementById("incomplete-form").style.display = "block";
+      }   
+    };
+  
   const handleCancel = () => {
     navigate("/admin/subjectList")
   }
@@ -359,7 +361,7 @@ const UpdateItem = ({ currentItem }) => {
         </div>
         
         
-        <div className="database-form">
+        <div className="database-form" id="update-item-form">
 
           <form onSubmit={onSubmit}>
 
@@ -470,14 +472,18 @@ const UpdateItem = ({ currentItem }) => {
           </form>
         </div>  
 
-        {submit && <div>
-          <h2>Submitting Resource</h2>
-          <p>Updating entry on Firebase. Do NOT refresh or leave the page while a file is uploading</p>
+        <div className="popup-container" id="submit-dialog-box">
+          <div className="pop-up-content"><h2>Submitting Resource</h2></div>
+          <div>
+          <p>Uploading files. Do NOT refresh or leave the page while files are uploading. (If your upload has failed you can try again by updating the resource)</p>
+          </div>
+          <div>
           {filesToUpload.map(resource => {
             return <p id={resource.name}>Uploading...{resource.name}</p>
           })
         }
-          </div>}
+        </div>
+          </div>
       </div>
     
   )
