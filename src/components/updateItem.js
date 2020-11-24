@@ -174,9 +174,12 @@ const UpdateItem = ({ currentItem }) => {
     if (tag === "") {
       return
     } else if (item.tags.includes(tag)) {
-      setDuplicateWarning(true);
+      document.getElementById("warning-dialog-box").style.visibility = "visible";
+      document.getElementById("duplicate-tags").style.display = "block";
+      setTag("")
     } else if (item.tags.length === 4) {
-      setTagWarning(true);
+      document.getElementById("warning-dialog-box").style.visibility = "visible";
+      document.getElementById("max-tags-reached").style.display = "block";
     } else {
       const newTags = item.tags
       newTags.push(tag)
