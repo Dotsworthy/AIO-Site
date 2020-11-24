@@ -448,7 +448,7 @@ const UpdateItem = ({ currentItem }) => {
             </div>
             </div>
 
-            <div>
+            <div className="form-footer">
               <button type="button" onClick={() => handleCancel()}>Cancel</button>
               <button type="submit" >Update</button>
             </div>
