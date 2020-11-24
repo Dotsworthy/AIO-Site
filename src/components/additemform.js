@@ -286,20 +286,34 @@ const AddItemForm = () => {
     return (
       <div>        
         <div className="popup-container" id="warning-dialog-box">
+          <div className="form-header">
+            <h2>Warning</h2>
+          </div>
+
           <div className="popup-content">
             <div id="incomplete-form">Not all fields are complete. Please complete all fields before submitting the form</div>
             <div id="duplicate-name">{name} already refers to an resource in the database. Either update the original resource, delete the original resource first, or choose a different name for the resource</div>
+
             <div id="max-tags-reached">Maximum of four tags. Please delete a tag before adding a new one</div>
+
             <div id="duplicate-tags">Tag already selected. Please select a different tag</div>
-                <div id="duplicate-files"><p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>
-              <p>Duplicate files:</p>
-              {duplicateFiles.map(file => (
-                <p>{file.name}</p>
-              ))
-              }
-              </div>
+
+            <div id="duplicate-files"><p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>
+            <br></br>
+            <p>Duplicate files:</p>
+            {/* <div className="form-inside-container"> */}
+            {duplicateFiles.map(file => (
+              <p>{file.name}</p>
+            ))
+            }
+            {/* </div> */}
+            </div>
           </div>
-          <button onClick={() => warningCancel()}>Close</button>
+
+          <div className="form-footer">
+            <button onClick={() => warningCancel()}>Close</button>
+          </div>
+
       </div>
 
       <div className="database-form" id="add-item-form">
@@ -406,17 +420,20 @@ const AddItemForm = () => {
 
         </div>
         <div className="popup-container" id="submit-dialog-box">
-          <div className="pop-up-content"><h2>Submitting Resource</h2></div>
-          <div>
-          <p>Uploading files. Do NOT refresh or leave the page while files are uploading. (If your upload has failed you can try again by updating the resource)</p>
+
+          <div className="form-header">
+            <h2>Submitting Resource</h2>
           </div>
-          <div>
-          {resourceUploads.map(resource => {
-            return <p id={resource.name}>Uploading...{resource.name}</p>
-          })
-        }
+
+          <div className="popup-content">
+            <p>Uploading files. Do NOT refresh or leave the page while files are uploading. (If your upload has failed you can try again by updating the resource)</p>
+            <br></br>
+            {resourceUploads.map(resource => {
+              return <p id={resource.name}>Uploading...{resource.name}</p>
+            })
+            }
+          </div>
         </div>
-          </div>
     </div>
     )
   }

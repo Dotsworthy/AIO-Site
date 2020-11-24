@@ -246,21 +246,23 @@ h1 {
 }
 
 .popup-container {
-    width: 350px;
-    // min-height: 220px;
-    height: auto;
-    position:absolute; 
-    top: calc(50% - 110px); // half of width
-    left: calc(50% - 175px); // half of height
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: #F4F5F5;
     border: 1px solid black;
-    border-radius: 2px;
-    padding: 5px; 
+    border-radius: 10px;
 }
 
 .popup-content {
-    padding: 2px;
-    margin: 2px;
+    padding: 5px;
+    margin: 5px;
+}
+
+.form-inside-container {
+    background-color: white;
+    border-radius: 10px;
 }
 
 // IDs for dialog boxes made visible by JavaScript

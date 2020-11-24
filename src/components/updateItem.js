@@ -19,11 +19,6 @@ const UpdateItem = ({ currentItem }) => {
   const [tag, setTag] = useState("");
 
   // warnings for duplicate entries and maximum entries
-  const [warning, setWarning] = useState(false)
-  const [nameWarning, setNameWarning] = useState(false);
-  const [tagWarning, setTagWarning] = useState(false);
-  const [duplicateWarning, setDuplicateWarning] = useState(false);
-  const [duplicateFileWarning, setDuplicateFileWarning] = useState(false);
   const [duplicateFiles, setDuplicateFiles] = useState([])
 
   // for rendering upload pop-up
@@ -107,8 +102,6 @@ const UpdateItem = ({ currentItem }) => {
   // changing tags
   const addTag = (e, tag) => {
     e.preventDefault()
-    setTagWarning(false)
-    setDuplicateWarning(false)
     if (tag === "") {
       return
     } else if (item.tags.includes(tag)) {
@@ -136,8 +129,6 @@ const UpdateItem = ({ currentItem }) => {
   // changing downloads
   const removeFile = (e, file, index) => {
     e.preventDefault()
-    setDuplicateFiles([])
-    setDuplicateFileWarning(false);
     const newFiles = item.download
     newFiles.splice(index, 1)
     filesToDelete.push(file)
