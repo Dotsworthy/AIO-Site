@@ -108,7 +108,7 @@ const AdminPage = () => {
         </div>
 
       </nav>
-        <div className="admin-layout">
+        <div>
         <Router>
 
           <SubjectList path="/admin/subjectList"/>

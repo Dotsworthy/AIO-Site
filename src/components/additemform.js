@@ -284,7 +284,7 @@ const AddItemForm = () => {
     }
  
     return (
-      <div>        
+      <div className="admin-layout">        
         <div className="popup-container" id="warning-dialog-box">
           <div className="form-header">
             <h2>Warning</h2>
@@ -355,33 +355,31 @@ const AddItemForm = () => {
               }
 
               {/* TAGS */}
-              <div className="tag-container">
-              <input placeholder="Add a tag" value={tag} name="tags" list="tagsList" onChange={e => setTag(e.currentTarget.value)} type="tags"/>
-              <button onClick={(e) => addTag(e, tag)}>Add Tag</button>
+              
+                <input placeholder="Add a tag" value={tag} name="tags" list="tagsList" onChange={e => setTag(e.currentTarget.value)} type="tags"/>
+                <button onClick={(e) => addTag(e, tag)}>Add Tag</button>
 
-              {allTags &&
-              <datalist id="tagsList">
+                {allTags &&
+                <datalist id="tagsList">
                 {allTags.map(singleTag => {
                   return <option key={singleTag.id} value={singleTag.name}>{singleTag.name}</option>
                 })}
-              </datalist>
-              }
-              <br></br>
-              <p>Tags added:</p>
-              <div className="form-inside-container">
-                
-                {addedTags.length == 0 ?
-                <p>None</p>
-                :
-                addedTags.map(singleTag => {
-                  return <div>
-                    <label htmlFor={singleTag} key={addedTags.indexOf(singleTag)} id={addedTags.indexOf(singleTag)} name={singleTag}>{singleTag}</label>
-                    <button name={singleTag} onClick={(e) => deleteTag(e, addedTags.indexOf(singleTag))}>Delete Tag</button>
-                    </div>
-                })
+                </datalist>
                 }
-              </div>
-              </div>
+                  <p className="tags-added-adjustment">Tags added:</p>
+                  <div className="form-inside-content">
+                    
+                            {addedTags.length == 0 ?
+                            <p>None</p>
+                            :
+                            addedTags.map(singleTag => {
+                            return <div className="added-item">
+                              <label htmlFor={singleTag} key={addedTags.indexOf(singleTag)} id={addedTags.indexOf(singleTag)} name={singleTag}>{singleTag}</label>
+                              <button name={singleTag} onClick={(e) => deleteTag(e, addedTags.indexOf(singleTag))}>Delete Tag</button>
+                              </div>
+                            })
+                            }
+                  </div>
             </div>
 
             <div className="form-downloads">
@@ -390,7 +388,7 @@ const AddItemForm = () => {
               <div>
               <h2>Upload Image</h2>
               <div className="image-container">
-                <img id="preview" alt="No Image Loaded"></img>
+                <img id="preview" alt="no image"></img>
               </div>
               <input onChange={(e) => prepareProfileImage(e, "preview")} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
               </div>
@@ -399,21 +397,30 @@ const AddItemForm = () => {
               <div>
               <h2>Upload Resources</h2>
               <input onChange={(e) => {prepareAllFiles(e)}}type="file" id="download" name="download" multiple/>
-              <p>Files to upload:</p>
-              <div className="form-inside-container">
-              {resourceUploads.length > 0 ? 
-              resourceUploads.map(file => (
-                <div>
-                <label>{file.name}</label>
-                <button onClick={(e) => removeFile(e, resourceUploads.indexOf(file))}>Remove File</button>
+              </div>
+              
+                <p>Files to upload:</p>
+                <div className="form-inside-content">
+                  
+                    {resourceUploads.length > 0 ? 
+                    resourceUploads.map(file => (
+                      <div className="added-item">
+                      <label>{file.name}</label>
+                      <button onClick={(e) => removeFile(e, resourceUploads.indexOf(file))}>Remove File</button>
+                      </div>
+                    ))
+                    :
+                    <p>None</p>}
                 </div>
-              ))
-              :
-              <p>None</p>}
-              </div>
-              </div>
+              
             </div>
-  
+
+            
+
+            
+
+            
+            
           </div>
           <div className="form-footer">
             <button type="submit" name="submit" onClick={() => handleCancel()} value="Cancel">Cancel</button>
@@ -432,10 +439,12 @@ const AddItemForm = () => {
           <div className="popup-content">
             <p>Uploading files. Do NOT refresh or leave the page while files are uploading. (If your upload has failed you can try again by updating the resource)</p>
             <br></br>
+            <div className="form-inside-content">
             {resourceUploads.map(resource => {
-              return <p id={resource.name}>Uploading...{resource.name}</p>
+              return <div className="added-item"><p id={resource.name}>Uploading...{resource.name}</p></div>
             })
             }
+            </div>
           </div>
         </div>
     </div>
