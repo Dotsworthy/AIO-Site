@@ -209,11 +209,18 @@ a, a:visited {
     margin: 5px 0px;
 }
 
-#preview, #output {
-    max-height: 300px;
-    max-width: auto;
+#preview {
+    height: 100%;
+    width: 100%;
     // border: 1px solid black;
     object-fit: contain;
+}
+
+#output {
+    height: 100%;
+    width: 100%;
+    // border: 1px solid black;
+    object-fit: contain;  
 }
 
 table {

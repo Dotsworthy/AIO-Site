@@ -327,70 +327,83 @@ const UpdateItem = ({ currentItem }) => {
   }
   
     return (
-      <div className="database-form">
-        <div>
-          <h2>Update Resource</h2>
-        </div>
-
-        <form onSubmit={onSubmit}>
-        <div className="form-warning">
-        {warning && <div>Some fields have been left blank. Please complete all fields (including downloads) before submitting the form</div>}
-        {nameWarning && <div>Resource name is already being used by another resource in the database. Please edit or delete this resource first, or choose another name for this resource.</div>}
+      <div>
+        <div className="popup-container" id="warning-dialog-box">
+        <div className="popup-content">
+          {warning && <div>Some fields have been left blank. Please complete all fields (including downloads) before submitting the form</div>}
+          {nameWarning && <div>Resource name is already being used by another resource in the database. Please edit or delete this resource first, or choose another name for this resource.</div>}
+          {tagWarning && <p>Maximum of four tags. Please delete a tag before adding a new one</p>}
+          {duplicateWarning && <p>Tag already selected. Please select a different tag</p>}
+          {duplicateFileWarning && <p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>}
+          {duplicateFiles.length > 0 && <p>Duplicate files:</p>}
+          {duplicateFiles.length > 0 && duplicateFiles.map(file => (
+            <p>{file}</p>
+          ))} 
           </div>
+          {/* <button onClick={() => warningCancel()}>Close</button> */}
+        </div>
+        
+        
+        <div className="database-form">
+
+          <form onSubmit={onSubmit}>
+
+            <div className="form-header">
+              <h2>Update Resource</h2>
+            </div>
           
-          <div className="form-container">
+            <div className="form-container">
             
-            <div className="form-fields">
-              <h2>Resource Information</h2>
-              <input type="text" name="name" value={item.name} onChange={onChange} />
-              <textarea className="input-description" type="text" name="description" value={item.description} onChange={onChange}/>
-              
-              <input placeholder="Category" type="text" name="category" value={item.category} list="categoryList" onChange={onChange}/>
-               
-               {allCategories && 
-               <datalist id="categoryList">
+              <div className="form-fields">
+                <h2>Resource Information</h2>
+                <input type="text" name="name" value={item.name} onChange={onChange} />
+                <textarea className="input-description" type="text" name="description" value={item.description} onChange={onChange}/>
                 
-                {allCategories.map(singleCategory => {
-                  return <option key={singleCategory.id} value={singleCategory.name}>{singleCategory.name}</option>
-                })}  
-                </datalist>
-              }
-
-              
-              <input placeholder="Level"value={item.level} name="level" list="levelList" onChange={onChange} type="level"/>
-              {allLevels && 
-                <datalist id="levelList">
-                {allLevels.map(singleLevel => {
-                    return <option key={singleLevel.id} value={singleLevel.name}>{singleLevel.name}</option>
+                <input placeholder="Category" type="text" name="category" value={item.category} list="categoryList" onChange={onChange}/>
+                
+                {allCategories && 
+                <datalist id="categoryList">
+                  
+                  {allCategories.map(singleCategory => {
+                    return <option key={singleCategory.id} value={singleCategory.name}>{singleCategory.name}</option>
                   })}  
-                </datalist>  
-              }
-              <input placeholder="Add a tag" value={tag} name="tags" list="tagsList" onChange={e => setTag(e.currentTarget.value)} type="tags"/>
-              <button onClick={(e) => addTag(e, tag)}>Add Tag</button>
-              
-              {allTags &&
-              <datalist id="tagsList">
-                {allTags.map(singleTag => {
-                  return <option key={singleTag.id} value={singleTag.name}>{singleTag.name}</option>
-                })}
-              </datalist>
-              }
+                  </datalist>
+                }
 
-              <p>Tags added:</p>
-              <div className="tags-container">
-              {item.tags == "" ?
-              <p>No tags to display</p>
-              :  
-              item.tags.map(singleTag => {
-                return <div>
-                  <label for={singleTag} key={item.tags.indexOf(singleTag)} id={item.tags.indexOf(singleTag)} name={singleTag}>{singleTag}</label>
-                  <button name={singleTag} onClick={(e) => deleteTag(e, item.tags.indexOf(singleTag))}>Delete Tag</button>
-                  </div>
-              })
-              }
-              
-              {tagWarning && <p>Maximum of four tags. Please delete a tag before adding a new one</p>}
-              {duplicateWarning && <p>Tag already selected. Please select a different tag</p>}
+                
+                <input placeholder="Level"value={item.level} name="level" list="levelList" onChange={onChange} type="level"/>
+                {allLevels && 
+                  <datalist id="levelList">
+                  {allLevels.map(singleLevel => {
+                      return <option key={singleLevel.id} value={singleLevel.name}>{singleLevel.name}</option>
+                    })}  
+                  </datalist>  
+                }
+                <input placeholder="Add a tag" value={tag} name="tags" list="tagsList" onChange={e => setTag(e.currentTarget.value)} type="tags"/>
+                <button onClick={(e) => addTag(e, tag)}>Add Tag</button>
+                
+                {allTags &&
+                <datalist id="tagsList">
+                  {allTags.map(singleTag => {
+                    return <option key={singleTag.id} value={singleTag.name}>{singleTag.name}</option>
+                  })}
+                </datalist>
+                }
+
+                <p>Tags added:</p>
+                <div className="tags-container">
+                {item.tags == "" ?
+                <p>No tags to display</p>
+                :  
+                item.tags.map(singleTag => {
+                  return <div>
+                    <label for={singleTag} key={item.tags.indexOf(singleTag)} id={item.tags.indexOf(singleTag)} name={singleTag}>{singleTag}</label>
+                    <button name={singleTag} onClick={(e) => deleteTag(e, item.tags.indexOf(singleTag))}>Delete Tag</button>
+                    </div>
+                })
+                }
+                
+                
               </div>
              
               {/* <input type="text" name="category" value={item.category} onChange={onChange}/>
@@ -429,22 +442,19 @@ const UpdateItem = ({ currentItem }) => {
                 <button onClick={(e) => removeFile(e, file, item.download.indexOf(file))}>Remove File</button>
                 </div>
                 ))}
-                {duplicateFileWarning && <p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>}
-                {duplicateFiles.length > 0 && <p>Duplicate files:</p>}
-                {duplicateFiles.length > 0 && duplicateFiles.map(file => (
-                <p>{file}</p>
-              ))}
+                
               </div>
             
             </div>
-          </div>
+            </div>
 
-          <div>
-            <button type="button" onClick={() => handleCancel()}>Cancel</button>
-            <button type="submit" >Update</button>
-          </div>
-        </form>
-        
+            <div>
+              <button type="button" onClick={() => handleCancel()}>Cancel</button>
+              <button type="submit" >Update</button>
+            </div>
+          </form>
+        </div>  
+
         {submit && <div>
           <h2>Submitting Resource</h2>
           <p>Updating entry on Firebase. Do NOT refresh or leave the page while a file is uploading</p>
