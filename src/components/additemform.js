@@ -293,20 +293,17 @@ const AddItemForm = () => {
           <div className="popup-content">
             <div id="incomplete-form">Not all fields are complete. Please complete all fields before submitting the form</div>
             <div id="duplicate-name">{name} already refers to an resource in the database. Either update the original resource, delete the original resource first, or choose a different name for the resource</div>
-
             <div id="max-tags-reached">Maximum of four tags. Please delete a tag before adding a new one</div>
-
             <div id="duplicate-tags">Tag already selected. Please select a different tag</div>
-
             <div id="duplicate-files"><p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>
-            <br></br>
-            <p>Duplicate files:</p>
-            {/* <div className="form-inside-container"> */}
-            {duplicateFiles.map(file => (
-              <p>{file.name}</p>
-            ))
-            }
-            {/* </div> */}
+              <br></br>
+              <p>Duplicate files:</p>
+              <div className="form-inside-content">
+              {duplicateFiles.map(file => {
+                  return <div className="added-item"> <p>{file.name}</p> </div>
+              })
+              }
+              </div>
             </div>
           </div>
 
@@ -320,10 +317,9 @@ const AddItemForm = () => {
         <div className="form-header">
           <h2>Add Resource</h2>
         </div>
-      <form onSubmit={onSubmit}>
-        
 
-          <div className="form-container">
+      <form onSubmit={onSubmit}>
+        <div className="form-container">
             <div className="form-fields">
               <h2>Resource Information</h2>
               
@@ -410,7 +406,7 @@ const AddItemForm = () => {
                       </div>
                     ))
                     :
-                    <p>None</p>}
+                    <p>No files added</p>}
                 </div>
               
             </div>

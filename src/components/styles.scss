@@ -156,6 +156,11 @@ a, a:visited {
     display: flex;
     justify-content: flex-end;
     padding: 10px;
+
+    button {
+        margin: 0px 4px;
+        padding: 5px;
+    }
 }
 
 .small-database-form {

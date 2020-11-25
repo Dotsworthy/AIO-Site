@@ -332,53 +332,65 @@ const UpdateItem = ({ currentItem }) => {
   }
   
     return (
-      <div>
+      <div className="admin-layout">
         <div className="popup-container" id="warning-dialog-box">
-        <div className="popup-content">
-          <div id="incomplete-form">Not all fields are complete. Please complete all fields before submitting the form</div>
-          <div id="duplicate-name">{item.name} already refers to an resource in the database. Either update the original resource, delete the original resource first, or choose a different name for the resource</div>
-          <div id="max-tags-reached">Maximum of four tags. Please delete a tag before adding a new one</div>
-          <div id="duplicate-tags">Tag already selected. Please select a different tag</div>
-          <div id="duplicate-files">
-            <p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>
-            <p>Duplicate files:</p>
-            {duplicateFiles.map(file => (
-              <p>{file.name}</p>
-            ))
-            }
+
+          <div className="form-header">
+            <h2>Warning</h2>
+          </div>
+
+          <div className="popup-content">
+            <div id="incomplete-form">Not all fields are complete. Please complete all fields before submitting the form</div>
+            <div id="duplicate-name">{item.name} already refers to an resource in the database. Either update the original resource, delete the original resource first, or choose a different name for the resource</div>
+            <div id="max-tags-reached">Maximum of four tags. Please delete a tag before adding a new one</div>
+            <div id="duplicate-tags">Tag already selected. Please select a different tag</div>
+            <div id="duplicate-files"><p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>
+              <br></br>
+              <p>Duplicate files:</p>
+              <div className="form-inside-content">
+                {duplicateFiles.map(file => {
+                  return <div className="added-item"><p>{file.name}</p></div>
+                })
+                }
+              </div>
             </div>
-          <button onClick={() => warningCancel()}>Close</button>
-        </div>
+            
+          </div>
+        
+          <div className="form-footer">
+            <button onClick={() => warningCancel()}>Close</button>
+          </div>
+        
         </div>
         
         
         <div className="database-form" id="update-item-form">
+          <div className="form-header">
+              <h2>Update Resource</h2>
+          </div>
 
           <form onSubmit={onSubmit}>
-
-            <div className="form-header">
-              <h2>Update Resource</h2>
-            </div>
-          
             <div className="form-container">
-            
               <div className="form-fields">
                 <h2>Resource Information</h2>
+
+                {/* NAME */}
                 <input type="text" name="name" value={item.name} onChange={onChange} />
+                
+                {/* DESCRIPTION */}
                 <textarea className="input-description" type="text" name="description" value={item.description} onChange={onChange}/>
                 
+                {/* CATEGORY */}
                 <input placeholder="Category" type="text" name="category" value={item.category} list="categoryList" onChange={onChange}/>
-                
                 {allCategories && 
                 <datalist id="categoryList">
-                  
                   {allCategories.map(singleCategory => {
                     return <option key={singleCategory.id} value={singleCategory.name}>{singleCategory.name}</option>
                   })}  
                   </datalist>
                 }
 
-                
+                {/* LEVEL */}
                 <input placeholder="Level"value={item.level} name="level" list="levelList" onChange={onChange} type="level"/>
                 {allLevels && 
                   <datalist id="levelList">
@@ -390,6 +402,7 @@ const UpdateItem = ({ currentItem }) => {
                 <input placeholder="Add a tag" value={tag} name="tags" list="tagsList" onChange={e => setTag(e.currentTarget.value)} type="tags"/>
                 <button onClick={(e) => addTag(e, tag)}>Add Tag</button>
                 
+                {/* TAGS */}
                 {allTags &&
                 <datalist id="tagsList">
                   {allTags.map(singleTag => {
@@ -398,13 +411,13 @@ const UpdateItem = ({ currentItem }) => {
                 </datalist>
                 }
 
-                <p>Tags added:</p>
-                <div className="tags-container">
+                <p className="tags-added-adjustment">Tags added:</p>
+                <div className="form-inside-content">
                 {item.tags == "" ?
                 <p>No tags to display</p>
                 :  
                 item.tags.map(singleTag => {
-                  return <div>
+                  return <div className="added-item">
                     <label for={singleTag} key={item.tags.indexOf(singleTag)} id={item.tags.indexOf(singleTag)} name={singleTag}>{singleTag}</label>
                     <button name={singleTag} onClick={(e) => deleteTag(e, item.tags.indexOf(singleTag))}>Delete Tag</button>
                     </div>
@@ -413,16 +426,12 @@ const UpdateItem = ({ currentItem }) => {
                 
                 
               </div>
-             
-              {/* <input type="text" name="category" value={item.category} onChange={onChange}/>
-              <input type="text" name="level" value={item.level} onChange={onChange}/> */}
-              {/* <input type="text" name="tags" value={tagString} onChange={(e) => setTagString(e.currentTarget.value)}/>
-              <button type="button" onClick={() => changeTags(tagString)}>Update Tags</button> */}
 
             </div>
 
             <div className="form-downloads">
 
+                {/* IMAGE */}
               <div>
                 <h2>Upload Image</h2>
                 <div className="image-container">
@@ -435,22 +444,23 @@ const UpdateItem = ({ currentItem }) => {
                   <input onChange={(e) => loadFile(e)} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
               </div>
 
+                {/* DOWNLOADS */}
               <div>
                 <h2>Upload Resources</h2>
                 <input onChange={(e) => loadAllFiles(e)} type="file" id="download" name="download" multiple/>
                 <p>Files:</p>
-                { item.download == "" ?
-                <div>
-                  <p>No files added</p>
-                </div>
-                :
-                item.download.map(file => (
-                  <div>
-                <label>{file}</label>
-                <button onClick={(e) => removeFile(e, file, item.download.indexOf(file))}>Remove File</button>
-                </div>
-                ))}
                 
+                <div className="form-inside-content">
+                  { item.download == "" ?
+                <div><p>No files added</p></div>
+                :
+                  item.download.map(file => (
+                    <div className="added-item">
+                  <label>{file}</label>
+                  <button onClick={(e) => removeFile(e, file, item.download.indexOf(file))}>Remove File</button>
+                  </div>
+                  ))}
+                </div>
               </div>
             
             </div>
@@ -464,6 +474,11 @@ const UpdateItem = ({ currentItem }) => {
         </div>  
 
         <div className="popup-container" id="submit-dialog-box">
+
+        <div className="form-header">
+            <h2>Submitting Resource</h2>
+          </div>
+          
           <div className="pop-up-content"><h2>Submitting Resource</h2></div>
           <div>
           <p>Uploading files. Do NOT refresh or leave the page while files are uploading. (If your upload has failed you can try again by updating the resource)</p>
