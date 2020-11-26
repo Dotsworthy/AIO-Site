@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import ListSubjects from "../components/ListSubjects"
-import UpdateItem from "../components/updateitem"
+import UpdateItem from "../components/updateItem"
 import UpdateDatabaseItem from "../components/updateDatabaseItem"
 import AddItemForm from "../components/addItemForm"
 import ListDatabaseItems from "../components/listDatabaseItems";
