@@ -202,7 +202,9 @@ const ResourceCatalogue = ( { downloadResource }) => {
       <div className="resource-page-container">
         <div className="resource-page-filters">
           <div className="resource-page-filter">
+            <div className="catalogue-item-header">
               <h3>Categories</h3>
+            </div>
               <div className="form-inside-content">
               <button className="filter-button" onClick={() => setCategorySelected("")}>Show All</button>  
               {allCategories.map(category => (
@@ -213,7 +215,9 @@ const ResourceCatalogue = ( { downloadResource }) => {
               </div>         
               </div>
           <div className="resource-page-filter">
+            <div className="catalogue-item-header">
               <h3>Education Level</h3>
+              </div>
               <div className="form-inside-content">
               <button className="filter-button" onClick={() => setLevelSelected("")}>Show All</button>    
               {allLevels.map(level => (
@@ -223,8 +227,10 @@ const ResourceCatalogue = ( { downloadResource }) => {
               ))}
               </div>
           </div>
-          <div className="resource-page-filter">
+          <div className = "resource-page-filter">
+            <div className = "catalogue-item-header">
               <h3>Tags</h3>
+              </div>
               <div className="form-inside-content">
               <button className="filter-button" onClick={() => setTagSelected("")}>Show All</button>    
               {allTags.map(tag => (

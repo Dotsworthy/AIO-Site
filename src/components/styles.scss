@@ -265,6 +265,7 @@ button {
     padding: 5px;
     display: flex;
     justify-content: center;
+    width: 100%;
 }
 
 .catalogue-image {
@@ -390,6 +391,7 @@ h1 {
 
 .resource-page-filter {
     width: 200px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
