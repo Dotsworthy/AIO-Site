@@ -3,7 +3,7 @@ import firebase from "firebase"
 import { navigate } from "gatsby"
 import 'firebase/storage'
 
-const AddItemForm = () => {
+const AddResourceForm = () => {
 
   // comment change?
     // database location. Needed for some functions.
@@ -448,4 +448,4 @@ const AddItemForm = () => {
     )
   }
 
-export default AddItemForm
+export default AddResourceForm

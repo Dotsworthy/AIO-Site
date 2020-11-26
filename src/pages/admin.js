@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import ListSubjects from "../components/ListSubjects"
 import UpdateItem from "../components/updateItem"
 import UpdateDatabaseItem from "../components/updateDatabaseItem"
-import AddItemForm from "../components/addItemForm"
+import AddResourceForm from "../components/addResourceForm"
 import ListDatabaseItems from "../components/listDatabaseItems";
 import DeleteDatabaseItem from "../components/deleteDatabaseItem";
 // import ResourceCatalogue from "../components/resourceCatalogue";
@@ -16,7 +16,7 @@ import { navigate } from "gatsby"
 const AdminPage = () => {
 
   const SubjectList = () => <ListSubjects editItem={editItem}/>
-  const AddSubject = () => <AddItemForm/>
+  const AddSubject = () => <AddResourceForm/>
   const UpdateSubject = () => <UpdateItem  currentItem={currentItem}/>
  
   const CategoryList = () => <ListDatabaseItems collection={"categories"} resourceEntry={"category"} editItem={editDatabaseItem} deleteItem={deleteDatabaseItem}/>
