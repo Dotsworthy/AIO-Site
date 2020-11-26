@@ -67,11 +67,18 @@ const ListDatabaseItems = ( { collection, resourceEntry, editItem, deleteItem } 
 
     return (
     <div className="database-container">
-      <form onSubmit={onSubmit} className="nav-bar-form">
-    <input type="text" id="search" name="search" placeholder="Search"/>
-    <button type="submit">Search</button>
-    <button type="reset" onClick={() => setSearchTerm(null)}>Clear</button>
-    </form>
+      <div className="database-navigation-container">
+
+          <form onSubmit={onSubmit} className="nav-bar-form">
+          <input type="text" id="search" name="search" placeholder="Search"/>
+          <div className="form-footer">
+          <button type="submit">Search</button>
+          <button type="reset" onClick={() => setSearchTerm(null)}>Clear</button>
+          </div>
+          </form>
+      </div>
+
+
         <table className="database-table">
       <tbody>
         <tr className="header-row">

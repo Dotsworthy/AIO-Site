@@ -87,12 +87,12 @@ const ListSubjects = ({ editItem }) => {
             <option value="level">Level</option>
             <option value="tags">Tags</option>
           </select>
-        <div>
-
+        
+        <div className="form-footer">
         <button type="submit">Search</button>
         <button type="reset" onClick={() => setSearchTerm(null)}>Clear</button>
+        </div>   
 
-        </div>    
         </form>
       </div>  
     
@@ -123,7 +123,7 @@ const ListSubjects = ({ editItem }) => {
             <td className="category">{resource.category}</td>
             <td className="level">{resource.level}</td>
             <td className="tags">{resource.tags.toString()}</td>
-            <td className="buttons">
+            <td className="table-buttons">
               <button onClick={() => editItem(resource)}>Edit</button>
               <button onClick={() => deleteResource(resource)}>Delete</button>
             </td>
