@@ -11,7 +11,7 @@ const DownloadHandler = ({ currentItem, setDownloading }) => {
     const getDownload = (download, location) => {
         const storage = firebase.storage();
         const storageRef = storage.ref()
-        const httpsReference = storageRef.child(`${location}/${download}`);
+        const httpsReference = storageRef.child(`${location}/${resources.id}/${download}`);
       
         httpsReference.getDownloadURL().then(function(url) {
           let xhr = new XMLHttpRequest();
@@ -37,7 +37,7 @@ const DownloadHandler = ({ currentItem, setDownloading }) => {
         let zip = new JSZip();
         let materials = zip.folder(`${resources.name}`)
         resources.download.forEach(resource => {
-            const httpsReference = storageRef.child(`${location}/${resource}`)
+            const httpsReference = storageRef.child(`${location}/${resources.id}/${resource}`)
             
             httpsReference.getDownloadURL().then(function(url) {
                 let xhr = new XMLHttpRequest();

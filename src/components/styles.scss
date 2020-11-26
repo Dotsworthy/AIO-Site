@@ -247,6 +247,22 @@ button {
     object-fit: contain;  
 }
 
+.catalogue-item {
+    height: 400px;
+    padding: 10px;
+}
+
+.catalogue-image-container {
+    height: 280px;
+    width: 200px;
+}
+
+.catalogue-image {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
 table {
     padding: 10px;
     width: 100%;
@@ -324,6 +340,35 @@ h1 {
 
 .table-buttons {
     min-width: 150px;
+}
+
+.filter-button {
+    background: none;
+    padding: 1px 1px;
+    margin: 2px;
+    border: none;
+    text-align: left;
+}
+
+.resource-page-container {
+    display: flex;
+    width: 100vw;
+}
+
+.resource-page-filters {
+    max-width: 200px;
+}
+
+.resource-page-filter {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.resource-page-items {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 // IDs for dialog boxes made visible by JavaScript

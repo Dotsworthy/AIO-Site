@@ -70,7 +70,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
   }
 
   const getImageURL = (id, location, resource) => {
-    const storageRef = firebase.storage().ref(`${location}/${resource.image}`)
+    const storageRef = firebase.storage().ref(`${location}/${id}/${resource.image}`)
     storageRef.getDownloadURL().then(function(url) {
 
       const img = document.getElementById(id)
@@ -198,42 +198,40 @@ const ResourceCatalogue = ( { downloadResource }) => {
   // }
 
   return (
-    <div>
-      <div>
-        <form onSubmit={(e) => handleSubmit(e)}>
-                <input type="text" value={searchLog} onChange={(e) => setSearchLog(e.target.value)}  placeholder="Search.." id="input" name="search"/>
-                <button  type="submit">Submit</button>
-        </form>
-      </div>
+    <div className="admin-layout">
       <div className="resource-page-container">
-        <div>
+        <div className="resource-page-filters">
           <div className="resource-page-filter">
               <h3>Categories</h3>
-              <button className="button-active" onClick={() => setCategorySelected("")}>Show All</button>  
+              <button className="filter-button" onClick={() => setCategorySelected("")}>Show All</button>  
               {allCategories.map(category => (
-                  <button style={ category.name === categorySelected ? {color: "red"} : {color: "black"}} key={category.id} className="button" 
+                  <button style={ category.name === categorySelected ? {color: "red"} : {color: "black"}} key={category.id} className="filter-button" 
                   onClick={() => setCategorySelected(category.name)}
                   >{category.name}</button>
               ))}
           </div>
           <div className="resource-page-filter">
               <h3>Education Level</h3>
-              <button className="button-active" onClick={() => setLevelSelected("")}>Show All</button>    
+              <button className="filter-button" onClick={() => setLevelSelected("")}>Show All</button>    
               {allLevels.map(level => (
-                  <button style={ level.name === levelSelected ? {color: "red"} : {color: "black"}} key={level.id} className="button" 
+                  <button style={ level.name === levelSelected ? {color: "red"} : {color: "black"}} key={level.id} className="filter-button" 
                   onClick={() => setLevelSelected(level.name)}
                   >{level.name}</button>
               ))}
           </div>
           <div className="resource-page-filter">
               <h3>Tags</h3>
-              <button className="button-active" onClick={() => setTagSelected("")}>Show All</button>    
+              <button className="filter-button" onClick={() => setTagSelected("")}>Show All</button>    
               {allTags.map(tag => (
-                  <button style={ tag.name === tagSelected ? {color: "red"} : {color: "black"}} key={tag.id} className="button" 
+                  <button style={ tag.name === tagSelected ? {color: "red"} : {color: "black"}} key={tag.id} className="filter-button" 
                   onClick={() => setTagSelected(tag.name)}
                   >{tag.name}</button>
               ))}
           </div>
+          <form onSubmit={(e) => handleSubmit(e)}>
+                <input type="text" value={searchLog} onChange={(e) => setSearchLog(e.target.value)}  placeholder="Search.." id="input" name="search"/>
+                <button  type="submit">Submit</button>
+        </form>
           <div className="resource-page-filter">
               <button onClick={() => clearFilters()}>Clear Filter</button>
           </div>
@@ -258,7 +256,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
           </div>
         }
         </div>
-      </div>
+    </div>
     </div>
   )
 }
