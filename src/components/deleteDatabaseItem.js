@@ -64,29 +64,36 @@ const DeleteDatabaseItem = ({currentItem}) => {
     }
     
     return (
-        <form className="small-database-form" onSubmit={onSubmit}>
-            <div>
-                <h2>Delete Item</h2>
-            {/* If there are resources in the database with the selected database item, it prevents the user from deleting the resource. */}
-            {resources.length > 0 ? 
-                <div>
-                    <h3>Items attached to resources!</h3>
-                    <p>You cannot delete this database item as it is attached to resources in the database. You must first assign new items to these resources:</p>
-                {resources.map(resource => {
-                    return <p>{resource.name}</p>
-                })
-                }
-               <button onClick={(e) => handleCancel(e)} >Cancel</button>
-                </div>
-            : 
-            <div>
-            <p>No resources have this {currentItem.location} attached and can be safely deleted.</p>    
-            <button onClick={(e) => handleCancel(e)} >Cancel</button>
-            <button type="submit">Delete Item</button>  
-            </div> 
-        }  
-        </div> 
-        </form>
+        <div className="popup-container">
+
+            <div className="form-header">
+                <h2>Confirm Delete?</h2>
+             </div>
+
+            <form className="popup-content" onSubmit={onSubmit}>
+                    <div>
+                        <h2>Delete Item</h2>
+                    {/* If there are resources in the database with the selected database item, it prevents the user from deleting the resource. */}
+                    {resources.length > 0 ? 
+                        <div>
+                            <h3>Items attached to resources!</h3>
+                            <p>You cannot delete this database item as it is attached to resources in the database. You must first assign new items to these resources:</p>
+                        {resources.map(resource => {
+                            return <p>{resource.name}</p>
+                        })
+                        }
+                    <button onClick={(e) => handleCancel(e)} >Cancel</button>
+                        </div>
+                    : 
+                    <div>
+                    <p>No resources have this {currentItem.location} attached and can be safely deleted.</p>    
+                    <button onClick={(e) => handleCancel(e)} >Cancel</button>
+                    <button type="submit">Delete Item</button>  
+                    </div> 
+                }  
+                </div> 
+            </form>
+        </div>
     )
 }
 

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import firebase from "firebase"
 import 'firebase/storage'
 
+// ISSUES: tags can be safely deleted but navigation is wrong. Needs refactoring.
+
 const DeleteResource = ({ currentResource, setDeleting }) => {
 
   // Resource for deletion
@@ -62,7 +64,11 @@ const DeleteResource = ({ currentResource, setDeleting }) => {
   }
 
   return (
-      <form onSubmit={onSubmit}>
+    <div className="popup-container">
+      <div className="form-header">
+        <h2>Confirm Delete?</h2>
+      </div>
+      <form className="popup-content" onSubmit={onSubmit}>
       { waiting ? 
       <p>Deleting Resource...</p>  
       :
@@ -71,6 +77,7 @@ const DeleteResource = ({ currentResource, setDeleting }) => {
       <button type="button" onClick={() => setDeleting(false)}>Cancel</button>
       <button type="submit">Confirm</button>
       </form>
+    </div>
   )
 }
 

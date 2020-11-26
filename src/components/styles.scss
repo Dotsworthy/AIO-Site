@@ -128,12 +128,12 @@ a, a:visited {
     // align-items: center;
 }
 
-.database-navigation-content {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    padding: 2px;
-}
+// .database-navigation-content {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: stretch;
+//     padding: 2px;
+// }
 
 .database-form {
     // padding: 10px;
@@ -262,6 +262,7 @@ h1 {
 
 .popup-container {
     position: fixed; 
+    min-width: 300px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
