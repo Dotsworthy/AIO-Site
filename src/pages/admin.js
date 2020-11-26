@@ -5,6 +5,7 @@ import UpdateDatabaseItem from "../components/updateDatabaseItem"
 import AddItemForm from "../components/addItemForm"
 import ListDatabaseItems from "../components/listDatabaseItems";
 import DeleteDatabaseItem from "../components/deleteDatabaseItem";
+// import ResourceCatalogue from "../components/resourceCatalogue";
 import Layout from "../components/layout"
 import { Router, Link } from "@reach/router"
 import firebase from 'firebase';
@@ -29,6 +30,8 @@ const AdminPage = () => {
   const TagList = () => <ListDatabaseItems collection={"tags"} resourceEntry={"tags"} editItem={editDatabaseItem} deleteItem={deleteDatabaseItem}/>
   const UpdateTag = () => <UpdateDatabaseItem currentItem={currentItem}/>
   const DeleteTag = () => <DeleteDatabaseItem currentItem={currentItem}/>
+
+  // const ResourceCatalogue = () => <ResourceCatalogue downloadResource={downloadResource}/>
 
   const initialItemState = [{ id: null, name: "", image: "", description: "", category: "", level: "", tags: "", download: "" }]
 
@@ -104,6 +107,7 @@ const AdminPage = () => {
           <Link to="/admin/categoryList">Categories</Link>
           <Link to="/admin/levelList">Levels</Link>
           <Link to="/admin/tagList">Tags</Link>
+          {/* <Link to="/admin/resourceCatalogue">Resource Catalogue</Link> */}
           <button className="link-button" onClick={() => logout()}>Logout</button>
         </div>
 
@@ -126,6 +130,8 @@ const AdminPage = () => {
           <TagList path="/admin/tagList"/>
           <UpdateTag path="/admin/tagList/updateTag"/>
           <DeleteTag path="/admin/tagList/deleteTag"/>
+
+          {/* <ResourceCatalogue path="/admin/resourceCatalogue"/> */}
 
         </Router> 
         </div>
