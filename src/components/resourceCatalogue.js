@@ -198,7 +198,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
   // }
 
   return (
-    <div className="admin-layout">
+    <div>
       <div className="resource-page-container">
         <div className="resource-page-filters">
           <div className="resource-page-filter">
@@ -240,8 +240,11 @@ const ResourceCatalogue = ( { downloadResource }) => {
         {resources.length > 0  ? 
         resources.map(resource => (
         <div key={resource.id} className="catalogue-item">
-            <h3>{resource.name}</h3>
-            <div className="catalogue-image-container">
+            <div className="catalogue-item-header">
+              <h3>{resource.name}</h3>
+            </div>
+            
+                        <div className="catalogue-image-container">
             <img className="catalogue-image" src={getImageURL(resource.id, "images", resource)}  id={resource.id} alt={resource.name}></img>
             </div>
             <div className="catalogue-button">

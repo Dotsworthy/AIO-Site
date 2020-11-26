@@ -24,6 +24,7 @@ const ResourcePage = () => {
 
     return (
         <Layout>
+            <div className="page-container">
             <h1>Resources</h1>
             {/* <input type="text" id="myInput" onKeyUp="myFunction()" placeholder="Search for names.."/> */}
             <div className="resource-page-container">
@@ -32,6 +33,7 @@ const ResourcePage = () => {
             currentItem={currentItem}
             setDownloading={setDownloading}
             />}
+            </div>
             </div>
         </Layout>
     )

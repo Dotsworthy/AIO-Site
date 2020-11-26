@@ -66,6 +66,10 @@ body {
     }
 }
 
+.page-container {
+    padding: 10px;
+}
+
 .tag-container {
     width: 100%;
     display: flex;
@@ -257,10 +261,21 @@ button {
     width: 200px;
 }
 
+.catalogue-item-header {
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+}
+
 .catalogue-image {
+    padding: 5px;
     height: 100%;
     width: 100%;
-    object-fit: contain;
+    object-fit: cover;
+}
+
+.catalogue-button {
+    margin: 10px;
 }
 
 table {
@@ -365,7 +380,6 @@ h1 {
 
 .resource-page-container {
     display: flex;
-    width: 100vw;
 }
 
 .resource-page-filters {
