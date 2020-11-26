@@ -203,30 +203,36 @@ const ResourceCatalogue = ( { downloadResource }) => {
         <div className="resource-page-filters">
           <div className="resource-page-filter">
               <h3>Categories</h3>
+              <div className="form-inside-content">
               <button className="filter-button" onClick={() => setCategorySelected("")}>Show All</button>  
               {allCategories.map(category => (
                   <button style={ category.name === categorySelected ? {color: "red"} : {color: "black"}} key={category.id} className="filter-button" 
                   onClick={() => setCategorySelected(category.name)}
                   >{category.name}</button>
               ))}
-          </div>
+              </div>         
+              </div>
           <div className="resource-page-filter">
               <h3>Education Level</h3>
+              <div className="form-inside-content">
               <button className="filter-button" onClick={() => setLevelSelected("")}>Show All</button>    
               {allLevels.map(level => (
                   <button style={ level.name === levelSelected ? {color: "red"} : {color: "black"}} key={level.id} className="filter-button" 
                   onClick={() => setLevelSelected(level.name)}
                   >{level.name}</button>
               ))}
+              </div>
           </div>
           <div className="resource-page-filter">
               <h3>Tags</h3>
+              <div className="form-inside-content">
               <button className="filter-button" onClick={() => setTagSelected("")}>Show All</button>    
               {allTags.map(tag => (
                   <button style={ tag.name === tagSelected ? {color: "red"} : {color: "black"}} key={tag.id} className="filter-button" 
                   onClick={() => setTagSelected(tag.name)}
                   >{tag.name}</button>
               ))}
+              </div>
           </div>
           <form onSubmit={(e) => handleSubmit(e)}>
                 <input type="text" value={searchLog} onChange={(e) => setSearchLog(e.target.value)}  placeholder="Search.." id="input" name="search"/>
