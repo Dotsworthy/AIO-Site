@@ -348,16 +348,18 @@ h1 {
 }
 
 .tags-added-adjustment {
-    margin-top: 25px;
+    margin-top: 15px;
 }
 
 .form-inside-content {
-    height: 130px;
+    height: 180px;
     width: 100%;
     background-color: white;
     border-radius: 10px;
     padding: 10px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .added-item {
