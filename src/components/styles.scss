@@ -402,6 +402,10 @@ h1 {
     flex-wrap: wrap;
 }
 
+.resource-page-form {
+    padding: 10px;
+}
+
 // IDs for dialog boxes made visible by JavaScript
 #submit-dialog-box { visibility: hidden; }
 #warning-dialog-box { visibility: hidden; }

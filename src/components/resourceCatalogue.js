@@ -19,6 +19,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
     firebase
     .firestore()
     .collection("tags")
+    .orderBy("name")
     .onSnapshot(snapshot => {
       listTags = snapshot.docs.map(doc => ({
         id: doc.id,
@@ -33,6 +34,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
     firebase
     .firestore()
     .collection("categories")
+    .orderBy("name")
     .onSnapshot(snapshot => {
       listCategories = snapshot.docs.map(doc => ({
         id: doc.id,
@@ -47,6 +49,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
     firebase
     .firestore()
     .collection("levels")
+    .orderBy("name")
     .onSnapshot(snapshot => {
       listLevels = snapshot.docs.map(doc => ({
         id: doc.id,
@@ -56,7 +59,8 @@ const ResourceCatalogue = ( { downloadResource }) => {
     })
   },[])
 
-  const clearFilters = () => {
+  const clearFilters = (e) => {
+    e.preventDefault()
     setLevelSelected("")
     setCategorySelected("")
     setTagSelected("")
@@ -87,6 +91,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
       .where("category", "==", categorySelected)
       .where("level", "==", levelSelected)
       .where("tags", "array-contains", tagSelected)
+      .orderBy("name")
       .onSnapshot(snapshot => {
         const listResources = snapshot.docs.map(doc => ({
           id: doc.id,
@@ -100,6 +105,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
     .collection("items")
     .where("category", "==", categorySelected)
     .where("level", "==", levelSelected)
+    .orderBy("name")
     .onSnapshot(snapshot => {
       const listResources = snapshot.docs.map(doc => ({
         id: doc.id,
@@ -113,6 +119,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
     .collection("items")
     .where("category", "==", categorySelected)
     .where("tags", "array-contains", tagSelected)
+    .orderBy("name")
     .onSnapshot(snapshot => {
       const listResources = snapshot.docs.map(doc => ({
         id: doc.id,
@@ -124,6 +131,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
     firebase
     .firestore()
     .collection("items")
+    .orderBy("name")
     .where("category", "==", categorySelected)
     .onSnapshot(snapshot => {
       const listResources = snapshot.docs.map(doc => ({
@@ -138,6 +146,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
     .collection("items")
     .where("level", "==", levelSelected)
     .where("tags", "array-contains", tagSelected)
+    .orderBy("name")
     .onSnapshot(snapshot => {
       const listResources = snapshot.docs.map(doc => ({
         id: doc.id,
@@ -150,6 +159,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
     .firestore()
     .collection("items")
     .where("level", "==", levelSelected)
+    .orderBy("name")
     .onSnapshot(snapshot => {
       const listResources = snapshot.docs.map(doc => ({
         id: doc.id,
@@ -162,6 +172,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
     .firestore()
     .collection("items")
     .where("tags", "array-contains", tagSelected)
+    .orderBy("name")
     .onSnapshot(snapshot => {
       const listResources = snapshot.docs.map(doc => ({
         id: doc.id,
@@ -173,6 +184,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
     firebase
     .firestore()
     .collection("items")
+    .orderBy("name")
     .onSnapshot(snapshot => {
       const listResources = snapshot.docs.map(doc => ({
         id: doc.id,
@@ -240,13 +252,13 @@ const ResourceCatalogue = ( { downloadResource }) => {
               ))}
               </div>
           </div>
-          <form onSubmit={(e) => handleSubmit(e)}>
+          <form className="resource-page-form" onSubmit={(e) => handleSubmit(e)}>
                 <input type="text" value={searchLog} onChange={(e) => setSearchLog(e.target.value)}  placeholder="Search.." id="input" name="search"/>
-                <button  type="submit">Submit</button>
+                <button  type="submit">Search</button>
+                <button onClick={(e) => clearFilters(e)}>Clear Filter</button>
         </form>
-          <div className="resource-page-filter">
-              <button onClick={() => clearFilters()}>Clear Filter</button>
-          </div>
+        
+          
         </div>
       <div className="resource-page-items">
         {resources.length > 0  ? 
