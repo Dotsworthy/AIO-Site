@@ -5,6 +5,7 @@ import 'firebase/storage'
 
 const AddItemForm = () => {
 
+  // comment change?
     // database location. Needed for some functions.
     const database = firebase.firestore()
 
