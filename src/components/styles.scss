@@ -319,6 +319,19 @@ h1 {
     margin: 5px;
 }
 
+.downloads-container {
+    width: 450px;
+    // display: flex;
+    // flex-direction: column;
+    // flex-wrap: wrap;
+    padding: 10px;
+}
+
+.download-items {
+    display: flex;
+    justify-content: space-between;
+}
+
 .tags-added-adjustment {
     margin-top: 25px;
 }

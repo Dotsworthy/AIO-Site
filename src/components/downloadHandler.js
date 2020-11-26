@@ -63,7 +63,7 @@ const DownloadHandler = ({ currentItem, setDownloading }) => {
     }  
 
     return (
-        <div className="database-form-container">
+        <div className="popup-container">
             <div className="form-header">
                 <h2>Download Resources</h2>
             </div>
@@ -79,7 +79,9 @@ const DownloadHandler = ({ currentItem, setDownloading }) => {
                 <button onClick={(e) => getAllDownloads("downloads")}>Download</button>
             </div>
             </div>
+            <div className="form-footer">
             <button onClick={()=>setDownloading(false)}>Close</button>
+            </div>
         </div>
     )
 }
