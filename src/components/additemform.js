@@ -318,8 +318,8 @@ const AddItemForm = () => {
           <h2>Add Resource</h2>
         </div>
 
-      <form onSubmit={onSubmit}>
-        <div className="form-container">
+        <form onSubmit={onSubmit}>
+          <div className="form-container">
             <div className="form-fields">
               <h2>Resource Information</h2>
               
