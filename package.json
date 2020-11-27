@@ -8,6 +8,7 @@
     "@babel/core": "^7.11.4",
     "@babel/preset-env": "^7.11.0",
     "@hot-loader/react-dom": "^16.13.0",
+    "@loadable/component": "^5.14.1",
     "admin": "^1.4.1",
     "file-saver": "^2.0.2",
     "firebase": "^7.23.0",

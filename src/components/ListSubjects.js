@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import DeleteResource from "./deleteResource"
 import { Link } from "@reach/router"
 import firebase from "./firebase"
-import 'firebase/storage'
+// import 'firebase/storage'
 
 const ListSubjects = ({ editItem }) => {
   
