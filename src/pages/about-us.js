@@ -38,6 +38,16 @@ const AboutUs = () => {
         <p>Read our full mission statement to find out more:</p>    
         <a href="./public/All-In-One-Education-Our-Mission.pdf" target="_blank" download>Mission Statement</a>
         </div>
+
+        <div>
+        <h2>SUBSCRIBE TO OUR NEWSLETTER</h2>
+        <p>Sign up with your email address to receive news and updates.</p>
+        <form>
+        <input placeholder="E-mail Address"/>
+        <button>Sign Up</button>
+        </form>
+
+        </div>
         </Layout>
     )
     
