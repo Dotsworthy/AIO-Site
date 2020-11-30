@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import firebase from "firebase"
 import 'firebase/storage'
 
-// ISSUES: tags can be safely deleted but navigation is wrong. Needs refactoring.
+// ISSUES: check that deleting resource deletes storage.
 
 const DeleteResource = ({ currentResource, setDeleting }) => {
 

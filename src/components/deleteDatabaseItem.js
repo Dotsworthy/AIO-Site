@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import firebase from "firebase";
 import { navigate } from "gatsby";
 
+// ISSUES: tags can be safely deleted but navigation is wrong. Needs refactoring.
+
 const DeleteDatabaseItem = ({currentItem}) => {
     
     // Resource for deletion

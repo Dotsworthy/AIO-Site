@@ -4,6 +4,8 @@ import { Link } from "@reach/router"
 import firebase from "./firebase"
 // import 'firebase/storage'
 
+// ISSUES: Improve search bar to be more flexible.
+
 const ListSubjects = ({ editItem }) => {
   
   // used for rendering and filtering resources

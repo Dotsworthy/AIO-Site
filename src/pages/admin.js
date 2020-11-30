@@ -12,6 +12,7 @@ import firebase from 'firebase';
 import SignInManager from "../components/signInManager"
 import { navigate } from "gatsby"
 
+// ISSUES: direct links to UpdateSubject render a blank page.
 
 const AdminPage = () => {
 
