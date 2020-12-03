@@ -22,7 +22,7 @@ Your site is now running at `http://localhost:8000`!
 
 The All in One Education website is an app for both consumers and administration. We have a traditional Gatsby front-end utilising links to send users to each       individual page of the site with a page utilising firebase to retrieve and download teaching resources, and a front end utilising Gatsby, Reach Router, and         Firebase to log admins into a front end which communicates with firebase to add, edit, and delete teaching resources.
 
-<h2 align="center">Backend Database<h2>
+<h2 align="center">Backend Database</h2>
 
 All of the AIO apps data and storage is handled by firebase. The app is currently utilising the following features:
 
@@ -32,7 +32,7 @@ This handles user accounts for the admins to login to the administrative side of
 
 As the app evolves, AIO may want to incorporate user accounts for visitors to the site. In this case, a new authentication system for administrators will need to be used.
 
-<h2>Firebase Cloud Firestore<h2> 
+<h2>Firebase Cloud Firestore</h2> 
   
 This is a non-sql relational database that contains information on all the teaching resources, catagories, education levels, and tags. 
 
@@ -67,13 +67,13 @@ When creating or updating a teaching resource, to ensure database integrity and 
 
 This means that if a upload is interrupted and is unable to complete, the process with end after step one. The app is designed so the user can try the upload again by updating the resource.
 
-<h2 align="center">Frontend Resource Catalogue<h2>
+<h2 align="center">Frontend Resource Catalogue</h2>
     
 The frontend of the app has one page that is accessible for anyone visiting AIO. The resource catalogue fetches the Cloud Firestore database and renders this information in a catalogue. The catalogue also user firebase storage allowing the user to download a resource.
 
 The remainder of the front end does not utilise firebase.
 
-<h2 align="center">Safety Rules for Firebase<h2>
+<h2 align="center">Safety Rules for Firebase</h2>
   
 Firebase has the current security rules set for users and visitors to the app:
 
