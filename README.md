@@ -22,7 +22,7 @@ Your site is now running at `http://localhost:8000`!
 
 The All in One Education website is an app for both consumers and administration. We have a traditional Gatsby front-end utilising links to send users to each       individual page of the site with a page utilising firebase to retrieve and download teaching resources, and a front end utilising Gatsby, Reach Router, and         Firebase to log admins into a front end which communicates with firebase to add, edit, and delete teaching resources.
 
-<h2>Tech Stack<h2>
+<h2>Tech Stack</h2>
 
 - React Gatsby
 - Firebase
