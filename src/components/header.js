@@ -10,10 +10,10 @@ const Header = ({ siteTitle }) => (
         </div>
 
         <div className="header-links">
-        <Link to="/about-us">About Us</Link>
-        <Link to="/take-action">Take Action</Link>
+        <Link className="header-link" to="/about-us">About Us</Link>
+        <Link className="header-link" to="/take-action">Take Action</Link>
         <Link className="header-link" to="/resources/">Resources</Link>
-        <Link to="/contact-us">Contact Us</Link>
+        <Link className="header-link" to="/contact-us">Contact Us</Link>
         <Link className="header-link" to="/admin/">Admin</Link>
         </div>
     </div>
