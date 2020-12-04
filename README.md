@@ -50,6 +50,10 @@ Teaching resources contain the following information:
 - Image (a profile image used for the catalogue)
 - Downloads (downloadable content attached to the resource for users to download on the front end).
 
+This is the diagram structure of the database:
+
+![Database Diagram](/images/logo.png)
+
 <h2>Firebase Storage</h2>
     
 Firebase storage contains all of the profile images for resources in the database, as well as the downloads attached to those resources.
