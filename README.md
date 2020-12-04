@@ -52,7 +52,7 @@ Teaching resources contain the following information:
 
 This is the diagram structure of the database:
 
-![Database Diagram](/images/logo.png)
+![Database Diagram](/images/database-diagram.png)
 
 <h2>Firebase Storage</h2>
     
