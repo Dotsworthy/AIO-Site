@@ -4,12 +4,51 @@ import { Link } from "gatsby"
 import Logo from "./Logo"
 import styled from 'styled-components'
 
+const Home = styled(Link)`
+text-decoration: none;
+color: #eee;
+display: inline-block;
+white-space: nowrap;
+margin: 1vw 1vw;
+transition: all 200ms ease-in;
+position: relative;
+font-size: 3rem;
+
+:after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 0%;
+  content: ".";
+  color: transparent;
+  background: goldenrod;
+  height: 1px;
+  transition: all 0.4s ease-in;
+}
+
+:hover {
+  color: goldenrod;
+  ::after {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  padding: 20px 0;
+  font-size: 2rem;
+  z-index: 6;
+}
+`;
+
 const Navigation = styled.nav`
-  height: 10vh;
+  min-height: 10vh;  
   display: flex;
+  flex-direction: column;
   background-color: #0B6BBF;
   position: relative;
   justify-content: space-between;
+  align-items: center;
   text-transform: uppercase;
   border-bottom: 2px solid #33333320;
   margin: 0 auto;
@@ -19,6 +58,7 @@ const Navigation = styled.nav`
 
   @media (max-width: 768px) {
     position: sticky;
+    flex-direction: row;
     height: 8vh;
     top: 0;
     left: 0;
@@ -31,7 +71,8 @@ const Toggle = styled.div`
   display: none;
   height: 100%;
   cursor: pointer;
-  padding: 0 10vw;
+  padding: 0 2vw;
+  color: white;
 
   @media (max-width: 768px) {
     display: flex;
@@ -58,7 +99,7 @@ const Navbox = styled.div`
 `
 
 const Hamburger = styled.div`
-  background-color: #111;
+  background-color: #eee;
   width: 30px;
   height: 3px;
   transition: all .3s linear;
@@ -70,7 +111,7 @@ const Hamburger = styled.div`
   ::after {
     width: 30px;
     height: 3px;
-    background-color: #111;
+    background-color: #eee;
     content: "";
     position: absolute;
     transition: all 0.3s linear;
@@ -95,7 +136,7 @@ const Navbar = () => {
   return (
     <Navigation className="navigation">
       {/* <Logo /> */}
-      <Link to="/">All In One</Link>
+      <Home to="/">All In One</Home>
       <Toggle
         navbarOpen={navbarOpen}
         onClick={() => setNavbarOpen(!navbarOpen)}

@@ -7,7 +7,7 @@ const NavItem = styled(Link)`
   color: #eee;
   display: inline-block;
   white-space: nowrap;
-  margin: 0 1vw;
+  margin: 1vw 1vw;
   transition: all 200ms ease-in;
   position: relative;
 
@@ -41,13 +41,11 @@ const NavItem = styled(Link)`
 const NavbarLinks = () => {
     return (
       <>
-        {/* <NavItem to="/">{siteTitle}</NavItem> */}
-        <NavItem to="/">Home</NavItem>
         <NavItem to="/about-us">About Us</NavItem>
         <NavItem to="/take-action">Take Action</NavItem>
         <NavItem to="/resources/">Resources</NavItem>
         <NavItem to="/contact-us">Contact Us</NavItem>
-        <NavItem to="/admin/">Admin</NavItem>
+        <NavItem to="/admin/">Admin Login</NavItem>
       </>
     )
   }

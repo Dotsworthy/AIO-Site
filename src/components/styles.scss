@@ -21,19 +21,23 @@
     font-size: 1rem;
 }
 
+p {
+    font-family: 'Arial', Fallback, sans-serif;
+}
+
 // NOTE! Remainder of nav css can be found in Navbar component folder
 nav {
     font-family: 'CodeDemo-Bold';
     letter-spacing: 2px;
 }
 
-// a, a:visited {
-//     font-family: 'CodeDemo-Bold';
-//     color: white;
-//     text-decoration: white;
-//     // letter-spacing: 2px;
-//     // padding: 0 10px;
-// }
+a, a:visited {
+    font-family: 'CodeDemo-Bold';
+    color: white;
+    text-decoration: white;
+    letter-spacing: 2px;
+    padding: 0 10px;
+}
 
 body {
     background-color: #F2B749;
@@ -123,10 +127,88 @@ button {
     width: 100%;
 }
 
-.content-tag {
+.content-box {
+    padding: 3vw;
+
+    h1 {
+        font-size: 3vw;
+    }
+
+    display: flex;
+    flex-direction: column;
+    align-items : center;
+
+    // a, a:visited {
+    //     background-color: #0B6BBF;
+    //     padding: 2vw 3.22vw;
+    // }
+}
+
+#white {
+    background-color: white;
+}
+
+.link-box {
+    margin: 2vw 0;
+    // padding: 2vw 3.22vw;
+    background-color: #0B6BBF;
+    width: 15vw;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media (max-width: 768px) {
+        width: 50vw;
+        height: 15vh;
+    }
+}
+
+.pitch-box {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    // padding: 2vw;
+
+    h1 {
+        font-size: 2.5vw;
+        // padding: 2vw;
+    }
+
+    .tag1 {
+        flex-basis: 175%;
+        
+    }
+
+    .tag2 {
+        // flex-grow: 1;
+        background-color: white;
+        padding: 2vw;
+        box-shadow: 10px 10px;
+        
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+
+        h1 {
+            font-size: 5vw;
+            padding: 4vw;
+        }
+    }
+}
+
+.paragraph-box {
+    margin: 3vw 0;
+
+    h1 {
+        font-size: 2vw;
+        margin: 2vw 0;
+    }
+
+    p {
+        margin: 2vw 0;
+    }
 }
 
 .downloads-container {
