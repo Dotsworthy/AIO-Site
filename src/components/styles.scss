@@ -147,14 +147,14 @@ button {
 
 .content-box {
     padding: 3vw;
+    display: flex;
+    flex-direction: column;
+    align-items : center;
+    
 
     h1 {
         font-size: 3vw;
     }
-
-    display: flex;
-    flex-direction: column;
-    align-items : center;
 
     // a, a:visited {
     //     background-color: #0B6BBF;
@@ -330,10 +330,60 @@ button {
     }
 }
 
-img {
-    object-fit: cover;
-    width: 75%;
-    height: auto;
+
+
+.content-overlay-box {
+    position: relative;
+    margin: 2vh 0;
+    
+    img {
+        // position: relative;
+        object-fit: cover;
+        width: 75%;
+        height: auto;
+    }
+
+    .img-right {
+        // position: absolute;
+        right: 0;
+    }
+
+    .paragraph-box {
+        position: relative;
+        // top: 0;
+        // left: 50%;
+        z-index: 1000;
+    }
+
+    .paragraph-left {
+        top: 0;
+        left: 0;
+        width: 50%;
+    }
+
+    .paragraph-right {
+        top: 0;
+        left: 50%;
+    }
+
+    @media (max-width: 768px) {
+
+        img {
+            // position: relative;
+            object-fit: cover;
+            width: 100%;
+            height: auto;
+        }
+
+        .paragraph-box {
+            position: absolute;
+            height: auto;
+            top: 60%;
+            left: 20%;
+            z-index: 1000;
+        }
+        
+    }
 }
 
 .form-header {
