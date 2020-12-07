@@ -16,14 +16,16 @@
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
-    font-family: 'Arial', Fallback, sans-serif;
+    // font-family: 'Arial', Fallback, sans-serif;
     // letter-spacing: 0em;
     font-size: 1rem;
 }
 
-// .navigation {
-//     font-family: 'CodeDemo-Bold';
-// }
+// NOTE! Remainder of nav css can be found in Navbar component folder
+nav {
+    font-family: 'CodeDemo-Bold';
+    letter-spacing: 2px;
+}
 
 // a, a:visited {
 //     font-family: 'CodeDemo-Bold';
