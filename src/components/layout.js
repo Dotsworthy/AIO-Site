@@ -10,6 +10,7 @@ import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 
 import Header from "./header"
+import Navbar from "./Navbar/Navbar"
 // import "./layout.css"
 import "./styles.scss"
 
@@ -26,6 +27,7 @@ const Layout = ({ children }) => {
 
   return (
     <>
+    <Navbar/>
       <Header siteTitle={data.site.siteMetadata.title} />
       <div
         style={{

@@ -21,20 +21,23 @@
     font-size: 1rem;
 }
 
-a, a:visited {
-    font-family: 'CodeDemo-Bold';
-    color: white;
-    text-decoration: white;
-    // letter-spacing: 2px;
-    // padding: 0 10px;
-}
+// .navigation {
+//     font-family: 'CodeDemo-Bold';
+// }
+
+// a, a:visited {
+//     font-family: 'CodeDemo-Bold';
+//     color: white;
+//     text-decoration: white;
+//     // letter-spacing: 2px;
+//     // padding: 0 10px;
+// }
 
 body {
     background-color: #F2B749;
 }
 
 /* nav bar */
-
 
 // IDs for dialog boxes made visible by JavaScript
 #submit-dialog-box { visibility: hidden; }
@@ -45,13 +48,13 @@ body {
 #duplicate-tags { display : none; }
 #duplicate-files { display: none; }
 
-a, a:visited {
-    font-family: 'CodeDemo-Bold';
-    color: white;
-    text-decoration: white;
-    letter-spacing: 2px;
-    padding: 0 10px;
-}
+// a, a:visited {
+//     font-family: 'CodeDemo-Bold';
+//     color: white;
+//     text-decoration: white;
+//     letter-spacing: 2px;
+//     padding: 0 10px;
+// }
 
 .added-item {
     display: flex;
