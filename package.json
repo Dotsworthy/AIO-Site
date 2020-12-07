@@ -7,9 +7,13 @@
   "dependencies": {
     "@babel/core": "^7.11.4",
     "@babel/preset-env": "^7.11.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/react-fontawesome": "^0.1.13",
     "@hot-loader/react-dom": "^16.13.0",
     "@loadable/component": "^5.14.1",
     "admin": "^1.4.1",
+    "babel-plugin-styled-components": "^1.12.0",
     "file-saver": "^2.0.2",
     "firebase": "^7.23.0",
     "fs-extra": "^9.0.1",
@@ -20,6 +24,7 @@
     "gatsby-plugin-react-helmet": "^3.3.12",
     "gatsby-plugin-sass": "^2.3.14",
     "gatsby-plugin-sharp": "^2.6.37",
+    "gatsby-plugin-styled-components": "^3.6.0",
     "gatsby-source-filesystem": "^2.3.31",
     "gatsby-transformer-sharp": "^2.5.16",
     "jszip": "^3.5.0",
@@ -28,7 +33,8 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^6.1.0",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "styled-components": "^5.2.1"
   },
   "devDependencies": {
     "@babel/plugin-syntax-jsx": "^7.10.4",

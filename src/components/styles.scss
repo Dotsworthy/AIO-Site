@@ -9,6 +9,9 @@
     src: url("../fonts/CodeDemo-Bold.otf");
 }
 
+
+/* Universal Styling */
+
 * {
     margin: 0px;
     padding: 0px;
@@ -17,6 +20,21 @@
     // letter-spacing: 0em;
     font-size: 1rem;
 }
+
+a, a:visited {
+    font-family: 'CodeDemo-Bold';
+    color: white;
+    text-decoration: white;
+    // letter-spacing: 2px;
+    // padding: 0 10px;
+}
+
+body {
+    background-color: #F2B749;
+}
+
+/* nav bar */
+
 
 // IDs for dialog boxes made visible by JavaScript
 #submit-dialog-box { visibility: hidden; }
@@ -62,9 +80,9 @@ a, a:visited {
     justify-content: center;
 }
 
-body {
-    background-color: #F2B749;
-}
+// body {
+//     background-color: #F2B749;
+// }
 
 button {
     min-width: 65px;
@@ -223,24 +241,22 @@ h1 {
     letter-spacing: 2px;
 }
 
-.header-container {
-    background-color: #0B6BBF;
-    height: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-}
 
-.header-link {
-    font-size: 2vw;
-}
 
-.header-title {
-    a, a:visited {
-        font-size: 5vw;
-    }
-}
+// .header-links {
+//     display: flex;
+//     // flex-direction: column;
+// }
+
+// .header-link {
+//     font-size: 1rem;
+// }
+
+// .header-title {
+//     a, a:visited {
+//         font-size: 5vw;
+//     }
+// }
 
 .image-container {
     height: 300px;
