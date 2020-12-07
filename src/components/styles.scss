@@ -224,6 +224,16 @@ button {
     p {
         margin: 2vw 0;
     }
+
+    @media (max-width: 768px) {
+        margin: 4vh 0;
+        padding: 4vw;
+       
+        p {
+            font-size: 4vw;
+            margin: 4vh 0;
+        }
+    }
 }
 
 .downloads-container {
