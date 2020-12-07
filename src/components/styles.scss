@@ -50,6 +50,19 @@ body {
 
 /* nav bar */
 
+/* Brand Colours */
+#white { background-color: white; }
+#blue { background-color: #0B6BBF}
+#yellow { background-color: #F2B749}
+#pink {background-color: #FF6A93}
+#green {background-color:#69BD5E}
+#dark-blue {background-color:#031240}
+#red { background-color: #D93030}
+
+
+
+
+
 // IDs for dialog boxes made visible by JavaScript
 #submit-dialog-box { visibility: hidden; }
 #warning-dialog-box { visibility: hidden; }
@@ -147,10 +160,6 @@ button {
     //     background-color: #0B6BBF;
     //     padding: 2vw 3.22vw;
     // }
-}
-
-#white {
-    background-color: white;
 }
 
 .link-box {
@@ -319,6 +328,12 @@ button {
         padding: 5px;
         min-width: 65px;
     }
+}
+
+img {
+    object-fit: cover;
+    width: 75%;
+    height: auto;
 }
 
 .form-header {

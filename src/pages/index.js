@@ -30,20 +30,20 @@ const IndexPage = () => (
     
     <section className="content-box" id="white">
       <h1>WHAT WE DO</h1>
-      <img src="../images/42401748_m.jpg"></img>
+      <img src={require("../images/42401748_m.jpg")}></img>
     
-    <div className="paragraph-box">
+    <div className="paragraph-box" id="pink">
     <h1>ENHANCE LEARNING, FOR LIFE IN MODERN BRITAIN</h1>
     <p>By enabling our nations’ educators to teach the intersectional realities of British History through engaging, representative, and accessible materials, we help equip young learners to acknowledge and address multiple perspectives across education and society as a whole, creating exceptional critical thinkers and future global leaders.</p>
     </div>
 
-    <div className="paragraph-box">
+    <div className="paragraph-box" id="green">
     <h1>PROVIDE EASY TO USE RESOURCES, FROM GRASSROOTS SOURCES</h1>
     <img></img>
     <p>The All in One resource gateway contains outstanding History lesson materials designed to correspond to and integrate seamlessly into the existing curriculum and examination requirements for every UK nation. All resource materials are made in partnership with existing expert organisations, academics, and UK teachers working currently.</p>
     </div>
 
-    <div className="paragraph-box">
+    <div className="paragraph-box" id="yellow">
       <h1>SUPPORT LASTING CHANGE </h1>
       <p>Our approach to educaton reform is two-pronged, encompassing both content creation, and reform lobbying of UK governments to include All In One as a recommended teaching aid for university and college PGCE/PDGE courses, so that a greater consistency in inclusive teaching methods can be achieved across schools/educators.</p>
       <a href="/about-us">Learn More</a>
