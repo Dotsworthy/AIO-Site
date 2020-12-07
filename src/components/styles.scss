@@ -4,6 +4,11 @@
 }
 
 @font-face {
+    font-family: 'OpenSans-Regular';
+    src: url("../fonts/OpenSans-Regular.ttf")
+}
+
+@font-face {
     font-family: 'CodeDemo-Bold';
     font-weight: bold;
     src: url("../fonts/CodeDemo-Bold.otf");
@@ -28,14 +33,14 @@ p {
 // NOTE! Remainder of nav css can be found in Navbar component folder
 nav {
     font-family: 'CodeDemo-Bold';
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 
 a, a:visited {
     font-family: 'CodeDemo-Bold';
     color: white;
     text-decoration: white;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     padding: 0 10px;
 }
 
@@ -177,7 +182,13 @@ button {
 
     .tag1 {
         flex-basis: 175%;
-        
+        padding: 2vw;
+        display: flex;
+        justify-content: center;
+
+        h1 {
+            align-self: center;
+        }
     }
 
     .tag2 {
@@ -194,12 +205,16 @@ button {
         h1 {
             font-size: 5vw;
             padding: 4vw;
+
+            margin: 2vh 0;
         }
     }
 }
 
 .paragraph-box {
     margin: 3vw 0;
+    box-shadow: 10px 10px;
+    padding: 2vw;
 
     h1 {
         font-size: 2vw;
@@ -243,7 +258,7 @@ button {
         font-family: 'CodeDemo-Bold';
     color: white;
     text-decoration: white;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     padding: 10px;
     }
 }
@@ -323,9 +338,9 @@ button {
 
 h1 {
     font-family: 'CodeDemo-bold';
-    font-size: 1rem;
+    // font-size: 1rem;
     // font-size: 36px;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 
 
@@ -378,6 +393,10 @@ input {
     width: 100%;
     // border: 1px solid black;
     object-fit: contain;  
+}
+
+p {
+    font-family: "OpenSans-Regular";
 }
 
 .page-container {
