@@ -9,7 +9,7 @@ text-decoration: none;
 color: #eee;
 display: inline-block;
 white-space: nowrap;
-margin-top: 1vh;
+margin: 1vh 0;
 transition: all 200ms ease-in;
 position: relative;
 font-size: 3rem;
@@ -35,14 +35,14 @@ font-size: 3rem;
 }
 
 @media (max-width: 768px) {
-  margin-top: 0.5vh;
+  margin-top: 1.5vh;
   font-size: 2rem;
   z-index: 6;
 }
 `;
 
 const Navigation = styled.nav`
-  height: 10vh;  
+  
   display: flex;
   flex-direction: column;
   background-color: #0B6BBF;

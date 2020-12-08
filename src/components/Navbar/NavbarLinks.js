@@ -7,7 +7,7 @@ const NavItem = styled(Link)`
   color: #eee;
   display: inline-block;
   white-space: nowrap;
-  margin: 0vw 0vw;
+  margin: 1vw 0;
   transition: all 200ms ease-in;
   position: relative;
 
