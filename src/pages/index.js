@@ -7,8 +7,8 @@ import SEO from "../components/seo"
 const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
-    <div className="banner-container">
-      <img src={require("../images/42271167_m.jpg")}/>
+    <div className="banner-container" id="index">
+      {/* <img src={require("../images/42271167_m.jpg")}/> */}
     </div>
     
     <section className="content-box" id="yellow"> 

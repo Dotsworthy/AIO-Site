@@ -42,7 +42,6 @@ font-size: 3rem;
 `;
 
 const Navigation = styled.nav`
-  
   display: flex;
   flex-direction: column;
   background-color: #0B6BBF;

@@ -7,8 +7,8 @@ const AboutUs = () => {
     return (
         <Layout>
             <SEO title="About Us" />
-            <div className="banner-container">
-                <img src={require("../images/79574096_m.jpg")}/>
+            <div className="banner-container" id="about-us">
+                {/* <img src={require("../images/79574096_m.jpg")}/> */}
             </div>
         
             <div className="content-box" id="pink">

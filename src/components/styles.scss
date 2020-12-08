@@ -106,27 +106,19 @@ p {
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
+    font-family: "OpenSans-Regular";
 }
 
-.banner-container {
-    height: 83vh;
+#index{background-image: url(../images/42271167_m.jpg)}
+#about-us{background-image: url(../images/79574096_m.jpg)}
 
-    img {
-        width: 100%;
-        height: 100vh;
-        object-fit: cover;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 1;
-    }
+.banner-container {
+    height: 91vh;
+    background-size: cover;
+    background-position: center;
 
     @media (max-width: 768px) {
         height: 50vh;
-
-        img {
-            height: 60vh;
-        }
     }
 }
 
@@ -279,7 +271,8 @@ body {
     }
 
     button {
-        font-family: "OpenSans-Regular";
+        font-family: 'CodeDemo-bold';
+        font-size: inherit;
         background-color: #0B6BBF;
         border: none;
         color: white;
