@@ -1,11 +1,16 @@
 import React from "react";
 import Layout from "../components/layout";
+import SEO from "../components/seo"
 
 const AboutUs = () => {
 
     return (
         <Layout>
-        <h1>ABOUT US</h1>
+        <SEO title="About Us" />
+        <div className="banner-container">
+            <img src={require("../images/42271167_m.jpg")}/>
+        </div>
+        
 
         <h1>WE ARE:</h1>
 

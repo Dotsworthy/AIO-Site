@@ -35,7 +35,7 @@ font-size: 3rem;
 }
 
 @media (max-width: 768px) {
-  padding: 20px 0;
+  padding: 5px 0;
   font-size: 2rem;
   z-index: 6;
 }
