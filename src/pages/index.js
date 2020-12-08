@@ -8,7 +8,10 @@ const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
     <div className="front-end-container">
-    <Image image={"42271167_m.jpg"} className="index-image"/>
+    {/* <Image image={"42271167_m.jpg"} className="index-image"/> */}
+    <div className="banner-container">
+      <img src={require("../images/42271167_m.jpg")}/>
+    </div>
     
     <section className="content-box"> 
     
