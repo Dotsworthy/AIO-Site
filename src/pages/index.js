@@ -1,14 +1,12 @@
 import React from "react"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import Image from "../components/image"
-import Img from "gatsby-image"
+// import Image from "../components/image"
+// import Img from "gatsby-image"
 
 const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
-    <div className="front-end-container">
-    {/* <Image image={"42271167_m.jpg"} className="index-image"/> */}
     <div className="banner-container">
       <img src={require("../images/42271167_m.jpg")}/>
     </div>
@@ -64,10 +62,6 @@ const IndexPage = () => (
     </div>
 
     </section>
-    
-
-    
-    </div>
   </Layout>
 )
 

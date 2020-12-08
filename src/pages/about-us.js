@@ -8,7 +8,7 @@ const AboutUs = () => {
         <Layout>
         <SEO title="About Us" />
         <div className="banner-container">
-            <img src={require("../images/42271167_m.jpg")}/>
+            <img src={require("../images/79574096_m.jpg")}/>
         </div>
         
 
