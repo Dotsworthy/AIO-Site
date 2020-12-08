@@ -226,6 +226,73 @@ body {
 
 }
 
+.newsletter-banner {
+    height: 75vh;
+    background: url(../images/42271125_m.jpg);
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    @media #{$mq-mobile} {
+        height: 100vh;   
+
+        input {
+            width: auto;
+        }
+
+        button {
+            width: 50%;
+        }
+    }
+
+    .paragraph-box {
+        margin: 2vw;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        @media #{$mq-mobile} {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2vh
+        }
+
+        input {
+            width: 50%;
+            border: 1px solid grey;
+            margin: 0px;
+            border-radius: 0;
+            margin: 2vh 0;
+
+        }
+
+
+    }
+
+    button {
+        font-family: "OpenSans-Regular";
+        background-color: #0B6BBF;
+        border: none;
+        color: white;
+        height: 10vh;
+        min-width: 15vw;
+    }
+    // background-cover: cover;
+}
+
+.client-form {
+    display: flex;
+}
+
 .link-box {
     margin: 5vw 0;
     // padding: 2vw 3.22vw;

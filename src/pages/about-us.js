@@ -55,13 +55,16 @@ const AboutUs = () => {
         
             </div>
 
-            <div className="paragraph-box-horizontal" id="white">
-                <h2>SUBSCRIBE TO OUR NEWSLETTER</h2>
+            <div className="newsletter-banner">
+                {/* <img src={require("../images/42271125_m.jpg")}></img>   */}
+                <div className="paragraph-box" id="white">
+                <h1>SUBSCRIBE TO OUR NEWSLETTER</h1>
                 <p>Sign up with your email address to receive news and updates.</p>
-                <form>
+                <form className="client-form">
                 <input placeholder="E-mail Address"/>
                 <button>Sign Up</button>
                 </form>
+                </div>
             </div>
 
         </Layout>
