@@ -9,7 +9,7 @@ text-decoration: none;
 color: #eee;
 display: inline-block;
 white-space: nowrap;
-margin: 1vw 1vw;
+margin-top: 1vh;
 transition: all 200ms ease-in;
 position: relative;
 font-size: 3rem;
@@ -35,14 +35,14 @@ font-size: 3rem;
 }
 
 @media (max-width: 768px) {
-  padding: 5px 0;
+  margin-top: 0.5vh;
   font-size: 2rem;
   z-index: 6;
 }
 `;
 
 const Navigation = styled.nav`
-  min-height: 10vh;  
+  height: 10vh;  
   display: flex;
   flex-direction: column;
   background-color: #0B6BBF;
@@ -59,7 +59,7 @@ const Navigation = styled.nav`
   @media (max-width: 768px) {
     position: sticky;
     flex-direction: row;
-    height: 8vh;
+    height: 12vh;
     top: 0;
     left: 0;
     right: 0;

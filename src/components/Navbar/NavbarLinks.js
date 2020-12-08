@@ -7,7 +7,7 @@ const NavItem = styled(Link)`
   color: #eee;
   display: inline-block;
   white-space: nowrap;
-  margin: 1vw 1vw;
+  margin: 0vw 0vw;
   transition: all 200ms ease-in;
   position: relative;
 
@@ -32,7 +32,7 @@ const NavItem = styled(Link)`
   }
 
   @media (max-width: 768px) {
-    padding: 5px 0;
+    padding: 3vh 0;
     font-size: 1.5rem;
     z-index: 6;
   }

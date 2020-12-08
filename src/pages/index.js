@@ -11,7 +11,7 @@ const IndexPage = () => (
       <img src={require("../images/42271167_m.jpg")}/>
     </div>
     
-    <section className="content-box"> 
+    <section className="content-box" id="yellow"> 
     
     <div className="pitch-box"> 
     <item className="tag1"><h1 >EDUCATION DONE - ALL IN ONE.</h1></item>
