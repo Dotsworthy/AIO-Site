@@ -64,6 +64,7 @@ const Navigation = styled.nav`
     left: 0;
     right: 0;
     left: 0;
+    z-index: 2;
   }
 `
 

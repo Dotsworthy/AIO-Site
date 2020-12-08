@@ -43,9 +43,9 @@ const IndexPage = () => (
     <img className="img-right" src={require("../images/96254573_m.jpg")}></img>
     <div className="paragraph-box paragraph-left" id="green">
     <h1>PROVIDE EASY TO USE RESOURCES, FROM GRASSROOTS SOURCES</h1>
-    <img></img>
     <p>The All in One resource gateway contains outstanding History lesson materials designed to correspond to and integrate seamlessly into the existing curriculum and examination requirements for every UK nation. All resource materials are made in partnership with existing expert organisations, academics, and UK teachers working currently.</p>
     </div>
+    
     </div>
 
     <div className="content-overlay-box"> 
@@ -53,7 +53,10 @@ const IndexPage = () => (
     <div className="paragraph-box paragraph-right" id="yellow">
       <h1>SUPPORT LASTING CHANGE </h1>
       <p>Our approach to educaton reform is two-pronged, encompassing both content creation, and reform lobbying of UK governments to include All In One as a recommended teaching aid for university and college PGCE/PDGE courses, so that a greater consistency in inclusive teaching methods can be achieved across schools/educators.</p>
+      
+      <div className="link-box">
       <a href="/about-us">Learn More</a>
+      </div>
     </div>
     </div>
 
