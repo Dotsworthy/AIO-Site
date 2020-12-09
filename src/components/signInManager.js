@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import firebase from 'firebase';
+import { navigate } from 'gatsby';
 
 const SignInManager = () => {
 
@@ -28,6 +29,8 @@ const SignInManager = () => {
               alert('The email address provided is invalid.')
           }
         })
+
+        navigate("/admin/subjectList")
       }
 
     return (
