@@ -28,7 +28,7 @@ font-size: 3rem;
 }
 
 :hover {
-  color: #F2B749;
+  color: goldenrod;
   ::after {
     width: 100%;
   }
