@@ -54,10 +54,10 @@ const NavbarLinks = ( siteType ) => {
       }
       { siteType.siteType == "admin" && 
       <>
-      <Link to="/admin/subjectList">Subject List</Link>
-      <Link to="/admin/categoryList">Categories</Link>
-      <Link to="/admin/levelList">Levels</Link>
-      <Link to="/admin/tagList">Tags</Link>
+      <NavItem to="/admin/subjectList">Subject List</NavItem>
+      <NavItem to="/admin/categoryList">Categories</NavItem>
+      <NavItem to="/admin/levelList">Levels</NavItem>
+      <NavItem to="/admin/tagList">Tags</NavItem>
       </>
       }
       </>

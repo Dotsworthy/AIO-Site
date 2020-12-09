@@ -44,7 +44,7 @@ font-size: 3rem;
 const Navigation = styled.nav`
   display: flex;
   flex-direction: column;
-  background-color: #0B6BBF;
+  
   position: relative;
   justify-content: space-between;
   align-items: center;
@@ -136,7 +136,7 @@ const Navbar = ( siteType ) => {
   console.log(site);
 
   return (
-    <Navigation className="navigation">
+    <Navigation className="navigation" id={ site == "client" ? "blue" : "red"}>
       {/* <Logo /> */}
       <Home to="/">All In One</Home>
       <Toggle
