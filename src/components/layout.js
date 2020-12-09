@@ -11,6 +11,8 @@ import { useStaticQuery, graphql } from "gatsby"
 
 import Header from "./header"
 import Navbar from "./Navbar/Navbar"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTwitter } from '@fortawesome/free-solid-svg-icons'
 // import "./layout.css"
 import "./styles.scss"
 
@@ -37,11 +39,12 @@ const Layout = ({ children, siteType }) => {
         }}
       >
         <main>{children}</main>
-        {/* <footer>
+        <footer className="footer">
           © {new Date().getFullYear()}, Built with
           {` `}
           <a href="https://www.gatsbyjs.org">Gatsby</a>
-        </footer> */}
+          <FontAwesomeIcon icon={faTwitter} />
+        </footer>
       </div>
     </>
   )

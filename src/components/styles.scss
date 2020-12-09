@@ -162,6 +162,10 @@ p {
     }
 }
 
+footer {
+    background-color: #2E2F2F;
+}
+
 // NOTE! Remainder of nav css can be found in Navbar component folder
 
 a, a:visited {
@@ -426,6 +430,10 @@ body {
 
     button {
         @extend %admin-font-options;
+    }
+
+    textarea {
+        resize: none;
     }
 
     h2 {
