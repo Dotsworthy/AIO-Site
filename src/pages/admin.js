@@ -97,6 +97,9 @@ const AdminPage = () => {
       {user ?     
       <div>
         <Layout siteType="admin">
+        <div className="admin-subnav">
+        <button onClick={() => logout()}>Logout</button>
+        </div>
           {/* <Link to="/admin/resourceCatalogue">Resource Catalogue</Link> */}
         <Router>
           <SubjectList path="/admin/subjectList"/>
@@ -117,7 +120,6 @@ const AdminPage = () => {
 
           {/* <ResourceCatalogue path="/admin/resourceCatalogue"/> */}
         </Router> 
-         <button className="link-button" onClick={() => logout()}>Logout</button>
         </Layout>
       </div>
     :

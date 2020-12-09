@@ -375,19 +375,6 @@ body {
     margin: 4px 0px;
 }
 
-.admin-header {
-    background-color: #D93030;
-    height: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-
-    h1 {
-        color: white;
-    }
-}
-
 .admin-layout {
     margin: 0 auto;
     max-width: 1280px;
@@ -398,7 +385,7 @@ body {
 
 button {
     min-width: 65px;
-    margin: 0px 4px;
+    margin-right: 2px;
     padding: 5px;
 }
 
@@ -583,6 +570,10 @@ input {
     padding: 0 10px;
     border: none;
     background-color: transparent;
+}
+
+.admin-subnav {
+    margin: 2vh 0 0 2vw;
 }
 
 #output {
