@@ -64,6 +64,34 @@ $mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
     }
 }
 
+%admin-font-options {
+    font-size: $base-font-size;
+    
+    @media #{$mq-mobile} {
+        font-size: $base-font-size*0.8;
+    }    
+
+    @media #{$mq-medium} {
+        font-size: $base-font-size*1;
+    }
+
+    @media #{$mq-large} {
+        font-size: $base-font-size*1;
+    }
+
+    @media #{$mq-xlarge} {
+        font-size: $base-font-size*1
+    }
+
+    @media #{$mq-uwide} {
+        font-size: $base-font-size*1
+    }
+
+    @media #{$mq-xxlarge} {
+        font-size: $base-font-size*1
+    }
+}
+
 /* Brand Colours */
 #white { background-color: white; }
 #blue { background-color: #0B6BBF}
@@ -74,7 +102,7 @@ $mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
 #red { background-color: #D93030}
 
 body {
-    @extend %font-options;
+    // @extend %font-options;
 }
 
 button {
@@ -100,6 +128,8 @@ h1 {
 p {
     font-family: "OpenSans-Regular";
     margin: 2vh 2vw;
+
+    // @extend %font-options;
 }
 
 // img {
@@ -386,11 +416,26 @@ body {
 }
 
 .admin-layout {
-    margin: 0 auto;
-    max-width: 1280px;
-    padding: 0 1.0875rem 1.45rem;
+    // margin: 0 auto;
+    max-width: 1920px;
+    // padding: 0 1.0875rem 1.45rem;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: flex-start;
+
+    button {
+        @extend %admin-font-options;
+    }
+
+    h2 {
+       @extend %admin-font-options; 
+    }
+
+    .admin-subnav {
+        margin: 10px 0 0 10px;
+        align-self: flex-start;
+    }
 }
 
 .catalogue-button {
@@ -443,7 +488,8 @@ body {
 
 .database-navigation-container {
     // height: 75px;
-    width: 275px;
+    // min-width: 275px;
+    flex-basis: 1;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -576,10 +622,6 @@ input {
     background-color: transparent;
 }
 
-.admin-subnav {
-    margin: 2vh 0 0 2vw;
-}
-
 #output {
     height: 100%;
     width: 100%;
@@ -670,17 +712,7 @@ table {
     width: 100%;
     max-width: 1366px;
 
-    font-size: 16px;    
-}
-
-th {
-
-    min-width: 200px;
-
-    button {
-        font-size: 16px;
-        width: 100%;
-    }
+    @extend %admin-font-options;  
 }
 
 // .table-buttons {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import DeleteResource from "./deleteResource"
 import { Link } from "@reach/router"
+import { navigate } from "gatsby"
 import firebase from "./firebase"
 // import 'firebase/storage'
 
@@ -74,11 +75,16 @@ const ListSubjects = ({ editItem }) => {
     setSearchLocation(category)
   }
 
+  const addSubject = e => {
+    e.preventDefault()
+    navigate("/admin/subjectList/addSubject")
+  }
+
   return (
     <div className="database-container">
     
       <div className="database-navigation-container">
-        <Link to="/admin/subjectList/addSubject">Add Subject</Link>
+        <button onClick={((e) => addSubject(e))}>Add Subject</button>
         <form className="database-navigation-content" onSubmit={onSubmit}>
           <input type="text" id="search" name="search" placeholder="Search"/>
           <select id="location" name="location">

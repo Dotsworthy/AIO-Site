@@ -95,33 +95,34 @@ const AdminPage = () => {
   return (
   <div>
       {user ?     
-      <div>
         <Layout siteType="admin">
-        <div className="admin-subnav">
-        <button onClick={() => logout()}>Logout</button>
-        </div>
-          {/* <Link to="/admin/resourceCatalogue">Resource Catalogue</Link> */}
-        <Router>
-          <SubjectList path="/admin/subjectList"/>
-          <AddSubject path="/admin/subjectList/addSubject"/>
-          <UpdateSubject path="/admin/subjectList/updateSubject"/>
+          <div className="admin-layout">
+          <div className="admin-subnav">
+              <button onClick={() => logout()}>Logout</button>
+          </div>
+            
+              {/* <Link to="/admin/resourceCatalogue">Resource Catalogue</Link> */}
+            <Router>
+              <SubjectList path="/admin/subjectList"/>
+              <AddSubject path="/admin/subjectList/addSubject"/>
+              <UpdateSubject path="/admin/subjectList/updateSubject"/>
 
-          <CategoryList path="/admin/categoryList"/>
-          <UpdateCategory path="/admin/categoryList/updateCategory"/>
-          <DeleteCategory path="/admin/categoryList/deleteCategory"/>
+              <CategoryList path="/admin/categoryList"/>
+              <UpdateCategory path="/admin/categoryList/updateCategory"/>
+              <DeleteCategory path="/admin/categoryList/deleteCategory"/>
 
-          <LevelList path="/admin/levelList"/>
-          <UpdateLevel path="/admin/levelList/updateLevel"/>
-          <DeleteLevel path="/admin/levelList/deleteLevel"/>
+              <LevelList path="/admin/levelList"/>
+              <UpdateLevel path="/admin/levelList/updateLevel"/>
+              <DeleteLevel path="/admin/levelList/deleteLevel"/>
 
-          <TagList path="/admin/tagList"/>
-          <UpdateTag path="/admin/tagList/updateTag"/>
-          <DeleteTag path="/admin/tagList/deleteTag"/>
+              <TagList path="/admin/tagList"/>
+              <UpdateTag path="/admin/tagList/updateTag"/>
+              <DeleteTag path="/admin/tagList/deleteTag"/>
 
-          {/* <ResourceCatalogue path="/admin/resourceCatalogue"/> */}
-        </Router> 
+              {/* <ResourceCatalogue path="/admin/resourceCatalogue"/> */}
+            </Router> 
+          </div>
         </Layout>
-      </div>
     :
     <Layout siteType={"client"}>
     <SignInManager/>
