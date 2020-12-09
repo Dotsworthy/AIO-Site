@@ -5,7 +5,7 @@ import SEO from "../components/seo"
 // import Img from "gatsby-image"
 
 const IndexPage = () => (
-  <Layout>
+  <Layout siteType={"client"}>
     <SEO title="Home" />
     <div className="banner-container" id="index">
       {/* <img src={require("../images/42271167_m.jpg")}/> */}

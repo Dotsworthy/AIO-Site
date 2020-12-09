@@ -4,7 +4,7 @@ import Layout from "../components/layout";
 const ContactUs = () => {
 
     return (
-        <Layout>
+        <Layout siteType={"client"}>
             <h1>CONTACT US</h1>
             <p>Contact us to learn more about our mission and work, or get involved yourself.</p>
             <p>enquiries@allinoneeducation.co.uk</p>

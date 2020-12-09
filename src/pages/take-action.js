@@ -5,7 +5,7 @@ const TakeAction = () => {
 
 
     return (
-        <Layout>
+        <Layout siteType={"client"}>
             <h1>HOW CAN YOU GET INVOLVED WITH ALL IN ONE?</h1>
             <p>Whether you’re a teacher or organisation with a great idea for a lesson or content, an educator who wants to trial our lessons in their classrooms, or a citizen wanting to see real change in the UK curriculum, here are some ways you can get involved with All in One:</p>
         

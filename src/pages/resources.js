@@ -23,7 +23,7 @@ const ResourcePage = () => {
     }
 
     return (
-        <Layout>
+        <Layout siteType={"client"}>
             <div className="page-container">
             <h1>Resources</h1>
             {/* <input type="text" id="myInput" onKeyUp="myFunction()" placeholder="Search for names.."/> */}

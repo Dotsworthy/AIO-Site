@@ -96,25 +96,9 @@ const AdminPage = () => {
   <div>
       {user ?     
       <div>
-        <nav className="admin-header">
-
-          <div>
-            <h1>All In One Education</h1>
-          </div>
-
-          <div>
-          <Link to="/admin/subjectList">Subject List</Link>
-          <Link to="/admin/categoryList">Categories</Link>
-          <Link to="/admin/levelList">Levels</Link>
-          <Link to="/admin/tagList">Tags</Link>
+        <Layout siteType="admin">
           {/* <Link to="/admin/resourceCatalogue">Resource Catalogue</Link> */}
-          <button className="link-button" onClick={() => logout()}>Logout</button>
-        </div>
-
-      </nav>
-        <div>
         <Router>
-
           <SubjectList path="/admin/subjectList"/>
           <AddSubject path="/admin/subjectList/addSubject"/>
           <UpdateSubject path="/admin/subjectList/updateSubject"/>
@@ -132,9 +116,9 @@ const AdminPage = () => {
           <DeleteTag path="/admin/tagList/deleteTag"/>
 
           {/* <ResourceCatalogue path="/admin/resourceCatalogue"/> */}
-
         </Router> 
-        </div>
+         <button className="link-button" onClick={() => logout()}>Logout</button>
+        </Layout>
       </div>
     :
     <Layout siteType={"client"}>

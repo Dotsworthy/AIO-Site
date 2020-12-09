@@ -52,7 +52,14 @@ const NavbarLinks = ( siteType ) => {
         <NavItem to="/admin/">Admin Login</NavItem>
         </>
       }
-      { siteType.siteType == "admin" && <div></div>}
+      { siteType.siteType == "admin" && 
+      <>
+      <Link to="/admin/subjectList">Subject List</Link>
+      <Link to="/admin/categoryList">Categories</Link>
+      <Link to="/admin/levelList">Levels</Link>
+      <Link to="/admin/tagList">Tags</Link>
+      </>
+      }
       </>
     )
   }

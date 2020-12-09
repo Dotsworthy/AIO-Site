@@ -5,7 +5,7 @@ import SEO from "../components/seo"
 const AboutUs = () => {
 
     return (
-        <Layout>
+        <Layout siteType={"client"}>
             <SEO title="About Us" />
             <div className="banner-container" id="about-us">
                 {/* <img src={require("../images/79574096_m.jpg")}/> */}
