@@ -130,8 +130,10 @@ const Hamburger = styled.div`
   }
 `
 
-const Navbar = () => {
+const Navbar = ( siteType ) => {
   const [navbarOpen, setNavbarOpen] = useState(false)
+  const site = String(siteType.siteType);
+  console.log(site);
 
   return (
     <Navigation className="navigation">
@@ -145,11 +147,11 @@ const Navbar = () => {
       </Toggle>
       {navbarOpen ? (
         <Navbox>
-          <NavbarLinks className="navlinks"/>
+          <NavbarLinks siteType={ site }/>
         </Navbox>
       ) : (
         <Navbox open>
-          <NavbarLinks />
+          <NavbarLinks siteType = { site }/>
         </Navbox>
       )}
     </Navigation>

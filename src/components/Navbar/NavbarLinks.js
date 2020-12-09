@@ -38,14 +38,21 @@ const NavItem = styled(Link)`
   }
 `
 
-const NavbarLinks = () => {
+const NavbarLinks = ( siteType ) => {
+  const site = String(siteType.siteType)
+  console.log(site)
     return (
       <>
+      { siteType.siteType == "client" && 
+        <>
         <NavItem to="/about-us">About Us</NavItem>
         <NavItem to="/take-action">Take Action</NavItem>
         <NavItem to="/resources/">Resources</NavItem>
         <NavItem to="/contact-us">Contact Us</NavItem>
         <NavItem to="/admin/">Admin Login</NavItem>
+        </>
+      }
+      { siteType.siteType == "admin" && <div></div>}
       </>
     )
   }

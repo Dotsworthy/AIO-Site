@@ -137,7 +137,7 @@ const AdminPage = () => {
         </div>
       </div>
     :
-    <Layout>
+    <Layout siteType={"client"}>
     <SignInManager/>
     </Layout>
     }

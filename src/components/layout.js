@@ -14,7 +14,7 @@ import Navbar from "./Navbar/Navbar"
 // import "./layout.css"
 import "./styles.scss"
 
-const Layout = ({ children }) => {
+const Layout = ({ children, siteType }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -27,8 +27,8 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <Navbar />
-      <Header siteTitle={data.site.siteMetadata.title} />
+      <Navbar siteType={siteType}/>
+      {/* <Header siteTitle={data.site.siteMetadata.title} /> */}
       <div
         style={{
           margin: `0 auto`,
