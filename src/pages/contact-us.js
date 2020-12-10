@@ -6,16 +6,29 @@ const ContactUs = () => {
     return (
         <Layout siteType={"client"}>
             <h1>CONTACT US</h1>
+
+            <div className="content-box-variable">
+            
+            <div className="paragraph-box box1" id="white">
             <p>Contact us to learn more about our mission and work, or get involved yourself.</p>
             <p>enquiries@allinoneeducation.co.uk</p>
-
-            <form>
+            <img src={require("../images/42401748_m.jpg")}></img>
+            
+            
+            
+            </div>
+            <div className="paragraph-box box2" id="white">
+            <form className="contact-us-form">
                 <input placeholder="First Name"/>
                 <input placeholder = "Last Name"/>
                 <input placeholder = "Email"/>
-                <input placeholder = "Message"/>
+                <textarea placeholder = "Message"/>
                 <button>Send</button>
             </form>
+            </div>
+            
+            </div>
+            
         </Layout>
     )
 }
