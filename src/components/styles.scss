@@ -206,6 +206,11 @@ p {
     height: 91vh;
     background-size: cover;
     background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2vw;
 
     @media (max-width: 768px) {
         height: 50vh;
