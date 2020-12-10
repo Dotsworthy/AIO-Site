@@ -1,6 +1,8 @@
 import React from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTwitter, faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons'
 
 const NavItem = styled(Link)`
   text-decoration: none;
@@ -60,6 +62,11 @@ const NavbarLinks = ( siteType ) => {
       <NavItem to="/admin/tagList">Tags</NavItem>
       </>
       }
+      <div className="icons-navlinks">
+      <span><FontAwesomeIcon icon={faFacebook} /></span>
+      <span><FontAwesomeIcon icon={faTwitter}/></span>
+      <span><FontAwesomeIcon icon={faInstagram}/></span>
+      </div>
       </>
     )
   }

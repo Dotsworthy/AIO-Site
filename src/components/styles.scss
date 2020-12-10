@@ -101,8 +101,48 @@ $mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
 #dark-blue {background-color:#031240}
 #red { background-color: #D93030}
 
+html, body {
+
+}
+
 body {
-    // @extend %font-options;
+    // display: flex;
+    // flex-direction: column;
+}
+
+span {
+    color: white;
+    font-size: 2rem;
+    padding: 5px;
+}
+
+.icons {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.icons-navlinks {
+    @media #{$mq-small} {
+        display: none;
+    }
+}
+
+.site {
+    display: flex;
+    min-height: 90vh;
+    flex-direction: column
+}
+
+.site-content {
+    flex-grow: 1;
+}
+
+footer {
+    background-color: #2E2F2F;
+    height: 10vh;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 button {
@@ -162,9 +202,7 @@ p {
     }
 }
 
-footer {
-    background-color: #2E2F2F;
-}
+
 
 // NOTE! Remainder of nav css can be found in Navbar component folder
 

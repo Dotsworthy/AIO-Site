@@ -12,9 +12,14 @@ import { useStaticQuery, graphql } from "gatsby"
 import Header from "./header"
 import Navbar from "./Navbar/Navbar"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTwitter } from '@fortawesome/free-solid-svg-icons'
+import { faTwitter, faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faCoffee} from '@fortawesome/free-solid-svg-icons'
+import { Link } from "gatsby"
 // import "./layout.css"
 import "./styles.scss"
+
+// library.add(fab, faTwitter)
 
 const Layout = ({ children, siteType }) => {
   const data = useStaticQuery(graphql`
@@ -31,21 +36,36 @@ const Layout = ({ children, siteType }) => {
     <>
       <Navbar siteType={siteType}/>
       {/* <Header siteTitle={data.site.siteMetadata.title} /> */}
-      <div
+      <div className="site"
         style={{
           margin: `0 auto`,
           maxWidth: 1920,
+          // position: 'relative',
+          // minHeight: '100vh',
           // padding: `0 1.0875rem 1.45rem`,
         }}
       >
-        <main>{children}</main>
+        <div className="site-content"><main>{children}</main></div>
+        
         <footer className="footer">
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
-          <FontAwesomeIcon icon={faTwitter} />
+          {/* <div>
+            © {new Date().getFullYear()}, Built with
+            {` `}
+            <a href="https://www.gatsbyjs.org">Gatsby</a>
+          </div> */}
+          
+          <div className="icons">
+            <span><FontAwesomeIcon icon={faFacebook} /></span>
+            <span><FontAwesomeIcon icon={faTwitter}/></span>
+            <span><FontAwesomeIcon icon={faInstagram}/></span>
+          </div>
+
+          <Link className="nav-links" to="/contact-us">Contact Us</Link>
+          
         </footer>
       </div>
+
+      
     </>
   )
 }
