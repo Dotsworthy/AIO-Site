@@ -5,8 +5,12 @@ const ContactUs = () => {
 
     return (
         <Layout siteType={"client"}>
-            <h1>CONTACT US</h1>
-
+            <div className="banner-container-2" id="pink">
+                <div className="paragraph-box" id="white">
+                    <h1>CONTACT US</h1>
+                </div>
+            </div>
+            
             <div className="content-box-variable">
             
             <div className="paragraph-box box1" id="white">

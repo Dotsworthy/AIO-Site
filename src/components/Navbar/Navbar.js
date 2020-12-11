@@ -46,7 +46,7 @@ const Navigation = styled.nav`
   flex-direction: column;
   
   position: relative;
-  
+  justify-content: space-between;
   align-items: center;
   text-transform: uppercase;
   border-bottom: 2px solid #33333320;
@@ -82,7 +82,6 @@ const Toggle = styled.div`
 const Navbox = styled.div`
   display: flex;
   height: 100%;
-  
   align-items: center;
 
   @media (max-width: 768px) {

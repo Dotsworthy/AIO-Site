@@ -24,8 +24,11 @@ const ResourcePage = () => {
 
     return (
         <Layout siteType={"client"}>
-            <div className="page-container">
-            <h1>Resources</h1>
+            <div className="banner-container-2" id="yellow">
+                    <div className="paragraph-box" id="white"><h1>RESOURCE CATALOGUE</h1></div>
+            </div>
+
+            <div className="page-container" id="white">
             {/* <input type="text" id="myInput" onKeyUp="myFunction()" placeholder="Search for names.."/> */}
             <div className="resource-page-container">
             <ResourceCatalogue downloadResource={downloadResource} />

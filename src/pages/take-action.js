@@ -6,9 +6,12 @@ const TakeAction = () => {
 
     return (
         <Layout siteType={"client"}>
-            <div className="banner-container" id="green">
+            <div className="banner-container-2" id="green">
                     <div className="paragraph-box" id="white"><h1>HOW CAN YOU GET INVOLVED WITH ALL IN ONE?</h1></div>
-                    <div className="paragraph-box" id="white"> <p>Whether you’re a teacher or organisation with a great idea for a lesson or content, an educator who wants to trial our lessons in their classrooms, or a citizen wanting to see real change in the UK curriculum, here are some ways you can get involved with All in One:</p></div>
+            </div>
+            <div className="content-box" id ="white">
+            <div className="paragraph-box" id="grey"> 
+            <p>Whether you’re a teacher or organisation with a great idea for a lesson or content, an educator who wants to trial our lessons in their classrooms, or a citizen wanting to see real change in the UK curriculum, here are some ways you can get involved with All in One:</p></div>
             </div>
             
             <div className="content-box" id="white">
