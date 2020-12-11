@@ -316,7 +316,7 @@ body {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-        min-width: 300px;
+        min-width: 300px;        
     }
 }
 
@@ -361,6 +361,14 @@ body {
         .box2 {
             flex-grow: 2;
         }
+    }
+}
+
+#admin-login {
+    display: none;
+
+    @media #{$mq-medium} {
+        display: block;
     }
 }
 

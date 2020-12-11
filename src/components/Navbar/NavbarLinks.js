@@ -51,7 +51,7 @@ const NavbarLinks = ( siteType ) => {
         <NavItem to="/take-action">Take Action</NavItem>
         <NavItem to="/resources/">Resources</NavItem>
         <NavItem to="/contact-us">Contact Us</NavItem>
-        <NavItem to="/admin/">Admin Login</NavItem>
+        <NavItem id="admin-login" to="/admin/">Admin Login</NavItem>
         </>
       }
       { siteType.siteType == "admin" && 
