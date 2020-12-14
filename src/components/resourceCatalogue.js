@@ -87,11 +87,10 @@ const ResourceCatalogue = ( { downloadResource }) => {
     if (categorySelected && levelSelected && tagSelected) {
       firebase
       .firestore()
-      .collection("items")
+      .collection("subjects")
       .where("category", "==", categorySelected)
       .where("level", "==", levelSelected)
       .where("tags", "array-contains", tagSelected)
-      .orderBy("name")
       .onSnapshot(snapshot => {
         const listResources = snapshot.docs.map(doc => ({
           id: doc.id,
@@ -102,10 +101,9 @@ const ResourceCatalogue = ( { downloadResource }) => {
   } else if (categorySelected && levelSelected && !tagSelected) {
     firebase
     .firestore()
-    .collection("items")
+    .collection("subjects")
     .where("category", "==", categorySelected)
     .where("level", "==", levelSelected)
-    .orderBy("name")
     .onSnapshot(snapshot => {
       const listResources = snapshot.docs.map(doc => ({
         id: doc.id,
@@ -116,10 +114,9 @@ const ResourceCatalogue = ( { downloadResource }) => {
   } else if (categorySelected && !levelSelected && tagSelected) {
     firebase
     .firestore()
-    .collection("items")
+    .collection("subjects")
     .where("category", "==", categorySelected)
     .where("tags", "array-contains", tagSelected)
-    .orderBy("name")
     .onSnapshot(snapshot => {
       const listResources = snapshot.docs.map(doc => ({
         id: doc.id,
@@ -130,8 +127,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
   } else if (categorySelected && !levelSelected && !tagSelected) {
     firebase
     .firestore()
-    .collection("items")
-    .orderBy("name")
+    .collection("subjects")
     .where("category", "==", categorySelected)
     .onSnapshot(snapshot => {
       const listResources = snapshot.docs.map(doc => ({
@@ -143,10 +139,9 @@ const ResourceCatalogue = ( { downloadResource }) => {
   } else if (!categorySelected && levelSelected && tagSelected) {
     firebase
     .firestore()
-    .collection("items")
+    .collection("subjects")
     .where("level", "==", levelSelected)
     .where("tags", "array-contains", tagSelected)
-    .orderBy("name")
     .onSnapshot(snapshot => {
       const listResources = snapshot.docs.map(doc => ({
         id: doc.id,
@@ -157,9 +152,8 @@ const ResourceCatalogue = ( { downloadResource }) => {
   } else if (!categorySelected && levelSelected && !tagSelected) {
     firebase
     .firestore()
-    .collection("items")
+    .collection("subjects")
     .where("level", "==", levelSelected)
-    .orderBy("name")
     .onSnapshot(snapshot => {
       const listResources = snapshot.docs.map(doc => ({
         id: doc.id,
@@ -170,9 +164,8 @@ const ResourceCatalogue = ( { downloadResource }) => {
   } else if (!categorySelected && !levelSelected && tagSelected) {
     firebase
     .firestore()
-    .collection("items")
+    .collection("subjects")
     .where("tags", "array-contains", tagSelected)
-    .orderBy("name")
     .onSnapshot(snapshot => {
       const listResources = snapshot.docs.map(doc => ({
         id: doc.id,
@@ -183,8 +176,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
   } else {
     firebase
     .firestore()
-    .collection("items")
-    .orderBy("name")
+    .collection("subjects")
     .onSnapshot(snapshot => {
       const listResources = snapshot.docs.map(doc => ({
         id: doc.id,
