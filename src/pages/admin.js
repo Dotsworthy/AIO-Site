@@ -97,7 +97,9 @@ const AdminPage = () => {
       {user ?     
         <Layout siteType="admin">
           <div className="admin-layout">
-          <div className="admin-subnav">
+          <div
+           className="admin-subnav"
+           >
               <button onClick={() => logout()}>Logout</button>
           </div>
             
