@@ -21,7 +21,7 @@ const ListSubjects = ({ editItem }) => {
   useEffect(() => {
     if (searchTerm) {
       if (searchLocation == "tags") {
-        const unsubscribe = firebase.firestore().collection("items").where(searchLocation, "array-contains", searchTerm).onSnapshot(snapshot => {
+        const unsubscribe = firebase.firestore().collection("subjects").where(searchLocation, "array-contains", searchTerm).onSnapshot(snapshot => {
           const listResources = snapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data()
@@ -30,7 +30,7 @@ const ListSubjects = ({ editItem }) => {
         });
         return unsubscribe
       } else {
-        const unsubscribe = firebase.firestore().collection("items").where(searchLocation, "==", searchTerm).onSnapshot(snapshot => {
+        const unsubscribe = firebase.firestore().collection("subjects").where(searchLocation, "==", searchTerm).onSnapshot(snapshot => {
           const listResources = snapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data()
@@ -40,7 +40,7 @@ const ListSubjects = ({ editItem }) => {
         return unsubscribe
       }
     } else {
-      const unsubscribe = firebase.firestore().collection("items").orderBy(orderBy).onSnapshot(snapshot => {
+      const unsubscribe = firebase.firestore().collection("subjects").orderBy(orderBy).onSnapshot(snapshot => {
         const listResources = snapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
