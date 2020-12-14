@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import ListSubjects from "../components/ListSubjects";
-import UpdateSubject from "../components/updateSubject";
-import UpdateDatabaseItem from "../components/updateDatabaseItem";
-import AddSubject from "../components/addSubject";
-import ListDatabaseItems from "../components/listDatabaseItems";
-import DeleteDatabaseItem from "../components/deleteDatabaseItem";
+import ListSubjects from "../../components/ListSubjects";
+import UpdateSubject from "../../components/updateSubject";
+import UpdateDatabaseItem from "../../components/updateDatabaseItem";
+import AddSubject from "../../components/addSubject";
+import ListDatabaseItems from "../../components/listDatabaseItems";
+import DeleteDatabaseItem from "../../components/deleteDatabaseItem";
 // import ResourceCatalogue from "../components/resourceCatalogue";
-import Layout from "../components/layout";
+import Layout from "../../components/layout";
 import { Router, Link } from "@reach/router";
 import firebase from 'firebase';
-import SignInManager from "../components/signInManager";
+import SignInManager from "../../components/signInManager";
 import { navigate } from "gatsby";
 
 
@@ -58,7 +58,7 @@ const AdminPage = () => {
       download: item.download
 
     })
-    navigate("/admin/subjectList/updateSubject")
+    navigate(`/admin/subjectList/${item.id}`);
   }
 
   const editDatabaseItem = (item, collection, location) => {
@@ -104,22 +104,24 @@ const AdminPage = () => {
           </div>
             
               {/* <Link to="/admin/resourceCatalogue">Resource Catalogue</Link> */}
-            <Router>
-              <SubjectList path="/admin/subjectList"/>
-              <AddNewSubject path="/admin/subjectList/addSubject"/>
-              <UpdateCurrentSubject path="/admin/subjectList/updateSubject"/>
+            <Router basepath="/admin">
+              <SubjectList path="/"/>
+              <SubjectList path="/subjectList"/>
+              <UpdateCurrentSubject path="/subjectList/:id"/>
+              <AddNewSubject path="/subjectList/addSubject"/>
+              
 
-              <CategoryList path="/admin/categoryList"/>
-              <UpdateCategory path="/admin/categoryList/updateCategory"/>
-              <DeleteCategory path="/admin/categoryList/deleteCategory"/>
+              <CategoryList path="/categoryList"/>
+              <UpdateCategory path="/categoryList/updateCategory"/>
+              <DeleteCategory path="/categoryList/deleteCategory"/>
 
-              <LevelList path="/admin/levelList"/>
-              <UpdateLevel path="/admin/levelList/updateLevel"/>
-              <DeleteLevel path="/admin/levelList/deleteLevel"/>
+              <LevelList path="/levelList"/>
+              <UpdateLevel path="/levelList/updateLevel"/>
+              <DeleteLevel path="/levelList/deleteLevel"/>
 
-              <TagList path="/admin/tagList"/>
-              <UpdateTag path="/admin/tagList/updateTag"/>
-              <DeleteTag path="/admin/tagList/deleteTag"/>
+              <TagList path="/tagList"/>
+              <UpdateTag path="/tagList/updateTag"/>
+              <DeleteTag path="/tagList/deleteTag"/>
 
               {/* <ResourceCatalogue path="/admin/resourceCatalogue"/> */}
             </Router> 

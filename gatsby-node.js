@@ -33,6 +33,8 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
     }
   }
 
+  
+
   exports.onCreatePage = async ({page, actions}) => {
     const { createPage } = actions
 
@@ -41,4 +43,13 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
 
       createPage(page)
     }
+
+    // if(page.path.match(/^\/subjectList/)) {
+      
+    //   createPage({
+    //     path: "/subjectList",
+    //     matchPath: "/subjectList/*",
+    //     component: path.resolve(`src/components/updateSubject`)
+    //   })
+    // }
   }
