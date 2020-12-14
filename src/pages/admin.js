@@ -1,23 +1,23 @@
-import React, { useState } from "react"
-import ListSubjects from "../components/ListSubjects"
-import UpdateItem from "../components/updateItem"
-import UpdateDatabaseItem from "../components/updateDatabaseItem"
-import AddResourceForm from "../components/addResourceForm"
+import React, { useState } from "react";
+import ListSubjects from "../components/ListSubjects";
+import UpdateSubject from "../components/updateSubject";
+import UpdateDatabaseItem from "../components/updateDatabaseItem";
+import AddSubject from "../components/addSubject";
 import ListDatabaseItems from "../components/listDatabaseItems";
 import DeleteDatabaseItem from "../components/deleteDatabaseItem";
 // import ResourceCatalogue from "../components/resourceCatalogue";
-import Layout from "../components/layout"
-import { Router, Link } from "@reach/router"
+import Layout from "../components/layout";
+import { Router, Link } from "@reach/router";
 import firebase from 'firebase';
-import SignInManager from "../components/signInManager"
-import { navigate } from "gatsby"
+import SignInManager from "../components/signInManager";
+import { navigate } from "gatsby";
 
 
 const AdminPage = () => {
 
   const SubjectList = () => <ListSubjects editItem={editItem}/>
-  const AddSubject = () => <AddResourceForm/>
-  const UpdateSubject = () => <UpdateItem  currentItem={currentItem}/>
+  const AddNewSubject = () => <AddSubject/>
+  const UpdateCurrentSubject = () => <UpdateSubject  currentItem={currentItem}/>
  
   const CategoryList = () => <ListDatabaseItems collection={"categories"} resourceEntry={"category"} editItem={editDatabaseItem} deleteItem={deleteDatabaseItem}/>
   const UpdateCategory = () => <UpdateDatabaseItem currentItem={currentItem}/>
@@ -106,8 +106,8 @@ const AdminPage = () => {
               {/* <Link to="/admin/resourceCatalogue">Resource Catalogue</Link> */}
             <Router>
               <SubjectList path="/admin/subjectList"/>
-              <AddSubject path="/admin/subjectList/addSubject"/>
-              <UpdateSubject path="/admin/subjectList/updateSubject"/>
+              <AddNewSubject path="/admin/subjectList/addSubject"/>
+              <UpdateCurrentSubject path="/admin/subjectList/updateSubject"/>
 
               <CategoryList path="/admin/categoryList"/>
               <UpdateCategory path="/admin/categoryList/updateCategory"/>

@@ -7,7 +7,7 @@ import 'firebase/storage'
 // ISSUES:
 // If resource has an image assigned to the image field but no corresponding image in cloud storage. Trying to upload that image will not work. User can upload a new image with different file name however. This is not something the user should run into.
 
-const UpdateItem = ({ currentItem }) => {
+const UpdateSubject = ({ currentItem }) => {
 
   // item information to update the database
   const [item, setItem] = useState(currentItem);
@@ -495,4 +495,4 @@ const UpdateItem = ({ currentItem }) => {
   )
 }
 
-export default UpdateItem
+export default UpdateSubject

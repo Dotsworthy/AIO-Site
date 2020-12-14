@@ -22,7 +22,7 @@ const DeleteResource = ({ currentResource, setDeleting }) => {
 
     firebase
     .firestore()
-    .collection("items")
+    .collection("subjects")
     .doc(resource.id)
     .delete()
 
