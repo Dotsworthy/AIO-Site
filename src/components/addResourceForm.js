@@ -214,7 +214,7 @@ const AddResourceForm = () => {
       e.preventDefault()
       if (name && description && category && level && addedTags && imageUpload &&     resourceUploads.length > 0) {
 
-      const nameCheck = await databaseCheck(name, "items")
+      const nameCheck = await databaseCheck(name, "subjects")
       const categoryCheck = await databaseCheck(category, "categories")
       const levelCheck = await databaseCheck(level, "levels")
       
@@ -243,9 +243,9 @@ const AddResourceForm = () => {
           
           const tags = addedTags;
           
-          addResource(name, description, category, level, tags, "items")
+          addResource(name, description, category, level, tags, "subjects")
 
-          const databaseEntry = await databaseCheck(name, "items")
+          const databaseEntry = await databaseCheck(name, "subjects")
           
           let image
           if (imageUpload == "") {
@@ -261,7 +261,7 @@ const AddResourceForm = () => {
             download = await uploadAllFiles('download', databaseEntry[0].id, 'downloads')
           }
           
-          updateResource(image, download, "items", databaseEntry[0].id)
+          updateResource(image, download, "subjects", databaseEntry[0].id)
 
           navigate("/admin/subjectList")
         }
