@@ -261,7 +261,7 @@ const UpdateItem = ({ currentItem }) => {
         item.image 
         && item.download.length > 0
         ) {
-        const nameCheck = await databaseCheck(item.name, "items")
+        const nameCheck = await databaseCheck(item.name, "subjects")
         const categoryCheck = await databaseCheck(item.category, "categories")
         const levelCheck = await databaseCheck(item.level, "levels")
   
@@ -305,7 +305,7 @@ const UpdateItem = ({ currentItem }) => {
   
         firebase
         .firestore()
-        .collection("items")
+        .collection("subjects")
         .doc(item.id)
         .update(item)
   
