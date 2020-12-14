@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import DeleteResource from "./deleteResource"
+import DeleteSubject from "./deleteSubject"
 import { Link } from "@reach/router"
 import { navigate } from "gatsby"
 import firebase from "./firebase"
@@ -15,7 +15,7 @@ const ListSubjects = ({ editItem }) => {
 
   // used for deleting resources
   const [deleting, setDeleting] = useState(false)
-  const [currentResource, setCurrentResource] = useState([])
+  const [currentItem, setCurrentItem] = useState([])
 
   // renders the list of resources
   useEffect(() => {
@@ -52,9 +52,9 @@ const ListSubjects = ({ editItem }) => {
   }, [searchTerm, orderBy])
 
   // sets Resource to be passed to deleteResource component
-  const deleteResource = (item) => {
+  const deleteSubject = (item) => {
     setDeleting(true)
-    setCurrentResource({
+    setCurrentItem({
       id: item.id,
       name: item.name,
       image: item.image,
@@ -131,16 +131,16 @@ const ListSubjects = ({ editItem }) => {
             <td className="tags">{resource.tags.toString()}</td>
             <td className="table-buttons">
               <button onClick={() => editItem(resource)}>Edit</button>
-              <button onClick={() => deleteResource(resource)}>Delete</button>
+              <button onClick={() => deleteSubject(resource)}>Delete</button>
             </td>
           </tr>
         </tbody>
       ))}
     </table>
 
-    {deleting && <div className="popup-container"><DeleteResource
+    {deleting && <div className="popup-container"><DeleteSubject
       setDeleting={setDeleting}
-      currentResource={currentResource}
+      currentItem={currentItem}
       />
     </div>
     }

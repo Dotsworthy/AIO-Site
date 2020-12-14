@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import firebase from "firebase"
 import 'firebase/storage'
 
-// ISSUES: tags can be safely deleted but navigation is wrong. Needs refactoring.
-
-const DeleteResource = ({ currentResource, setDeleting }) => {
+const DeleteSubject = ({ currentItem, setDeleting }) => {
 
   // Resource for deletion
-  const resource = currentResource
+  const resource = currentItem;
 
   // generates notification for user that resource is in process of deletion
   const [waiting, setWaiting] = useState(false)
@@ -81,4 +79,4 @@ const DeleteResource = ({ currentResource, setDeleting }) => {
   )
 }
 
-export default DeleteResource
+export default DeleteSubject
