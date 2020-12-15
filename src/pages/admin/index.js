@@ -15,7 +15,7 @@ import { navigate } from "gatsby";
 
 const AdminPage = () => {
 
-  const SubjectList = () => <ListSubjects editItem={editItem}/>
+  const SubjectList = () => <ListSubjects/>
   const AddNewSubject = () => <AddSubject/>
   const UpdateCurrentSubject = () => <UpdateSubject  currentItem={currentItem}/>
  
@@ -45,21 +45,6 @@ const AdminPage = () => {
       setUser(user)
     }
   })
-
-  const editItem = item => {
-    setCurrentItem({
-      id: item.id,
-      name: item.name,
-      image: item.image,
-      description: item.description,
-      category: item.category,
-      level: item.level,
-      tags: item.tags,
-      download: item.download
-
-    })
-    navigate(`/admin/subjectList/${item.id}`);
-  }
 
   const editDatabaseItem = (item, collection, location) => {
     setCurrentItem({

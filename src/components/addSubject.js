@@ -198,7 +198,7 @@ const AddSubject = () => {
     const updateResource = (image, download, location, id) => {
       firebase.firestore().collection(location).doc(id).update({
         image,
-        download
+        download,
       })
     }
 

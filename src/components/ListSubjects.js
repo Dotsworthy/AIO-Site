@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react"
 import DeleteSubject from "./deleteSubject"
+import UpdateSubject from "./updateSubject"
 import { Link } from "@reach/router"
 import { navigate } from "gatsby"
 import firebase from "./firebase"
 // import 'firebase/storage'
 
-const ListSubjects = ({ editItem }) => {
+const ListSubjects = () => {
   
   // used for rendering and filtering resources
   const [resources, setResources] = useState([]);
@@ -15,6 +16,7 @@ const ListSubjects = ({ editItem }) => {
 
   // used for deleting resources
   const [deleting, setDeleting] = useState(false)
+  const [editing, setEditing] = useState(false)
   const [currentItem, setCurrentItem] = useState([])
 
   // renders the list of resources
@@ -49,7 +51,7 @@ const ListSubjects = ({ editItem }) => {
       });
       return unsubscribe
     }
-  }, [searchTerm, orderBy])
+  }, [editing, searchTerm, orderBy])
 
   // sets Resource to be passed to deleteResource component
   const deleteSubject = (item) => {
@@ -64,6 +66,21 @@ const ListSubjects = ({ editItem }) => {
       tags: item.tags,
       download: item.download
     })
+  }
+
+  const editSubject = (item) => {
+    setCurrentItem({
+      id: item.id,
+      name: item.name,
+      image: item.image,
+      description: item.description,
+      category: item.category,
+      level: item.level,
+      tags: item.tags,
+      download: item.download
+    })
+
+    setEditing(true)
   }
   
   // search form
@@ -80,10 +97,14 @@ const ListSubjects = ({ editItem }) => {
     navigate("/admin/subjectList/addSubject")
   }
 
+
+
   return (
-    <div className="database-container">
     
-      <div className="database-navigation-container">
+    <div className="database-container">
+      
+      {!editing && <> 
+        <div className="database-navigation-container">
         <button onClick={((e) => addSubject(e))}>Add Subject</button>
         <form className="database-navigation-content" onSubmit={onSubmit}>
           <input type="text" id="search" name="search" placeholder="Search"/>
@@ -102,48 +123,57 @@ const ListSubjects = ({ editItem }) => {
         </form>
       </div>  
     
-    <table className="database-table">
-      <tbody>
-        <tr className="header-row">
-          <th className="name">
-            <button onClick={() => setOrderBy("name")}>Resource Name</button>
-          </th>
-          
-          <th className="category">
-            <button onClick={() => setOrderBy("category")}>Category</button>
-          </th>
-          
-          <th className="level">
-            <button onClick={() => setOrderBy("level")}>Level</button>
-          </th>
-          
-          <th className="tags">
-            <button onClick={() => setOrderBy("tags")}>Tags</button>
-          </th>
-        </tr>
-      </tbody>
-      {resources.map(resource => (
-        <tbody key={resource.id}>
-          <tr className="data-row">
-            <td className="resource-name">{resource.name}</td>
-            <td className="category">{resource.category}</td>
-            <td className="level">{resource.level}</td>
-            <td className="tags">{resource.tags.toString()}</td>
-            <td className="table-buttons">
-              <button onClick={() => editItem(resource)}>Edit</button>
-              <button onClick={() => deleteSubject(resource)}>Delete</button>
-            </td>
+      <table className="database-table">
+        <tbody>
+          <tr className="header-row">
+            <th className="name">
+              <button onClick={() => setOrderBy("name")}>Resource Name</button>
+            </th>
+            
+            <th className="category">
+              <button onClick={() => setOrderBy("category")}>Category</button>
+            </th>
+            
+            <th className="level">
+              <button onClick={() => setOrderBy("level")}>Level</button>
+            </th>
+            
+            <th className="tags">
+              <button onClick={() => setOrderBy("tags")}>Tags</button>
+            </th>
           </tr>
         </tbody>
-      ))}
-    </table>
+        {resources.map(resource => (
+          <tbody key={resource.id}>
+            <tr className="data-row">
+              <td className="resource-name">{resource.name}</td>
+              <td className="category">{resource.category}</td>
+              <td className="level">{resource.level}</td>
+              <td className="tags">{resource.tags.toString()}</td>
+              <td className="table-buttons">
+                <button onClick={() => editSubject(resource)}>Edit</button>
+                <button onClick={() => deleteSubject(resource)}>Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        ))}
+      </table>
+        
+        
+        </>}
+      
 
-    {deleting && <div className="popup-container"><DeleteSubject
-      setDeleting={setDeleting}
+      {deleting && <div className="popup-container"><DeleteSubject
+        setDeleting={setDeleting}
+        currentItem={currentItem}
+        />
+        </div>
+      }
+
+      {editing && <UpdateSubject
       currentItem={currentItem}
-      />
-    </div>
-    }
+      setEditing={setEditing}
+      />}
 
   </div>
   )

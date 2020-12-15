@@ -7,7 +7,7 @@ import 'firebase/storage'
 // ISSUES:
 // If resource has an image assigned to the image field but no corresponding image in cloud storage. Trying to upload that image will not work. User can upload a new image with different file name however. This is not something the user should run into.
 
-const UpdateSubject = ({ currentItem }) => {
+const UpdateSubject = ({ currentItem, setEditing }) => {
 
   // item information to update the database
   const [item, setItem] = useState(currentItem);
@@ -24,7 +24,6 @@ const UpdateSubject = ({ currentItem }) => {
   // for rendering upload pop-up
   const [submit, setSubmit] = useState(false)
 
-  
   // original variables for checking whether to upload/download
   const originalImage = currentItem.image;
   const originalName = currentItem.name;
@@ -310,7 +309,7 @@ const UpdateSubject = ({ currentItem }) => {
         .update(item)
   
   
-          navigate("/admin/subjectList")
+          setEditing(false);
         }
       } else {
         document.getElementById("warning-dialog-box").style.visibility = "visible";
@@ -319,7 +318,7 @@ const UpdateSubject = ({ currentItem }) => {
     };
   
   const handleCancel = () => {
-    navigate("/admin/subjectList")
+      setEditing(false);
   }
 
   const warningCancel = () => {
