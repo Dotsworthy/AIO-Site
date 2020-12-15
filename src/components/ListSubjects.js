@@ -23,7 +23,7 @@ const ListSubjects = () => {
   useEffect(() => {
     if (searchTerm) {
       if (searchLocation == "tags") {
-        const unsubscribe = firebase.firestore().collection("subjects").where(searchLocation, "array-contains", searchTerm).onSnapshot(snapshot => {
+        const unsubscribe = firebase.firestore().collection("subjects").onSnapshot(snapshot => {
           const listResources = snapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data()
@@ -32,13 +32,23 @@ const ListSubjects = () => {
         });
         return unsubscribe
       } else {
-        const unsubscribe = firebase.firestore().collection("subjects").where(searchLocation, "==", searchTerm).onSnapshot(snapshot => {
+        const unsubscribe = firebase.firestore().collection("subjects").onSnapshot(snapshot => {
           const listResources = snapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data()
           }))
-          setResources(listResources);
-        });
+          // setResources(listResources);
+          // let result = []
+          const result = listResources.filter(resource => { return resource.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1});
+          setResources(result);
+          })
+          // listResources.filter(resource => {
+          //   console.log(resource);
+          //   resource.name.toLowerCase().indexOf(searchTerm.toLowerCase() >= 0);
+          //   console.log(result);
+          // setResources(result) ; 
+          // })
+        // });
         return unsubscribe
       }
     } else {
@@ -143,7 +153,7 @@ const ListSubjects = () => {
             </th>
           </tr>
         </tbody>
-        {resources.map(resource => (
+        {resources.length > 0 ? resources.map(resource => (
           <tbody key={resource.id}>
             <tr className="data-row">
               <td className="resource-name">{resource.name}</td>
@@ -156,7 +166,10 @@ const ListSubjects = () => {
               </td>
             </tr>
           </tbody>
-        ))}
+        ))
+        :
+        <p>No Results</p>
+        }
       </table>
         
         
