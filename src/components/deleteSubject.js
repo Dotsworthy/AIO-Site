@@ -25,14 +25,16 @@ const DeleteSubject = ({ currentItem, setDeleting }) => {
     .doc(resource.id)
     .delete()
 
-    setDeleting(false)
+    setDeleting(false);
+
+    
   }  
   
   // deletes a single file within a folder in firebase storage
   const deleteFile = async (file, id, location) => {
     const string = `${location}/${id}/${file}`
     const storageRef = firebase.storage().ref()
-    if (file = "") {
+    if (file == "") {
       console.log("no file?")
       return
     } else {
@@ -48,15 +50,18 @@ const DeleteSubject = ({ currentItem, setDeleting }) => {
   // deletes all files within a folder in firebase storage
   const deleteAllFiles = async (file, id, location) => {
     const storageRef = firebase.storage().ref()
-    if (file = "") {
+    console.log(file)
+    if (file == "") {
+      console.log(file)
       console.log("no id?")
       return
     } else if (file.length == 0) {
+      console.log(file)
       console.log("no length?")
       return
     } else {
       console.log("code-reached")
-      file.forEach(download => {
+      file.map(download => {
         const fileRef = storageRef.child(`${location}/${id}/${download}`)
         fileRef.delete().then(function() {
           console.log("resource deleted successfully")
