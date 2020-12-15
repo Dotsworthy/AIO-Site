@@ -101,8 +101,9 @@ const ListSubjects = () => {
       {!editing && <> 
         <div className="database-navigation-container">
         <button onClick={((e) => addSubject(e))}>Add Subject</button>
+        
         <form className="database-navigation-content" onSubmit={onSubmit}>
-          <input type="text" id="search" name="search" placeholder="Search"/>
+          <input type="text" id="search" placeholder="Search" name="search"/>
         
         <div className="form-footer">
         <button type="submit">Search</button>

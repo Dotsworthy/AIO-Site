@@ -55,18 +55,11 @@ const ResourceCatalogue = ( { downloadResource }) => {
     })
   },[])
 
-  const clearFilters = (e) => {
-    e.preventDefault()
+  const clearFilters = () => {
     setLevelSelected("")
     setCategorySelected("")
     setTagSelected("")
-    // setSearchTerm("")
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // setSearchTerm(searchLog);
-    // setSearchLog("");
+    setSearchTerm("")
   }
 
   const getImageURL = (id, location, resource) => {
@@ -86,8 +79,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
             id: doc.id,
             ...doc.data()
           }))
-          console.log(listResources);
-          const result = listResources
+          let result = listResources
           .filter(resource =>  
                resource.name.toLowerCase().includes(searchTerm.toLowerCase()) 
             || resource.category.toLowerCase().includes(searchTerm.toLowerCase()) 
@@ -95,7 +87,20 @@ const ResourceCatalogue = ( { downloadResource }) => {
             || resource.tags.some(tag => 
               tag.toLowerCase().includes(searchTerm.toLowerCase())
               )
-            )      
+            )
+          if (categorySelected) {
+            const category = result.filter(resource => resource.category == categorySelected)
+            result = category;
+          }
+          if (levelSelected) {
+            const level = result.filter(resource => resource.level == levelSelected)
+            result = level;
+          }  
+          if (tagSelected) {
+            const tag = result.filter(resource => 
+            resource.tags.some(tag => tag.includes(tagSelected)))
+            result = tag;
+          }
           setResources(result);
           })
         return unsubscribe
@@ -105,135 +110,31 @@ const ResourceCatalogue = ( { downloadResource }) => {
           id: doc.id,
           ...doc.data()
         }))
-        setResources(listResources);
+        let result = listResources
+        if (categorySelected) {
+          const category = result.filter(resource => resource.category == categorySelected)
+          result = category;
+        }
+        if (levelSelected) {
+          const level = result.filter(resource => resource.level == levelSelected)
+          result = level;
+        }  
+        if (tagSelected) {
+          const tag = result.filter(resource => 
+          resource.tags.some(tag => tag.includes(tagSelected)))
+          result = tag;
+        }
+        setResources(result);
       });
       return unsubscribe
     }
-  }, [searchTerm])
+  }, [searchTerm, categorySelected, levelSelected, tagSelected])
 
   const onSubmit = e => {
     e.preventDefault()
     const element = document.getElementById("search").value
     setSearchTerm(element);
   }
-
-  // useEffect(() => {
-  //   if (categorySelected && levelSelected && tagSelected) {
-  //     firebase
-  //     .firestore()
-  //     .collection("subjects")
-  //     .where("category", "==", categorySelected)
-  //     .where("level", "==", levelSelected)
-  //     .where("tags", "array-contains", tagSelected)
-  //     .onSnapshot(snapshot => {
-  //       const listResources = snapshot.docs.map(doc => ({
-  //         id: doc.id,
-  //         ...doc.data()
-  //       }));
-  //       setResources(listResources);
-  //     })
-  // } else if (categorySelected && levelSelected && !tagSelected) {
-  //   firebase
-  //   .firestore()
-  //   .collection("subjects")
-  //   .where("category", "==", categorySelected)
-  //   .where("level", "==", levelSelected)
-  //   .onSnapshot(snapshot => {
-  //     const listResources = snapshot.docs.map(doc => ({
-  //       id: doc.id,
-  //       ...doc.data()
-  //     }));
-  //     setResources(listResources);
-  //   })
-  // } else if (categorySelected && !levelSelected && tagSelected) {
-  //   firebase
-  //   .firestore()
-  //   .collection("subjects")
-  //   .where("category", "==", categorySelected)
-  //   .where("tags", "array-contains", tagSelected)
-  //   .onSnapshot(snapshot => {
-  //     const listResources = snapshot.docs.map(doc => ({
-  //       id: doc.id,
-  //       ...doc.data()
-  //     }));
-  //     setResources(listResources);
-  //   })
-  // } else if (categorySelected && !levelSelected && !tagSelected) {
-  //   firebase
-  //   .firestore()
-  //   .collection("subjects")
-  //   .where("category", "==", categorySelected)
-  //   .onSnapshot(snapshot => {
-  //     const listResources = snapshot.docs.map(doc => ({
-  //       id: doc.id,
-  //       ...doc.data()
-  //     }));
-  //     setResources(listResources);
-  //   })
-  // } else if (!categorySelected && levelSelected && tagSelected) {
-  //   firebase
-  //   .firestore()
-  //   .collection("subjects")
-  //   .where("level", "==", levelSelected)
-  //   .where("tags", "array-contains", tagSelected)
-  //   .onSnapshot(snapshot => {
-  //     const listResources = snapshot.docs.map(doc => ({
-  //       id: doc.id,
-  //       ...doc.data()
-  //     }));
-  //     setResources(listResources);
-  //   })
-  // } else if (!categorySelected && levelSelected && !tagSelected) {
-  //   firebase
-  //   .firestore()
-  //   .collection("subjects")
-  //   .where("level", "==", levelSelected)
-  //   .onSnapshot(snapshot => {
-  //     const listResources = snapshot.docs.map(doc => ({
-  //       id: doc.id,
-  //       ...doc.data()
-  //     }));
-  //     setResources(listResources);
-  //   })
-  // } else if (!categorySelected && !levelSelected && tagSelected) {
-  //   firebase
-  //   .firestore()
-  //   .collection("subjects")
-  //   .where("tags", "array-contains", tagSelected)
-  //   .onSnapshot(snapshot => {
-  //     const listResources = snapshot.docs.map(doc => ({
-  //       id: doc.id,
-  //       ...doc.data()
-  //     }));
-  //     setResources(listResources);
-  //   })
-  // } else {
-  //   firebase
-  //   .firestore()
-  //   .collection("subjects")
-  //   .onSnapshot(snapshot => {
-  //     const listResources = snapshot.docs.map(doc => ({
-  //       id: doc.id,
-  //       ...doc.data()
-  //     }));
-  //     setResources(listResources);
-  //     // const categories = [];
-  //     // listResources.forEach(resource => {
-  //     //   if (categories.includes(resource.category)) {
-  //     //     return;
-  //     //   } else {
-  //     //     categories.push(resource.category)
-  //     //   }
-  //     // })
-  //     // console.log(categories);
-  //     // setAllCategories(categories);
-  //   })
-  // }
-  // },[categorySelected, levelSelected, tagSelected]);
-
-  // const getList = () => {
-
-  // }
 
   return (
     <div>
@@ -278,10 +179,13 @@ const ResourceCatalogue = ( { downloadResource }) => {
               ))}
               </div>
           </div>
-          <form className="resource-page-form" onSubmit={(e) => onSubmit(e)}>
-                <input type="text" id="search"  placeholder="Search.." name="search"/>
+          <form className="resource-page-form" onSubmit={onSubmit}>
+                <input type="text" id="search"  placeholder="Search" name="search"/>
+
+                <div className="form-footer">
                 <button type="submit">Search</button>
-                <button type="reset" onClick={() => setSearchTerm(null)}>Clear Filter</button>
+                <button type="reset" onClick={() => clearFilters()}>Clear</button>
+                </div>
         </form>
         
           
