@@ -6,6 +6,8 @@ import { navigate } from "gatsby"
 import firebase from "./firebase"
 // import 'firebase/storage'
 
+// can't search by tags
+
 const ListSubjects = () => {
   
   // used for rendering and filtering resources
@@ -22,35 +24,24 @@ const ListSubjects = () => {
   // renders the list of resources
   useEffect(() => {
     if (searchTerm) {
-      if (searchLocation == "tags") {
         const unsubscribe = firebase.firestore().collection("subjects").onSnapshot(snapshot => {
           const listResources = snapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data()
           }))
-          setResources(listResources);
-        });
-        return unsubscribe
-      } else {
-        const unsubscribe = firebase.firestore().collection("subjects").onSnapshot(snapshot => {
-          const listResources = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-          }))
-          // setResources(listResources);
-          // let result = []
-          const result = listResources.filter(resource => { return resource.name.toLowerCase().includes(searchTerm.toLowerCase())});
+          console.log(listResources);
+          const result = listResources
+          .filter(resource =>  
+               resource.name.toLowerCase().includes(searchTerm.toLowerCase()) 
+            || resource.category.toLowerCase().includes(searchTerm.toLowerCase()) 
+            || resource.level.toLowerCase().includes(searchTerm.toLowerCase())
+            || resource.tags.some(tag => 
+              tag.toLowerCase().includes(searchTerm.toLowerCase())
+              )
+            )      
           setResources(result);
           })
-          // listResources.filter(resource => {
-          //   console.log(resource);
-          //   resource.name.toLowerCase().indexOf(searchTerm.toLowerCase() >= 0);
-          //   console.log(result);
-          // setResources(result) ; 
-          // })
-        // });
         return unsubscribe
-      }
     } else {
       const unsubscribe = firebase.firestore().collection("subjects").orderBy(orderBy).onSnapshot(snapshot => {
         const listResources = snapshot.docs.map(doc => ({
@@ -61,7 +52,7 @@ const ListSubjects = () => {
       });
       return unsubscribe
     }
-  }, [editing, searchTerm, orderBy])
+  }, [editing, searchTerm])
 
   // sets Resource to be passed to deleteResource component
   const deleteSubject = (item) => {
@@ -99,7 +90,7 @@ const ListSubjects = () => {
     const element = document.getElementById("search").value
     setSearchTerm(element);
     const category = document.getElementById("location").value
-    setSearchLocation(category)
+    // setSearchLocation(category)
   }
 
   const addSubject = e => {
