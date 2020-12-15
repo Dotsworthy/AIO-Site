@@ -10,8 +10,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
   const [categorySelected, setCategorySelected] = useState("") ;
   const [levelSelected, setLevelSelected] = useState("");
   const [tagSelected, setTagSelected] = useState("");
-  // const [searchTerm, setSearchTerm] = useState("");
-  const [searchLog, setSearchLog] = useState("")
+  const [searchTerm, setSearchTerm] = useState();
   // const [page, setPage] = useState(0)
 
   useEffect(() => {
@@ -19,7 +18,6 @@ const ResourceCatalogue = ( { downloadResource }) => {
     firebase
     .firestore()
     .collection("tags")
-    .orderBy("name")
     .onSnapshot(snapshot => {
       listTags = snapshot.docs.map(doc => ({
         id: doc.id,
@@ -34,7 +32,6 @@ const ResourceCatalogue = ( { downloadResource }) => {
     firebase
     .firestore()
     .collection("categories")
-    .orderBy("name")
     .onSnapshot(snapshot => {
       listCategories = snapshot.docs.map(doc => ({
         id: doc.id,
@@ -49,7 +46,6 @@ const ResourceCatalogue = ( { downloadResource }) => {
     firebase
     .firestore()
     .collection("levels")
-    .orderBy("name")
     .onSnapshot(snapshot => {
       listLevels = snapshot.docs.map(doc => ({
         id: doc.id,
@@ -84,118 +80,156 @@ const ResourceCatalogue = ( { downloadResource }) => {
   }
 
   useEffect(() => {
-    if (categorySelected && levelSelected && tagSelected) {
-      firebase
-      .firestore()
-      .collection("subjects")
-      .where("category", "==", categorySelected)
-      .where("level", "==", levelSelected)
-      .where("tags", "array-contains", tagSelected)
-      .onSnapshot(snapshot => {
+    if (searchTerm) {
+        const unsubscribe = firebase.firestore().collection("subjects").orderBy("name").onSnapshot(snapshot => {
+          const listResources = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+          }))
+          console.log(listResources);
+          const result = listResources
+          .filter(resource =>  
+               resource.name.toLowerCase().includes(searchTerm.toLowerCase()) 
+            || resource.category.toLowerCase().includes(searchTerm.toLowerCase()) 
+            || resource.level.toLowerCase().includes(searchTerm.toLowerCase())
+            || resource.tags.some(tag => 
+              tag.toLowerCase().includes(searchTerm.toLowerCase())
+              )
+            )      
+          setResources(result);
+          })
+        return unsubscribe
+    } else {
+      const unsubscribe = firebase.firestore().collection("subjects").orderBy("name").onSnapshot(snapshot => {
         const listResources = snapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
-        }));
+        }))
         setResources(listResources);
-      })
-  } else if (categorySelected && levelSelected && !tagSelected) {
-    firebase
-    .firestore()
-    .collection("subjects")
-    .where("category", "==", categorySelected)
-    .where("level", "==", levelSelected)
-    .onSnapshot(snapshot => {
-      const listResources = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setResources(listResources);
-    })
-  } else if (categorySelected && !levelSelected && tagSelected) {
-    firebase
-    .firestore()
-    .collection("subjects")
-    .where("category", "==", categorySelected)
-    .where("tags", "array-contains", tagSelected)
-    .onSnapshot(snapshot => {
-      const listResources = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setResources(listResources);
-    })
-  } else if (categorySelected && !levelSelected && !tagSelected) {
-    firebase
-    .firestore()
-    .collection("subjects")
-    .where("category", "==", categorySelected)
-    .onSnapshot(snapshot => {
-      const listResources = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setResources(listResources);
-    })
-  } else if (!categorySelected && levelSelected && tagSelected) {
-    firebase
-    .firestore()
-    .collection("subjects")
-    .where("level", "==", levelSelected)
-    .where("tags", "array-contains", tagSelected)
-    .onSnapshot(snapshot => {
-      const listResources = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setResources(listResources);
-    })
-  } else if (!categorySelected && levelSelected && !tagSelected) {
-    firebase
-    .firestore()
-    .collection("subjects")
-    .where("level", "==", levelSelected)
-    .onSnapshot(snapshot => {
-      const listResources = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setResources(listResources);
-    })
-  } else if (!categorySelected && !levelSelected && tagSelected) {
-    firebase
-    .firestore()
-    .collection("subjects")
-    .where("tags", "array-contains", tagSelected)
-    .onSnapshot(snapshot => {
-      const listResources = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setResources(listResources);
-    })
-  } else {
-    firebase
-    .firestore()
-    .collection("subjects")
-    .onSnapshot(snapshot => {
-      const listResources = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setResources(listResources);
-      // const categories = [];
-      // listResources.forEach(resource => {
-      //   if (categories.includes(resource.category)) {
-      //     return;
-      //   } else {
-      //     categories.push(resource.category)
-      //   }
-      // })
-      // console.log(categories);
-      // setAllCategories(categories);
-    })
+      });
+      return unsubscribe
+    }
+  }, [searchTerm])
+
+  const onSubmit = e => {
+    e.preventDefault()
+    const element = document.getElementById("search").value
+    setSearchTerm(element);
   }
-  },[categorySelected, levelSelected, tagSelected]);
+
+  // useEffect(() => {
+  //   if (categorySelected && levelSelected && tagSelected) {
+  //     firebase
+  //     .firestore()
+  //     .collection("subjects")
+  //     .where("category", "==", categorySelected)
+  //     .where("level", "==", levelSelected)
+  //     .where("tags", "array-contains", tagSelected)
+  //     .onSnapshot(snapshot => {
+  //       const listResources = snapshot.docs.map(doc => ({
+  //         id: doc.id,
+  //         ...doc.data()
+  //       }));
+  //       setResources(listResources);
+  //     })
+  // } else if (categorySelected && levelSelected && !tagSelected) {
+  //   firebase
+  //   .firestore()
+  //   .collection("subjects")
+  //   .where("category", "==", categorySelected)
+  //   .where("level", "==", levelSelected)
+  //   .onSnapshot(snapshot => {
+  //     const listResources = snapshot.docs.map(doc => ({
+  //       id: doc.id,
+  //       ...doc.data()
+  //     }));
+  //     setResources(listResources);
+  //   })
+  // } else if (categorySelected && !levelSelected && tagSelected) {
+  //   firebase
+  //   .firestore()
+  //   .collection("subjects")
+  //   .where("category", "==", categorySelected)
+  //   .where("tags", "array-contains", tagSelected)
+  //   .onSnapshot(snapshot => {
+  //     const listResources = snapshot.docs.map(doc => ({
+  //       id: doc.id,
+  //       ...doc.data()
+  //     }));
+  //     setResources(listResources);
+  //   })
+  // } else if (categorySelected && !levelSelected && !tagSelected) {
+  //   firebase
+  //   .firestore()
+  //   .collection("subjects")
+  //   .where("category", "==", categorySelected)
+  //   .onSnapshot(snapshot => {
+  //     const listResources = snapshot.docs.map(doc => ({
+  //       id: doc.id,
+  //       ...doc.data()
+  //     }));
+  //     setResources(listResources);
+  //   })
+  // } else if (!categorySelected && levelSelected && tagSelected) {
+  //   firebase
+  //   .firestore()
+  //   .collection("subjects")
+  //   .where("level", "==", levelSelected)
+  //   .where("tags", "array-contains", tagSelected)
+  //   .onSnapshot(snapshot => {
+  //     const listResources = snapshot.docs.map(doc => ({
+  //       id: doc.id,
+  //       ...doc.data()
+  //     }));
+  //     setResources(listResources);
+  //   })
+  // } else if (!categorySelected && levelSelected && !tagSelected) {
+  //   firebase
+  //   .firestore()
+  //   .collection("subjects")
+  //   .where("level", "==", levelSelected)
+  //   .onSnapshot(snapshot => {
+  //     const listResources = snapshot.docs.map(doc => ({
+  //       id: doc.id,
+  //       ...doc.data()
+  //     }));
+  //     setResources(listResources);
+  //   })
+  // } else if (!categorySelected && !levelSelected && tagSelected) {
+  //   firebase
+  //   .firestore()
+  //   .collection("subjects")
+  //   .where("tags", "array-contains", tagSelected)
+  //   .onSnapshot(snapshot => {
+  //     const listResources = snapshot.docs.map(doc => ({
+  //       id: doc.id,
+  //       ...doc.data()
+  //     }));
+  //     setResources(listResources);
+  //   })
+  // } else {
+  //   firebase
+  //   .firestore()
+  //   .collection("subjects")
+  //   .onSnapshot(snapshot => {
+  //     const listResources = snapshot.docs.map(doc => ({
+  //       id: doc.id,
+  //       ...doc.data()
+  //     }));
+  //     setResources(listResources);
+  //     // const categories = [];
+  //     // listResources.forEach(resource => {
+  //     //   if (categories.includes(resource.category)) {
+  //     //     return;
+  //     //   } else {
+  //     //     categories.push(resource.category)
+  //     //   }
+  //     // })
+  //     // console.log(categories);
+  //     // setAllCategories(categories);
+  //   })
+  // }
+  // },[categorySelected, levelSelected, tagSelected]);
 
   // const getList = () => {
 
@@ -244,10 +278,10 @@ const ResourceCatalogue = ( { downloadResource }) => {
               ))}
               </div>
           </div>
-          <form className="resource-page-form" onSubmit={(e) => handleSubmit(e)}>
-                <input type="text" value={searchLog} onChange={(e) => setSearchLog(e.target.value)}  placeholder="Search.." id="input" name="search"/>
-                <button  type="submit">Search</button>
-                <button onClick={(e) => clearFilters(e)}>Clear Filter</button>
+          <form className="resource-page-form" onSubmit={(e) => onSubmit(e)}>
+                <input type="text" id="search"  placeholder="Search.." name="search"/>
+                <button type="submit">Search</button>
+                <button type="reset" onClick={() => setSearchTerm(null)}>Clear Filter</button>
         </form>
         
           
