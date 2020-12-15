@@ -198,8 +198,12 @@ img {
     font-family: "OpenSans-Regular";
 }
 
-#index{background-image: url(../images/42271167_m.jpg)}
-#about-us{background-image: url(../images/79574096_m.jpg)}
+#index {background-image: url(../images/42271167_m.jpg)}
+#about-us {background-image: url(../images/79574096_m.jpg)}
+
+#confirm {display: none}
+#error {display: none}
+
 
 .banner-container {
     height: 90vh;

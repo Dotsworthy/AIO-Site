@@ -1,7 +1,32 @@
 import React from "react";
 import Layout from "../components/layout";
+import emailjs from "emailjs-com";
 
 const ContactUs = () => {
+
+    const handleSubmit = e => {
+        e.preventDefault()
+        const button = document.getElementById('button')
+        const form = document.getElementById('form')
+
+        const confirm = document.getElementById('confirm')
+        const error = document.getElementById('error')
+
+        const serviceID = 'default_service';
+        const templateID = 'template_qrrr8tp';
+        const userID = 'user_Qbuw599Yamda7QR3LTIuO';
+
+        button.value = 'Sending...'
+
+        emailjs.sendForm(serviceID, templateID, form, userID)
+            .then(() => {
+                confirm.style.display = "block";
+                form.style.display = "none";
+            }, (err) => {
+                error.style.display = "block";
+                form.style.display = "none";
+            });
+    }
 
     return (
         <Layout siteType={"client"}>
@@ -22,12 +47,14 @@ const ContactUs = () => {
             
             </div>
             <div className="paragraph-box box2" id="white">
-            <form className="contact-us-form">
-                <input placeholder="First Name"/>
-                <input placeholder = "Last Name"/>
-                <input placeholder = "Email"/>
-                <textarea placeholder = "Message"/>
-                <button>Send</button>
+            <div id="confirm"><p>Thanks! We will reply to your enquiry ASAP</p></div>
+            <div id="error"><p>Oh No! It appears there was an error. Please try emailing us directly at enquiries@allinoneeducation.co.uk</p></div>
+            <form id="form" onSubmit={handleSubmit} className="contact-us-form">
+                <input type="text" name="first_name" placeholder="First Name"/>
+                <input type="text" name="last_name" placeholder = "Last Name"/>
+                <input type="text" name="reply_to" placeholder = "Email"/>
+                <textarea type="text" name="message" placeholder = "Message"/>
+                <input type="submit" id="button" value="Send Email"/>
             </form>
             </div>
             
