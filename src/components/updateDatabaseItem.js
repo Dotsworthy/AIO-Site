@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import firebase from "./firebase";
 
 
-const UpdateDatabaseItem = ( { currentItem }) => {
+const UpdateDatabaseItem = ( { setEditing, currentItem }) => {
     
     // Used for updating the database item.
     const [item, setItem] = useState(currentItem);
@@ -82,7 +82,7 @@ const UpdateDatabaseItem = ( { currentItem }) => {
 
         firebase.firestore().collection(item.collection).doc(item.id).update({name: item.name})
         
-        navigate(`/admin/${currentItem.location}List`)
+        setEditing(false);
     }
 
     const onChange = e => {
@@ -92,7 +92,7 @@ const UpdateDatabaseItem = ( { currentItem }) => {
 
     const handleCancel = (e) => {
         e.preventDefault()
-        navigate(`/admin/${currentItem.location}List`)
+        setEditing(false)
     }  
 
     return (

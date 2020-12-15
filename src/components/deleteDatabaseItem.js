@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import firebase from "firebase";
 import { navigate } from "gatsby";
 
-const DeleteDatabaseItem = ({currentItem}) => {
+const DeleteDatabaseItem = ({ setDeleting, currentItem}) => {
     
     // Resource for deletion
     const item = currentItem;
@@ -15,7 +15,7 @@ const DeleteDatabaseItem = ({currentItem}) => {
             
                 const unsubscribe = firebase
                 .firestore()
-                .collection("items")
+                .collection("subjects")
                 .where(`${item.location}`, "array-contains", `${item.name}`)
                 .onSnapshot(function(snapshot) {
                     const listItems = snapshot.docs.map(doc => ({
@@ -28,7 +28,7 @@ const DeleteDatabaseItem = ({currentItem}) => {
             } else {
                 const unsubscribe = firebase
                 .firestore()
-                .collection("items")
+                .collection("subjects")
                 .where(`${item.location}`, "==", `${item.name}`)
                 .onSnapshot(function(snapshot) {
                     const listItems = snapshot.docs.map(doc => ({
@@ -54,13 +54,13 @@ const DeleteDatabaseItem = ({currentItem}) => {
         .doc(item.id)
         .delete()
 
-        navigate(`/admin/${currentItem.location}List`)
+        setDeleting(false)
     }
 
     const handleCancel = (e) => {
         e.preventDefault()
 
-        navigate(`/admin/${currentItem.location}List`)
+        setDeleting(false)
     }
     
     return (

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import ListSubjects from "../../components/ListSubjects";
-import UpdateSubject from "../../components/updateSubject";
 import UpdateDatabaseItem from "../../components/updateDatabaseItem";
 import AddSubject from "../../components/addSubject";
 import ListDatabaseItems from "../../components/listDatabaseItems";
@@ -17,7 +16,6 @@ const AdminPage = () => {
 
   const SubjectList = () => <ListSubjects/>
   const AddNewSubject = () => <AddSubject/>
-  const UpdateCurrentSubject = () => <UpdateSubject  currentItem={currentItem}/>
  
   const CategoryList = () => <ListDatabaseItems collection={"categories"} resourceEntry={"category"} editItem={editDatabaseItem} deleteItem={deleteDatabaseItem}/>
   const UpdateCategory = () => <UpdateDatabaseItem currentItem={currentItem}/>
@@ -92,21 +90,13 @@ const AdminPage = () => {
             <Router basepath="/admin">
               <SubjectList path="/"/>
               <SubjectList path="/subjectList"/>
-              <UpdateCurrentSubject path="/subjectList/:id"/>
               <AddNewSubject path="/subjectList/addSubject"/>
               
-
               <CategoryList path="/categoryList"/>
-              <UpdateCategory path="/categoryList/updateCategory"/>
-              <DeleteCategory path="/categoryList/deleteCategory"/>
 
               <LevelList path="/levelList"/>
-              <UpdateLevel path="/levelList/updateLevel"/>
-              <DeleteLevel path="/levelList/deleteLevel"/>
 
               <TagList path="/tagList"/>
-              <UpdateTag path="/tagList/updateTag"/>
-              <DeleteTag path="/tagList/deleteTag"/>
 
               {/* <ResourceCatalogue path="/admin/resourceCatalogue"/> */}
             </Router> 

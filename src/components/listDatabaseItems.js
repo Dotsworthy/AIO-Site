@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react"
 import firebase from "./firebase"
+import UpdateDatabaseItem from "./updateDatabaseItem"
+import DeleteDatabaseItem from "./deleteDatabaseItem"
 
 // const db = firebase.firestore()
 
-const ListDatabaseItems = ( { collection, resourceEntry, editItem, deleteItem } ) => {
+const ListDatabaseItems = ( { collection, resourceEntry} ) => {
     const [items, setItems] = useState([])
     const [searchTerm, setSearchTerm] = useState(null)
+    const [currentItem, setCurrentItem] = useState()
+    const [editing, setEditing] = useState(false)
+    const [deleting, setDeleting] = useState(false)
 
     useEffect(() => {
       if (searchTerm) {
@@ -28,7 +33,7 @@ const ListDatabaseItems = ( { collection, resourceEntry, editItem, deleteItem } 
         return unsubscribe
       }
         
-      }, [searchTerm])
+      }, [editing, searchTerm])
 
     // The functions below were used to render the number of resources attached. Currently non-working.
 
@@ -59,6 +64,31 @@ const ListDatabaseItems = ( { collection, resourceEntry, editItem, deleteItem } 
     //   const resourcesAttached = result.length
     //   return resources.push({category, resourcesAttached})
     // }  
+
+    const editDatabaseItem = (item, collection, location) => {
+      setCurrentItem({
+        id: item.id,
+        name: item.name,
+        location: location,
+        collection: collection
+      })
+  
+      // navigate("/admin/categoryList/updateCategory")
+      setEditing(true)
+    }
+  
+    const deleteDatabaseItem = (item, collection, location) => {
+      setCurrentItem({
+        id: item.id,
+        name: item.name,
+        location: location,
+        collection: collection
+      })
+
+      setDeleting(true)
+  
+      // navigate("/admin/categoryList/deleteCategory")
+    }
     const onSubmit = e => {
       e.preventDefault()
       const element = document.getElementById("search").value
@@ -90,14 +120,16 @@ const ListDatabaseItems = ( { collection, resourceEntry, editItem, deleteItem } 
               <tr className="data-row">
                 <td className="item-name">{item.name}</td>
                 <td className="buttons">
-                    <button onClick={() => editItem(item, collection, resourceEntry)}>Edit</button>
-                    <button onClick={() => deleteItem(item, collection, resourceEntry)}>Delete</button>
+                    <button onClick={() => editDatabaseItem(item, collection, resourceEntry)}>Edit</button>
+                    <button onClick={() => deleteDatabaseItem(item, collection, resourceEntry)}>Delete</button>
                 </td>
               </tr>
             </tbody>
           ))}
     </table>
 
+    {editing && <UpdateDatabaseItem setEditing={setEditing} currentItem={currentItem}/>}
+    {deleting && <DeleteDatabaseItem setDeleting={setDeleting} currentItem={currentItem}/>}    
     </div>
     )
 }
