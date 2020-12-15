@@ -39,7 +39,7 @@ const ListSubjects = () => {
           }))
           // setResources(listResources);
           // let result = []
-          const result = listResources.filter(resource => { return resource.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1});
+          const result = listResources.filter(resource => { return resource.name.toLowerCase().includes(searchTerm.toLowerCase())});
           setResources(result);
           })
           // listResources.filter(resource => {
