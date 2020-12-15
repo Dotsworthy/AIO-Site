@@ -132,7 +132,6 @@ const Hamburger = styled.div`
 const Navbar = ( siteType ) => {
   const [navbarOpen, setNavbarOpen] = useState(false)
   const site = String(siteType.siteType);
-  console.log(site);
 
   return (
     <Navigation className="navigation" id={ site == "client" ? "blue" : "red"}>

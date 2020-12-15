@@ -6,6 +6,7 @@ const DeleteSubject = ({ currentItem, setDeleting }) => {
 
   // Resource for deletion
   const resource = currentItem;
+  console.log(resource);
 
   // generates notification for user that resource is in process of deletion
   const [waiting, setWaiting] = useState(false)
@@ -29,11 +30,13 @@ const DeleteSubject = ({ currentItem, setDeleting }) => {
   
   // deletes a single file within a folder in firebase storage
   const deleteFile = async (file, id, location) => {
+    const string = `${location}/${id}/${file}`
     const storageRef = firebase.storage().ref()
     if (file = "") {
+      console.log("no file?")
       return
     } else {
-      const fileRef = storageRef.child(`${location}/${id}/${file}`)
+      const fileRef = storageRef.child(`${string}`)
       fileRef.delete().then(function() {
         console.log("resource deleted successfully")
       }).catch(function(error) {
@@ -46,10 +49,13 @@ const DeleteSubject = ({ currentItem, setDeleting }) => {
   const deleteAllFiles = async (file, id, location) => {
     const storageRef = firebase.storage().ref()
     if (file = "") {
+      console.log("no id?")
       return
     } else if (file.length == 0) {
+      console.log("no length?")
       return
     } else {
+      console.log("code-reached")
       file.forEach(download => {
         const fileRef = storageRef.child(`${location}/${id}/${download}`)
         fileRef.delete().then(function() {

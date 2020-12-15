@@ -42,7 +42,6 @@ const NavItem = styled(Link)`
 
 const NavbarLinks = ( siteType ) => {
   const site = String(siteType.siteType)
-  console.log(site)
     return (
       <>
       { siteType.siteType == "client" && 
