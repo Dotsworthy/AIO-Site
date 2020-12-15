@@ -17,7 +17,7 @@ const UpdateDatabaseItem = ( { setEditing, currentItem }) => {
             
                 const unsubscribe = firebase
                 .firestore()
-                .collection("items")
+                .collection("subjects")
                 .where(`${item.location}`, "array-contains", `${item.name}`)
                 .onSnapshot(function(snapshot) {
                     const listItems = snapshot.docs.map(doc => ({
@@ -30,7 +30,7 @@ const UpdateDatabaseItem = ( { setEditing, currentItem }) => {
             } else {
                 const unsubscribe = firebase
                 .firestore()
-                .collection("items")
+                .collection("subjects")
                 .where(`${item.location}`, "==", `${item.name}`)
                 .onSnapshot(function(snapshot) {
                     const listItems = snapshot.docs.map(doc => ({
@@ -77,7 +77,7 @@ const UpdateDatabaseItem = ( { setEditing, currentItem }) => {
         e.preventDefault()
 
         resources.map(resource => {
-            return updateResource(resource, "items")
+            return updateResource(resource, "subjects")
         })
 
         firebase.firestore().collection(item.collection).doc(item.id).update({name: item.name})

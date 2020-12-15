@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { navigate } from "gatsby"
-
 import firebase from "firebase"
 import 'firebase/storage'
 
