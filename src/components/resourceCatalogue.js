@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react"
 import firebase from "./firebase"
 import 'firebase/storage'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 // TODO: fire an event when a mobile filter is closed to reset the search field.
 // TODO: make desktop filters be filterable as well.
@@ -188,8 +190,10 @@ const ResourceCatalogue = ( { downloadResource }) => {
         <form className="resource-page-form" onSubmit={onSubmit}>
           <input type="text" id="search"  placeholder="Search names, tags, etc..." name="search"/>
 
-          <div className="form-footer">
-          <button type="submit">Search</button>
+          <div>
+          <button type="submit" className="search-button">
+          <FontAwesomeIcon icon={faSearch}/>
+          </button>
           </div>
         </form>
       
@@ -242,7 +246,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
                 <form><input type="text" id="search-filter tags" onChange={() => filterButtons("tags")} placeholder="search levels"/></form>
               </div>        
 
-                <div className="tags">
+                <div className="content-filters">
               {allTags.map(tag => (
                       <button style={ tag.name === tagSelected ? {color: "red"} : {color: "black"}} key={tag.id} className="filter-button tags" 
                       onClick={() => setTagSelected(tag.name)}
@@ -260,12 +264,19 @@ const ResourceCatalogue = ( { downloadResource }) => {
               <h3>Categories</h3>
             </div>
               <div className="form-inside-content">
-              <button className="filter-button" onClick={() => setCategorySelected("")}>Show All</button>  
+              <div className="content-search">
+                <form><input type="text" id="search-filter categories1" onChange={() => filterButtons("categories1")} placeholder="search categories"/></form>
+              </div>
+              {/* <button className="filter-button" onClick={() => setCategorySelected("")}>Show All</button>   */}
+              
+              
               {allCategories.map(category => (
-                  <button style={ category.name === categorySelected ? {color: "red"} : {color: "black"}} key={category.id} className="filter-button" 
+                  <button style={ category.name === categorySelected ? {color: "red"} : {color: "black"}} key={category.id} className="filter-button categories1" 
                   onClick={() => setCategorySelected(category.name)}
                   >{category.name}</button>
               ))}
+              
+              
               </div>         
               </div>
           <div className="resource-page-filter">
@@ -273,9 +284,12 @@ const ResourceCatalogue = ( { downloadResource }) => {
               <h3>Education Level</h3>
               </div>
               <div className="form-inside-content">
-              <button className="filter-button" onClick={() => setLevelSelected("")}>Show All</button>    
+              <div className="content-search">
+                <form><input type="text" id="search-filter levels1" onChange={() => filterButtons("levels1")} placeholder="search levels"/></form>
+              </div>
+              {/* <button className="filter-button" onClick={() => setLevelSelected("")}>Show All</button>     */}
               {allLevels.map(level => (
-                  <button style={ level.name === levelSelected ? {color: "red"} : {color: "black"}} key={level.id} className="filter-button" 
+                  <button style={ level.name === levelSelected ? {color: "red"} : {color: "black"}} key={level.id} className="filter-button levels1" 
                   onClick={() => setLevelSelected(level.name)}
                   >{level.name}</button>
               ))}
@@ -286,9 +300,12 @@ const ResourceCatalogue = ( { downloadResource }) => {
               <h3>Tags</h3>
               </div>
               <div className="form-inside-content">
-              <button className="filter-button" onClick={() => setTagSelected("")}>Show All</button>    
+              <div className="content-search">
+                <form><input type="text" id="search-filter tags1" onChange={() => filterButtons("tags1")} placeholder="search tags"/></form>
+              </div>
+              {/* <button className="filter-button" onClick={() => setTagSelected("")}>Show All</button>     */}
               {allTags.map(tag => (
-                  <button style={ tag.name === tagSelected ? {color: "red"} : {color: "black"}} key={tag.id} className="filter-button" 
+                  <button style={ tag.name === tagSelected ? {color: "red"} : {color: "black"}} key={tag.id} className="filter-button tags1" 
                   onClick={() => setTagSelected(tag.name)}
                   >{tag.name}</button>
               ))}

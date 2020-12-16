@@ -566,6 +566,9 @@ textarea {
     justify-content: space-evenly;
 }
 
+.content-filters {
+}
+
 .catalogue-image {
     padding: 5px;
     height: 100%;
@@ -639,7 +642,14 @@ textarea {
 
     // background: none;
     // padding: 1px 1px;
-    margin: 2px;
+    margin: 2px 2px 0 0;
+
+    @media #{$mq-small} {
+        background: none;
+        border: none;
+        text-align: left;
+        font-size: 14px;
+    }
     // border: none;
     // text-align: left;
 }
@@ -731,7 +741,6 @@ textarea {
 }
 
 input {
-    margin: 6px 0px;
     padding: 5px;
     width: 100%;
     // border: none;
@@ -841,6 +850,8 @@ input {
 .resource-page-form {
     padding: 10px;
     display: flex;
+    justify-content: space-between;
+    align-items: stretch;
     background-color: grey;
     position: -webkit-sticky;
     position: sticky;
@@ -854,7 +865,6 @@ input {
             width: 350px;
         }
     }
-    
     
 }
 
