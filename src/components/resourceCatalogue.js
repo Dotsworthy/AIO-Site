@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react"
 import firebase from "./firebase"
 import 'firebase/storage'
 
+// TODO: fire an event when a mobile filter is closed to reset the search field.
+
 const ResourceCatalogue = ( { downloadResource }) => {
   const [resources, setResources] = useState([]);
   const [allCategories, setAllCategories] = useState([]);
@@ -247,10 +249,9 @@ const ResourceCatalogue = ( { downloadResource }) => {
           </div>
         </div>
 
-  
-
-  
-          {/* <div className="resource-page-filter">
+        <div className="resource-page-filters">
+        <button onClick={() => clearFilters()}>Clear Filter</button>
+        <div className="resource-page-filter">
             <div className="catalogue-item-header">
               <h3>Categories</h3>
             </div>
@@ -262,8 +263,8 @@ const ResourceCatalogue = ( { downloadResource }) => {
                   >{category.name}</button>
               ))}
               </div>         
-              </div> */}
-          {/* <div className="resource-page-filter">
+              </div>
+          <div className="resource-page-filter">
             <div className="catalogue-item-header">
               <h3>Education Level</h3>
               </div>
@@ -275,8 +276,8 @@ const ResourceCatalogue = ( { downloadResource }) => {
                   >{level.name}</button>
               ))}
               </div>
-          </div> */}
-          {/* <div className = "resource-page-filter">
+          </div>
+          <div className = "resource-page-filter">
             <div className = "catalogue-item-header">
               <h3>Tags</h3>
               </div>
@@ -288,7 +289,12 @@ const ResourceCatalogue = ( { downloadResource }) => {
                   >{tag.name}</button>
               ))}
               </div>
-          </div> */}
+          </div>
+
+        </div>
+
+  
+   
         
           
         
