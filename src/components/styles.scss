@@ -813,7 +813,7 @@ input {
     flex-direction: column;
     position: sticky;
     overflow-x: scroll;
-    top: 165px;
+    top: 145px;
 
     @media #{$mq-small} {
         display: none;

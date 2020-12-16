@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react"
 import firebase from "./firebase"
 import 'firebase/storage'
+import { Router, Link } from "@reach/router";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 // TODO: fire an event when a mobile filter is closed to reset the search field.
-// TODO: make desktop filters be filterable as well.
-// TODO: add mobile icon to search.
 // TODO: custom routes for more info?
-
 
 const ResourceCatalogue = ( { downloadResource }) => {
   const [resources, setResources] = useState([]);
@@ -19,6 +17,8 @@ const ResourceCatalogue = ( { downloadResource }) => {
   const [levelSelected, setLevelSelected] = useState("");
   const [tagSelected, setTagSelected] = useState("");
   const [searchTerm, setSearchTerm] = useState();
+  const [currentItem, setCurrentItem] = useState([])
+  const [moreInfo, setMoreInfo] = useState(false);
   // const [page, setPage] = useState(0)
 
   useEffect(() => {
@@ -62,6 +62,21 @@ const ResourceCatalogue = ( { downloadResource }) => {
       setAllLevels(listLevels)
     })
   },[])
+
+  const getMoreInfo = (item) => {
+    setCurrentItem({
+      id: item.id,
+      name: item.name,
+      image: item.image,
+      description: item.description,
+      category: item.category,
+      level: item.level,
+      tags: item.tags,
+      download: item.download
+    })
+
+    setMoreInfo(true)
+  }
 
   const clearFilters = () => {
     setLevelSelected("")
@@ -331,7 +346,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
             <img className="catalogue-image" src={getImageURL(resource.id, "images", resource)}  id={resource.id} alt={resource.name}></img>
             </div>
             <div className="catalogue-button">
-            <button>More Info</button>
+            <button onClick={() =>  getMoreInfo(resource)}>More Info</button>
             <button onClick={() => downloadResource(resource)}>Download</button>
             </div>
         </div>      

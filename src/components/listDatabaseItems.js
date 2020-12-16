@@ -5,6 +5,8 @@ import DeleteDatabaseItem from "./deleteDatabaseItem"
 
 // const db = firebase.firestore()
 
+// TO DO: render list of resources attached to database item
+
 const ListDatabaseItems = ( { collection, resourceEntry} ) => {
     const [items, setItems] = useState([])
     const [searchTerm, setSearchTerm] = useState(null)
