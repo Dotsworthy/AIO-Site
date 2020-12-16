@@ -3,7 +3,7 @@ import DownloadHandler from "./downloadHandler";
 import firebase from "firebase";
 import 'firebase/storage';
 
-const MoreInfo = ({ currentItem }) => {
+const MoreInfo = ({ currentItem, setMoreInfo }) => {
 
     const [item, setItem] = useState(currentItem);
     const [downloading, setDownloading] = useState(false);
@@ -25,6 +25,7 @@ const MoreInfo = ({ currentItem }) => {
         <div className="database-form">
             <div className="form-header">
                 <h2>{item.name}</h2>
+                <button onClick={() => setMoreInfo(false)}>X</button>
             </div>
 
                 <div className="form-container">

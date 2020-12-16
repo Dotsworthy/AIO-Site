@@ -203,6 +203,8 @@ const ResourceCatalogue = ( { downloadResource }) => {
 
   return (
     <div>
+      { !moreInfo &&
+      <>
         <form className="resource-page-form" onSubmit={onSubmit}>
           <input type="text" id="search"  placeholder="Search names, tags, etc..." name="search"/>
 
@@ -335,32 +337,34 @@ const ResourceCatalogue = ( { downloadResource }) => {
         
           
         
-      <div className="resource-page-items">
-        {resources.length > 0  ? 
-        resources.map(resource => (
-        <div key={resource.id} className="catalogue-item">
-            <div className="catalogue-item-header">
-              <h3>{resource.name}</h3>
+        <div className="resource-page-items">
+          {resources.length > 0  ? 
+          resources.map(resource => (
+          <div key={resource.id} className="catalogue-item">
+              <div className="catalogue-item-header">
+                <h3>{resource.name}</h3>
+              </div>
+              
+                          <div className="catalogue-image-container">
+              <img className="catalogue-image" src={getImageURL(resource.id, "images", resource)}  id={resource.id} alt={resource.name}></img>
+              </div>
+              <div className="catalogue-button">
+              <button onClick={() =>  getMoreInfo(resource)}>More Info</button>
+              <button onClick={() => downloadResource(resource)}>Download</button>
+              </div>
+          </div>      
+          ))
+            :
+            <div>
+              <p>Sorry no results. Please try a different level or category, or press cancel filter to try a new search</p>
             </div>
-            
-                        <div className="catalogue-image-container">
-            <img className="catalogue-image" src={getImageURL(resource.id, "images", resource)}  id={resource.id} alt={resource.name}></img>
-            </div>
-            <div className="catalogue-button">
-            <button onClick={() =>  getMoreInfo(resource)}>More Info</button>
-            <button onClick={() => downloadResource(resource)}>Download</button>
-            </div>
-        </div>      
-        ))
-          :
-          <div>
-            <p>Sorry no results. Please try a different level or category, or press cancel filter to try a new search</p>
+          }
           </div>
-        }
-        </div>
-    </div>
+      </div>
+    </>
+    }
 
-    {moreInfo && <MoreInfo currentItem={currentItem}/>}
+    {moreInfo && <MoreInfo currentItem={currentItem} setMoreInfo={setMoreInfo}/>}
     </div>
   )
 }

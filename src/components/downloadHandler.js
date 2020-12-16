@@ -4,6 +4,8 @@ import 'firebase/storage'
 import JSZip from "jszip";
 import { saveAs } from 'file-saver';
 
+// This needs to be a promise!
+
 const DownloadHandler = ({ currentItem, setDownloading }) => {
 
     const [item] = useState(currentItem)
