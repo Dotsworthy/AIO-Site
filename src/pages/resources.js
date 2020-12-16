@@ -28,9 +28,9 @@ const ResourcePage = () => {
                     <div className="paragraph-box" id="white"><h1>RESOURCE CATALOGUE</h1></div>
             </div>
 
-            <div className="page-container" id="white">
+            <div>
             {/* <input type="text" id="myInput" onKeyUp="myFunction()" placeholder="Search for names.."/> */}
-            <div className="resource-page-container">
+            <div>
             <ResourceCatalogue downloadResource={downloadResource} />
             {downloading && <DownloadHandler
             currentItem={currentItem}

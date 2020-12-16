@@ -130,6 +130,38 @@ const ResourceCatalogue = ( { downloadResource }) => {
     }
   }, [searchTerm, categorySelected, levelSelected, tagSelected])
 
+  const expandMenu = (item) => {
+    const menu = document.getElementsByClassName("collapsible");
+    const column = document.getElementsByClassName("content");
+    const selectedColumn = document.getElementById(item);
+    console.log(column);
+    console.log(selectedColumn.style.display);
+
+
+    if (selectedColumn.style.display == "flex") {
+      console.log("code-reached")
+      selectedColumn.style.display = "none";
+    } else {
+      column[0].style.display = "none";
+      column[1].style.display = "none";
+      column[2].style.display = "none";
+      console.log("code-reached")
+      selectedColumn.style.display = "flex";
+    }
+  }
+
+  const filterButtons = () => {
+    const searchTerm = document.getElementById("search-filter").value;
+    const list = document.getElementsByClassName("categories")
+    console.log(searchTerm);
+    console.log(list);
+    let i;
+
+    // for (i = 0; i < list.length; i++) {
+
+    // }
+  }
+
   const onSubmit = e => {
     e.preventDefault()
     const element = document.getElementById("search").value
@@ -138,9 +170,69 @@ const ResourceCatalogue = ( { downloadResource }) => {
 
   return (
     <div>
-      <div className="resource-page-container">
-        <div className="resource-page-filters">
-          <div className="resource-page-filter">
+        <form className="resource-page-form" onSubmit={onSubmit}>
+          <input type="text" id="search"  placeholder="Search names, tags, etc..." name="search"/>
+
+          <div className="form-footer">
+          <button type="submit">Search</button>
+          </div>
+        </form>
+      
+        <div className="resource-page-container">
+ 
+          <div className="resource-page-filter-bar" id="white">
+
+            <div className="resource-page-button-menu">
+            <button onClick={() => clearFilters()}>Clear Filter</button>
+              <button type="button" class="collapsible" onClick={() => expandMenu("categories")}>Categories</button>
+              <button type="button" class="collapsible" onClick={() => expandMenu("levels")}>Levels</button>
+              <button type="button" class="collapsible"  onClick={() => expandMenu("tags")}>Tags</button>
+            </div>
+
+            <div className="resource-page-filter-box">
+              <div className="content"  id="categories">
+              
+              <div className="content-search">
+              <form>
+                <input type="text" id="search-filter" onChange={() => filterButtons()} placeholder="search categories"/>
+              </form>
+
+            </div>
+
+
+            <div className="content-filters">
+              {allCategories.map(category => (
+                      <button style={ category.name === categorySelected ? {color: "red"} : {color: "black"}} key={category.id} id="filter-button" className="filter-button categories"   
+                      onClick={() => setCategorySelected(category.name)}
+                      >{category.name}</button>
+                  ))}
+            </div>
+            </div>
+          
+            <div className="content"  id="levels">
+              {allLevels.map(level => (
+                      <button style={ level.name === levelSelected ? {color: "red"} : {color: "black"}} key={level.id} className="filter-button" 
+                      onClick={() => setLevelSelected(level.name)}
+                      >{level.name}</button>
+                  ))}
+
+            </div>
+
+            <div className="content"  id="tags">
+              {allTags.map(tag => (
+                      <button style={ tag.name === tagSelected ? {color: "red"} : {color: "black"}} key={tag.id} className="filter-button" 
+                      onClick={() => setTagSelected(tag.name)}
+                      >{tag.name}</button>
+                  ))}
+
+              </div>
+          </div>
+        </div>
+
+  
+
+  
+          {/* <div className="resource-page-filter">
             <div className="catalogue-item-header">
               <h3>Categories</h3>
             </div>
@@ -152,8 +244,8 @@ const ResourceCatalogue = ( { downloadResource }) => {
                   >{category.name}</button>
               ))}
               </div>         
-              </div>
-          <div className="resource-page-filter">
+              </div> */}
+          {/* <div className="resource-page-filter">
             <div className="catalogue-item-header">
               <h3>Education Level</h3>
               </div>
@@ -165,8 +257,8 @@ const ResourceCatalogue = ( { downloadResource }) => {
                   >{level.name}</button>
               ))}
               </div>
-          </div>
-          <div className = "resource-page-filter">
+          </div> */}
+          {/* <div className = "resource-page-filter">
             <div className = "catalogue-item-header">
               <h3>Tags</h3>
               </div>
@@ -178,18 +270,10 @@ const ResourceCatalogue = ( { downloadResource }) => {
                   >{tag.name}</button>
               ))}
               </div>
-          </div>
-          <form className="resource-page-form" onSubmit={onSubmit}>
-                <input type="text" id="search"  placeholder="Search" name="search"/>
-
-                <div className="form-footer">
-                <button type="submit">Search</button>
-                <button type="reset" onClick={() => clearFilters()}>Clear</button>
-                </div>
-        </form>
+          </div> */}
         
           
-        </div>
+        
       <div className="resource-page-items">
         {resources.length > 0  ? 
         resources.map(resource => (

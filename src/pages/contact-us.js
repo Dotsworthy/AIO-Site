@@ -21,10 +21,10 @@ const ContactUs = () => {
         emailjs.sendForm(serviceID, templateID, form, userID)
             .then(() => {
                 confirm.style.display = "block";
-                form.style.display = "none";
+                button.style.display = "none";
             }, (err) => {
                 error.style.display = "block";
-                form.style.display = "none";
+                button.style.display = "none";
             });
     }
 
@@ -47,13 +47,13 @@ const ContactUs = () => {
             
             </div>
             <div className="paragraph-box box2" id="white">
-            <div id="confirm"><p>Thanks! We will reply to your enquiry ASAP</p></div>
-            <div id="error"><p>Oh No! It appears there was an error. Please try emailing us directly at enquiries@allinoneeducation.co.uk</p></div>
             <form id="form" onSubmit={handleSubmit} className="contact-us-form">
                 <input type="text" name="first_name" placeholder="First Name"/>
                 <input type="text" name="last_name" placeholder = "Last Name"/>
                 <input type="text" name="reply_to" placeholder = "Email"/>
                 <textarea type="text" name="message" placeholder = "Message"/>
+                <div id="confirm"><p>Thanks! We will reply to your enquiry ASAP.</p></div>
+                <div id="error"><p>Oh No! It appears there was an error. Please try emailing us directly at enquiries@allinoneeducation.co.uk.</p></div>
                 <input type="submit" id="button" value="Send Email"/>
             </form>
             </div>
