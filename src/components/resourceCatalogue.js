@@ -3,6 +3,10 @@ import firebase from "./firebase"
 import 'firebase/storage'
 
 // TODO: fire an event when a mobile filter is closed to reset the search field.
+// TODO: make desktop filters be filterable as well.
+// TODO: add mobile icon to search.
+// TODO: custom routes for more info?
+
 
 const ResourceCatalogue = ( { downloadResource }) => {
   const [resources, setResources] = useState([]);

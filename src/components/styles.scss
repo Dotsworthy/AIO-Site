@@ -795,7 +795,7 @@ input {
 
     @media #{$mq-small} {
         flex-direction: row;
-        justify-content: space-evenly;
+        // justify-content: space-evenly;
     }
 }
 
@@ -848,7 +848,14 @@ input {
 
     @media #{$mq-small} {
         position: static;
+        justify-content: flex-start;
+
+        input {
+            width: 350px;
+        }
     }
+    
+    
 }
 
 .resource-page-items {
