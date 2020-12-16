@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import firebase from "./firebase"
 import 'firebase/storage'
 import { Router, Link } from "@reach/router";
+import MoreInfo from "./MoreInfo";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
@@ -358,6 +359,8 @@ const ResourceCatalogue = ( { downloadResource }) => {
         }
         </div>
     </div>
+
+    {moreInfo && <MoreInfo currentItem={currentItem}/>}
     </div>
   )
 }

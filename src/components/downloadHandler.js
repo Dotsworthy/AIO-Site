@@ -6,12 +6,12 @@ import { saveAs } from 'file-saver';
 
 const DownloadHandler = ({ currentItem, setDownloading }) => {
 
-    const [resources] = useState(currentItem)
+    const [item] = useState(currentItem)
 
     const getDownload = (download, location) => {
         const storage = firebase.storage();
         const storageRef = storage.ref()
-        const httpsReference = storageRef.child(`${location}/${resources.id}/${download}`);
+        const httpsReference = storageRef.child(`${location}/${item.id}/${download}`);
       
         httpsReference.getDownloadURL().then(function(url) {
           let xhr = new XMLHttpRequest();
@@ -35,9 +35,9 @@ const DownloadHandler = ({ currentItem, setDownloading }) => {
         const storage = firebase.storage();
         const storageRef = storage.ref()
         let zip = new JSZip();
-        let materials = zip.folder(`${resources.name}`)
-        resources.download.forEach(resource => {
-            const httpsReference = storageRef.child(`${location}/${resources.id}/${resource}`)
+        let materials = zip.folder(`${item.name}`)
+        item.download.forEach(resource => {
+            const httpsReference = storageRef.child(`${location}/${item.id}/${resource}`)
             
             httpsReference.getDownloadURL().then(function(url) {
                 let xhr = new XMLHttpRequest();
@@ -57,18 +57,15 @@ const DownloadHandler = ({ currentItem, setDownloading }) => {
         setTimeout(function() {
             zip.generateAsync({type:"blob"})
             .then(function (blob) {
-                saveAs(blob, `${resources.name}`);
+                saveAs(blob, `${item.name}`);
             })
         }, 3000)
     }  
 
     return (
-        <div className="popup-container">
-            <div className="form-header">
-                <h2>Download Resources</h2>
-            </div>
+        <div>
             <div className="downloads-container">
-            {resources.download.map(resource => (
+            {item.download.map(resource => (
                 <div key={resource} className="download-items">
                 <p>{resource}</p>
                 <button onClick={(e) => getDownload(resource, "downloads")}>Download</button>
