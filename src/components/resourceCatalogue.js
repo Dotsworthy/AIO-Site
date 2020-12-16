@@ -331,12 +331,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
           </div>
 
         </div>
-
-  
-   
-        
           
-        
         <div className="resource-page-items">
           {resources.length > 0  ? 
           resources.map(resource => (

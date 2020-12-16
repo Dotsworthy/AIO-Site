@@ -4,7 +4,7 @@ import 'firebase/storage'
 import JSZip from "jszip";
 import { saveAs } from 'file-saver';
 
-// This needs to be a promise!
+// Get all downloads needs to be converted to a promise in order to wait for large downloads.
 
 const DownloadHandler = ({ currentItem, setDownloading }) => {
 
@@ -36,6 +36,8 @@ const DownloadHandler = ({ currentItem, setDownloading }) => {
     const getAllDownloads = (location) => {
         const storage = firebase.storage();
         const storageRef = storage.ref()
+        const download = document.getElementById("zip")
+        download.value = "downloading..."
         let zip = new JSZip();
         let materials = zip.folder(`${item.name}`)
         item.download.forEach(resource => {
@@ -61,7 +63,10 @@ const DownloadHandler = ({ currentItem, setDownloading }) => {
             .then(function (blob) {
                 saveAs(blob, `${item.name}`);
             })
-        }, 3000)
+            download.value = "Download";
+        }, 4000)
+
+        
     }  
 
     return (
@@ -70,17 +75,17 @@ const DownloadHandler = ({ currentItem, setDownloading }) => {
             {item.download.map(resource => (
                 <div key={resource} className="download-items">
                 <p>{resource}</p>
-                <button onClick={(e) => getDownload(resource, "downloads")}>Download</button>
+                <button id={resource.name} onClick={(e) => getDownload(resource, "downloads")}>Download</button>
                 </div>
             ))}
             <div className="download-items">
                 <p>Download All Files as Zip</p>
-                <button onClick={(e) => getAllDownloads("downloads")}>Download</button>
+                <input type="button" id="zip" onClick={(e) => getAllDownloads("downloads")}/>
             </div>
             </div>
-            <div className="form-footer">
+            {/* <div className="form-footer">
             <button onClick={()=>setDownloading(false)}>Close</button>
-            </div>
+            </div> */}
         </div>
     )
 }
