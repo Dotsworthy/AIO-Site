@@ -71,16 +71,18 @@ const DownloadHandler = ({ currentItem, setDownloading }) => {
 
     return (
         <div>
-            <div className="downloads-container">
+            <div
+             className="downloads-container"
+             >
             {item.download.map(resource => (
                 <div key={resource} className="download-items">
                 <p>{resource}</p>
-                <button id={resource.name} onClick={(e) => getDownload(resource, "downloads")}>Download</button>
+                <input id={resource.name} value="Download" onClick={(e) => getDownload(resource, "downloads")}/>
                 </div>
             ))}
             <div className="download-items">
                 <p>Download All Files as Zip</p>
-                <input type="button" id="zip" onClick={(e) => getAllDownloads("downloads")}/>
+                <input type="button" value="Download" id="zip" onClick={(e) => getAllDownloads("downloads")}/>
             </div>
             </div>
             {/* <div className="form-footer">
