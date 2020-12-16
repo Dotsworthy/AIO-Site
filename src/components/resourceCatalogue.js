@@ -134,6 +134,8 @@ const ResourceCatalogue = ( { downloadResource }) => {
     const menu = document.getElementsByClassName("collapsible");
     const column = document.getElementsByClassName("content");
     const selectedColumn = document.getElementById(item);
+    // const selectedFilter = document.getElementById("search-filter")
+    // console.log(selectedFilter)
     console.log(column);
     console.log(selectedColumn.style.display);
 
@@ -141,6 +143,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
     if (selectedColumn.style.display == "flex") {
       console.log("code-reached")
       selectedColumn.style.display = "none";
+      // selectedFilter.value = "";
     } else {
       column[0].style.display = "none";
       column[1].style.display = "none";
@@ -150,16 +153,22 @@ const ResourceCatalogue = ( { downloadResource }) => {
     }
   }
 
-  const filterButtons = () => {
-    const searchTerm = document.getElementById("search-filter").value;
-    const list = document.getElementsByClassName("categories")
+  const filterButtons = (item) => {
+    const searchTerm = document.getElementById(`search-filter ${item}`).value;
+    const list = document.getElementsByClassName(item)
     console.log(searchTerm);
     console.log(list);
-    let i;
+    let i, a;
 
-    // for (i = 0; i < list.length; i++) {
-
-    // }
+    for (i = 0; i < list.length; i++) {
+      a = list[i]
+      console.log(a.innerHTML);
+      if (a.innerHTML.toLowerCase().includes(searchTerm.toLowerCase())) {
+        a.style.display = "";
+      } else {
+        a.style.display = "none";
+      }
+    }
   }
 
   const onSubmit = e => {
@@ -190,41 +199,50 @@ const ResourceCatalogue = ( { downloadResource }) => {
             </div>
 
             <div className="resource-page-filter-box">
-              <div className="content"  id="categories">
-              
+              <div className="content"  id="categories"> 
+
               <div className="content-search">
-              <form>
-                <input type="text" id="search-filter" onChange={() => filterButtons()} placeholder="search categories"/>
-              </form>
-
-            </div>
+                <form><input type="text" id="search-filter categories" onChange={() => filterButtons("categories")} placeholder="search categories"/></form>
+              </div>
 
 
-            <div className="content-filters">
-              {allCategories.map(category => (
-                      <button style={ category.name === categorySelected ? {color: "red"} : {color: "black"}} key={category.id} id="filter-button" className="filter-button categories"   
-                      onClick={() => setCategorySelected(category.name)}
-                      >{category.name}</button>
-                  ))}
-            </div>
+              <div className="content-filters">
+                {allCategories.map(category => (
+                        <button style={ category.name === categorySelected ? {color: "red"} : {color: "black"}} key={category.id} id="filter-button" className="filter-button categories"   
+                        onClick={() => setCategorySelected(category.name)}
+                        >{category.name}</button>
+                    ))}
+              </div>
             </div>
           
             <div className="content"  id="levels">
+
+            <div className="content-search">
+                <form><input type="text" id="search-filter levels" onChange={() => filterButtons("levels")} placeholder="search levels"/></form>
+              </div>      
+
+            <div className="content-filters">     
               {allLevels.map(level => (
-                      <button style={ level.name === levelSelected ? {color: "red"} : {color: "black"}} key={level.id} className="filter-button" 
+                      <button style={ level.name === levelSelected ? {color: "red"} : {color: "black"}} key={level.id} className="filter-button levels" 
                       onClick={() => setLevelSelected(level.name)}
                       >{level.name}</button>
                   ))}
-
+            </div> 
             </div>
 
             <div className="content"  id="tags">
+
+            <div className="content-search">
+                <form><input type="text" id="search-filter tags" onChange={() => filterButtons("tags")} placeholder="search levels"/></form>
+              </div>        
+
+                <div className="tags">
               {allTags.map(tag => (
-                      <button style={ tag.name === tagSelected ? {color: "red"} : {color: "black"}} key={tag.id} className="filter-button" 
+                      <button style={ tag.name === tagSelected ? {color: "red"} : {color: "black"}} key={tag.id} className="filter-button tags" 
                       onClick={() => setTagSelected(tag.name)}
                       >{tag.name}</button>
                   ))}
-
+                </div>
               </div>
           </div>
         </div>
