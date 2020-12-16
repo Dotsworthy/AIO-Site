@@ -194,7 +194,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
             <div className="resource-page-button-menu">
             <button onClick={() => clearFilters()}>Clear Filter</button>
               <button type="button" class="collapsible" onClick={() => expandMenu("categories")}>Categories</button>
-              <button type="button" class="collapsible" onClick={() => expandMenu("levels")}>Levels</button>
+              <button type="button" class="collapsible" onClick={() => expandMenu("levels")}>Level</button>
               <button type="button" class="collapsible"  onClick={() => expandMenu("tags")}>Tags</button>
             </div>
 
