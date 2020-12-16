@@ -15,7 +15,6 @@ const MoreInfo = ({ currentItem, setMoreInfo }) => {
             
           const img = document.getElementById("output")
           img.src = url;
-          console.log(img.src)
         }).catch(function(error) {
             console.log(error);
         })
