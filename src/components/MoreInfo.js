@@ -36,7 +36,7 @@ const MoreInfo = ({ currentItem, setMoreInfo }) => {
 
                 <div>
                     <h2>Downloads</h2>
-                    <DownloadHandler currentItem={currentItem} setDownloading={setDownloading}/>
+                    <DownloadHandler currentItem={currentItem} setDownloading={setDownloading} setMoreInfo={setMoreInfo}/>
                 </div>
 
             

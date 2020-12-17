@@ -6,7 +6,7 @@ import { saveAs } from 'file-saver';
 
 // NOTE: large file sizes are sizable and cause problems. Maybe look at bandwidth with free plan.
 
-const DownloadHandler = ({ currentItem, setDownloading }) => {
+const DownloadHandler = ({ currentItem, setDownloading, setMoreInfo }) => {
 
     const [item] = useState(currentItem)
 
@@ -93,6 +93,11 @@ const DownloadHandler = ({ currentItem, setDownloading }) => {
         download.value = "Download";
     }     
 
+    const closeWindow = () => {
+        setDownloading(false);
+        setMoreInfo(false);
+    }
+
     return (
         <div>
             <div className="downloads-container">
@@ -115,9 +120,9 @@ const DownloadHandler = ({ currentItem, setDownloading }) => {
             }
             
             </div>
-            {/* <div className="form-footer">
-            <button onClick={()=>setDownloading(false)}>Close</button>
-            </div> */}
+            <div className="form-footer">
+            <button onClick={()=>closeWindow()}>Close</button>
+            </div>
         </div>
     )
 }
