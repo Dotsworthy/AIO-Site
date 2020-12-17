@@ -100,7 +100,7 @@ const DownloadHandler = ({ currentItem, setDownloading, setMoreInfo }) => {
 
     return (
         <div>
-            <div className="downloads-container">
+            <div>
             { item.download.length > 0 ? 
                 <>
                 { item.download.map(resource => (

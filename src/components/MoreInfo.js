@@ -21,13 +21,12 @@ const MoreInfo = ({ currentItem, setMoreInfo }) => {
       }
 
     return (
-        <div className="database-form">
-            <div className="form-header">
+        <div>
+            <div>
                 <h2>{item.name}</h2>
-                <button onClick={() => setMoreInfo(false)}>X</button>
             </div>
 
-                <div className="form-container">
+                <div>
                 <p>{item.description}</p>
                 <div className="catalogue-image-container">
                 <img className="catalogue-image" src={getImageURL(item.id, "images", item)} id={"output"} alt={item.name}></img>

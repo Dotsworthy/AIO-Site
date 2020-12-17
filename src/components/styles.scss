@@ -742,7 +742,7 @@ textarea {
 
 input {
     padding: 5px;
-    width: 100%;
+    // width: 100%;
     // border: none;
     // border-radius: 5px;
 }
@@ -890,7 +890,6 @@ select {
     padding: 5px;
     align-items: flex-start;
     flex-wrap: wrap;
-    display: flex;
     flex-direction: column;
     overflow: scroll;
 }

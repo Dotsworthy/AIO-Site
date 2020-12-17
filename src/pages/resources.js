@@ -3,6 +3,7 @@ import ResourceCatalogue from "../components/resourceCatalogue"
 import Layout from "../components/layout";
 import DownloadHandler from "../components/downloadHandler";
 
+// Move Download handler to resource catalogue.
 
 const ResourcePage = () => {
 
