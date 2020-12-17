@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import firebase from "./firebase"
 import UpdateDatabaseItem from "./updateDatabaseItem"
 import DeleteDatabaseItem from "./deleteDatabaseItem"
+import RenderResourceNumber from "./renderResourceNumber"
 
 const db = firebase.firestore()
 
@@ -57,22 +58,22 @@ const ListDatabaseItems = ( { collection, resourceEntry} ) => {
     //   console.log(items)
     // }
     
-    const getResourcesAttached = async (item) => {
-      const resources = []
-      const resourcesRef = db.collection("items")
-      await resourcesRef.where(`${resourceEntry}`, "==", `${item.name}`).get().then(function(querySnapshot) {
-        if (querySnapshot.empty) {
-          return
-      } else {
-          querySnapshot.forEach(doc => {
-          resources.push({...doc.data()})
-          })}
-      }
-      ).catch(function(error) {
-        console.log("Error getting documents: ", error)
-      });
-      console.log(resources);
-    }
+    // const getResourcesAttached = async (item) => {
+    //   const resources = []
+    //   const resourcesRef = db.collection("items")
+    //   await resourcesRef.where(`${resourceEntry}`, "==", `${item.name}`).get().then(function(querySnapshot) {
+    //     if (querySnapshot.empty) {
+    //       return
+    //   } else {
+    //       querySnapshot.forEach(doc => {
+    //       resources.push({...doc.data()})
+    //       })}
+    //   }
+    //   ).catch(function(error) {
+    //     console.log("Error getting documents: ", error)
+    //   });
+    //   console.log(resources);
+    // }
   
     // const getResourcesAttached = async (category) => {
     //   const result = await
@@ -133,12 +134,14 @@ const ListDatabaseItems = ( { collection, resourceEntry} ) => {
         <tbody>
         <tr className="header-row">
         <th className="name">Name</th>
+        <th>Resources Attached</th>
         </tr>
         </tbody>
         {items.map(item => (
           <tbody key={item.id}>
             <tr className="data-row">
               <td className="item-name">{item.name}</td>
+              <RenderResourceNumber currentItem={item} resourceEntry={resourceEntry}/>
               <td className="buttons">
                   <button onClick={() => editDatabaseItem(item, collection, resourceEntry)}>Edit</button>
                   <button onClick={() => deleteDatabaseItem(item, collection, resourceEntry)}>Delete</button>
