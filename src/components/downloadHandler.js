@@ -112,7 +112,7 @@ const DownloadHandler = ({ currentItem, setDownloading }) => {
             {item.download.map(resource => (
                 <div key={resource} className="download-items">
                 <p>{resource}</p>
-                <input id={resource.name} value="Download" onClick={(e) => getDownload(resource, "downloads")}/>
+                <input type="button" id={resource.name} value="Download" onClick={(e) => getDownload(resource, "downloads")}/>
                 </div>
             ))}
             <div className="download-items">
