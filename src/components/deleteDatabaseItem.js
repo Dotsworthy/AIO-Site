@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
 import firebase from "firebase";
+import UpdateSubject from "./updateSubject";
 import { navigate } from "gatsby";
 
 const DeleteDatabaseItem = ({ setDeleting, currentItem}) => {
     
     // Resource for deletion
     const item = currentItem;
+
+    const [deletingSubject, setDeletingSubject] = useState(false)
+    const [editingSubject, setEditingSubject] = useState(false)
+    const [currentSubject, setCurrentSubject] = useState()
     
     // Looks for resources that contain the selected database item.
     const useItems = () => {
@@ -46,6 +51,37 @@ const DeleteDatabaseItem = ({ setDeleting, currentItem}) => {
     // Collects and stores resources that contain the selected database item.
     const resources = useItems();
 
+    const deleteSubject = (e, item) => {
+        e.preventDefault();
+        setDeletingSubject(true)
+        setCurrentSubject({
+          id: item.id,
+          name: item.name,
+          image: item.image,
+          description: item.description,
+          category: item.category,
+          level: item.level,
+          tags: item.tags,
+          download: item.download
+        })
+      }
+    
+      const editSubject = (e, item) => {
+          e.preventDefault();
+        setCurrentSubject({
+          id: item.id,
+          name: item.name,
+          image: item.image,
+          description: item.description,
+          category: item.category,
+          level: item.level,
+          tags: item.tags,
+          download: item.download
+        })
+    
+        setEditingSubject(true)
+      }
+
     const onSubmit = e => {
         e.preventDefault()
         firebase
@@ -64,7 +100,7 @@ const DeleteDatabaseItem = ({ setDeleting, currentItem}) => {
     }
     
     return (
-        <div className="popup-container">
+        <div>
 
             <div className="form-header">
                 <h2>Confirm Delete?</h2>
@@ -81,8 +117,8 @@ const DeleteDatabaseItem = ({ setDeleting, currentItem}) => {
                         {resources.map(resource => {
                             return <div>
                                 <p>{resource.name}</p>
-                                <button>Edit</button>
-                                <button>Delete</button>
+                                <button type="button" onClick={(e) => editSubject(e, resource)}>Edit</button>
+                                <button type="button" onClick={(e) => deleteSubject(e, resource)}>Delete</button>
 
                             </div>
                             
@@ -90,7 +126,7 @@ const DeleteDatabaseItem = ({ setDeleting, currentItem}) => {
                             
                         })
                         }
-                    <button onClick={(e) => handleCancel(e)} >Cancel</button>
+                    <button type="reset" onClick={(e) => handleCancel(e)} >Cancel</button>
                         </div>
                     : 
                     <div>
@@ -101,6 +137,8 @@ const DeleteDatabaseItem = ({ setDeleting, currentItem}) => {
                 }  
                 </div> 
             </form>
+                {editingSubject && <UpdateSubject setEditing={setEditingSubject} currentItem={currentSubject}/>}
+
         </div>
     )
 }
