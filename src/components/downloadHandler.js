@@ -4,7 +4,7 @@ import 'firebase/storage'
 import JSZip from "jszip";
 import { saveAs } from 'file-saver';
 
-// Get all downloads needs to be converted to a promise in order to wait for large downloads. How to do this?
+// NOTE: large file sizes are sizable and cause problems. Maybe look at bandwidth with free plan.
 
 const DownloadHandler = ({ currentItem, setDownloading }) => {
 
