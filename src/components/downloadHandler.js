@@ -3,9 +3,8 @@ import firebase from "firebase"
 import 'firebase/storage'
 import JSZip from "jszip";
 import { saveAs } from 'file-saver';
-import ResourceCatalogue from "./resourceCatalogue";
 
-// Get all downloads needs to be converted to a promise in order to wait for large downloads.
+// Get all downloads needs to be converted to a promise in order to wait for large downloads. How to do this?
 
 const DownloadHandler = ({ currentItem, setDownloading }) => {
 
@@ -17,6 +16,7 @@ const DownloadHandler = ({ currentItem, setDownloading }) => {
         const httpsReference = storageRef.child(`${location}/${item.id}/${download}`);
       
         httpsReference.getDownloadURL().then(function(url) {
+            console.log("code-reached")
           let xhr = new XMLHttpRequest();
           xhr.responseType = 'blob';
           xhr.onload = function(event) {
@@ -29,96 +29,91 @@ const DownloadHandler = ({ currentItem, setDownloading }) => {
           };
           xhr.open('GET', url);
           xhr.send();
+          console.log("code-reached")
         }).catch(function(error) {
           console.log(error);
         });
-    }
+    }   
 
     const fileDownloader = async (fileList) => {
         let zip = new JSZip();
-        let downloadList = zip.folder(`${item.name}`)
-        const storageRef = firebase.storage().ref()
+        let materials = zip.folder(`${item.name}`)
+        console.log("code-reached")
         await Promise.all(fileList.map(file => {
-            console.log("code reached")
-            const result = storageRef.child(`images/${item.id}/${file}`).getDownloadURL().then(function(url) {
-                console.log("code reached")
-                return new Promise(function(resolve, reject) {
+            return new Promise(function (resolve, reject) {
+                const storageRef = firebase.storage().ref(`downloads/${item.id}/${file}`)
+                storageRef.getDownloadURL().then(function(url) {
+                    console.log("code-reached")
                     let xhr = new XMLHttpRequest();
                     xhr.responseType = 'blob';
-                    xhr.onload = function(event) {
-                        let blob = xhr.response;
-                        downloadList.file(`${file}`, blob)
-                        resolve(xhr.response);
-                    }
+                    xhr.open('GET', url);
+                    xhr.onreadystatechange = function(event) {
+                        if (xhr.readyState === 4) {
+                            if (xhr.status === 200) {
+                                console.log("code-reached")
+                                let blob = xhr.response
+                                materials.file(`${file}`, blob)
+                                console.log(materials);
+                                resolve(xhr.response)
+                                
+                            } else {
+                                reject(new Error("error"))
+                            }
+                        }
+                        
+                        // resolve(materials);
+                        // console.log(materials);
+                        // resolve(xhr.response);
+                    };
+                    xhr.send();
+                    // console.log(materials);
+                    // // resolve(xhr);
+                    // resolve(xhr);
+                    
                 })
             })
+        }))
+        .then(function() {
+            console.log(zip)
+            setTimeout(function() { zip.generateAsync({type: "blob"}).then(function (blob) {
+                saveAs(blob, `${item.name}`)
+            }) }, 0)
             
         })
-    ).then(function() {
-        console.log("code reached")
-        console.log(downloadList);
-        console.log(zip);
-        return zip
-    })}
+        // return zip
+    }
 
-
-
-    const getAllDownloads = async (location) => {
-        const storageRef = firebase.storage().ref();
+    const getAllDownloads = async () => {
         const download = document.getElementById("zip")
         download.value = "downloading..."
-        // let zip = new JSZip();
-        // let materials = zip.folder(`${item.name}`)
-        const fileList = Array.from(item.download)
 
-        const zip = await fileDownloader(fileList);
-        
-        // await item.download.forEach(resource => {
-        //     const httpsReference = storageRef.child(`${location}/${item.id}/${resource}`)
-        //     const result = httpsReference.getDownloadURL().then(function(url) {
-        //         return new Promise(function(resolve, reject) {
-        //             let xhr = new XMLHttpRequest();
-        //             xhr.responseType = 'blob';
-        //             xhr.onload = function(event) {
-        //                 let blob = xhr.response;
-        //                 resolve(xhr.response);
-        //                 materials.file(`${resource}`, blob)
-        //                 console.log(materials)
-        //             };
-        //             xhr.open('GET', url)
-        //             xhr.send();  
-        //         })
-                
-        //         }).catch(function(error) {
-        //             console.log(error)
-        //         })   
-        // })
+        const fileList = Array.from(item.download);
+        const zip = await fileDownloader(fileList)
 
-        console.log(zip);
-
-        // zip.generateAsync({type:"blob"})
-        // .then(function (blob) {
-        //     saveAs(blob, `${item.name}`)
-        //     download.value = "Download";
-        // })
-
-    }  
+        download.value = "Download";
+    }     
 
     return (
         <div>
-            <div
-             className="downloads-container"
-             >
-            {item.download.map(resource => (
-                <div key={resource} className="download-items">
-                <p>{resource}</p>
-                <input type="button" id={resource.name} value="Download" onClick={(e) => getDownload(resource, "downloads")}/>
+            <div className="downloads-container">
+            { item.download.length > 0 ? 
+                <>
+                { item.download.map(resource => (
+                    <div key={resource} className="download-items">
+                    <p>{resource}</p>
+                    <input type="button" id={resource.name} value="Download" onClick={(e) => getDownload(resource, "downloads")}/>
+                    </div>
+                ))}
+                <div className="download-items">
+                    <p>Download All Files as Zip</p>
+                    <input type="button" value="Download" id="zip" onClick={(e) => getAllDownloads(e)}/>
                 </div>
-            ))}
-            <div className="download-items">
-                <p>Download All Files as Zip</p>
-                <input type="button" value="Download" id="zip" onClick={(e) => getAllDownloads("downloads")}/>
-            </div>
+                
+                </>
+            :
+            <><div>No Downloads Available</div></>
+            }
+            
             </div>
             {/* <div className="form-footer">
             <button onClick={()=>setDownloading(false)}>Close</button>

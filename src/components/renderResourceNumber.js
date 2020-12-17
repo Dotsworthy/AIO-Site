@@ -3,8 +3,6 @@ import firebase from "firebase"
 
 const RenderResourceNumber = ({ currentItem, resourceEntry }) => {
 
-    console.log(resourceEntry);
-
     const useItems = () => {
         const [items, setItems] = useState([]);
         useEffect(() => {
@@ -29,13 +27,10 @@ const RenderResourceNumber = ({ currentItem, resourceEntry }) => {
         return items;
       };
 
-
     const resources = useItems()  
-    console.log(resources);
-
 
     return (
-        <p> {resources.length} </p>
+        <td> {resources.length} </td>
     )
 }
 
