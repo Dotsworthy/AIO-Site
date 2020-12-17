@@ -79,7 +79,15 @@ const DeleteDatabaseItem = ({ setDeleting, currentItem}) => {
                             <h3>Items attached to resources!</h3>
                             <p>You cannot delete this database item as it is attached to resources in the database. You must first assign new items to these resources:</p>
                         {resources.map(resource => {
-                            return <p>{resource.name}</p>
+                            return <div>
+                                <p>{resource.name}</p>
+                                <button>Edit</button>
+                                <button>Delete</button>
+
+                            </div>
+                            
+                            
+                            
                         })
                         }
                     <button onClick={(e) => handleCancel(e)} >Cancel</button>

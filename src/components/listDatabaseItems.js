@@ -3,12 +3,13 @@ import firebase from "./firebase"
 import UpdateDatabaseItem from "./updateDatabaseItem"
 import DeleteDatabaseItem from "./deleteDatabaseItem"
 
-// const db = firebase.firestore()
+const db = firebase.firestore()
 
 // TO DO: render list of resources attached to database item
 
 const ListDatabaseItems = ( { collection, resourceEntry} ) => {
     const [items, setItems] = useState([])
+    const [resources, setResources] = useState([])
     const [searchTerm, setSearchTerm] = useState(null)
     const [currentItem, setCurrentItem] = useState()
     const [editing, setEditing] = useState(false)
@@ -32,6 +33,7 @@ const ListDatabaseItems = ( { collection, resourceEntry} ) => {
           }))
           setItems(listItems);
         });
+        console.log(items);
         return unsubscribe
       }
         
@@ -40,23 +42,37 @@ const ListDatabaseItems = ( { collection, resourceEntry} ) => {
     // The functions below were used to render the number of resources attached. Currently non-working.
 
     // const resources = []
-    
-    // const addResourcesAttached = async (item) => {
-    //   const resources = []
-    //   const resourcesRef = db.collection("items")
-    //   await resourcesRef.where(`${resourceEntry}`, "==", `${item}`).get().then(function(querySnapshot) {
-    //     if (querySnapshot.empty) {
-    //       return
-    //   } else {
-    //       querySnapshot.forEach(doc => {
-    //       resources.push({...doc.data()})
-    //       })}
-    //   }
-    //   ).catch(function(error) {
-    //     console.log("Error getting documents: ", error)
-    //   });
-    //   return resources
+
+    // const useItems = (item) => {
+    //   const [items, setItems] = useState([]);
+    //   useEffect(() => {
+    //     database.collection(resourceEntry).where(`${resourceEntry}, "==", ${item}`).onSnapshot(snapshot => {
+    //       const listItems = snapshot.docs.map(doc => ({
+    //         id: doc.id,
+    //         ...doc.data()
+    //       }));
+    //       setItems(listItems);
+    //     })
+    //   })
+    //   console.log(items)
     // }
+    
+    const getResourcesAttached = async (item) => {
+      const resources = []
+      const resourcesRef = db.collection("items")
+      await resourcesRef.where(`${resourceEntry}`, "==", `${item.name}`).get().then(function(querySnapshot) {
+        if (querySnapshot.empty) {
+          return
+      } else {
+          querySnapshot.forEach(doc => {
+          resources.push({...doc.data()})
+          })}
+      }
+      ).catch(function(error) {
+        console.log("Error getting documents: ", error)
+      });
+      console.log(resources);
+    }
   
     // const getResourcesAttached = async (category) => {
     //   const result = await
