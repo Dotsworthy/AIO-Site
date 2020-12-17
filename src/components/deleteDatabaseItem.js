@@ -102,8 +102,9 @@ const DeleteDatabaseItem = ({ setDeleting, currentItem}) => {
     
     return (
         <div>
-
-            <div className="form-header">
+            {!deletingSubject && !editingSubject && 
+                <div className="database-form">
+                  <div className="form-header">
                 <h2>Confirm Delete?</h2>
              </div>
 
@@ -138,6 +139,9 @@ const DeleteDatabaseItem = ({ setDeleting, currentItem}) => {
                 }  
                 </div> 
             </form>
+                </div>
+            }
+      
                 {editingSubject && <UpdateSubject setEditing={setEditingSubject} currentItem={currentSubject}/>}
                 {deletingSubject && <DeleteSubject setDeleting={setDeletingSubject} currentItem={currentSubject}/>}
 
