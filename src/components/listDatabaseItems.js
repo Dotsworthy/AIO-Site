@@ -115,36 +115,43 @@ const ListDatabaseItems = ( { collection, resourceEntry} ) => {
 
     return (
     <div className="database-container">
-      <div className="database-navigation-container">
+      {!editing && !deleting && 
+      <>
+         <div className="database-navigation-container">
 
-          <form onSubmit={onSubmit} className="nav-bar-form">
-          <input type="text" id="search" name="search" placeholder="Search"/>
-          <div className="form-footer">
-          <button type="submit">Search</button>
-          <button type="reset" onClick={() => setSearchTerm(null)}>Clear</button>
-          </div>
-          </form>
-      </div>
+        <form onSubmit={onSubmit} className="nav-bar-form">
+        <input type="text" id="search" name="search" placeholder="Search"/>
+        <div className="form-footer">
+        <button type="submit">Search</button>
+        <button type="reset" onClick={() => setSearchTerm(null)}>Clear</button>
+        </div>
+        </form>
+        </div>
 
 
         <table className="database-table">
-      <tbody>
+        <tbody>
         <tr className="header-row">
-          <th className="name">Name</th>
+        <th className="name">Name</th>
         </tr>
-      </tbody>
-      {items.map(item => (
-            <tbody key={item.id}>
-              <tr className="data-row">
-                <td className="item-name">{item.name}</td>
-                <td className="buttons">
-                    <button onClick={() => editDatabaseItem(item, collection, resourceEntry)}>Edit</button>
-                    <button onClick={() => deleteDatabaseItem(item, collection, resourceEntry)}>Delete</button>
-                </td>
-              </tr>
-            </tbody>
-          ))}
-    </table>
+        </tbody>
+        {items.map(item => (
+          <tbody key={item.id}>
+            <tr className="data-row">
+              <td className="item-name">{item.name}</td>
+              <td className="buttons">
+                  <button onClick={() => editDatabaseItem(item, collection, resourceEntry)}>Edit</button>
+                  <button onClick={() => deleteDatabaseItem(item, collection, resourceEntry)}>Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        ))}
+        </table>
+      </>
+      
+      }
+
+     
 
     {editing && <UpdateDatabaseItem setEditing={setEditing} currentItem={currentItem}/>}
     {deleting && <DeleteDatabaseItem setDeleting={setDeleting} currentItem={currentItem}/>}    
