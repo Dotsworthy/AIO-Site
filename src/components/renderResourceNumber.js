@@ -3,19 +3,32 @@ import firebase from "firebase"
 
 const RenderResourceNumber = ({ currentItem, resourceEntry }) => {
 
+    console.log(resourceEntry);
+
     const useItems = () => {
         const [items, setItems] = useState([]);
         useEffect(() => {
-          firebase.firestore().collection("subjects").where(`${resourceEntry}`, "==", `${currentItem.name}`).onSnapshot(snapshot => {
-              const listItems = snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-              }));
-              setItems(listItems);
-            });
+            if(resourceEntry == "tags") {
+                firebase.firestore().collection("subjects").where(`${resourceEntry}`, "array-contains", `${currentItem.name}`).onSnapshot(snapshot => {
+                    const listItems = snapshot.docs.map(doc => ({
+                      id: doc.id,
+                      ...doc.data()
+                    }));
+                    setItems(listItems);
+                  });
+            } else {
+                firebase.firestore().collection("subjects").where(`${resourceEntry}`, "==", `${currentItem.name}`).onSnapshot(snapshot => {
+                    const listItems = snapshot.docs.map(doc => ({
+                      id: doc.id,
+                      ...doc.data()
+                    }));
+                    setItems(listItems);
+                  });
+            }
         }, []);
         return items;
       };
+
 
     const resources = useItems()  
     console.log(resources);
