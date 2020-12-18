@@ -164,7 +164,7 @@ footer {
 }
 
 button {
-    min-width: 65px;
+    // min-width: 65px;
     padding: 5px;
 
     @extend %font-options
@@ -226,10 +226,6 @@ img {
         height: 50vh;
     }
 
-}
-
-.mobile-button {
-    
 }
 
 .banner-container-2 {
@@ -593,7 +589,9 @@ textarea {
     justify-content: space-evenly;
 }
 
-.content-filters {
+.content {
+    background-color: white;
+    
 }
 
 .catalogue-image {
@@ -615,6 +613,13 @@ textarea {
 }
 
 .catalogue-item-header {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.more-info-item-header {
     padding: 10px;
     display: flex;
     justify-content: space-between;
@@ -866,15 +871,16 @@ input {
     }
 }
 
-// .resource-page-filter-box {
-//     display: flex;
+.resource-page-filter-box {
+    border-bottom: 2px solid #33333320;
     
-// }
+}
 
 .resource-page-button-menu {
     padding: 10px;
     display: flex;
     justify-content: space-evenly;
+    background-color: white;
 }
 
 .resource-page-filters {
@@ -894,15 +900,23 @@ input {
 }
 
 .resource-page-search {
-    padding: 10px;
+    padding: 5px;
     height: 50px;
     display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    background-color: grey;
+    // justify-content: space-between;
+    // align-items: stretch;
+    background-color: #0B6BBF;
     position: -webkit-sticky;
     position: sticky;
     top: 100px;
+
+    input {
+        flex-grow: 2;
+    }
+
+    button {
+        flex-grow: 1;
+    }
 
     @media #{$mq-small} {
         position: static;

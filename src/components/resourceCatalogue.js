@@ -219,22 +219,29 @@ const ResourceCatalogue = ( ) => {
         <form className="resource-page-search" onSubmit={onSubmit}>
           <input type="text" id="search"  placeholder="Search names, tags, etc..." name="search"/>
 
-          <div>
+          {/* <div> */}
           <button type="submit" className="search-button">
           <FontAwesomeIcon icon={faSearch}/>
           </button>
-          </div>
+          {/* </div> */}
         </form>
       
         <div className="resource-page-container">
  
-          <div className="resource-page-filter-bar" id="white">
+          <div className="resource-page-filter-bar">
 
             <div className="resource-page-button-menu">
             <button onClick={() => clearFilters()}>Clear Filter</button>
               <button type="button" class="collapsible" onClick={() => expandMenu("categories")}>Categories</button>
               <button type="button" class="collapsible" onClick={() => expandMenu("levels")}>Level</button>
               <button type="button" class="collapsible"  onClick={() => expandMenu("tags")}>Tags</button>
+            
+            
+            
+            
+            
+            
+            
             </div>
 
             <div className="resource-page-filter-box">

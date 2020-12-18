@@ -22,7 +22,7 @@ const MoreInfo = ({ currentItem, setMoreInfo }) => {
 
     return (
         <div className="catalogue-item" id="white">
-            <div className="catalogue-item-header">
+            <div className="more-info-item-header">
                 <h2>{item.name}</h2>
                 <button className="mobile-button" onClick={() => setMoreInfo(false)}>X</button>
             </div>
