@@ -58,7 +58,7 @@ const Navigation = styled.nav`
   @media (max-width: 768px) {
     position: sticky;
     flex-direction: row;
-    height: 12vh;
+    height: 100px;
     top: 0;
     left: 0;
     right: 0;
@@ -89,10 +89,10 @@ const Navbox = styled.div`
     position: fixed;
     width: 100%;
     justify-content: flex-start;
-    padding-top: 10vh;
+    padding-top: 20%;
     background-color: #0B6BBF;
     transition: all 0.3s ease-in;
-    top: 8vh;
+    top: 100px;
     left: ${props => (props.open ? "-100%" : "0")};
   }
 `

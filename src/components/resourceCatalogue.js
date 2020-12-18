@@ -5,11 +5,12 @@ import { Router, Link } from "@reach/router";
 import MoreInfo from "./MoreInfo";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import DownloadHandler from "../components/downloadHandler";
 
 // TODO: fire an event when a mobile filter is closed to reset the search field.
 // TODO: custom routes for more info?
 
-const ResourceCatalogue = ( { downloadResource }) => {
+const ResourceCatalogue = ( ) => {
   const [resources, setResources] = useState([]);
   const [allCategories, setAllCategories] = useState([]);
   const [allLevels, setAllLevels] = useState([]);
@@ -20,6 +21,7 @@ const ResourceCatalogue = ( { downloadResource }) => {
   const [searchTerm, setSearchTerm] = useState();
   const [currentItem, setCurrentItem] = useState([])
   const [moreInfo, setMoreInfo] = useState(false);
+  const [downloading, setDownloading] = useState(false);
   // const [page, setPage] = useState(0)
 
   useEffect(() => {
@@ -78,6 +80,15 @@ const ResourceCatalogue = ( { downloadResource }) => {
 
     setMoreInfo(true)
   }
+
+  const downloadResource = item => {
+    setDownloading(true);
+    setCurrentItem({
+        id: item.id,
+        name: item.name,
+        download: item.download
+    })
+}
 
   const clearFilters = () => {
     setLevelSelected("")
@@ -203,9 +214,9 @@ const ResourceCatalogue = ( { downloadResource }) => {
 
   return (
     <div>
-      { !moreInfo &&
+      { !moreInfo && !downloading &&
       <>
-        <form className="resource-page-form" onSubmit={onSubmit}>
+        <form className="resource-page-search" onSubmit={onSubmit}>
           <input type="text" id="search"  placeholder="Search names, tags, etc..." name="search"/>
 
           <div>
@@ -360,6 +371,13 @@ const ResourceCatalogue = ( { downloadResource }) => {
     }
 
     {moreInfo && <MoreInfo currentItem={currentItem} setMoreInfo={setMoreInfo}/>}
+    {downloading && 
+    <div className="catalogue-item" id="white">
+          <DownloadHandler currentItem={currentItem} setMoreInfo={setMoreInfo} setDownloading={setDownloading}/>
+    </div>
+    
+    
+            }
     </div>
   )
 }

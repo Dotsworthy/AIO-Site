@@ -25,7 +25,7 @@ const ResourcePage = () => {
 
     return (
         <Layout siteType={"client"}>
-            <div className="banner-container-2" id="yellow">
+            <div className="banner-container-desktop-only" id="yellow">
                     <div className="paragraph-box" id="white"><h1>RESOURCE CATALOGUE</h1></div>
             </div>
 

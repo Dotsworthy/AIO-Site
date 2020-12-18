@@ -21,16 +21,17 @@ const MoreInfo = ({ currentItem, setMoreInfo }) => {
       }
 
     return (
-        <div>
-            <div>
+        <div className="catalogue-item" id="white">
+            <div className="catalogue-item-header">
                 <h2>{item.name}</h2>
+                <button className="mobile-button" onClick={() => setMoreInfo(false)}>X</button>
             </div>
 
-                <div>
-                <p>{item.description}</p>
+                <div className="catalogue-item-info">
                 <div className="catalogue-image-container">
                 <img className="catalogue-image" src={getImageURL(item.id, "images", item)} id={"output"} alt={item.name}></img>
                 </div>
+                <p>{item.description}</p>
                 </div>
 
                 <div>

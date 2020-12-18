@@ -7,6 +7,8 @@ import { Router, Link } from "@reach/router";
 import firebase from 'firebase';
 import SignInManager from "../../components/signInManager";
 
+// Move addSubject to 
+
 const AdminPage = () => {
 
   const SubjectList = () => <ListSubjects/>
