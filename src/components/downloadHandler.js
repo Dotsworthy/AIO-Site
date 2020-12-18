@@ -120,9 +120,9 @@ const DownloadHandler = ({ currentItem, setDownloading, setMoreInfo }) => {
             }
             
             </div>
-            <div className="form-footer">
+            {/* <div className="form-footer">
             <button onClick={()=>closeWindow()}>Close</button>
-            </div>
+            </div> */}
         </div>
     )
 }

@@ -213,7 +213,7 @@ const ResourceCatalogue = ( ) => {
   }
 
   return (
-    <div>
+    <div className="resource-page">
       { !moreInfo && !downloading &&
       <>
         <form className="resource-page-search" onSubmit={onSubmit}>
@@ -372,12 +372,16 @@ const ResourceCatalogue = ( ) => {
 
     {moreInfo && <MoreInfo currentItem={currentItem} setMoreInfo={setMoreInfo}/>}
     {downloading && 
-    <div className="catalogue-item" id="white">
-          <DownloadHandler currentItem={currentItem} setMoreInfo={setMoreInfo} setDownloading={setDownloading}/>
+    <div className="catalogue-download" id="white">
+      <div className="catalogue-item-header">
+                    <h2>Downloads</h2>
+                    <button className="mobile-button" onClick={() => setDownloading(false)}>X</button>
+                </div>   
+      <DownloadHandler currentItem={currentItem} setMoreInfo={setMoreInfo} setDownloading={setDownloading}/>
     </div>
     
     
-            }
+    }
     </div>
   )
 }

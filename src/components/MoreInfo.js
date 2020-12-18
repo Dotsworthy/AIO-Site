@@ -34,10 +34,11 @@ const MoreInfo = ({ currentItem, setMoreInfo }) => {
                 <p>{item.description}</p>
                 </div>
 
-                <div>
+                <div className="catalogue-item-header">
                     <h2>Downloads</h2>
+                </div>    
                     <DownloadHandler currentItem={currentItem} setDownloading={setDownloading} setMoreInfo={setMoreInfo}/>
-                </div>
+                {/* </div> */}
 
             
         </div>
