@@ -614,6 +614,13 @@ textarea {
     object-fit: cover;
 }
 
+.preview-image {
+    height: 280px;
+    width: 280px;
+    padding: 5px;
+    object-fit: cover;
+}
+
 .catalogue-image-container {
     height: 280px;
     width: 200px;
@@ -645,6 +652,7 @@ textarea {
 
 .catalogue-description {
     padding: 10px;
+    // width: 500px;
 }
 
 .more-info-item-header {
@@ -663,12 +671,12 @@ textarea {
 
     @media #{$mq-small} {
         flex-direction: row;
-        justify-content: space-evenly;
+        // justify-content: space-between;
         align-items: flex-start;
     }
 
     .catalogue-image-container {
-        width: 100%;
+        min-width: 300px;
     }
 }
 
@@ -684,13 +692,15 @@ textarea {
 
     @media #{$mq-small} {
         min-height: auto;
-        position: fixed; 
-        // min-width: 300px;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        // position: fixed; 
+        width: 400px;
+        // top: 50%;
+        // left: 50%;
+        // transform: translate(-50%, -50%);
         background-color: #F4F5F5;
         // border-radius: 10px;
+        align-self: center;
+        justify-self: center;
 
     }
 }
@@ -707,13 +717,24 @@ textarea {
         @media #{$mq-small} {
             height: auto;
             width: 750px;
-            position: fixed; 
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            // position: fixed; 
+            // top: 50%;
+            // left: 50%;
+            // transform: translate(-50%, -50%);
             background-color: #F4F5F5;
     
         }
+}
+
+.additional-container {
+
+    @media #{$mq-small} {
+        min-height: calc( 100vh - 100px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+    
 }
 
 .resource-page {

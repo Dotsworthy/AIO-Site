@@ -386,15 +386,25 @@ const ResourceCatalogue = ( ) => {
     </>
     }
 
-    {moreInfo && <MoreInfo currentItem={currentItem} setMoreInfo={setMoreInfo}/>}
+    {moreInfo && 
+      <div className="additional-container">
+        <MoreInfo currentItem={currentItem} setMoreInfo={setMoreInfo}/>
+      </div>
+    
+    }
     {downloading && 
-    <div className="catalogue-download" id="white">
+    <div className="additional-container">
+      <div className="catalogue-download" id="white">
       <div className="more-info-item-header">
                     <h2>Downloads</h2>
                     <button className="mobile-button" onClick={() => setDownloading(false)}>X</button>
                 </div>   
       <DownloadHandler currentItem={currentItem} setMoreInfo={setMoreInfo} setDownloading={setDownloading}/>
     </div>
+
+
+    </div>
+    
     
     
     }
