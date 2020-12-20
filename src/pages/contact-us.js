@@ -41,7 +41,7 @@ const ContactUs = () => {
             <div className="paragraph-box box1" id="white">
             <p>Contact us to learn more about our mission and work, or get involved yourself.</p>
             <p>enquiries@allinoneeducation.co.uk</p>
-            <img src={require("../images/42401748_m.jpg")}></img>
+            <img src={require("../images/42401748_m.jpg")} alt="contact-us"></img>
             
             
             

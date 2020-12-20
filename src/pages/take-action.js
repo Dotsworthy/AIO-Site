@@ -16,7 +16,7 @@ const TakeAction = () => {
             
             <div className="content-box" id="white">
                 <div className="content-overlay-box">
-                <img src={require("../images/42402515_m.jpg")}></img>
+                <img src={require("../images/42402515_m.jpg")} alt="Donate"></img>
                 <div className="paragraph-box paragraph-right" id="pink">
                     <h2>DONATE </h2>
                     <p>All In One Education is a voluntary organisation powered by collaboration, and donation. Support us via our gofundme page below - all donations go towards creating and maintaining the All in One learning platform, paying contributor fees, and running promotional events, and every penny makes a huge difference - so thank you!</p>
@@ -29,7 +29,7 @@ const TakeAction = () => {
                 </div>
 
                 <div className="content-overlay-box">
-                <img className="img-right" src={require("../images/115668764_m.jpg")}></img>
+                <img className="img-right" src={require("../images/115668764_m.jpg")} alt="Volunteer"></img>
                 <div className="paragraph-box paragraph-left" id="yellow">
                     <h2>VOLUNTEER</h2> 
                         <p>Want to volunteer with us to create amazing content for All in One? Click below to join the collective!</p>

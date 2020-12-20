@@ -5,7 +5,7 @@ import 'firebase/storage';
 
 const MoreInfo = ({ currentItem, setMoreInfo }) => {
 
-    const [item, setItem] = useState(currentItem);
+    const [item] = useState(currentItem);
     const [downloading, setDownloading] = useState(false);
 
     const getImageURL = (id, location, resource) => {

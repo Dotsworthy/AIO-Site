@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import firebase from "./firebase"
 import 'firebase/storage'
-import { Router, Link } from "@reach/router";
+// import { Router, Link } from "@reach/router";
 import MoreInfo from "./MoreInfo";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
@@ -124,11 +124,11 @@ const ResourceCatalogue = ( ) => {
               )
             )
           if (categorySelected) {
-            const category = result.filter(resource => resource.category == categorySelected)
+            const category = result.filter(resource => resource.category === categorySelected)
             result = category;
           }
           if (levelSelected) {
-            const level = result.filter(resource => resource.level == levelSelected)
+            const level = result.filter(resource => resource.level === levelSelected)
             result = level;
           }  
           if (tagSelected) {
@@ -147,11 +147,11 @@ const ResourceCatalogue = ( ) => {
         }))
         let result = listResources
         if (categorySelected) {
-          const category = result.filter(resource => resource.category == categorySelected)
+          const category = result.filter(resource => resource.category === categorySelected)
           result = category;
         }
         if (levelSelected) {
-          const level = result.filter(resource => resource.level == levelSelected)
+          const level = result.filter(resource => resource.level === levelSelected)
           result = level;
         }  
         if (tagSelected) {
@@ -166,24 +166,16 @@ const ResourceCatalogue = ( ) => {
   }, [searchTerm, categorySelected, levelSelected, tagSelected])
 
   const expandMenu = (item) => {
-    const menu = document.getElementsByClassName("collapsible");
     const column = document.getElementsByClassName("content");
     const selectedColumn = document.getElementById(item);
-    // const selectedFilter = document.getElementById("search-filter")
-    // console.log(selectedFilter)
-    console.log(column);
-    console.log(selectedColumn.style.display);
 
-
-    if (selectedColumn.style.display == "flex") {
-      console.log("code-reached")
+    if (selectedColumn.style.display === "flex") {
       selectedColumn.style.display = "none";
       // selectedFilter.value = "";
     } else {
       column[0].style.display = "none";
       column[1].style.display = "none";
       column[2].style.display = "none";
-      console.log("code-reached")
       selectedColumn.style.display = "flex";
     }
   }

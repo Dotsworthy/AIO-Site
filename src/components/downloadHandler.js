@@ -60,16 +60,9 @@ const DownloadHandler = ({ currentItem, setDownloading, setMoreInfo }) => {
                                 reject(new Error("error"))
                             }
                         }
-                        
-                        // resolve(materials);
-                        // console.log(materials);
-                        // resolve(xhr.response);
+
                     };
                     xhr.send();
-                    // console.log(materials);
-                    // // resolve(xhr);
-                    // resolve(xhr);
-                    
                 })
             })
         }))
@@ -80,7 +73,6 @@ const DownloadHandler = ({ currentItem, setDownloading, setMoreInfo }) => {
             }) }, 0)
             
         })
-        // return zip
     }
 
     const getAllDownloads = async () => {
@@ -88,15 +80,10 @@ const DownloadHandler = ({ currentItem, setDownloading, setMoreInfo }) => {
         download.value = "downloading..."
 
         const fileList = Array.from(item.download);
-        const zip = await fileDownloader(fileList)
+        await fileDownloader(fileList)
 
         download.value = "Download";
     }     
-
-    const closeWindow = () => {
-        setDownloading(false);
-        setMoreInfo(false);
-    }
 
     return (
         <div>
@@ -120,9 +107,6 @@ const DownloadHandler = ({ currentItem, setDownloading, setMoreInfo }) => {
             }
             
             </div>
-            {/* <div className="form-footer">
-            <button onClick={()=>closeWindow()}>Close</button>
-            </div> */}
         </div>
     )
 }

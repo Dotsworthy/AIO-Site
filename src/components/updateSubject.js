@@ -19,9 +19,6 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
   // warnings for duplicate entries and maximum entries
   const [duplicateFiles, setDuplicateFiles] = useState([])
 
-  // for rendering upload pop-up
-  const [submit, setSubmit] = useState(false)
-
   // original variables for checking whether to upload/download
   const originalImage = currentItem.image;
   const originalName = currentItem.name;
@@ -410,7 +407,7 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
 
                 <p className="tags-added-adjustment">Tags added:</p>
                 <div className="form-inside-content">
-                {item.tags == "" ?
+                {item.tags === "" ?
                 <p>No tags to display</p>
                 :  
                 item.tags.map(singleTag => {
@@ -432,10 +429,10 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
               <div>
                 <h2>Upload Image</h2>
                 <div className="image-container">
-                  { item.image == "" ?
+                  { item.image === "" ?
                   <p>No Profile Image</p>
                 :
-                  <img className="preview" id="output" alt="Loading Image..."></img>
+                  <img className="preview" id="output" alt="Loading..."></img>
                 }
                 </div>
                   <input onChange={(e) => loadFile(e)} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
@@ -448,7 +445,7 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
                 <p>Files:</p>
                 
                 <div className="form-inside-content">
-                  { item.download == "" ?
+                  { item.download === "" ?
                 <div><p>No files added</p></div>
                 :
                   item.download.map(file => (

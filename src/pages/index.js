@@ -24,7 +24,7 @@ const IndexPage = () => (
     </div>
 
     <div className="link-box">
-      <a href="https://www.gofundme.com/f/all-in-one-education-a-reformative-resource" target="_blank">Donate</a>
+      <a href="https://www.gofundme.com/f/all-in-one-education-a-reformative-resource" target="_blank" rel="noreferrer">Donate</a>
     </div>
     
     </section>
@@ -33,7 +33,7 @@ const IndexPage = () => (
       <h1>WHAT WE DO</h1>
     
     <div className="content-overlay-box">
-      <img src={require("../images/42401748_m.jpg")}></img>
+      <img src={require("../images/42401748_m.jpg")} alt="enhance-learning"></img>
       <div className="paragraph-box paragraph-right" id="pink">
         <h1>ENHANCE LEARNING, FOR LIFE IN MODERN BRITAIN</h1>
         <p>By enabling our nations’ educators to teach the intersectional realities of British History through engaging, representative, and accessible materials, we help equip young learners to acknowledge and address multiple perspectives across education and society as a whole, creating exceptional critical thinkers and future global leaders.</p>
@@ -41,7 +41,7 @@ const IndexPage = () => (
     </div>
 
     <div className="content-overlay-box">
-    <img className="img-right" src={require("../images/96254573_m.jpg")}></img>
+    <img className="img-right" src={require("../images/96254573_m.jpg")} alt="provide resources"></img>
     <div className="paragraph-box paragraph-left" id="green">
     <h1>PROVIDE EASY TO USE RESOURCES, FROM GRASSROOTS SOURCES</h1>
     <p>The All in One resource gateway contains outstanding History lesson materials designed to correspond to and integrate seamlessly into the existing curriculum and examination requirements for every UK nation. All resource materials are made in partnership with existing expert organisations, academics, and UK teachers working currently.</p>
@@ -50,7 +50,7 @@ const IndexPage = () => (
     </div>
 
     <div className="content-overlay-box"> 
-    <img src={require("../images/127784687_m.jpg")}></img>
+    <img src={require("../images/127784687_m.jpg")} alt="support-change"></img>
     <div className="paragraph-box paragraph-right" id="yellow">
       <h1>SUPPORT LASTING CHANGE </h1>
       <p>Our approach to educaton reform is two-pronged, encompassing both content creation, and reform lobbying of UK governments to include All In One as a recommended teaching aid for university and college PGCE/PDGE courses, so that a greater consistency in inclusive teaching methods can be achieved across schools/educators.</p>

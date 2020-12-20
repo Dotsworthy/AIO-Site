@@ -34,7 +34,7 @@ const DeleteSubject = ({ currentItem, setDeleting }) => {
   const deleteFile = async (file, id, location) => {
     const string = `${location}/${id}/${file}`
     const storageRef = firebase.storage().ref()
-    if (file == "") {
+    if (file === "") {
       console.log("no file?")
       return
     } else {
@@ -51,19 +51,14 @@ const DeleteSubject = ({ currentItem, setDeleting }) => {
   const deleteAllFiles = async (file, id, location) => {
     const storageRef = firebase.storage().ref()
     console.log(file)
-    if (file == "") {
-      console.log(file)
-      console.log("no id?")
+    if (file === "") {
       return
-    } else if (file.length == 0) {
-      console.log(file)
-      console.log("no length?")
+    } else if (file.length === 0) {
       return
     } else {
-      console.log("code-reached")
       file.map(download => {
         const fileRef = storageRef.child(`${location}/${id}/${download}`)
-        fileRef.delete().then(function() {
+        return fileRef.delete().then(function() {
           console.log("resource deleted successfully")
         }).catch(function(error) {
           console.log(error)

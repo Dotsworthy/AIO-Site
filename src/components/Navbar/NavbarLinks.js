@@ -9,7 +9,7 @@ const NavItem = styled(Link)`
   color: #eee;
   display: inline-block;
   white-space: nowrap;
-  margin: 1vw 0;
+  margin: 10px 0;
   transition: all 200ms ease-in;
   position: relative;
 

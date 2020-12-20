@@ -4,13 +4,10 @@ import UpdateDatabaseItem from "./updateDatabaseItem"
 import DeleteDatabaseItem from "./deleteDatabaseItem"
 import RenderResourceNumber from "./renderResourceNumber"
 
-const db = firebase.firestore()
-
-// TO DO: render list of resources attached to database item
+// TO DO: Implement similar search functionality from list Subjects
 
 const ListDatabaseItems = ( { collection, resourceEntry} ) => {
     const [items, setItems] = useState([])
-    const [resources, setResources] = useState([])
     const [searchTerm, setSearchTerm] = useState(null)
     const [currentItem, setCurrentItem] = useState()
     const [editing, setEditing] = useState(false)
@@ -38,7 +35,7 @@ const ListDatabaseItems = ( { collection, resourceEntry} ) => {
         return unsubscribe
       }
         
-      }, [editing, searchTerm])
+      }, [collection, items, editing, searchTerm])
 
     // The functions below were used to render the number of resources attached. Currently non-working.
 

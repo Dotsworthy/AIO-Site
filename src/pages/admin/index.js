@@ -3,7 +3,7 @@ import ListSubjects from "../../components/ListSubjects";
 import AddSubject from "../../components/addSubject";
 import ListDatabaseItems from "../../components/listDatabaseItems";
 import Layout from "../../components/layout";
-import { Router, Link } from "@reach/router";
+import { Router } from "@reach/router";
 import firebase from 'firebase';
 import SignInManager from "../../components/signInManager";
 

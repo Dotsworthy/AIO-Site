@@ -7,14 +7,13 @@
 
 import React from "react"
 import PropTypes from "prop-types"
-import { useStaticQuery, graphql } from "gatsby"
+// import { useStaticQuery, graphql } from "gatsby"
 
-import Header from "./header"
+// import Header from "./header"
 import Navbar from "./Navbar/Navbar"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCoffee} from '@fortawesome/free-solid-svg-icons'
+
 import { Link } from "gatsby"
 // import "./layout.css"
 import "./styles.scss"
@@ -22,15 +21,15 @@ import "./styles.scss"
 // library.add(fab, faTwitter)
 
 const Layout = ({ children, siteType }) => {
-  const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `)
+  // const data = useStaticQuery(graphql`
+  //   query SiteTitleQuery {
+  //     site {
+  //       siteMetadata {
+  //         title
+  //       }
+  //     }
+  //   }
+  // `)
 
   return (
     <>

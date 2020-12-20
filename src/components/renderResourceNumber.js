@@ -6,7 +6,7 @@ const RenderResourceNumber = ({ currentItem, resourceEntry }) => {
     const useItems = () => {
         const [items, setItems] = useState([]);
         useEffect(() => {
-            if(resourceEntry == "tags") {
+            if(resourceEntry === "tags") {
                 firebase.firestore().collection("subjects").where(`${resourceEntry}`, "array-contains", `${currentItem.name}`).onSnapshot(snapshot => {
                     const listItems = snapshot.docs.map(doc => ({
                       id: doc.id,

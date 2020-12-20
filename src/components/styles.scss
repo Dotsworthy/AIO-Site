@@ -403,7 +403,7 @@ body {
 #admin-login {
     display: none;
 
-    @media #{$mq-medium} {
+    @media #{$mq-small} {
         display: block;
     }
 }
