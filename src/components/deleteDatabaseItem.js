@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import firebase from "firebase";
 import UpdateSubject from "./updateSubject";
 import DeleteSubject from "./deleteSubject";
-import { navigate } from "gatsby";
 
 const DeleteDatabaseItem = ({ setDeleting, currentItem}) => {
     

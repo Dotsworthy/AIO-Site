@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import NavbarLinks from "./NavbarLinks"
 import { Link } from "gatsby"
-import Logo from "./Logo"
 import styled from 'styled-components'
 
 const Home = styled(Link)`
@@ -134,8 +133,7 @@ const Navbar = ( siteType ) => {
   const site = String(siteType.siteType);
 
   return (
-    <Navigation className="navigation" id={ site == "client" ? "blue" : "red"}>
-      {/* <Logo /> */}
+    <Navigation className="navigation" id={ site === "client" ? "blue" : "red"}>
       <Home to="/">All In One</Home>
       <Toggle
         navbarOpen={navbarOpen}

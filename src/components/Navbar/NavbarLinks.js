@@ -41,10 +41,9 @@ const NavItem = styled(Link)`
 `
 
 const NavbarLinks = ( siteType ) => {
-  const site = String(siteType.siteType)
     return (
       <>
-      { siteType.siteType == "client" && 
+      { siteType.siteType === "client" && 
         <>
         <NavItem to="/about-us">About Us</NavItem>
         <NavItem to="/take-action">Take Action</NavItem>
@@ -53,7 +52,7 @@ const NavbarLinks = ( siteType ) => {
         <NavItem id="admin-login" to="/admin/">Admin Login</NavItem>
         </>
       }
-      { siteType.siteType == "admin" && 
+      { siteType.siteType === "admin" && 
       <>
       <NavItem to="/admin/subjectList">Subject List</NavItem>
       <NavItem to="/admin/categoryList">Categories</NavItem>

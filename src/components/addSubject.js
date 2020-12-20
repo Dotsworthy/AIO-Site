@@ -248,14 +248,14 @@ const AddSubject = () => {
           const databaseEntry = await databaseCheck(name, "subjects")
           
           let image
-          if (imageUpload == "") {
+          if (imageUpload === "") {
             image = ""
           } else {
             image = await uploadSingleFile('image', databaseEntry[0].id, 'images')
           }
 
           let download
-          if (resourceUploads == []) {
+          if (resourceUploads === []) {
             download = ""
           } else {
             download = await uploadAllFiles('download', databaseEntry[0].id, 'downloads')
@@ -366,7 +366,7 @@ const AddSubject = () => {
                   <p className="tags-added-adjustment">Tags added:</p>
                   <div className="form-inside-content">
                     
-                            {addedTags.length == 0 ?
+                            {addedTags.length === 0 ?
                             <p>None</p>
                             :
                             addedTags.map(singleTag => {
@@ -385,7 +385,7 @@ const AddSubject = () => {
               <div>
               <h2>Upload Image</h2>
               <div className="image-container">
-                <img id="preview" alt="no image"></img>
+                <img id="preview" alt="No Profile "></img>
               </div>
               <input onChange={(e) => prepareProfileImage(e, "preview")} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
               </div>
