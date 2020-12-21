@@ -82,14 +82,13 @@ const Toggle = styled.div`
 const Navbox = styled.div`
   display: flex;
   min-height: -webkit-fill-available;
-  height: 100%;
+  height: calc(100vh - 100px);
   align-items: center;
 
   @media (max-width: 768px) {
     flex-direction: column;
     position: fixed;
     width: 100%;
-    justify-content: flex-start;
     background-color: #0B6BBF;
     transition: all 0.3s ease-in;
     top: 99px;
