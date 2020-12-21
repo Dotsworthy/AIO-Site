@@ -35,6 +35,7 @@ font-size: 3rem;
 }
 
 @media (max-width: 768px) {
+  top: 26px;
   font-size: 2rem;
   z-index: 6;
   position: fixed;
@@ -105,7 +106,8 @@ const Hamburger = styled.div`
   transition: all .3s linear;
   align-self: center;
   position: fixed;
-  left: 88%;
+  
+  right: 3%;
   transform: ${props => (props.open ? "rotate(-45deg)" : "inherit")};
 
   ::before,
