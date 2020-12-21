@@ -95,6 +95,10 @@ const Navbox = styled.div`
     top: 99px;
     left: ${props => (props.open ? "-100%" : "0")};
   }
+
+  @supports (-webkit-touch-callout: none) {
+    height: calc(100% + 69px);
+  }
 `
 
 const Hamburger = styled.div`
