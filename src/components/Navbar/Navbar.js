@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import NavbarLinks from "./NavbarLinks"
 import { Link } from "gatsby"
 // import Logo from "./Logo"
@@ -72,6 +72,7 @@ const Toggle = styled.div`
   display: none;
   height: 100%;
   padding: 0 2vw;
+  cursor: default;
   color: white;
 
   @media (max-width: 768px) {
@@ -96,7 +97,6 @@ const Navbox = styled.div`
     left: ${props => (props.open ? "-100%" : "0")};
   }
 `
-
 
 const Hamburger = styled.div`
   background-color: #eee;
@@ -135,7 +135,16 @@ const Hamburger = styled.div`
 
 const Navbar = ( siteType ) => {
   const [navbarOpen, setNavbarOpen] = useState(false)
+  const [hasMounted, setHasMounted] = useState(false)
   const site = String(siteType.siteType);
+
+  useEffect(() => {
+    setHasMounted(true);
+  },[])
+
+  if (!hasMounted) {
+    return null;
+  }
 
   return (
     <Navigation className="navigation" id={ site === "client" ? "blue" : "red"}>
