@@ -3,10 +3,9 @@ import DownloadHandler from "./downloadHandler";
 import firebase from "firebase";
 import 'firebase/storage';
 
-const MoreInfo = ({ currentItem, setMoreInfo }) => {
+const MoreInfo = ({ currentItem, setDownloading, setMoreInfo }) => {
 
     const [item] = useState(currentItem);
-    const [downloading, setDownloading] = useState(false);
 
     const getImageURL = (id, location, resource) => {
         const image = `${location}/${id}/${resource.image}`

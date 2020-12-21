@@ -380,7 +380,7 @@ const ResourceCatalogue = ( ) => {
 
     {moreInfo && 
       <div className="additional-container">
-        <MoreInfo currentItem={currentItem} setMoreInfo={setMoreInfo}/>
+        <MoreInfo currentItem={currentItem} setDownloading={setDownloading} setMoreInfo={setMoreInfo}/>
       </div>
     
     }
