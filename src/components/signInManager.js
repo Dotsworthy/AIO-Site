@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import firebase from 'firebase';
+import { navigate } from 'gatsby';
 
 const SignInManager = () => {
 
@@ -28,15 +29,20 @@ const SignInManager = () => {
               alert('The email address provided is invalid.')
           }
         })
+
+        navigate("/admin/subjectList")
       }
 
     return (
-        <div className="small-form-container">
+        <div className="banner-container">
+        <div className="paragraph-box" id="white">
+            <h1>Admin Login</h1>
             <form onSubmit={onSubmit}>
                 <input placeholder="email" type="text" id="email" value={email} onChange={e => setEmail(e.currentTarget.value)}></input>
                 <input placeholder="password" type="password" id="password" value={password} onChange={e => setPassword(e.currentTarget.value)}></input>
                 <button type="submit">Sign In</button>
             </form>
+        </div>
         </div>
     )
 }

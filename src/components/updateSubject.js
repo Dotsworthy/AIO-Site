@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { navigate } from "gatsby"
-
 import firebase from "firebase"
 import 'firebase/storage'
 
 // ISSUES:
 // If resource has an image assigned to the image field but no corresponding image in cloud storage. Trying to upload that image will not work. User can upload a new image with different file name however. This is not something the user should run into.
 
-const UpdateItem = ({ currentItem }) => {
+const UpdateSubject = ({ currentItem, setEditing }) => {
 
   // item information to update the database
   const [item, setItem] = useState(currentItem);
@@ -21,10 +19,6 @@ const UpdateItem = ({ currentItem }) => {
   // warnings for duplicate entries and maximum entries
   const [duplicateFiles, setDuplicateFiles] = useState([])
 
-  // for rendering upload pop-up
-  const [submit, setSubmit] = useState(false)
-
-  
   // original variables for checking whether to upload/download
   const originalImage = currentItem.image;
   const originalName = currentItem.name;
@@ -261,7 +255,7 @@ const UpdateItem = ({ currentItem }) => {
         item.image 
         && item.download.length > 0
         ) {
-        const nameCheck = await databaseCheck(item.name, "items")
+        const nameCheck = await databaseCheck(item.name, "subjects")
         const categoryCheck = await databaseCheck(item.category, "categories")
         const levelCheck = await databaseCheck(item.level, "levels")
   
@@ -305,12 +299,12 @@ const UpdateItem = ({ currentItem }) => {
   
         firebase
         .firestore()
-        .collection("items")
+        .collection("subjects")
         .doc(item.id)
         .update(item)
   
   
-          navigate("/admin/subjectList")
+          setEditing(false);
         }
       } else {
         document.getElementById("warning-dialog-box").style.visibility = "visible";
@@ -319,7 +313,7 @@ const UpdateItem = ({ currentItem }) => {
     };
   
   const handleCancel = () => {
-    navigate("/admin/subjectList")
+      setEditing(false);
   }
 
   const warningCancel = () => {
@@ -413,7 +407,7 @@ const UpdateItem = ({ currentItem }) => {
 
                 <p className="tags-added-adjustment">Tags added:</p>
                 <div className="form-inside-content">
-                {item.tags == "" ?
+                {item.tags === "" ?
                 <p>No tags to display</p>
                 :  
                 item.tags.map(singleTag => {
@@ -435,10 +429,10 @@ const UpdateItem = ({ currentItem }) => {
               <div>
                 <h2>Upload Image</h2>
                 <div className="image-container">
-                  { item.image == "" ?
+                  { item.image === "" ?
                   <p>No Profile Image</p>
                 :
-                  <img className="preview" id="output" alt="Loading Image..."></img>
+                  <img className="preview" id="output" alt="Loading..."></img>
                 }
                 </div>
                   <input onChange={(e) => loadFile(e)} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
@@ -451,7 +445,7 @@ const UpdateItem = ({ currentItem }) => {
                 <p>Files:</p>
                 
                 <div className="form-inside-content">
-                  { item.download == "" ?
+                  { item.download === "" ?
                 <div><p>No files added</p></div>
                 :
                   item.download.map(file => (
@@ -495,4 +489,4 @@ const UpdateItem = ({ currentItem }) => {
   )
 }
 
-export default UpdateItem
+export default UpdateSubject

@@ -1,40 +1,20 @@
-import React, { useState } from "react"
+import React from "react"
 import ResourceCatalogue from "../components/resourceCatalogue"
 import Layout from "../components/layout";
-import DownloadHandler from "../components/downloadHandler";
 
+
+// Move Download handler to resource catalogue.
 
 const ResourcePage = () => {
 
-    const initialItemState = [
-        { id: null, name: "", download: "" },
-        ]
-
-    const [downloading, setDownloading] = useState(false);
-    const [currentItem, setCurrentItem] = useState(initialItemState)
-
-    const downloadResource = item => {
-        setDownloading(true);
-        setCurrentItem({
-            id: item.id,
-            name: item.name,
-            download: item.download
-        })
-    }
-
     return (
-        <Layout>
-            <div className="page-container">
-            <h1>Resources</h1>
-            {/* <input type="text" id="myInput" onKeyUp="myFunction()" placeholder="Search for names.."/> */}
-            <div className="resource-page-container">
-            <ResourceCatalogue downloadResource={downloadResource} />
-            {downloading && <DownloadHandler
-            currentItem={currentItem}
-            setDownloading={setDownloading}
-            />}
+        <Layout siteType={"client"}>
+            <div className="banner-container-desktop-only" id="dark-grey">
+                    <div className="paragraph-box" id="white"><h1>RESOURCE CATALOGUE</h1></div>
             </div>
-            </div>
+
+            <ResourceCatalogue/>
+
         </Layout>
     )
 }

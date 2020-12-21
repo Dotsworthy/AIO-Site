@@ -4,16 +4,19 @@ import 'firebase/storage'
 import JSZip from "jszip";
 import { saveAs } from 'file-saver';
 
-const DownloadHandler = ({ currentItem, setDownloading }) => {
+// NOTE: large file sizes are sizable and cause problems. Maybe look at bandwidth with free plan.
 
-    const [resources] = useState(currentItem)
+const DownloadHandler = ({ currentItem, setDownloading, setMoreInfo }) => {
+
+    const [item] = useState(currentItem)
 
     const getDownload = (download, location) => {
         const storage = firebase.storage();
         const storageRef = storage.ref()
-        const httpsReference = storageRef.child(`${location}/${resources.id}/${download}`);
+        const httpsReference = storageRef.child(`${location}/${item.id}/${download}`);
       
         httpsReference.getDownloadURL().then(function(url) {
+            console.log("code-reached")
           let xhr = new XMLHttpRequest();
           xhr.responseType = 'blob';
           xhr.onload = function(event) {
@@ -26,61 +29,83 @@ const DownloadHandler = ({ currentItem, setDownloading }) => {
           };
           xhr.open('GET', url);
           xhr.send();
+          console.log("code-reached")
         }).catch(function(error) {
           console.log(error);
         });
-      }
+    }   
 
-    const getAllDownloads = (location) => {
-        const storage = firebase.storage();
-        const storageRef = storage.ref()
+    const fileDownloader = async (fileList) => {
         let zip = new JSZip();
-        let materials = zip.folder(`${resources.name}`)
-        resources.download.forEach(resource => {
-            const httpsReference = storageRef.child(`${location}/${resources.id}/${resource}`)
-            
-            httpsReference.getDownloadURL().then(function(url) {
-                let xhr = new XMLHttpRequest();
-                xhr.responseType = 'blob';
-                console.log(xhr)
-                xhr.onload = function(event) {
-                    let blob = xhr.response;
-                    materials.file(`${resource}`, blob)
-                };
-                xhr.open('GET', url)
-                xhr.send();  
-                }).catch(function(error) {
-                    console.log(error)
-                })   
-        })
-        console.log(zip)
-        setTimeout(function() {
-            zip.generateAsync({type:"blob"})
-            .then(function (blob) {
-                saveAs(blob, `${resources.name}`);
+        let materials = zip.folder(`${item.name}`)
+        console.log("code-reached")
+        await Promise.all(fileList.map(file => {
+            return new Promise(function (resolve, reject) {
+                const storageRef = firebase.storage().ref(`downloads/${item.id}/${file}`)
+                storageRef.getDownloadURL().then(function(url) {
+                    console.log("code-reached")
+                    let xhr = new XMLHttpRequest();
+                    xhr.responseType = 'blob';
+                    xhr.open('GET', url);
+                    xhr.onreadystatechange = function(event) {
+                        if (xhr.readyState === 4) {
+                            if (xhr.status === 200) {
+                                console.log("code-reached")
+                                let blob = xhr.response
+                                materials.file(`${file}`, blob)
+                                console.log(materials);
+                                resolve(xhr.response)
+                                
+                            } else {
+                                reject(new Error("error"))
+                            }
+                        }
+
+                    };
+                    xhr.send();
+                })
             })
-        }, 3000)
-    }  
+        }))
+        .then(function() {
+            console.log(zip)
+            setTimeout(function() { zip.generateAsync({type: "blob"}).then(function (blob) {
+                saveAs(blob, `${item.name}`)
+            }) }, 0)
+            
+        })
+    }
+
+    const getAllDownloads = async () => {
+        const download = document.getElementById("zip")
+        download.value = "downloading..."
+
+        const fileList = Array.from(item.download);
+        await fileDownloader(fileList)
+
+        download.value = "Download";
+    }     
 
     return (
-        <div className="popup-container">
-            <div className="form-header">
-                <h2>Download Resources</h2>
-            </div>
-            <div className="downloads-container">
-            {resources.download.map(resource => (
-                <div key={resource} className="download-items">
-                <p>{resource}</p>
-                <button onClick={(e) => getDownload(resource, "downloads")}>Download</button>
+        <div>
+            <div>
+            { item.download.length > 0 ? 
+                <>
+                { item.download.map(resource => (
+                    <div key={resource} className="download-items">
+                    <p>{resource}</p>
+                    <input type="button" id={resource.name} value="Download" onClick={(e) => getDownload(resource, "downloads")}/>
+                    </div>
+                ))}
+                <div className="download-items">
+                    <p>Download All Files as Zip</p>
+                    <input type="button" value="Download" id="zip" onClick={(e) => getAllDownloads(e)}/>
                 </div>
-            ))}
-            <div className="download-items">
-                <p>Download All Files as Zip</p>
-                <button onClick={(e) => getAllDownloads("downloads")}>Download</button>
-            </div>
-            </div>
-            <div className="form-footer">
-            <button onClick={()=>setDownloading(false)}>Close</button>
+                
+                </>
+            :
+            <><div>No Downloads Available</div></>
+            }
+            
             </div>
         </div>
     )

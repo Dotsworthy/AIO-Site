@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from "react";
 import firebase from "firebase";
-import { navigate } from "gatsby";
+import UpdateSubject from "./updateSubject";
+import DeleteSubject from "./deleteSubject";
 
+<<<<<<< HEAD
 // ISSUES: tags can be safely deleted but navigation is wrong. Needs refactoring.
 
 const DeleteDatabaseItem = ({currentItem}) => {
+=======
+const DeleteDatabaseItem = ({ setDeleting, currentItem}) => {
+>>>>>>> develop
     
     // Resource for deletion
     const item = currentItem;
+
+    const [deletingSubject, setDeletingSubject] = useState(false)
+    const [editingSubject, setEditingSubject] = useState(false)
+    const [currentSubject, setCurrentSubject] = useState()
     
     // Looks for resources that contain the selected database item.
     const useItems = () => {
@@ -17,7 +26,7 @@ const DeleteDatabaseItem = ({currentItem}) => {
             
                 const unsubscribe = firebase
                 .firestore()
-                .collection("items")
+                .collection("subjects")
                 .where(`${item.location}`, "array-contains", `${item.name}`)
                 .onSnapshot(function(snapshot) {
                     const listItems = snapshot.docs.map(doc => ({
@@ -30,7 +39,7 @@ const DeleteDatabaseItem = ({currentItem}) => {
             } else {
                 const unsubscribe = firebase
                 .firestore()
-                .collection("items")
+                .collection("subjects")
                 .where(`${item.location}`, "==", `${item.name}`)
                 .onSnapshot(function(snapshot) {
                     const listItems = snapshot.docs.map(doc => ({
@@ -48,6 +57,37 @@ const DeleteDatabaseItem = ({currentItem}) => {
     // Collects and stores resources that contain the selected database item.
     const resources = useItems();
 
+    const deleteSubject = (e, item) => {
+        e.preventDefault();
+        setDeletingSubject(true)
+        setCurrentSubject({
+          id: item.id,
+          name: item.name,
+          image: item.image,
+          description: item.description,
+          category: item.category,
+          level: item.level,
+          tags: item.tags,
+          download: item.download
+        })
+      }
+    
+      const editSubject = (e, item) => {
+          e.preventDefault();
+        setCurrentSubject({
+          id: item.id,
+          name: item.name,
+          image: item.image,
+          description: item.description,
+          category: item.category,
+          level: item.level,
+          tags: item.tags,
+          download: item.download
+        })
+    
+        setEditingSubject(true)
+      }
+
     const onSubmit = e => {
         e.preventDefault()
         firebase
@@ -56,19 +96,20 @@ const DeleteDatabaseItem = ({currentItem}) => {
         .doc(item.id)
         .delete()
 
-        navigate(`/admin/${currentItem.location}List`)
+        setDeleting(false)
     }
 
     const handleCancel = (e) => {
         e.preventDefault()
 
-        navigate(`/admin/${currentItem.location}List`)
+        setDeleting(false)
     }
     
     return (
-        <div className="popup-container">
-
-            <div className="form-header">
+        <div>
+            {!deletingSubject && !editingSubject && 
+                <div className="database-form">
+                  <div className="form-header">
                 <h2>Confirm Delete?</h2>
              </div>
 
@@ -81,10 +122,18 @@ const DeleteDatabaseItem = ({currentItem}) => {
                             <h3>Items attached to resources!</h3>
                             <p>You cannot delete this database item as it is attached to resources in the database. You must first assign new items to these resources:</p>
                         {resources.map(resource => {
-                            return <p>{resource.name}</p>
+                            return <div>
+                                <p>{resource.name}</p>
+                                <button type="button" onClick={(e) => editSubject(e, resource)}>Edit</button>
+                                <button type="button" onClick={(e) => deleteSubject(e, resource)}>Delete</button>
+
+                            </div>
+                            
+                            
+                            
                         })
                         }
-                    <button onClick={(e) => handleCancel(e)} >Cancel</button>
+                    <button type="reset" onClick={(e) => handleCancel(e)} >Cancel</button>
                         </div>
                     : 
                     <div>
@@ -95,6 +144,12 @@ const DeleteDatabaseItem = ({currentItem}) => {
                 }  
                 </div> 
             </form>
+                </div>
+            }
+      
+                {editingSubject && <UpdateSubject setEditing={setEditingSubject} currentItem={currentSubject}/>}
+                {deletingSubject && <DeleteSubject setDeleting={setDeletingSubject} currentItem={currentSubject}/>}
+
         </div>
     )
 }

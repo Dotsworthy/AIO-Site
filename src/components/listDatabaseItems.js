@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react"
 import firebase from "./firebase"
+import UpdateDatabaseItem from "./updateDatabaseItem"
+import DeleteDatabaseItem from "./deleteDatabaseItem"
+import RenderResourceNumber from "./renderResourceNumber"
 
-// const db = firebase.firestore()
+// TO DO: Implement similar search functionality from list Subjects
 
-const ListDatabaseItems = ( { collection, resourceEntry, editItem, deleteItem } ) => {
+const ListDatabaseItems = ( { collection, resourceEntry} ) => {
     const [items, setItems] = useState([])
     const [searchTerm, setSearchTerm] = useState(null)
+    const [currentItem, setCurrentItem] = useState()
+    const [editing, setEditing] = useState(false)
+    const [deleting, setDeleting] = useState(false)
 
     useEffect(() => {
       if (searchTerm) {
@@ -25,19 +31,34 @@ const ListDatabaseItems = ( { collection, resourceEntry, editItem, deleteItem } 
           }))
           setItems(listItems);
         });
+        console.log(items);
         return unsubscribe
       }
         
-      }, [searchTerm])
+      }, [collection, items, editing, searchTerm])
 
     // The functions below were used to render the number of resources attached. Currently non-working.
 
     // const resources = []
+
+    // const useItems = (item) => {
+    //   const [items, setItems] = useState([]);
+    //   useEffect(() => {
+    //     database.collection(resourceEntry).where(`${resourceEntry}, "==", ${item}`).onSnapshot(snapshot => {
+    //       const listItems = snapshot.docs.map(doc => ({
+    //         id: doc.id,
+    //         ...doc.data()
+    //       }));
+    //       setItems(listItems);
+    //     })
+    //   })
+    //   console.log(items)
+    // }
     
-    // const addResourcesAttached = async (item) => {
+    // const getResourcesAttached = async (item) => {
     //   const resources = []
     //   const resourcesRef = db.collection("items")
-    //   await resourcesRef.where(`${resourceEntry}`, "==", `${item}`).get().then(function(querySnapshot) {
+    //   await resourcesRef.where(`${resourceEntry}`, "==", `${item.name}`).get().then(function(querySnapshot) {
     //     if (querySnapshot.empty) {
     //       return
     //   } else {
@@ -48,7 +69,7 @@ const ListDatabaseItems = ( { collection, resourceEntry, editItem, deleteItem } 
     //   ).catch(function(error) {
     //     console.log("Error getting documents: ", error)
     //   });
-    //   return resources
+    //   console.log(resources);
     // }
   
     // const getResourcesAttached = async (category) => {
@@ -59,6 +80,31 @@ const ListDatabaseItems = ( { collection, resourceEntry, editItem, deleteItem } 
     //   const resourcesAttached = result.length
     //   return resources.push({category, resourcesAttached})
     // }  
+
+    const editDatabaseItem = (item, collection, location) => {
+      setCurrentItem({
+        id: item.id,
+        name: item.name,
+        location: location,
+        collection: collection
+      })
+  
+      // navigate("/admin/categoryList/updateCategory")
+      setEditing(true)
+    }
+  
+    const deleteDatabaseItem = (item, collection, location) => {
+      setCurrentItem({
+        id: item.id,
+        name: item.name,
+        location: location,
+        collection: collection
+      })
+
+      setDeleting(true)
+  
+      // navigate("/admin/categoryList/deleteCategory")
+    }
     const onSubmit = e => {
       e.preventDefault()
       const element = document.getElementById("search").value
@@ -67,37 +113,48 @@ const ListDatabaseItems = ( { collection, resourceEntry, editItem, deleteItem } 
 
     return (
     <div className="database-container">
-      <div className="database-navigation-container">
+      {!editing && !deleting && 
+      <>
+         <div className="database-navigation-container">
 
-          <form onSubmit={onSubmit} className="nav-bar-form">
-          <input type="text" id="search" name="search" placeholder="Search"/>
-          <div className="form-footer">
-          <button type="submit">Search</button>
-          <button type="reset" onClick={() => setSearchTerm(null)}>Clear</button>
-          </div>
-          </form>
-      </div>
+        <form onSubmit={onSubmit} className="nav-bar-form">
+        <input type="text" id="search" name="search" placeholder="Search"/>
+        <div className="form-footer">
+        <button type="submit">Search</button>
+        <button type="reset" onClick={() => setSearchTerm(null)}>Clear</button>
+        </div>
+        </form>
+        </div>
 
 
         <table className="database-table">
-      <tbody>
+        <tbody>
         <tr className="header-row">
-          <th className="name">Name</th>
+        <th className="name">Name</th>
+        <th>Resources Attached</th>
         </tr>
-      </tbody>
-      {items.map(item => (
-            <tbody key={item.id}>
-              <tr className="data-row">
-                <td className="item-name">{item.name}</td>
-                <td className="buttons">
-                    <button onClick={() => editItem(item, collection, resourceEntry)}>Edit</button>
-                    <button onClick={() => deleteItem(item, collection, resourceEntry)}>Delete</button>
-                </td>
-              </tr>
-            </tbody>
-          ))}
-    </table>
+        </tbody>
+        {items.map(item => (
+          <tbody key={item.id}>
+            <tr className="data-row">
+              <td className="item-name">{item.name}</td>
+              <RenderResourceNumber currentItem={item} resourceEntry={resourceEntry}/>
+              <td className="buttons">
+                  <button onClick={() => editDatabaseItem(item, collection, resourceEntry)}>Edit</button>
+                  <button onClick={() => deleteDatabaseItem(item, collection, resourceEntry)}>Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        ))}
+        </table>
+      </>
+      
+      }
 
+     
+
+    {editing && <UpdateDatabaseItem setEditing={setEditing} currentItem={currentItem}/>}
+    {deleting && <DeleteDatabaseItem setDeleting={setDeleting} currentItem={currentItem}/>}    
     </div>
     )
 }

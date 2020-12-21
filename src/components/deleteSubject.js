@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import firebase from "firebase"
 import 'firebase/storage'
 
+<<<<<<< HEAD:src/components/deleteResource.js
 // ISSUES: check that deleting resource deletes storage.
 
 const DeleteResource = ({ currentResource, setDeleting }) => {
+=======
+const DeleteSubject = ({ currentItem, setDeleting }) => {
+>>>>>>> develop:src/components/deleteSubject.js
 
   // Resource for deletion
-  const resource = currentResource
+  const resource = currentItem;
+  console.log(resource);
 
   // generates notification for user that resource is in process of deletion
   const [waiting, setWaiting] = useState(false)
@@ -22,20 +27,24 @@ const DeleteResource = ({ currentResource, setDeleting }) => {
 
     firebase
     .firestore()
-    .collection("items")
+    .collection("subjects")
     .doc(resource.id)
     .delete()
 
-    setDeleting(false)
+    setDeleting(false);
+
+    
   }  
   
   // deletes a single file within a folder in firebase storage
   const deleteFile = async (file, id, location) => {
+    const string = `${location}/${id}/${file}`
     const storageRef = firebase.storage().ref()
-    if (file = "") {
+    if (file === "") {
+      console.log("no file?")
       return
     } else {
-      const fileRef = storageRef.child(`${location}/${id}/${file}`)
+      const fileRef = storageRef.child(`${string}`)
       fileRef.delete().then(function() {
         console.log("resource deleted successfully")
       }).catch(function(error) {
@@ -47,14 +56,15 @@ const DeleteResource = ({ currentResource, setDeleting }) => {
   // deletes all files within a folder in firebase storage
   const deleteAllFiles = async (file, id, location) => {
     const storageRef = firebase.storage().ref()
-    if (file = "") {
+    console.log(file)
+    if (file === "") {
       return
-    } else if (file.length == 0) {
+    } else if (file.length === 0) {
       return
     } else {
-      file.forEach(download => {
+      file.map(download => {
         const fileRef = storageRef.child(`${location}/${id}/${download}`)
-        fileRef.delete().then(function() {
+        return fileRef.delete().then(function() {
           console.log("resource deleted successfully")
         }).catch(function(error) {
           console.log(error)
@@ -81,4 +91,4 @@ const DeleteResource = ({ currentResource, setDeleting }) => {
   )
 }
 
-export default DeleteResource
+export default DeleteSubject

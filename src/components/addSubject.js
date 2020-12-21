@@ -3,7 +3,7 @@ import firebase from "firebase"
 import { navigate } from "gatsby"
 import 'firebase/storage'
 
-const AddResourceForm = () => {
+const AddSubject = () => {
 
   // comment change?
     // database location. Needed for some functions.
@@ -198,7 +198,7 @@ const AddResourceForm = () => {
     const updateResource = (image, download, location, id) => {
       firebase.firestore().collection(location).doc(id).update({
         image,
-        download
+        download,
       })
     }
 
@@ -214,7 +214,7 @@ const AddResourceForm = () => {
       e.preventDefault()
       if (name && description && category && level && addedTags && imageUpload &&     resourceUploads.length > 0) {
 
-      const nameCheck = await databaseCheck(name, "items")
+      const nameCheck = await databaseCheck(name, "subjects")
       const categoryCheck = await databaseCheck(category, "categories")
       const levelCheck = await databaseCheck(level, "levels")
       
@@ -243,25 +243,25 @@ const AddResourceForm = () => {
           
           const tags = addedTags;
           
-          addResource(name, description, category, level, tags, "items")
+          addResource(name, description, category, level, tags, "subjects")
 
-          const databaseEntry = await databaseCheck(name, "items")
+          const databaseEntry = await databaseCheck(name, "subjects")
           
           let image
-          if (imageUpload == "") {
+          if (imageUpload === "") {
             image = ""
           } else {
             image = await uploadSingleFile('image', databaseEntry[0].id, 'images')
           }
 
           let download
-          if (resourceUploads == []) {
+          if (resourceUploads === []) {
             download = ""
           } else {
             download = await uploadAllFiles('download', databaseEntry[0].id, 'downloads')
           }
           
-          updateResource(image, download, "items", databaseEntry[0].id)
+          updateResource(image, download, "subjects", databaseEntry[0].id)
 
           navigate("/admin/subjectList")
         }
@@ -366,7 +366,7 @@ const AddResourceForm = () => {
                   <p className="tags-added-adjustment">Tags added:</p>
                   <div className="form-inside-content">
                     
-                            {addedTags.length == 0 ?
+                            {addedTags.length === 0 ?
                             <p>None</p>
                             :
                             addedTags.map(singleTag => {
@@ -385,7 +385,7 @@ const AddResourceForm = () => {
               <div>
               <h2>Upload Image</h2>
               <div className="image-container">
-                <img id="preview" alt="no image"></img>
+                <img id="preview" alt="No Profile "></img>
               </div>
               <input onChange={(e) => prepareProfileImage(e, "preview")} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
               </div>
@@ -448,4 +448,4 @@ const AddResourceForm = () => {
     )
   }
 
-export default AddResourceForm
+export default AddSubject

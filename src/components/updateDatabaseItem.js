@@ -1,9 +1,8 @@
-import { navigate } from "gatsby";
 import React, { useState, useEffect } from "react";
 import firebase from "./firebase";
 
 
-const UpdateDatabaseItem = ( { currentItem }) => {
+const UpdateDatabaseItem = ( { setEditing, currentItem }) => {
     
     // Used for updating the database item.
     const [item, setItem] = useState(currentItem);
@@ -17,7 +16,7 @@ const UpdateDatabaseItem = ( { currentItem }) => {
             
                 const unsubscribe = firebase
                 .firestore()
-                .collection("items")
+                .collection("subjects")
                 .where(`${item.location}`, "array-contains", `${item.name}`)
                 .onSnapshot(function(snapshot) {
                     const listItems = snapshot.docs.map(doc => ({
@@ -30,7 +29,7 @@ const UpdateDatabaseItem = ( { currentItem }) => {
             } else {
                 const unsubscribe = firebase
                 .firestore()
-                .collection("items")
+                .collection("subjects")
                 .where(`${item.location}`, "==", `${item.name}`)
                 .onSnapshot(function(snapshot) {
                     const listItems = snapshot.docs.map(doc => ({
@@ -77,12 +76,12 @@ const UpdateDatabaseItem = ( { currentItem }) => {
         e.preventDefault()
 
         resources.map(resource => {
-            return updateResource(resource, "items")
+            return updateResource(resource, "subjects")
         })
 
         firebase.firestore().collection(item.collection).doc(item.id).update({name: item.name})
         
-        navigate(`/admin/${currentItem.location}List`)
+        setEditing(false);
     }
 
     const onChange = e => {
@@ -92,7 +91,7 @@ const UpdateDatabaseItem = ( { currentItem }) => {
 
     const handleCancel = (e) => {
         e.preventDefault()
-        navigate(`/admin/${currentItem.location}List`)
+        setEditing(false)
     }  
 
     return (
