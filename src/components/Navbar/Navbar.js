@@ -105,7 +105,7 @@ const Hamburger = styled.div`
   transition: all .3s linear;
   align-self: center;
   position: fixed;
-  
+  top: 49px;
   right: 3%;
   transform: ${props => (props.open ? "rotate(-45deg)" : "inherit")};
 
