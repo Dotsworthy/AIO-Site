@@ -81,6 +81,7 @@ const Toggle = styled.div`
 
 const Navbox = styled.div`
   display: flex;
+  min-height: -webkit-fill-available;
   height: 100%;
   align-items: center;
 
@@ -89,7 +90,6 @@ const Navbox = styled.div`
     position: fixed;
     width: 100%;
     justify-content: flex-start;
-    padding-top: 20%;
     background-color: #0B6BBF;
     transition: all 0.3s ease-in;
     top: 99px;
