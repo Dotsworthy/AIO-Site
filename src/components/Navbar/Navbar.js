@@ -72,7 +72,6 @@ const Toggle = styled.div`
   display: none;
   height: 100%;
   padding: 0 2vw;
-  cursor: default;
   color: white;
 
   @media (max-width: 768px) {
@@ -105,7 +104,8 @@ const Hamburger = styled.div`
   transition: all .3s linear;
   align-self: center;
   position: fixed;
-  top: 49px;
+  margin: 2px;
+  top: 47px;
   right: 3%;
   transform: ${props => (props.open ? "rotate(-45deg)" : "inherit")};
 
