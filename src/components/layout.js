@@ -13,12 +13,16 @@ import PropTypes from "prop-types"
 import Navbar from "./Navbar/Navbar"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons'
+import { config } from "@fortawesome/fontawesome-svg-core"
+
 
 import { Link } from "gatsby"
 // import "./layout.css"
 import "./styles.scss"
 
 // library.add(fab, faTwitter)
+config.autoAddCss = false
+
 
 const Layout = ({ children, siteType }) => {
   // const data = useStaticQuery(graphql`
