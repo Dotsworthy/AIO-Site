@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import NavbarLinks from "./NavbarLinks"
 import { Link } from "gatsby"
+// import Logo from "./Logo"
 import styled from 'styled-components'
 
 const Home = styled(Link)`
@@ -8,7 +9,7 @@ text-decoration: none;
 color: #eee;
 display: inline-block;
 white-space: nowrap;
-margin: 1vh 0;
+margin: 10px 0;
 transition: all 200ms ease-in;
 position: relative;
 font-size: 3rem;
@@ -34,9 +35,9 @@ font-size: 3rem;
 }
 
 @media (max-width: 768px) {
-  margin-top: 1.5vh;
   font-size: 2rem;
   z-index: 6;
+  position: fixed;
 }
 `;
 
@@ -91,10 +92,11 @@ const Navbox = styled.div`
     padding-top: 20%;
     background-color: #0B6BBF;
     transition: all 0.3s ease-in;
-    top: 100px;
+    top: 99px;
     left: ${props => (props.open ? "-100%" : "0")};
   }
 `
+
 
 const Hamburger = styled.div`
   background-color: #eee;
@@ -102,7 +104,8 @@ const Hamburger = styled.div`
   height: 3px;
   transition: all .3s linear;
   align-self: center;
-  position: relative;
+  position: fixed;
+  left: 88%;
   transform: ${props => (props.open ? "rotate(-45deg)" : "inherit")};
 
   ::before,
@@ -128,6 +131,7 @@ const Hamburger = styled.div`
   }
 `
 
+
 const Navbar = ( siteType ) => {
   const [navbarOpen, setNavbarOpen] = useState(false)
   const site = String(siteType.siteType);
@@ -141,6 +145,7 @@ const Navbar = ( siteType ) => {
       >
         {navbarOpen ? <Hamburger open /> : <Hamburger />}
       </Toggle>
+
       {navbarOpen ? (
         <Navbox>
           <NavbarLinks siteType={ site }/>
