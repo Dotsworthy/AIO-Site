@@ -60,6 +60,7 @@ const Navigation = styled.nav`
     position: sticky;
     flex-direction: row;
     height: 100px;
+    min-height: -webkit-fill-available;
     top: 0;
     left: 0;
     right: 0;
@@ -87,7 +88,8 @@ const Navbox = styled.div`
   @media (max-width: 768px) {
     flex-direction: column;
     position: fixed;
-    min-height: calc(100vh - 100px);
+    height: calc(100vh - 100px);
+    min-height: -webkit-fill-available;
     width: 100%;
     background-color: #0B6BBF;
     transition: all 0.3s ease-in;
