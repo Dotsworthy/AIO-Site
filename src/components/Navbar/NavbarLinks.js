@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -42,7 +42,20 @@ const NavItem = styled(Link)`
 `
 
 const NavbarLinks = ( siteType ) => {
-    return (
+
+  const [hasMounted, setHasMounted] = useState(false)
+
+  useEffect(() => {
+    setHasMounted(true)
+  },[])
+
+  if (!hasMounted) {
+    return <>
+    </>
+  }
+
+
+  return (
       <>
       { siteType.siteType === "client" && 
         <>

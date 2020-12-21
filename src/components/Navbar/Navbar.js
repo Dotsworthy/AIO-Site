@@ -135,16 +135,7 @@ const Hamburger = styled.div`
 
 const Navbar = ( siteType ) => {
   const [navbarOpen, setNavbarOpen] = useState(false)
-  const [hasMounted, setHasMounted] = useState(false)
   const site = String(siteType.siteType);
-
-  useEffect(() => {
-    setHasMounted(true);
-  },[])
-
-  if (!hasMounted) {
-    return null;
-  }
 
   return (
     <Navigation className="navigation" id={ site === "client" ? "blue" : "red"}>
