@@ -60,6 +60,7 @@ const Navigation = styled.nav`
     position: sticky;
     flex-direction: row;
     height: 100px;
+    min-height: -webkit-fill-available;
     top: 0;
     left: 0;
     right: 0;
@@ -82,7 +83,7 @@ const Toggle = styled.div`
 const Navbox = styled.div`
   display: flex;
   min-height: -webkit-fill-available;
-  height: calc(100vh - 100px);
+  min-height: calc(100vh);
   align-items: center;
 
   @media (max-width: 768px) {
