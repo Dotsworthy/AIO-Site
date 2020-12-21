@@ -5,15 +5,9 @@ import { navigate } from "gatsby"
 import firebase from "./firebase"
 // import 'firebase/storage'
 
-<<<<<<< HEAD
-// ISSUES: Improve search bar to be more flexible.
-
-const ListSubjects = ({ editItem }) => {
-=======
 // can't search by tags
 
 const ListSubjects = () => {
->>>>>>> develop
   
   // used for rendering and filtering resources
   const [resources, setResources] = useState([]);

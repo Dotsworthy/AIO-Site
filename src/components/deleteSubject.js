@@ -2,13 +2,7 @@ import React, { useState } from "react";
 import firebase from "firebase"
 import 'firebase/storage'
 
-<<<<<<< HEAD:src/components/deleteResource.js
-// ISSUES: check that deleting resource deletes storage.
-
-const DeleteResource = ({ currentResource, setDeleting }) => {
-=======
 const DeleteSubject = ({ currentItem, setDeleting }) => {
->>>>>>> develop:src/components/deleteSubject.js
 
   // Resource for deletion
   const resource = currentItem;

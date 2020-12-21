@@ -3,13 +3,7 @@ import firebase from "firebase";
 import UpdateSubject from "./updateSubject";
 import DeleteSubject from "./deleteSubject";
 
-<<<<<<< HEAD
-// ISSUES: tags can be safely deleted but navigation is wrong. Needs refactoring.
-
-const DeleteDatabaseItem = ({currentItem}) => {
-=======
 const DeleteDatabaseItem = ({ setDeleting, currentItem}) => {
->>>>>>> develop
     
     // Resource for deletion
     const item = currentItem;
