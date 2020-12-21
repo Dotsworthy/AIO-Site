@@ -60,7 +60,6 @@ const Navigation = styled.nav`
     position: sticky;
     flex-direction: row;
     height: 100px;
-    min-height: -webkit-fill-available;
     top: 0;
     left: 0;
     right: 0;
