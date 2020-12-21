@@ -3,9 +3,6 @@ import styled from "styled-components"
 import { Link } from "gatsby"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons'
-import { config } from "@fortawesome/fontawesome-svg-core"
-
-config.autoAddCss = false
 
 
 const NavItem = styled(Link)`
