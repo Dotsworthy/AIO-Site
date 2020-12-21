@@ -62,15 +62,15 @@ const NavbarLinks = ( siteType ) => {
       }
       <div className="icons-navlinks">
       <a className="icon-link" href="https://www.facebook.com/allinoneeducationuk">
-              <FontAwesomeIcon icon={faFacebook} />
+              <FontAwesomeIcon icon={faFacebook} size="1x"/>
             </a>
             
             <a className="icon-link" href="https://twitter.com/aioeducation?lang=en">
-              <FontAwesomeIcon icon={faTwitter}/>
+              <FontAwesomeIcon icon={faTwitter} size="1x"/>
             </a>
 
             <a className="icon-link"  href="https://www.instagram.com/allinoneeducationuk/">
-              <FontAwesomeIcon icon={faInstagram}/>
+              <FontAwesomeIcon icon={faInstagram} size="1x"/>
             </a>
       </div>
       </>
