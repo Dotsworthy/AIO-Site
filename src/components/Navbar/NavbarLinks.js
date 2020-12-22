@@ -11,7 +11,6 @@ const NavItem = styled(Link)`
   display: inline-block;
   white-space: nowrap;
   margin: 10px 0;
-  transition: all 200ms ease-in;
   position: relative;
 
   :after {

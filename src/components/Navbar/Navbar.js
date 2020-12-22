@@ -142,7 +142,12 @@ const Navbar = ( siteType ) => {
   // const body = document.getElementsByTagName("BODY")[0];
 
   useEffect(() => {
-    setHasMounted(true);
+
+    setTimeout(function() {
+      setHasMounted(true);
+    },2000)
+
+   
     document.body.style.overflow = "auto"
   },[])
 
