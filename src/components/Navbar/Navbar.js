@@ -136,19 +136,19 @@ const Hamburger = styled.div`
   }
 `
 
-
+// Note: scrolling issues with SSR. Thinking about how to fix.
 
 
 const Navbar = ( siteType ) => {
   const [navbarOpen, setNavbarOpen] = useState(false)
   const site = String(siteType.siteType);
-  const body = document.getElementsByTagName("BODY")[0];
+  // const body = document.getElementsByTagName("BODY")[0];
 
-  if (navbarOpen === true) {
-    body.style.overflow = "hidden"
-  } else if (navbarOpen === false) {
-    body.style.overflow = "auto"
-  }
+  // if (navbarOpen === true) {
+  //   body.style.overflow = "hidden"
+  // } else if (navbarOpen === false) {
+  //   body.style.overflow = "auto"
+  // }
 
   return (
     <Navigation className="navigation" id={ site === "client" ? "blue" : "red"}>
