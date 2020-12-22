@@ -143,18 +143,10 @@ const Navbar = ( siteType ) => {
   const [navbarOpen, setNavbarOpen] = useState(false)
   const site = String(siteType.siteType);
 
-  const openNavbar = () => {
-
-    if (navbarOpen === true) {
-      setNavbarOpen(false)
-      document.body.style.overflow = "auto";
-    }
-
-    if (navbarOpen === false) {
-      setNavbarOpen(true)
-      document.body.style.overflow = "hidden";
-    }
-    
+  if (navbarOpen === true) {
+    document.body.style.overflow = "hidden"
+  } else if (navbarOpen === false) {
+    document.body.style.overflow = "auto"
   }
 
   return (
@@ -162,7 +154,7 @@ const Navbar = ( siteType ) => {
       <Home to="/">All In One</Home>
       <Toggle
         navbarOpen={navbarOpen}
-        onClick={() => openNavbar()}
+        onClick={() => setNavbarOpen(!navbarOpen)}
       >
         {navbarOpen ? 
         <Hamburger open /> 
@@ -171,11 +163,11 @@ const Navbar = ( siteType ) => {
 
       {navbarOpen ? (
         <Navbox>
-          <NavbarLinks siteType={ site }/>
+          <NavbarLinks siteType={ site } setNavbarOpen={setNavbarOpen}/>
         </Navbox>
       ) : (
         <Navbox open>
-          <NavbarLinks siteType = { site }/>
+          <NavbarLinks siteType = { site } setNavbarOpen={setNavbarOpen}/>
         </Navbox>
       )}
     </Navigation>

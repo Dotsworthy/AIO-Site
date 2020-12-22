@@ -41,7 +41,7 @@ const NavItem = styled(Link)`
   }
 `
 
-const NavbarLinks = ( siteType ) => {
+const NavbarLinks = ( siteType, setNavbarOpen ) => {
 
   const [hasMounted, setHasMounted] = useState(false)
 
