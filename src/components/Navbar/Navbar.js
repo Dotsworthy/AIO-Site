@@ -142,11 +142,12 @@ const Hamburger = styled.div`
 const Navbar = ( siteType ) => {
   const [navbarOpen, setNavbarOpen] = useState(false)
   const site = String(siteType.siteType);
+  const body = document.getElementsByTagName("BODY")[0];
 
   if (navbarOpen === true) {
-    document.body.style.overflow = "hidden"
+    body.style.overflow = "hidden"
   } else if (navbarOpen === false) {
-    document.body.style.overflow = "auto"
+    body.style.overflow = "auto"
   }
 
   return (
