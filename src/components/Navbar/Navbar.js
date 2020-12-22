@@ -4,66 +4,6 @@ import { Link } from "gatsby"
 // import Logo from "./Logo"
 import styled from 'styled-components'
 
-const Home = styled(Link)`
-text-decoration: none;
-color: #eee;
-position: relative;
-font-size: 3rem;
-
-:after {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 0%;
-  content: ".";
-  color: transparent;
-  background: #F2B749;
-  height: 1px;
-  transition: all 0.4s ease-in;
-}
-
-:hover {
-  color: goldenrod;
-  ::after {
-    width: 100%;
-  }
-}
-
-@media (max-width: 768px) {
-  font-size: 2rem;
-  z-index: 6;
-  position: relative;
-}
-`;
-
-const Navigation = styled.nav`
-  display: flex;
-  flex-direction: column;
-  min-height: 100px;
-  position: relative;
-  justify-content: space-evenly;
-  align-items: center;
-  text-transform: uppercase;
-  border-bottom: 2px solid #33333320;
-  margin: 0 auto;
-  padding: 0 2vw;
-  z-index: 2;
-  align-self: center;
-
-  @media (max-width: 768px) {
-    position: sticky;
-    flex-direction: row;
-    justify-content: space-between;
-    height: 100px;
-    top: 0;
-    left: 0;
-    right: 0;
-    left: 0;
-    z-index: 2;
-  }
-`
-
 const Toggle = styled.div`
   display: none;
   height: 100%;
@@ -144,9 +84,6 @@ const Navbar = ( siteType ) => {
   useEffect(() => {
 
     setHasMounted(true);
-
-
-   
     document.body.style.overflow = "auto"
   },[])
 
