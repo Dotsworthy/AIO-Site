@@ -10,7 +10,6 @@ color: #eee;
 display: inline-block;
 white-space: nowrap;
 margin: 10px 0;
-transition: all 200ms ease-in;
 position: relative;
 font-size: 3rem;
 
@@ -91,8 +90,7 @@ const Navbox = styled.div`
     flex-direction: column;
     justify-content: space-evenly;
     position: fixed;
-    height: 100%
-    min-height: -webkit-fill-available;
+    height: calc(100% - 99px);
     width: 100%;
     background-color: #0B6BBF;
     transition: all 0.3s ease-in;
