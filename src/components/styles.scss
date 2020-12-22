@@ -111,7 +111,9 @@ body {
     // display: flex;
     // flex-direction: column;
     @extend %font-options;
+    overflow: auto;
 }
+
 
 span {
     color: white;

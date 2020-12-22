@@ -137,18 +137,36 @@ const Hamburger = styled.div`
 `
 
 
+
+
 const Navbar = ( siteType ) => {
   const [navbarOpen, setNavbarOpen] = useState(false)
   const site = String(siteType.siteType);
+
+  const openNavbar = () => {
+
+    if (navbarOpen === true) {
+      setNavbarOpen(false)
+      document.body.style.overflow = "auto";
+    }
+
+    if (navbarOpen === false) {
+      setNavbarOpen(true)
+      document.body.style.overflow = "hidden";
+    }
+    
+  }
 
   return (
     <Navigation className="navigation" id={ site === "client" ? "blue" : "red"}>
       <Home to="/">All In One</Home>
       <Toggle
         navbarOpen={navbarOpen}
-        onClick={() => setNavbarOpen(!navbarOpen)}
+        onClick={() => openNavbar()}
       >
-        {navbarOpen ? <Hamburger open /> : <Hamburger />}
+        {navbarOpen ? 
+        <Hamburger open /> 
+        : <Hamburger />}
       </Toggle>
 
       {navbarOpen ? (
