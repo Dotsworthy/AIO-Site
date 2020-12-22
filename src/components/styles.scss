@@ -1113,6 +1113,7 @@ input {
     background-color: #F6F5F4;
     @media #{$mq-small} {
         display: block;
+        min-height: calc(100vh - 160px);
     }
 }
 
@@ -1145,6 +1146,7 @@ input {
     @media #{$mq-small} {
         // background-color: #50514F;
         padding: 10px;
+        height: 60px;
     }
 
     @media #{$mq-mobile} {
