@@ -14,8 +14,8 @@ const IndexPage = () => (
     <section className="content-box" id="yellow"> 
     
     <div className="pitch-box"> 
-    <item className="tag1"><h1 >EDUCATION DONE - ALL IN ONE.</h1></item>
-    <item className="tag2"><h1>THE HISTORY OF BRITAIN IS COMPLEX AND DIVERSE - AND OUR EDUCATION SYSTEM SHOULD REFLECT THIS.</h1></item>
+    <div className="tag1"><h1 >EDUCATION DONE - ALL IN ONE.</h1></div>
+    <div className="tag2"><h1>THE HISTORY OF BRITAIN IS COMPLEX AND DIVERSE - AND OUR EDUCATION SYSTEM SHOULD REFLECT THIS.</h1></div>
     </div> 
 
     <div className="paragraph-box" id="white">

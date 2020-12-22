@@ -165,9 +165,8 @@ span {
 .toggle {
     display: none;
     height: 100%;
-    width:  20%;
-    padding: 0 2rem;
-    color: white;
+    padding: 0 1rem;
+    outline: none;
 
     @media (max-width: 768px) {
     display: flex;
