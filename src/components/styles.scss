@@ -576,6 +576,23 @@ textarea {
     resize: none;
 }
 
+.banner-renderer {
+    height: 100px;
+    background-color: #0B6BBF;
+    display: flex;
+    align-items: center;
+    padding: 0 2vw;
+    border-bottom: 2px solid #33333320;
+
+    a {
+        font-size: 2rem;
+        color: white;
+        padding: 0 10px;
+        
+
+    }
+}
+
 .admin-layout {
     // margin: 0 auto;
     max-width: 1920px;

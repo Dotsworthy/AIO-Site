@@ -7,8 +7,6 @@ import styled from 'styled-components'
 const Home = styled(Link)`
 text-decoration: none;
 color: #eee;
-display: inline-block;
-white-space: nowrap;
 margin: 10px 0;
 position: relative;
 font-size: 3rem;
@@ -34,10 +32,9 @@ font-size: 3rem;
 }
 
 @media (max-width: 768px) {
-  top: 26px;
   font-size: 2rem;
   z-index: 6;
-  position: fixed;
+  position: relative;
 }
 `;
 
@@ -140,12 +137,22 @@ const Hamburger = styled.div`
 
 const Navbar = ( siteType ) => {
   const [navbarOpen, setNavbarOpen] = useState(false)
+  const [hasMounted, setHasMounted] = useState(false)
   const site = String(siteType.siteType);
   // const body = document.getElementsByTagName("BODY")[0];
 
   useEffect(() => {
+    setHasMounted(true);
     document.body.style.overflow = "auto"
   },[])
+
+  if (!hasMounted) {
+    return (
+      <div className="banner-renderer">
+        <Link to="/">All In One</Link>
+      </div>
+    )
+  }
 
   const triggerNavbar = () => {
     if (navbarOpen === true) {
