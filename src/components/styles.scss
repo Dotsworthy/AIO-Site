@@ -244,6 +244,11 @@ footer {
 button {
     // min-width: 65px;
     padding: 5px;
+    // -webkit-appearence: none;
+    -webkit-border-radius: none;
+    border-radius: 1px;
+    border: 1px solid grey;
+    background-color: #e7e7e7;
 
     @extend %font-options
 }
@@ -1016,6 +1021,9 @@ textarea {
 
 input {
     padding: 5px;
+    border-radius: 0;
+    -webkit-appearance: none;
+
     // width: 100%;
     // border: none;
     // border-radius: 5px;
