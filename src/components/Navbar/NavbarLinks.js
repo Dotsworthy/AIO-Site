@@ -11,10 +11,10 @@ const NavbarLinks = ( siteType ) => {
     setHasMounted(true)
   },[])
 
-  if (!hasMounted) {
-    return <>
-    </>
-  }
+  // if (!hasMounted) {
+  //   return <>
+  //   </>
+  // }
 
 
   return (
@@ -38,15 +38,15 @@ const NavbarLinks = ( siteType ) => {
       }
       <div className="icons-navlinks">
       <a className="icon-link" href="https://www.facebook.com/allinoneeducationuk">
-              <FontAwesomeIcon icon={faFacebook} size="1x"/>
+              <FontAwesomeIcon icon={faFacebook} />
             </a>
             
             <a className="icon-link" href="https://twitter.com/aioeducation?lang=en">
-              <FontAwesomeIcon icon={faTwitter} size="1x"/>
+              <FontAwesomeIcon icon={faTwitter} />
             </a>
 
             <a className="icon-link"  href="https://www.instagram.com/allinoneeducationuk/">
-              <FontAwesomeIcon icon={faInstagram} size="1x"/>
+              <FontAwesomeIcon icon={faInstagram} />
             </a>
       </div>
       </>
