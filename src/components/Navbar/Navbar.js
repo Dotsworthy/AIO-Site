@@ -8,12 +8,6 @@ const Navbar = ( siteType ) => {
   // const [hasMounted, setHasMounted] = useState(false)
   const site = String(siteType.siteType);
 
-  useEffect(() => {
-
-    // setHasMounted(true);
-    document.body.style.overflow = "auto"
-  },[])
-
   const triggerNavbar = () => {
     if (navbarOpen === true) {
       setNavbarOpen(false)
@@ -23,6 +17,17 @@ const Navbar = ( siteType ) => {
       document.body.style.overflow = "hidden"
     }
   }
+
+  useEffect(() => {
+
+    
+
+    // setHasMounted(true);
+    document.body.style.overflow = "auto"
+    
+  },[])
+
+  
   // if (navbarOpen === true) {
   //   body.style.overflow = "hidden"
   // } else if (navbarOpen === false) {
@@ -32,7 +37,7 @@ const Navbar = ( siteType ) => {
   return (
     <nav className="navigation" id={ site === "client" ? "blue" : "red"}>
       <Link className="home-link" to="/">All In One</Link>
-      <div role="button" tabindex="0" className="toggle"
+      <button className="toggle" id="toggle"
         onClick={() => triggerNavbar()}
       >
         {navbarOpen ? 
@@ -47,7 +52,7 @@ const Navbar = ( siteType ) => {
             <div className="slice3"/>
           </div>
           }
-      </div>
+      </button>
       {navbarOpen ? (
         <div className="navbox" id="open">
           <NavbarLinks siteType={ site } setNavbarOpen={setNavbarOpen}/>
