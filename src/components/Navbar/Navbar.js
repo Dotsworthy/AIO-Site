@@ -163,7 +163,6 @@ const Navbar = ( siteType ) => {
   // }
 
   return (
-    <div className="navbar-container">
     <Navigation className="navigation" id={ site === "client" ? "blue" : "red"}>
       <Home to="/">All In One</Home>
       <Toggle
@@ -184,7 +183,6 @@ const Navbar = ( siteType ) => {
         </Navbox>
       )}
     </Navigation>
-    </div>
   )
 }
 
