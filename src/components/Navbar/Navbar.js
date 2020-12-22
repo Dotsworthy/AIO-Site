@@ -174,7 +174,7 @@ const Navbar = ( siteType ) => {
   // }
 
   return (
-    <Navigation className="navigation" id={ site === "client" ? "blue" : "red"}>
+    <nav className="navigation" id={ site === "client" ? "blue" : "red"}>
       <Link className="home-link" to="/">All In One</Link>
       <Toggle
         navbarOpen={navbarOpen}
@@ -193,7 +193,7 @@ const Navbar = ( siteType ) => {
           <NavbarLinks siteType = { site } setNavbarOpen={setNavbarOpen}/>
         </Navbox>
       )}
-    </Navigation>
+    </nav>
   )
 }
 

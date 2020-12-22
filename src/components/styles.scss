@@ -286,6 +286,33 @@ body {
     // background-color: white;
 }
 
+nav {
+    display: flex;
+  flex-direction: column;
+  min-height: 100px;
+  position: relative;
+  justify-content: space-evenly;
+  align-items: center;
+  text-transform: uppercase;
+  border-bottom: 2px solid #33333320;
+  margin: 0 auto;
+  padding: 0 2vw;
+  z-index: 2;
+  align-self: center;
+
+  @media (max-width: 768px) {
+    position: sticky;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 100px;
+    top: 0;
+    left: 0;
+    right: 0;
+    left: 0;
+    z-index: 2;
+  }
+}
+
 // IDs for dialog boxes made visible by JavaScript
 #submit-dialog-box { visibility: hidden; }
 #warning-dialog-box { visibility: hidden; }
