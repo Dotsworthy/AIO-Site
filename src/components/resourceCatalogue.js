@@ -24,6 +24,8 @@ const ResourceCatalogue = ( ) => {
   const [downloading, setDownloading] = useState(false);
   // const [page, setPage] = useState(0)
 
+  const [hasMounted, setHasMounted] = useState(false);
+
   useEffect(() => {
     let listTags
     firebase
@@ -65,47 +67,6 @@ const ResourceCatalogue = ( ) => {
       setAllLevels(listLevels)
     })
   },[])
-
-  const getMoreInfo = (item) => {
-    setCurrentItem({
-      id: item.id,
-      name: item.name,
-      image: item.image,
-      description: item.description,
-      category: item.category,
-      level: item.level,
-      tags: item.tags,
-      download: item.download
-    })
-
-    setMoreInfo(true)
-  }
-
-  const downloadResource = item => {
-    setDownloading(true);
-    setCurrentItem({
-        id: item.id,
-        name: item.name,
-        download: item.download
-    })
-}
-
-  const clearFilters = () => {
-    setLevelSelected("")
-    setCategorySelected("")
-    setTagSelected("")
-    setSearchTerm("")
-  }
-
-  const getImageURL = (id, location, resource) => {
-    const storageRef = firebase.storage().ref(`${location}/${id}/${resource.image}`)
-    storageRef.getDownloadURL().then(function(url) {
-
-      const img = document.getElementById(id)
-      img.src = url;
-    }).catch(function(error) {
-    })
-  }
 
   useEffect(() => {
     if (searchTerm) {
@@ -160,10 +121,61 @@ const ResourceCatalogue = ( ) => {
           result = tag;
         }
         setResources(result);
+        setHasMounted(true);
       });
       return unsubscribe
     }
   }, [searchTerm, categorySelected, levelSelected, tagSelected])
+
+//   useEffect(() => {
+//     setHasMounted(true);
+// }, [])
+
+  if (!hasMounted) {
+    return <p>Loading...</p>
+  }
+
+  const getMoreInfo = (item) => {
+    setCurrentItem({
+      id: item.id,
+      name: item.name,
+      image: item.image,
+      description: item.description,
+      category: item.category,
+      level: item.level,
+      tags: item.tags,
+      download: item.download
+    })
+
+    setMoreInfo(true)
+  }
+
+  const downloadResource = item => {
+    setDownloading(true);
+    setCurrentItem({
+        id: item.id,
+        name: item.name,
+        download: item.download
+    })
+}
+
+  const clearFilters = () => {
+    setLevelSelected("")
+    setCategorySelected("")
+    setTagSelected("")
+    setSearchTerm("")
+  }
+
+  const getImageURL = (id, location, resource) => {
+    const storageRef = firebase.storage().ref(`${location}/${id}/${resource.image}`)
+    storageRef.getDownloadURL().then(function(url) {
+
+      const img = document.getElementById(id)
+      img.src = url;
+    }).catch(function(error) {
+    })
+  }
+
 
   const expandMenu = (item) => {
     const column = document.getElementsByClassName("content");
