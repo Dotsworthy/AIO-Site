@@ -45,7 +45,7 @@ font-size: 3rem;
 const Navigation = styled.nav`
   display: flex;
   flex-direction: column;
-  
+  min-height: 100px;
   position: relative;
   justify-content: space-between;
   align-items: center;
@@ -71,11 +71,14 @@ const Navigation = styled.nav`
 const Toggle = styled.div`
   display: none;
   height: 100%;
-  padding: 0 2vw;
+  width:  20%;
+  padding: 0 2rem;
   color: white;
 
   @media (max-width: 768px) {
     display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `
 
@@ -86,8 +89,9 @@ const Navbox = styled.div`
 
   @media (max-width: 768px) {
     flex-direction: column;
+    justify-content: space-evenly;
     position: fixed;
-    height: 100%;
+    height: 100%
     min-height: -webkit-fill-available;
     width: 100%;
     background-color: #0B6BBF;
@@ -97,7 +101,7 @@ const Navbox = styled.div`
   }
 
   @supports (-webkit-touch-callout: none) {
-    height: calc(100% + 69px);
+    height: calc(100% - 99px);
   }
 `
 
@@ -108,7 +112,7 @@ const Hamburger = styled.div`
   transition: all .3s linear;
   align-self: center;
   position: fixed;
-  margin: 2px;
+  margin: 3px;
   top: 47px;
   right: 3%;
   transform: ${props => (props.open ? "rotate(-45deg)" : "inherit")};
@@ -136,17 +140,12 @@ const Hamburger = styled.div`
   }
 `
 
-// Note: scrolling issues with SSR. Thinking about how to fix.
-
-
 const Navbar = ( siteType ) => {
   const [navbarOpen, setNavbarOpen] = useState(false)
-  const [hasMounted, setHasMounted] = useState(false)
   const site = String(siteType.siteType);
   // const body = document.getElementsByTagName("BODY")[0];
 
   useEffect(() => {
-    setHasMounted(true);
     document.body.style.overflow = "auto"
   },[])
 
@@ -176,7 +175,6 @@ const Navbar = ( siteType ) => {
         <Hamburger open /> 
         : <Hamburger />}
       </Toggle>
-
       {navbarOpen ? (
         <Navbox>
           <NavbarLinks siteType={ site } setNavbarOpen={setNavbarOpen}/>
