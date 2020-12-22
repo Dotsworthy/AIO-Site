@@ -132,7 +132,7 @@ const ResourceCatalogue = ( ) => {
 // }, [])
 
   if (!hasMounted) {
-    return
+    return null
   }
 
   const getMoreInfo = (item) => {

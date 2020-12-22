@@ -6,8 +6,6 @@ import Layout from "../components/layout";
 
 const ResourcePage = () => {
 
-
-
     return (
         <Layout siteType={"client"}>
         <ResourceCatalogue/> 
