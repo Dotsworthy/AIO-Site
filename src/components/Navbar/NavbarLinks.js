@@ -37,7 +37,7 @@ const NavbarLinks = ( siteType ) => {
       </>
       }
       <div className="icons-navlinks">
-      <a className="icon-link" href="https://www.facebook.com/allinoneeducationuk">
+            <a className="icon-link" href="https://www.facebook.com/allinoneeducationuk">
               <FontAwesomeIcon icon={faFacebook} />
             </a>
             

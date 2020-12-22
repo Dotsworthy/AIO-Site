@@ -4,42 +4,6 @@ import { Link } from "gatsby"
 // import Logo from "./Logo"
 import styled from 'styled-components'
 
-const Toggle = styled.div`
-  display: none;
-  height: 100%;
-  width:  20%;
-  padding: 0 2rem;
-  color: white;
-
-  @media (max-width: 768px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-`
-
-const Navbox = styled.div`
-  display: flex;
-  height: 100%;
-  align-items: center;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    justify-content: space-evenly;
-    position: fixed;
-    height: calc(100% - 99px);
-    width: 100%;
-    background-color: #0B6BBF;
-    transition: all 0.3s ease-in;
-    top: 99px;
-    left: ${props => (props.open ? "-100%" : "0")};
-  }
-
-  @supports (-webkit-touch-callout: none) {
-    height: calc(100% - 99px);
-  }
-`
-
 const Hamburger = styled.div`
   background-color: #eee;
   width: 30px;
@@ -113,22 +77,31 @@ const Navbar = ( siteType ) => {
   return (
     <nav className="navigation" id={ site === "client" ? "blue" : "red"}>
       <Link className="home-link" to="/">All In One</Link>
-      <Toggle
+      <div className="toggle"
         navbarOpen={navbarOpen}
         onClick={() => triggerNavbar()}
       >
         {navbarOpen ? 
-        <Hamburger open /> 
-        : <Hamburger />}
-      </Toggle>
+        <div className="burger-container"id="burger-open">
+          <div className="slice1" id="slice1"/>
+            <div className="slice2" id="slice2"/>
+            <div className="slice3" id="slice3"/>
+        </div> 
+        : <div className="burger-container" id="burger-closed">
+            <div className="slice1"/>
+            <div className="slice2"/>
+            <div className="slice3"/>
+          </div>
+          }
+      </div>
       {navbarOpen ? (
-        <Navbox>
+        <div className="navbox" id="open">
           <NavbarLinks siteType={ site } setNavbarOpen={setNavbarOpen}/>
-        </Navbox>
+        </div>
       ) : (
-        <Navbox open>
+        <div className="navbox" id="closed">
           <NavbarLinks siteType = { site } setNavbarOpen={setNavbarOpen}/>
-        </Navbox>
+        </div>
       )}
     </nav>
   )
