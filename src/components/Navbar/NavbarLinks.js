@@ -58,11 +58,11 @@ const NavbarLinks = ( siteType, setNavbarOpen ) => {
       <>
       { siteType.siteType === "client" && 
         <>
-        <NavItem to="/about-us">About Us</NavItem>
-        <NavItem to="/take-action">Take Action</NavItem>
-        <NavItem to="/resources/">Resources</NavItem>
-        <NavItem to="/contact-us">Contact Us</NavItem>
-        <NavItem id="admin-login" to="/admin/">Admin Login</NavItem>
+        <Link className="navbar-link" to="/about-us">About Us</Link>
+        <Link className="navbar-link" to="/take-action">Take Action</Link>
+        <Link className="navbar-link" to="/resources/">Resources</Link>
+        <Link className="navbar-link" to="/contact-us">Contact Us</Link>
+        <Link className="navbar-link" id="admin-login" to="/admin/">Admin Login</Link>
         </>
       }
       { siteType.siteType === "admin" && 

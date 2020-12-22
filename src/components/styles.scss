@@ -576,33 +576,19 @@ textarea {
     resize: none;
 }
 
-.banner-renderer {
-    height: 100px;
-    background-color: #0B6BBF;
-    display: flex;
-    padding: 0 2vw;
-    border-bottom: 2px solid #33333320;
-
-    a {
-        font-size: 2rem;
-        color: white;
-        padding: 0 10px;
-        margin: 10px 0;
-    }
+.home-link {
+    font-size: 3rem;
 
     @media #{$mq-mobile} {
-        align-items: center;
+        font-size: 2rem;
     }
+}
 
-    @media #{$mq-small} {
-        min-height: 108.4px;
-        justify-content: center;
-        // align-items: flex-start;
+.navbar-link {
 
-        a {
-            font-size: 3rem;
-            
-        }
+    @media #{$mq-mobile} {
+        font-size: 1.5rem;
+        z-index: 6;
     }
 }
 

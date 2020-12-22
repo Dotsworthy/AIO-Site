@@ -7,7 +7,6 @@ import styled from 'styled-components'
 const Home = styled(Link)`
 text-decoration: none;
 color: #eee;
-margin: 10px 0;
 position: relative;
 font-size: 3rem;
 
@@ -43,7 +42,7 @@ const Navigation = styled.nav`
   flex-direction: column;
   min-height: 100px;
   position: relative;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   text-transform: uppercase;
   border-bottom: 2px solid #33333320;
@@ -55,6 +54,7 @@ const Navigation = styled.nav`
   @media (max-width: 768px) {
     position: sticky;
     flex-direction: row;
+    justify-content: space-between;
     height: 100px;
     top: 0;
     left: 0;
@@ -143,21 +143,20 @@ const Navbar = ( siteType ) => {
 
   useEffect(() => {
 
-    setTimeout(function() {
-      setHasMounted(true);
-    },2000)
+    setHasMounted(true);
+
 
    
     document.body.style.overflow = "auto"
   },[])
 
-  if (!hasMounted) {
-    return (
-      <div className="banner-renderer">
-        <Link to="/">All In One</Link>
-      </div>
-    )
-  }
+  // if (!hasMounted) {
+  //   return (
+  //     <div className="banner-renderer">
+  //       <Link to="/">All In One</Link>
+  //     </div>
+  //   )
+  // }
 
   const triggerNavbar = () => {
     if (navbarOpen === true) {
@@ -176,7 +175,7 @@ const Navbar = ( siteType ) => {
 
   return (
     <Navigation className="navigation" id={ site === "client" ? "blue" : "red"}>
-      <Home to="/">All In One</Home>
+      <Link className="home-link" to="/">All In One</Link>
       <Toggle
         navbarOpen={navbarOpen}
         onClick={() => triggerNavbar()}
