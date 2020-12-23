@@ -93,15 +93,25 @@ $mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
 }
 
 /* Brand Colours */
+$blue: #0B6BBF;
+$yellow: #F2B749;
+$pink: #FF6A93;
+$green: #69BD5E;
+$dark-blue: #031240;
+$red: #D93030;
+$grey: #F6F5F4;
+$dark-grey: #50514F;
+
+
 #white { background-color: white; }
-#blue { background-color: #0B6BBF}
-#yellow { background-color: #F2B749}
-#pink {background-color: #FF6A93}
-#green {background-color:#69BD5E}
-#dark-blue {background-color:#031240}
-#red { background-color: #D93030}
-#grey { background-color: #F6F5F4}
-#dark-grey {background-color: #50514F}
+#blue { background-color: $blue}
+#yellow { background-color: $yellow}
+#pink {background-color:  $pink}
+#green {background-color: $green}
+#dark-blue {background-color: $dark-blue}
+#red { background-color: $red}
+#grey { background-color:  $grey}
+#dark-grey {background-color: $dark-grey}
 
 html {
     -webkit-tap-highlight-color: transparent;
