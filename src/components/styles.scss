@@ -226,7 +226,7 @@ span {
 
 footer {
     background-color: #2E2F2F;
-    height: 150px;
+    // height: 150px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -235,11 +235,18 @@ footer {
 
     @media #{$mq-small} {
         flex-direction: row;
+        height: 150px;
     }
 }
 
 .icon-link {
     font-size: 2rem;
+}
+
+.logo {
+    max-height: 60px;
+    width: auto;
+    margin: 10px 10px;
 }
 
 button {

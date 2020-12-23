@@ -69,7 +69,13 @@ const Layout = ({ children, siteType }) => {
 
           </div>
 
-          <Link className="nav-links" to="/contact-us">Contact Us</Link>
+          <div className="logo-container">
+            <img className="logo" src={require("../images/OSCR.jpg")}></img>
+            <img className="logo" src={require("../images/SVCO.png")}></img>
+
+          </div>
+
+          <Link className="logo" to="/contact-us">Contact Us</Link>
           
         </footer>
       </div>
