@@ -70,8 +70,8 @@ const Layout = ({ children, siteType }) => {
           </div>
 
           <div className="logo-container">
-            <img className="logo" src={require("../images/OSCR.jpg")}></img>
-            <img className="logo" src={require("../images/SVCO.png")}></img>
+            <img className="logo" src={require("../images/OSCR.jpg")} alt="OSCR"></img>
+            <img className="logo" src={require("../images/SVCO.png")} alt="SVCO"></img>
 
           </div>
 

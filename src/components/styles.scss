@@ -757,10 +757,7 @@ textarea {
     }
 }
 
-.content {
-    background-color: white;
-    
-}
+
 
 .catalogue-image {
     padding: 5px;
@@ -1128,6 +1125,7 @@ input {
 
 .resource-page-filter-box {
     border-bottom: 2px solid #33333320;
+
     
 }
 
@@ -1136,6 +1134,8 @@ input {
     display: flex;
     justify-content: space-evenly;
     background-color: white;
+    transition: all 0.3s ease-in;
+
 }
 
 .resource-page-filters {
@@ -1146,6 +1146,7 @@ input {
     @media #{$mq-small} {
         display: block;
         min-height: calc(100vh - 160px);
+
     }
 }
 
@@ -1222,10 +1223,13 @@ select {
 .content {
     display: none;
     padding: 5px;
+    z-index: -1;
     align-items: flex-start;
     flex-wrap: wrap;
     flex-direction: column;
     overflow: scroll;
+    animation: slide-up 0.4s ease;
+    background-color: white;
 }
 
 .small-database-form {
@@ -1281,11 +1285,16 @@ textarea {
     width: 100%;
 }
 
-
-
-
-
-
+@keyframes slide-up {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
 
 

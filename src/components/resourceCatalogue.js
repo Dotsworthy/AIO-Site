@@ -239,13 +239,6 @@ const ResourceCatalogue = ( ) => {
               <button type="button" class="collapsible" onClick={() => expandMenu("categories")}>Categories</button>
               <button type="button" class="collapsible" onClick={() => expandMenu("levels")}>Level</button>
               <button type="button" class="collapsible"  onClick={() => expandMenu("tags")}>Tags</button>
-            
-            
-            
-            
-            
-            
-            
             </div>
 
             <div className="resource-page-filter-box">
