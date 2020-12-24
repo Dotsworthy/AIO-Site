@@ -11,10 +11,10 @@ const NavbarLinks = ( siteType ) => {
     setHasMounted(true)
   },[])
 
-  if (!hasMounted) {
-    return <>
-    </>
-  }
+  // if (!hasMounted) {
+  //   return <>
+  //   </>
+  // }
 
 
   return (

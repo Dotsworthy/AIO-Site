@@ -5,7 +5,7 @@ import { Link } from "gatsby"
 
 const Navbar = ( siteType ) => {
   const [navbarOpen, setNavbarOpen] = useState(false)
-  // const [hasMounted, setHasMounted] = useState(false)
+  const [hasMounted, setHasMounted] = useState(false)
   const site = String(siteType.siteType);
 
   const triggerNavbar = () => {
@@ -19,12 +19,8 @@ const Navbar = ( siteType ) => {
   }
 
   useEffect(() => {
-
-    
-
-    // setHasMounted(true);
+    setHasMounted(true);
     document.body.style.overflow = "auto"
-    
   },[])
 
   
