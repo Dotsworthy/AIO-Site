@@ -1,20 +1,20 @@
 @font-face {
     font-family: 'CodeDemo-Light';
-    src: url("../fonts/CodeDemo-Light.otf");
+    src: url("../../fonts/CodeDemo-Light.otf");
     font-display: fallback;
 
 }
 
 @font-face {
     font-family: 'OpenSans-Regular';
-    src: url("../fonts/OpenSans-Regular.ttf");
+    src: url("../../fonts/OpenSans-Regular.ttf");
     font-display: fallback;
 }
 
 @font-face {
     font-family: 'CodeDemo-Bold';
     font-weight: bold;
-    src: url("../fonts/CodeDemo-Bold.otf");
+    src: url("../../fonts/CodeDemo-Bold.otf");
     font-display: fallback;
 }
 
@@ -310,8 +310,8 @@ img {
     font-family: "OpenSans-Regular";
 }
 
-#index {background-image: url(../images/42271167_m.jpg)}
-#about-us {background-image: url(../images/79574096_m.jpg)}
+#index {background-image: url(../../images/42271167_m.jpg)}
+#about-us {background-image: url(../../images/79574096_m.jpg)}
 
 #confirm {display: none}
 #error {display: none}
@@ -549,7 +549,7 @@ nav {
 
 .newsletter-banner {
     height: 75vh;
-    background: url(../images/42271125_m.jpg);
+    background: url(../../images/42271125_m.jpg);
     background-size: cover;
     background-position: center;
     display: flex;
