@@ -1,22 +1,4 @@
-@font-face {
-    font-family: 'CodeDemo-Light';
-    src: url("../../fonts/CodeDemo-Light.otf");
-    font-display: fallback;
-
-}
-
-@font-face {
-    font-family: 'OpenSans-Regular';
-    src: url("../../fonts/OpenSans-Regular.ttf");
-    font-display: fallback;
-}
-
-@font-face {
-    font-family: 'CodeDemo-Bold';
-    font-weight: bold;
-    src: url("../../fonts/CodeDemo-Bold.otf");
-    font-display: fallback;
-}
+@import 'fonts.scss';
 
 // Font-Size
 $base-font-size: 1em;
