@@ -5,7 +5,7 @@ import { Link } from "gatsby"
 
 const Navbar = ( siteType ) => {
   const [navbarOpen, setNavbarOpen] = useState(false)
-  const [hasMounted, setHasMounted] = useState(false)
+  // const [hasMounted, setHasMounted] = useState(false)
   const site = String(siteType.siteType);
 
   const triggerNavbar = () => {
@@ -19,30 +19,23 @@ const Navbar = ( siteType ) => {
   }
 
   useEffect(() => {
-    setHasMounted(true);
+    // setHasMounted(true);
     document.body.style.overflow = "auto"
   },[])
-
-  
-  // if (navbarOpen === true) {
-  //   body.style.overflow = "hidden"
-  // } else if (navbarOpen === false) {
-  //   body.style.overflow = "auto"
-  // }
 
   return (
     <nav className="navigation" id={ site === "client" ? "blue" : "red"}>
       <Link className="home-link" to="/">All In One</Link>
-      <button className="toggle" id="toggle"
+      <button className="navbox-toggle" id="toggle"
         onClick={() => triggerNavbar()}
       >
         {navbarOpen ? 
-        <div className="burger-container"id="burger-open">
+        <div className="burger-menu-container"id="burger-open">
           <div className="slice1" id="slice1"/>
             <div className="slice2" id="slice2"/>
             <div className="slice3" id="slice3"/>
         </div> 
-        : <div className="burger-container" id="burger-closed">
+        : <div className="burger-menu-container" id="burger-closed">
             <div className="slice1"/>
             <div className="slice2"/>
             <div className="slice3"/>
@@ -50,11 +43,11 @@ const Navbar = ( siteType ) => {
           }
       </button>
       {navbarOpen ? (
-        <div className="navbox" id="open">
+        <div className="navbox" id="navbox-open">
           <NavbarLinks siteType={ site } setNavbarOpen={setNavbarOpen}/>
         </div>
       ) : (
-        <div className="navbox" id="closed">
+        <div className="navbox" id="navbox-closed">
           <NavbarLinks siteType = { site } setNavbarOpen={setNavbarOpen}/>
         </div>
       )}
