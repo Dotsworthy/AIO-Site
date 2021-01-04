@@ -1,0 +1,123 @@
+// media queries
+$bp-small: 768px; // 768px
+$bp-medium: 1024px; // 1024px
+$bp-large: 85.375em; // 1366px
+$bp-xlarge: 120em; // 1920px
+$bp-xxlarge: 160em; // 2560px
+
+$mq-mobile: "(max-width: #{$bp-small})";
+$mq-small: "(min-width: #{$bp-small})";
+$mq-medium: "(min-width: #{$bp-medium})";
+$mq-large: "(min-width: #{$bp-large})";
+$mq-xlarge: "(min-width: #{$bp-xlarge})";
+$mq-uwide: "(min-width: #{$bp-xxlarge}) and (max-height: 1080px)";
+$mq-xxlarge: "(min-width: #{$bp-xxlarge})";
+$mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
+
+
+nav {
+    display: flex;
+    align-items: center;
+
+    text-transform: uppercase;
+    border-bottom: 2px solid #33333320;
+    margin: 0;
+    padding: 0 2rem;
+    z-index: 2;
+
+    @media (max-width: 768px) {
+        position: sticky;
+        flex-direction: row;
+        justify-content: space-between;
+        height: 100px;
+        top: 0;
+        left: 0;
+        right: 0;
+        left: 0;
+        z-index: 2;
+    }
+
+    @media #{$mq-small} {
+        height: 125px;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+}
+
+.navbox {
+    display: flex;
+    // height: 100%;
+    align-items: center;
+  
+    @media (max-width: 768px) {
+      flex-direction: column;
+      justify-content: space-evenly;
+      position: fixed;
+      height: calc(100% - 100px);
+      width: 100%;
+      background-color: #0B6BBF;
+      transition: all 0.3s ease-in;
+      top: 100px;  
+    }
+
+    @supports (-webkit-touch-callout: none) {
+      height: calc(100% - 100px);
+    }
+
+    .icons-navlinks {
+        @media #{$mq-small} {
+            display: none;
+        }
+    }
+}
+
+#navbox-open {
+    left: 0;
+} 
+
+#navbox-closed { 
+    left: -100%;
+}
+
+.burger-menu-container {
+    display: inline-block;
+    cursor: pointer;
+    margin-bottom: 5px;
+
+    .slice1, .slice2, .slice3 {
+        width: 35px;
+        height: 4px;
+        background-color: #eee;
+        margin: 6px 0;
+        transition: 0.4s;
+    }
+    
+    #slice1 {
+        -webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
+        transform: rotate(-45deg) translate(-8px, 6px) ;
+    }
+    
+    #slice2 {
+        opacity: 0;
+    }
+    
+    #slice3 {
+        -webkit-transform: rotate(45deg) translate(-8px, -8px) ;
+        transform: rotate(45deg) translate(-8px, -6px) ;
+    } 
+}
+
+.navbox-toggle {
+    display: none;
+    background: none;
+    height: 100%;
+    padding: 0 1rem;
+    outline: none;
+    border: none;
+
+    @media (max-width: 768px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+}

@@ -18,6 +18,7 @@ import { faTwitter, faFacebook, faInstagram } from '@fortawesome/free-brands-svg
 import { Link } from "gatsby"
 // import "./layout.css"
 import "./stylesheets/styles.scss"
+import "./stylesheets/navbar.scss"
 
 
 const Layout = ({ children, siteType }) => {
