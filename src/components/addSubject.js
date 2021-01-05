@@ -99,6 +99,7 @@ const AddSubject = () => {
     const prepareAllFiles = (e) => {
       setDuplicateFiles([])
       const allFiles = Array.from(e.target.files)
+      console.log(e.target.files);
       const existingFiles = resourceUploads;
       const duplicates = [];
       allFiles.map(file => {
@@ -107,7 +108,12 @@ const AddSubject = () => {
           document.getElementById("warning-dialog-box").style.visibility = "visible";
           document.getElementById("duplicate-files").style.display = "block";
           return duplicates.push(file)
-        } else {
+        } else if (file.size > 500) {
+          document.getElementById("warning-dialog-box").style.visibility = "visible";
+        }
+        
+        
+        else {
           return existingFiles.push(file)
         }
       })

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
 import NavbarLinks from "./NavbarLinks"
 import { Link } from "gatsby"
-// import Logo from "./Logo"
 
 const Navbar = ( siteType ) => {
   const [navbarOpen, setNavbarOpen] = useState(false)
