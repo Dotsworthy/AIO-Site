@@ -232,15 +232,23 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
     console.log(allFiles)
     allFiles.map(file => {
       const duplicate = existingFiles.includes(file.name)
+      const fileSize = file.size / 1024 / 1024;
       if (duplicate === true) {
         console.log(duplicate);
         document.getElementById("warning-dialog-box").style.visibility = "visible";
         document.getElementById("duplicate-files").style.display = "block";
         return duplicates.push(file);
-      } else {
-        return (existingFiles.push(file.name), existingUploads.push(file)) 
+      } 
+      
+      if (fileSize > 25) {
+        document.getElementById("warning-dialog-box").style.visibility = "visible";
+        document.getElementById("file-too-large").style.display = "block";
       }
+      
+      if (duplicate === false && fileSize <= 25)
+        return (existingFiles.push(file.name), existingUploads.push(file)) 
     })
+
     setDuplicateFiles([...duplicates])
     changeDownloads("download", existingFiles)
     document.getElementById("download").value = "";
@@ -323,6 +331,7 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
     document.getElementById("max-tags-reached").style.display = "none";
     document.getElementById("duplicate-tags").style.display = "none";
     document.getElementById("duplicate-files").style.display = "none";
+    document.getElementById("file-too-large").style.display = "none";
   }
   
     return (
@@ -338,6 +347,7 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
             <div id="duplicate-name">{item.name} already refers to an resource in the database. Either update the original resource, delete the original resource first, or choose a different name for the resource</div>
             <div id="max-tags-reached">Maximum of four tags. Please delete a tag before adding a new one</div>
             <div id="duplicate-tags">Tag already selected. Please select a different tag</div>
+            <div id="file-too-large"><p>One or more of your files are too large. Please limit individual files to a maximum of 25mb.</p></div>
             <div id="duplicate-files"><p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>
               <br></br>
               <p>Duplicate files:</p>
