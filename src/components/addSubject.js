@@ -109,11 +109,14 @@ const AddSubject = () => {
           document.getElementById("warning-dialog-box").style.visibility = "visible";
           document.getElementById("duplicate-files").style.display = "block";
           return duplicates.push(file)
-        } else if (fileSize > 25) {
+        }
+        
+        if (fileSize > 25) {
           document.getElementById("warning-dialog-box").style.visibility = "visible";
           document.getElementById("file-too-large").style.display = "block";
-        }        
-        else {
+        }       
+         
+        if (duplicate.length === 0 && fileSize <= 25) {
           return existingFiles.push(file)
         }
       })
