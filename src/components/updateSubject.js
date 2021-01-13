@@ -12,7 +12,7 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
   const database = firebase.firestore()
     
   // states for changed data that needs processing
-  const [filesToUpload] = useState([])
+  const [filesToUpload, setFilesToUpload] = useState([]);
   const [filesToDelete] = useState([])
   const [tag, setTag] = useState("");
 
@@ -143,17 +143,10 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
     e.preventDefault()
 
     const findUploads = []
-    filesToUpload.map(object => {
-      findUploads.push(object.name)
-    })
+    filesToUpload.map(object => { findUploads.push(object.name) })
     
-    const findFile = item.download.find(function(element, index) {
-      return index === fileIndex;
-    })
-
-    console.log(findFile);
-
-    console.log(filesToUpload);
+    const findFile = item.download.find(function(element, index) { return index === fileIndex; })
+    
     if (findUploads.includes(findFile)) {
       let file = filesToUpload.filter(file => {
         return file.name === findFile
@@ -276,16 +269,17 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
     const upload = e.target.files;
     const allFiles = Array.from(upload)
     const existingFiles = Array.from(item.download);
-    const existingUploads = filesToUpload;
+    const existingUploads = Array.from(filesToUpload);
     const duplicates = [];
     console.log(allFiles)
     allFiles.map(file => {
       const duplicate = existingFiles.includes(file.name)
+      console.log(duplicate);
       let newFolderSize = folderSize;
       newFolderSize += file.size / 1024 / 1024
+      console.log(newFolderSize);
 
       if (duplicate === true) {
-        console.log(duplicate);
         document.getElementById("warning-dialog-box").style.visibility = "visible";
         document.getElementById("duplicate-files").style.display = "block";
         return duplicates.push(file);
@@ -296,13 +290,16 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
         document.getElementById("file-too-large").style.display = "block";
       }
       
-      if (duplicate === false && newFolderSize <= 50)
+      if (duplicate === false && newFolderSize <= 50) {
       setFolderSize(newFolderSize);
         return (existingFiles.push(file.name), existingUploads.push(file)) 
+      }
     })
-
-    setDuplicateFiles([...duplicates])
-    changeDownloads("download", existingFiles)
+    console.log(existingFiles);
+    console.log(existingUploads);
+    setDuplicateFiles([...duplicates]);
+    changeDownloads("download", existingFiles);
+    setFilesToUpload(existingUploads);
     document.getElementById("download").value = "";
   }
   
