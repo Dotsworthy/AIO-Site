@@ -106,10 +106,7 @@ const AddSubject = () => {
       allFiles.map(file => {
         const duplicate = existingFiles.filter(existingFile => existingFile.name === file.name)
         let newFolderSize = folderSize;
-        console.log(folderSize);
-        console.log(newFolderSize);
         newFolderSize += file.size / 1024 / 1024
-        console.log(newFolderSize);
 
         if (duplicate.length > 0) {
           document.getElementById("warning-dialog-box").style.visibility = "visible";
@@ -124,7 +121,6 @@ const AddSubject = () => {
 
         if (duplicate.length === 0 && newFolderSize <= 25) {
           setFolderSize(newFolderSize);
-          console.log(folderSize);
           return existingFiles.push(file)
         }
       })
@@ -168,11 +164,17 @@ const AddSubject = () => {
     }
 
     // removes download from list of downloads to be updated.
-    const removeFile = (e, index) => {
+    const removeFile = (e, fileIndex) => {
       e.preventDefault()
       setDuplicateFiles([])
+      const findFile = resourceUploads.find(function(element, index) {
+        return index === fileIndex;
+      })
+      let newFolderSize = folderSize
+      newFolderSize -= findFile.size / 1024 / 1024;
+      setFolderSize(newFolderSize);
       const newFiles = resourceUploads
-      newFiles.splice(index, 1)
+      newFiles.splice(fileIndex, 1)
       setResourceUploads([...newFiles])
     }
 
