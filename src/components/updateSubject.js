@@ -141,14 +141,31 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
   // changing downloads
   const removeFile = (e, file, fileIndex) => {
     e.preventDefault()
+
+    const findUploads = []
+    filesToUpload.map(object => {
+      findUploads.push(object.name)
+    })
     
     const findFile = item.download.find(function(element, index) {
       return index === fileIndex;
     })
+
     console.log(findFile);
+
+    console.log(filesToUpload);
+    if (findUploads.includes(findFile)) {
+      let file = filesToUpload.filter(file => {
+        return file.name === findFile
+      })
+      console.log(file);
+
+
     let newFolderSize = folderSize
-    newFolderSize -= findFile.size / 1024 / 1024;
+    newFolderSize -= file[0].size / 1024 / 1024;
     setFolderSize(newFolderSize);
+    }
+    
 
     const newFiles = item.download
     newFiles.splice(fileIndex, 1)
