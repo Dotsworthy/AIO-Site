@@ -139,10 +139,19 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
   }
 
   // changing downloads
-  const removeFile = (e, file, index) => {
+  const removeFile = (e, file, fileIndex) => {
     e.preventDefault()
+    
+    const findFile = item.download.find(function(element, index) {
+      return index === fileIndex;
+    })
+    console.log(findFile);
+    let newFolderSize = folderSize
+    newFolderSize -= findFile.size / 1024 / 1024;
+    setFolderSize(newFolderSize);
+
     const newFiles = item.download
-    newFiles.splice(index, 1)
+    newFiles.splice(fileIndex, 1)
     filesToDelete.push(file)
     changeDownloads("download", newFiles)
   }
@@ -252,7 +261,9 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
     console.log(allFiles)
     allFiles.map(file => {
       const duplicate = existingFiles.includes(file.name)
-      const fileSize = file.size / 1024 / 1024;
+      let newFolderSize = folderSize;
+      newFolderSize += file.size / 1024 / 1024
+
       if (duplicate === true) {
         console.log(duplicate);
         document.getElementById("warning-dialog-box").style.visibility = "visible";
@@ -260,12 +271,13 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
         return duplicates.push(file);
       } 
       
-      if (fileSize > 25) {
+      if (newFolderSize > 50) {
         document.getElementById("warning-dialog-box").style.visibility = "visible";
         document.getElementById("file-too-large").style.display = "block";
       }
       
-      if (duplicate === false && fileSize <= 25)
+      if (duplicate === false && newFolderSize <= 50)
+      setFolderSize(newFolderSize);
         return (existingFiles.push(file.name), existingUploads.push(file)) 
     })
 
