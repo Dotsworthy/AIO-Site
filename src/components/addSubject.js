@@ -231,7 +231,7 @@ const AddSubject = () => {
 
     const onSubmit = async e => {
       e.preventDefault()
-      if (name && description && category && level && addedTags && imageUpload &&     resourceUploads.length > 0) {
+      if (name && description && category && level && addedTags && imageUpload && resourceUploads.length > 0) {
 
       const nameCheck = await databaseCheck(name, "subjects")
       const categoryCheck = await databaseCheck(category, "categories")
@@ -316,7 +316,7 @@ const AddSubject = () => {
             <div id="duplicate-name">{name} already refers to an resource in the database. Either update the original resource, delete the original resource first, or choose a different name for the resource</div>
             <div id="max-tags-reached">Maximum of four tags. Please delete a tag before adding a new one</div>
             <div id="duplicate-tags">Tag already selected. Please select a different tag</div>
-            <div id="file-too-large"><p>One or more of your files are too large. Please limit individual files to a maximum of 25mb.</p></div>
+            <div id="file-too-large"><p>The total size of all files attached cannot exceed 50mb.</p></div>
             <div id="duplicate-files"><p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>
               <br></br>
               <p>Duplicate files:</p>

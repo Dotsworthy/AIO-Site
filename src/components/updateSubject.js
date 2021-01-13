@@ -3,7 +3,7 @@ import firebase from "firebase"
 import 'firebase/storage'
 
 // ISSUES:
-// If resource has an image assigned to the image field but no corresponding image in cloud storage. Trying to upload that image will not work. User can upload a new image with different file name however. This is not something the user should run into.
+// Need to test that uploads and downloads are working properly.
 
 const UpdateSubject = ({ currentItem, setEditing }) => {
 
@@ -295,8 +295,6 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
         return (existingFiles.push(file.name), existingUploads.push(file)) 
       }
     })
-    console.log(existingFiles);
-    console.log(existingUploads);
     setDuplicateFiles([...duplicates]);
     changeDownloads("download", existingFiles);
     setFilesToUpload(existingUploads);
@@ -396,7 +394,7 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
             <div id="duplicate-name">{item.name} already refers to an resource in the database. Either update the original resource, delete the original resource first, or choose a different name for the resource</div>
             <div id="max-tags-reached">Maximum of four tags. Please delete a tag before adding a new one</div>
             <div id="duplicate-tags">Tag already selected. Please select a different tag</div>
-            <div id="file-too-large"><p>One or more of your files are too large. Please limit individual files to a maximum of 25mb.</p></div>
+            <div id="file-too-large"><p>The total size of all files attached cannot exceed 50mb.</p></div>
             <div id="duplicate-files"><p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>
               <br></br>
               <p>Duplicate files:</p>
