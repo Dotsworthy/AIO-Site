@@ -21,6 +21,7 @@ const AddSubject = () => {
 
     // validation hook for form.
     const [duplicateFiles, setDuplicateFiles] = useState([])
+    const [folderSize, setFolderSize] = useState(0);
 
     // This React hook generates lists for the item form.
     const useItems = (location) => {
@@ -104,19 +105,26 @@ const AddSubject = () => {
       const duplicates = [];
       allFiles.map(file => {
         const duplicate = existingFiles.filter(existingFile => existingFile.name === file.name)
-        const fileSize = file.size / 1024 / 1024;
+        let newFolderSize = folderSize;
+        console.log(folderSize);
+        console.log(newFolderSize);
+        newFolderSize += file.size / 1024 / 1024
+        console.log(newFolderSize);
+
         if (duplicate.length > 0) {
           document.getElementById("warning-dialog-box").style.visibility = "visible";
           document.getElementById("duplicate-files").style.display = "block";
           return duplicates.push(file)
         }
         
-        if (fileSize > 25) {
+        if (newFolderSize > 25) {
           document.getElementById("warning-dialog-box").style.visibility = "visible";
           document.getElementById("file-too-large").style.display = "block";
         }       
-         
-        if (duplicate.length === 0 && fileSize <= 25) {
+
+        if (duplicate.length === 0 && newFolderSize <= 25) {
+          setFolderSize(newFolderSize);
+          console.log(folderSize);
           return existingFiles.push(file)
         }
       })
