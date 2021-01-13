@@ -158,14 +158,17 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
       let file = filesToUpload.filter(file => {
         return file.name === findFile
       })
-      console.log(file);
-
-
     let newFolderSize = folderSize
     newFolderSize -= file[0].size / 1024 / 1024;
     setFolderSize(newFolderSize);
+    } else {
+      const storageRef = firebase.storage().ref(`downloads/${item.id}/${file}`)
+      storageRef.getMetadata().then(function(metadata) {
+        let newFolderSize = folderSize
+        newFolderSize -= metadata.size / 1024 / 1024;
+        setFolderSize(newFolderSize);
+      })
     }
-    
 
     const newFiles = item.download
     newFiles.splice(fileIndex, 1)
