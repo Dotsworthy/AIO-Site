@@ -18,6 +18,7 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
 
   // warnings for duplicate entries and maximum entries
   const [duplicateFiles, setDuplicateFiles] = useState([])
+  const [folderSize, setFolderSize] = useState(0)
 
   // original variables for checking whether to upload/download
   const originalImage = currentItem.image;
@@ -41,6 +42,23 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
     }, [location]);
     return items;
   };
+
+  useEffect(() => {
+    let newFolderSize = 0
+    item.download.map(file => {
+      const storageRef = firebase.storage().ref(`downloads/${item.id}/${file}`)
+      storageRef.getMetadata().then(function(metadata) {
+        console.log(metadata);
+        const fileSize = metadata.size / 1024 / 1024
+        newFolderSize += fileSize;
+        console.log(newFolderSize);
+        setFolderSize(newFolderSize);
+      }).catch(function(error) {
+        console.log(error);
+      })
+    })
+    
+  }, [])
   
   const allCategories = useItems("categories");
   const allLevels = useItems("levels");
@@ -160,6 +178,8 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
       storageRef.put(selectedFile)
     }
   }
+
+ 
 
   // Uploads multiple files. Used for resource downloads
   const uploadMultipleFiles = async (file, id, location) => {

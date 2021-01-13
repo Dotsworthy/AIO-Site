@@ -114,12 +114,12 @@ const AddSubject = () => {
           return duplicates.push(file)
         }
         
-        if (newFolderSize > 25) {
+        if (newFolderSize > 50) {
           document.getElementById("warning-dialog-box").style.visibility = "visible";
           document.getElementById("file-too-large").style.display = "block";
         }       
 
-        if (duplicate.length === 0 && newFolderSize <= 25) {
+        if (duplicate.length === 0 && newFolderSize <= 50) {
           setFolderSize(newFolderSize);
           return existingFiles.push(file)
         }
