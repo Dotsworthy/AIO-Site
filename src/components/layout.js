@@ -19,6 +19,8 @@ import { Link } from "gatsby"
 // import "./layout.css"
 import "./stylesheets/styles.scss"
 import "./stylesheets/navbar.scss"
+import "./stylesheets/admin.scss"
+import "./stylesheets/frontend.scss"
 
 
 const Layout = ({ children, siteType }) => {

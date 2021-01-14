@@ -121,3 +121,31 @@ nav {
     justify-content: center;
     }
 }
+
+.home-link {
+    font-size: 3rem;
+
+    @media #{$mq-mobile} {
+        font-size: 2rem;
+    }
+}
+
+.icon-link {
+    font-size: 2rem;
+}
+
+.navbar-link {
+
+    @media #{$mq-mobile} {
+        font-size: 1.5rem;
+        z-index: 6;
+    }
+}
+
+#admin-login {
+    display: none;
+
+    @media #{$mq-small} {
+        display: block;
+    }
+}
