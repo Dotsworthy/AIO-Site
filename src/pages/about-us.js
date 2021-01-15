@@ -55,8 +55,8 @@ const AboutUs = () => {
         
             </div>
 
-            <div className="newsletter-banner">
-                {/* <img src={require("../images/42271125_m.jpg")}></img>   */}
+            {/* Needs integration with Mailchimp */}
+            {/* <div className="newsletter-banner">
                 <div className="paragraph-box" id="white">
                 <h1>SUBSCRIBE TO OUR NEWSLETTER</h1>
                 <p>Sign up with your email address to receive news and updates.</p>
@@ -65,7 +65,8 @@ const AboutUs = () => {
                 <button>Sign Up</button>
                 </form>
                 </div>
-            </div>
+            </div>  */}
+           
 
         </Layout>
     )

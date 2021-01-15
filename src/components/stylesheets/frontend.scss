@@ -389,6 +389,7 @@ $mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
             // left: 50%;
             // transform: translate(-50%, -50%);
             background-color: #F4F5F5;
+            box-shadow: 10px 10px;
         }
 }
 
@@ -644,4 +645,19 @@ $mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
             flex-grow: 2;
         }
     }
+}
+
+.additional-container {
+
+    @media #{$mq-small} {
+        min-height: calc( 100vh - 100px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+    
+}
+
+.mobile-button {
+    width: 50px;
 }
