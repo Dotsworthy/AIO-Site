@@ -326,6 +326,11 @@ $mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
     padding: 10px;
     flex-grow: 1;
     // width: 500px;
+    border-bottom: 1px solid grey;
+}
+
+.more-info-content-container {
+    padding: 10px;
 }
 
 .more-info-item-header {
@@ -401,7 +406,7 @@ $mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
         }
 }
 
-.more-info-content {
+.more-info-container {
 
     display: flex;
 
@@ -437,6 +442,7 @@ $mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
     @media #{$mq-small} {
         
         display: flex;
+        margin-bottom: 10px;
     }
 }
 
@@ -472,11 +478,16 @@ $mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
     flex-basis: 100%;
 }
 
+.more-info-download-container {
+    max-height: 225px;
+    overflow-y: scroll;
+}
+
 .catalogue-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    // margin-bottom: 10px;
 }
 
 
