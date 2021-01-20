@@ -10,3 +10,26 @@
     src: url("../../fonts/CodeDemo-Bold.otf");
     font-display: fallback;
 }
+
+@font-face {
+    font-family: 'Noah-Bold';
+    font-weight: bold;
+    src: url("../../fonts/Noah-Bold.otf")
+}
+
+@font-face {
+    font-family: 'Noah-BoldItalic';
+    font-weight: bold;
+    src: url("../../fonts/Noah-BoldItalic.otf")
+}
+
+@font-face {
+    font-family: 'Noah-Regular';
+    src: url("../../fonts/Noah-Regular.otf")
+}
+
+@font-face {
+    font-family: 'Noah-RegularItalic';
+   
+    src: url("../../fonts/Noah-RegularItalic.otf")
+}

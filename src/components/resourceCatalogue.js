@@ -256,6 +256,7 @@ const ResourceCatalogue = ( ) => {
                         >{category.name}</button>
                     ))}
               </div>
+            
             </div>
           
             <div className="content"  id="levels">
