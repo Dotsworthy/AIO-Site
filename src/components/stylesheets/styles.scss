@@ -102,7 +102,7 @@ $dark-grey: #50514F;
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
-    font-family: "OpenSans-Regular";
+    font-family: 'Helvetica';
 }
 
 html {
@@ -168,6 +168,16 @@ h1 {
     // }
 }
 
+h2 {
+    font-family: 'CodeDemo-bold';
+    letter-spacing: 1px; 
+}
+
+h3 {
+    font-family: 'CodeDemo-bold';
+    letter-spacing: 1px; 
+}
+
 img {
 
     height: auto;
@@ -186,8 +196,8 @@ input {
 }
 
 p {
-    font-family: "OpenSans-Regular";
-    // margin: 2vh 2vw;
+    // font-family: "OpenSans-Regular";
+    margin: 10px;
 
     // @extend %font-options;
 }
