@@ -1,7 +1,7 @@
 @import "fonts.scss";
 
 // Font-Size
-$base-font-size: 1.2em;
+$base-font-size: 1em;
 $base-header-size: 2em;
 $base-line-height: 1.5;
 $header-line-height: 1.25;
@@ -102,7 +102,7 @@ $dark-grey: #50514F;
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
-    font-family: 'Noah-Regular';
+    font-family: 'Poppins-Regular';
 }
 
 html {
@@ -202,6 +202,8 @@ input {
 p {
     // font-family: "OpenSans-Regular";
     margin: 10px;
+
+    font-size: $base-font-size * 1.2;
 
     // @extend %font-options;
 }

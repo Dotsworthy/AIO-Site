@@ -215,6 +215,7 @@ $mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
     @media #{$mq-small} {
         display: block;
         min-height: calc(100vh - 160px);
+        width: 250px;
     }
 }
 
