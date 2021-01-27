@@ -70,7 +70,7 @@ $mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
 }
 
 .banner-container {
-    height: 90vh;
+    height: calc(100vh - 125px);
     background-size: cover;
     background-position: center;
     display: flex;
