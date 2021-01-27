@@ -159,7 +159,8 @@ footer {
 h1 {
     font-family: 'CodeDemo-bold';
     letter-spacing: 1px;
-    margin: 2vh 2vw;
+    margin: 20px;
+    
 
     font-size: $base-header-size;
 
@@ -171,6 +172,7 @@ h1 {
 h2 {
     font-family: 'CodeDemo-bold';
     letter-spacing: 1px; 
+    
 
     font-size: $base-header-size * 0.8;
 }
@@ -201,9 +203,9 @@ input {
 
 p {
     // font-family: "OpenSans-Regular";
-    margin: 10px;
+    margin: 20px;
 
-    font-size: $base-font-size * 1.2;
+    // font-size: $base-font-size * 1.2;
 
     // @extend %font-options;
 }

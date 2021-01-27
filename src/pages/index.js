@@ -54,10 +54,13 @@ const IndexPage = () => (
     <div className="paragraph-box paragraph-right" id="yellow">
       <h1>SUPPORT LASTING CHANGE </h1>
       <p>Our approach to educaton reform is two-pronged, encompassing both content creation, and reform lobbying of UK governments to include All In One as a recommended teaching aid for university and college PGCE/PDGE courses, so that a greater consistency in inclusive teaching methods can be achieved across schools/educators.</p>
-      
+      <div className="link-container">
       <div className="link-box">
       <a href="/about-us">Learn More</a>
       </div>
+      </div>
+      
+      
     </div>
     </div>
 

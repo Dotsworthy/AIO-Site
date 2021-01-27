@@ -1,6 +1,7 @@
 import React from "react";
 import Layout from "../components/layout";
-import SEO from "../components/seo"
+import SEO from "../components/seo";
+import downloadFile from "../images/All-In-One-Education-Our-Mission.pdf";
 
 const AboutUs = () => {
 
@@ -48,7 +49,9 @@ const AboutUs = () => {
                     <div className="paragraph-box-horizontal" id="white">
                         <p>Read our full mission statement to find out more:</p>    
                         <div className="link-box">
-                            <a href="./public/All-In-One-Education-Our-Mission.pdf" target="_blank" download>Mission Statement</a>
+                            <a href={downloadFile}
+                             target="_blank" 
+                             download>Mission Statement</a>
                         </div>
                     </div>
                 </div>
