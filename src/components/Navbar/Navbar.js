@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import NavbarLinks from "./NavbarLinks"
 import { Link } from "gatsby"
+import aioLogo from "../../images/aioLogoWhite.png"
 
 const Navbar = ( siteType ) => {
   const [navbarOpen, setNavbarOpen] = useState(false)
@@ -24,7 +25,12 @@ const Navbar = ( siteType ) => {
 
   return (
     <nav className="navigation" id={ site === "client" ? "blue" : "red"}>
-      <Link className="home-link" to="/">All In One</Link>
+      <Link className="home-link" to="/">
+        <img className="image-link" src={aioLogo}></img>
+        All In One
+        
+        
+        </Link>
       <button className="navbox-toggle" id="toggle" onClick={() => triggerNavbar()}>
         {navbarOpen ? 
         <div className="burger-menu-container"id="burger-open">
