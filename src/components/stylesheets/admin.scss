@@ -75,9 +75,6 @@
 
 .form-header {
     padding: 10px;
-    height: 50px;
-    background-color: #0B6BBF;
-    border-radius: 10px 10px 0 0;
     display: flex;
     align-items: center;
 }
@@ -92,8 +89,8 @@
 .form-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
-    padding: 10px;
+    // justify-content: space-evenly;
+    padding: 0 10px;
     // align-items: flex-start;
 }
 
@@ -101,7 +98,8 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 300px;
+    margin-right: 10px;
+    // width: 300px;
 }
 
 .form-footer {
@@ -118,8 +116,8 @@
     // padding: 10px;
     margin: 10px;
     background-color: #F4F5F5;
-    border-radius: 10px;
-    width: 800px;
+    box-shadow: 10px 10px;
+    // width: 800px;
 }
 
 .added-item {

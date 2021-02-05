@@ -343,7 +343,7 @@ const AddSubject = () => {
         <form onSubmit={onSubmit}>
           <div className="form-container">
             <div className="form-fields">
-              <h2>Resource Information</h2>
+              <h3>Resource Information</h3>
               
               {/* NAME */}
               <input placeholder="Name" value={name} name="name" onChange={e => setName(e.currentTarget.value)} type="text"/>
@@ -404,7 +404,7 @@ const AddSubject = () => {
 
               {/* IMAGE */}  
               <div>
-              <h2>Upload Image</h2>
+              <h3>Upload Image</h3>
               <div className="image-container">
                 <img id="preview" alt="No Profile "></img>
               </div>
@@ -413,7 +413,7 @@ const AddSubject = () => {
 
               {/* DOWNLOADS */}
               <div>
-              <h2>Upload Resources</h2>
+              <h3>Upload Resources</h3>
               <input onChange={(e) => {prepareAllFiles(e)}}type="file" id="download" name="download" multiple/>
               </div>
               
