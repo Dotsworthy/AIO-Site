@@ -84,17 +84,22 @@ const AddSubject = () => {
     // sends selected image file to JSX to render image. NOTE. clicking the upload image button and pressing cancel will remove the image from image uploads but does not remove preview. To fix.
     const createPreview = (e, htmlLocation) => {
       const htmlElement = document.getElementById(htmlLocation);
+      console.log(htmlElement);
       if (e.target.files.length > 0) {
         
         htmlElement.src = URL.createObjectURL(e.target.files[0]);
+        console.log(htmlElement.src);
         htmlElement.style.visibility = "visible";
         htmlElement.onload = function() {
         URL.revokeObjectURL(htmlElement.src);
         } 
+        console.log(htmlElement.src);
       } else {
         htmlElement.src = "";
       }
     }
+
+
 
     // Loads and validates file uploads and prepares them for adding to the database 
     const prepareAllFiles = (e) => {
@@ -337,20 +342,30 @@ const AddSubject = () => {
 
       <div className="database-form" id="add-item-form">
         <div className="form-header">
-          <h2>Add Resource</h2>
+          <h2>Add Subject</h2>
         </div>
 
         <form onSubmit={onSubmit}>
           <div className="form-container">
+
             <div className="form-fields">
-              <h3>Resource Information</h3>
+
+              <div className="form-subfield">
+              <h3>Subject Description</h3>
               
               {/* NAME */}
-              <input placeholder="Name" value={name} name="name" onChange={e => setName(e.currentTarget.value)} type="text"/>
+              <input placeholder="Subject Name" value={name} name="name" onChange={e => setName(e.currentTarget.value)} type="text"/>
               
               {/* DESCRIPTION */}
-              <textarea placeholder="Description" value={description} name="Description" onChange={e => setDescription(e.currentTarget.value)} type="text"/>
-              
+              <textarea placeholder="Subject Description" maxLength="2000" value={description} name="Description" onChange={e => setDescription(e.currentTarget.value)} type="text"/>
+              </div>
+
+
+
+            <div className="form-subfield">
+              <h3>Subject Details </h3>
+              <p>Click to select from dropdown or start typing to search. Anything typed into the text box not in the database will be added.</p>
+
               {/* CATEGORY */}
               <input placeholder="Category" type="text" name="category" value={category} list="categoryList" onChange={e => setCategory(e.currentTarget.value)}/>
                {allCategories &&
@@ -374,8 +389,10 @@ const AddSubject = () => {
 
               {/* TAGS */}
               
-                <input placeholder="Add a tag" value={tag} name="tags" list="tagsList" onChange={e => setTag(e.currentTarget.value)} type="tags"/>
-                <button onClick={(e) => addTag(e, tag)}>Add Tag</button>
+              <div className="button-menu-container">
+              <input placeholder="Tags" value={tag} name="tags" list="tagsList" onChange={e => setTag(e.currentTarget.value)} type="tags"/>
+              <button onClick={(e) => addTag(e, tag)}>Add Tag</button>
+              </div>
 
                 {allTags &&
                 <datalist id="tagsList">
@@ -384,8 +401,8 @@ const AddSubject = () => {
                 })}
                 </datalist>
                 }
-                  <p className="tags-added-adjustment">Tags added:</p>
-                  <div className="form-inside-content">
+                  <p>Tags added (4 maximum):</p>
+                  <div className="form-inside-content" id="tags">
                     
                             {addedTags.length === 0 ?
                             <p>None</p>
@@ -398,27 +415,56 @@ const AddSubject = () => {
                             })
                             }
                   </div>
+
+              
+
             </div>
 
-            <div className="form-downloads">
+            </div> 
 
-              {/* IMAGE */}  
+             {/* IMAGE */}  
+            <div className="form-fields-notext">
+              <div className="form-subfield">
               <div>
-              <h3>Upload Image</h3>
+                <h3>Profile Image</h3>
+                <p>This image will be used on the resource catalogue</p>
+              </div>
+
               <div className="image-container">
-                <img id="preview" alt="No Profile "></img>
+
+                <div>
+                  <p>Profile Image</p>          
+                  <div className="catalogue-profile-image">
+                    <img id="preview" alt="No Profile "></img>
+                  </div >
+                </div>  
+                
+                <div>
+                  <p>Profile Card Image</p>
+                  <div className ="catalogue-card-image">
+                    <img id="preview-2" alt="No profile"></img>
+                  </div>
+                </div>
+
               </div>
-              <input onChange={(e) => prepareProfileImage(e, "preview")} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
+
+              <input className="custom-file-input" onChange={(e) => prepareProfileImage(e, "preview")} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
+
               </div>
+            </div>
+
+
+            {/* <div className="form-downloads"> */}
+              
+             
 
               {/* DOWNLOADS */}
-              <div>
+              <div className="form-fields-notext">
+                <div className="form-subfield">
               <h3>Upload Resources</h3>
-              <input onChange={(e) => {prepareAllFiles(e)}}type="file" id="download" name="download" multiple/>
-              </div>
-              
-                <p>Files to upload:</p>
-                <div className="form-inside-content">
+
+              <p>Files to upload (Maximum total size 50mb):</p>
+                <div className="form-inside-content" id="downloads">
                   
                     {resourceUploads.length > 0 ? 
                     resourceUploads.map(file => (
@@ -430,8 +476,14 @@ const AddSubject = () => {
                     :
                     <p>No files added</p>}
                 </div>
-              
+
+              <input className="custom-file-input" onChange={(e) => {prepareAllFiles(e)}}type="file" id="download" name="download" multiple/>
+              </div>
             </div>
+              
+                
+              
+            {/* </div> */}
 
             
 
