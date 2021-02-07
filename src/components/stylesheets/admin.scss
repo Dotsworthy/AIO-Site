@@ -1,12 +1,12 @@
 // IDs for dialog boxes made visible by JavaScript
 #submit-dialog-box { visibility: hidden; }
 #warning-dialog-box { visibility: hidden; }
-#incomplete-form { display: none; }
-#duplicate-name { display: none; }
-#max-tags-reached { display: none; }
-#duplicate-tags { display : none; }
-#duplicate-files { display: none; }
-#file-too-large { display: none; }
+#incomplete-form { display: none; color: red;}
+#duplicate-name { display: none; color: red;}
+#max-tags-reached { display: none; color: red; width: 400px;}
+#duplicate-tags { display : none; color: red; width: 400px;}
+#duplicate-files { display: none; color: red;}
+#file-too-large { display: none; color: red;}
 
 .popup-container {
     display: block;
@@ -156,6 +156,19 @@
     button {
         margin: 10px 0 10px 10px;
     }
+}
+
+.input-field {
+    display: flex;
+    align-items: center;
+}
+
+.file-input-field {
+    display: flex;
+}
+
+.file-input-warning {
+    margin: 10px;
 }
 
 .database-container {

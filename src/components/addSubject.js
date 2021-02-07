@@ -318,9 +318,6 @@ const AddSubject = () => {
 
           <div className="popup-content">
             <div id="incomplete-form">Not all fields are complete. Please complete all fields before submitting the form</div>
-            <div id="duplicate-name">{name} already refers to an resource in the database. Either update the original resource, delete the original resource first, or choose a different name for the resource</div>
-            <div id="max-tags-reached">Maximum of four tags. Please delete a tag before adding a new one</div>
-            <div id="duplicate-tags">Tag already selected. Please select a different tag</div>
             <div id="file-too-large"><p>The total size of all files attached cannot exceed 50mb.</p></div>
             <div id="duplicate-files"><p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>
               <br></br>
@@ -354,7 +351,10 @@ const AddSubject = () => {
               <h3>Subject Description</h3>
               
               {/* NAME */}
+              <div className="input-field">
               <input placeholder="Subject Name" value={name} name="name" onChange={e => setName(e.currentTarget.value)} type="text"/>
+              <div id="duplicate-name">A subject named {name} already exists.</div>
+              </div>
               
               {/* DESCRIPTION */}
               <p>Write a preview of your subject. This is viewed by users to the resource catalogue, and could include a small introduction of the topic, an overview of the lesson plan, etc. (max characters: 3000)</p>
@@ -403,6 +403,7 @@ const AddSubject = () => {
                 </datalist>
                 }
                   <p>Tags added (4 maximum):</p>
+                  <div className="file-input-field">
                   <div className="form-inside-content" id="tags">
                     
                             {addedTags.length === 0 ?
@@ -415,8 +416,13 @@ const AddSubject = () => {
                               </div>
                             })
                             }
+                            
                   </div>
-
+                    <div className="file-input-warning">
+                    <div id="max-tags-reached">Maximum of four tags. Please delete a tag before adding a new one</div>
+                    <div id="duplicate-tags">Tag already selected. Please select a different tag</div>   
+                    </div>
+                  </div>   
               
 
             </div>
