@@ -46,14 +46,19 @@ const AddSubject = () => {
     // Prepares and validates tags for addition to the database.
     const addTag = (e, tag) => {
       e.preventDefault()
+      document.getElementById("max-tags-reached").style.display = "none";
+      document.getElementById("duplicate-tags").style.display = "none";
+
       if (tag === "") { return } 
       else if (addedTags.includes(tag)) { 
-        document.getElementById("warning-dialog-box").style.visibility = "visible";
+        // document.getElementById("warning-dialog-box").style.visibility = "visible";
+        document.getElementById("max-tags-reached").style.display = "none";
         document.getElementById("duplicate-tags").style.display = "block";
         setTag("")
       } 
       else if (addedTags.length === 4) { 
-        document.getElementById("warning-dialog-box").style.visibility = "visible";
+        // document.getElementById("warning-dialog-box").style.visibility = "visible";
+        document.getElementById("duplicate-tags").style.display = "none";
         document.getElementById("max-tags-reached").style.display = "block";
       } 
       else {
@@ -65,6 +70,8 @@ const AddSubject = () => {
     // Deletes a tag from the list of tags to be created.
     const deleteTag = (e, index) => {
       e.preventDefault()
+      document.getElementById("max-tags-reached").style.display = "none";
+      document.getElementById("duplicate-tags").style.display = "none";
       const newTags = addedTags
       newTags.splice(index, 1)
       setAddedTags([...newTags])
@@ -103,7 +110,11 @@ const AddSubject = () => {
 
     // Loads and validates file uploads and prepares them for adding to the database 
     const prepareAllFiles = (e) => {
+      
       setDuplicateFiles([])
+      document.getElementById("duplicate-files").style.display = "none";
+      document.getElementById("file-too-large").style.display = "none";
+      
       const allFiles = Array.from(e.target.files)
       console.log(e.target.files);
       const existingFiles = resourceUploads;
@@ -114,13 +125,11 @@ const AddSubject = () => {
         newFolderSize += file.size / 1024 / 1024
 
         if (duplicate.length > 0) {
-          document.getElementById("warning-dialog-box").style.visibility = "visible";
           document.getElementById("duplicate-files").style.display = "block";
           return duplicates.push(file)
         }
         
         if (newFolderSize > 50) {
-          document.getElementById("warning-dialog-box").style.visibility = "visible";
           document.getElementById("file-too-large").style.display = "block";
         }       
 
@@ -171,6 +180,8 @@ const AddSubject = () => {
     // removes download from list of downloads to be updated.
     const removeFile = (e, fileIndex) => {
       e.preventDefault()
+      document.getElementById("duplicate-files").style.display = "none";
+      document.getElementById("file-too-large").style.display = "none";
       setDuplicateFiles([])
       const findFile = resourceUploads.find(function(element, index) {
         return index === fileIndex;
@@ -318,17 +329,6 @@ const AddSubject = () => {
 
           <div className="popup-content">
             <div id="incomplete-form">Not all fields are complete. Please complete all fields before submitting the form</div>
-            <div id="file-too-large"><p>The total size of all files attached cannot exceed 50mb.</p></div>
-            <div id="duplicate-files"><p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>
-              <br></br>
-              <p>Duplicate files:</p>
-              <div className="form-inside-content">
-              {duplicateFiles.map(file => {
-                  return <div className="added-item"> <p>{file.name}</p> </div>
-              })
-              }
-              </div>
-            </div>
           </div>
 
           <div className="form-footer">
@@ -404,7 +404,7 @@ const AddSubject = () => {
                 }
                   <p>Tags added (4 maximum):</p>
                   <div className="file-input-field">
-                  <div className="form-inside-content" id="tags">
+                  <div className="form-inside-content" id="default">
                     
                             {addedTags.length === 0 ?
                             <p>None</p>
@@ -468,25 +468,46 @@ const AddSubject = () => {
               {/* DOWNLOADS */}
               <div className="form-fields-notext">
                 <div className="form-subfield">
-              <h3>Upload Resources</h3>
-              <p>Your teaching resources can be uploaded here, click to upload one or more files. There is no limit on the number of files you can upload but the maximum file size cannot exceed 50mb.</p>
-              <br></br>
-              <p>Files to upload (Maximum total size 50mb):</p>
-                <div className="form-inside-content" id="downloads">
-                  
-                    {resourceUploads.length > 0 ? 
-                    resourceUploads.map(file => (
-                      <div className="added-item">
-                      <label>{file.name}</label>
-                      <button onClick={(e) => removeFile(e, resourceUploads.indexOf(file))}>Remove File</button>
-                      </div>
-                    ))
-                    :
-                    <p>No files added</p>}
-                </div>
+                  <h3>Upload Resources</h3>
+                  <p>Your teaching resources can be uploaded here, click to upload one or more files. There is no limit on the number of files you can upload but the maximum file size cannot exceed 50mb.</p>
+                  <br></br>
+                  <p>Files to upload (Maximum total size 50mb):</p>
 
-              <input className="custom-file-input" onChange={(e) => {prepareAllFiles(e)}}type="file" id="download" name="download" multiple/>
+                
+                  <div className="file-input-field"> 
+                
+                    <div className="form-inside-content" id="default">
+                    
+                      {resourceUploads.length > 0 ? 
+                      resourceUploads.map(file => (
+                        <div className="added-item">
+                        <label>{file.name}</label>
+                        <button onClick={(e) => removeFile(e, resourceUploads.indexOf(file))}>Remove File</button>
+                        </div>
+                      ))
+                      :
+                      <p>No files added</p>}
+                  </div>
+                  <div className="file-input-warning">
+                  <div id="file-too-large"><p>The total size of all files attached cannot exceed 50mb.</p></div>
+               <div id="duplicate-files"><p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>
+               <br></br>
+               <p>Duplicate files:</p>
+
+                <div className="form-inside-content" id="duplicates">
+                 {duplicateFiles.map(file => {
+                  return <div className="added-item"> <p>{file.name}</p> </div>
+                 })
+                 }
+                </div>
               </div>
+              </div>
+
+                </div>
+                <input className="custom-file-input" onChange={(e) => {prepareAllFiles(e)}}type="file" id="download" name="download" multiple/>
+
+                
+            </div> 
             </div>
               
                 

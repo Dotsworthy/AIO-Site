@@ -169,6 +169,8 @@
 
 .file-input-warning {
     margin: 10px;
+    width: 50%;
+    max-height: 200px;
 }
 
 .database-container {
@@ -187,7 +189,19 @@
 .added-item {
     display: flex;
     justify-content: space-between;
+    overflow-x: hidden;
+    white-space: nowrap;
     margin: 4px 0px;
+
+    label {
+        overflow-x: hidden;
+        white-space: nowrap;
+        margin-right: 5px;
+    }
+
+    // button {
+    //     width: 25%;
+    // }
 }
 
 .image-container {
@@ -241,23 +255,26 @@
 .form-inside-content {
     // max-height: 200px;
     margin: 10px 0px;
-    width: 100%;
     background-color: white;
     border: 1px solid grey;
     // border-radius: 10px;
     padding: 10px;
+    overflow-x: hidden;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+    flex-wrap: nowrap;
 }
 
-#tags {
+#default {
     height: 200px;
-    width: 510px;
+    width: 50%;
 }
 
-#downloads {
-    height: 200px;
+#duplicates {
+    height: 94px;
+    width: 100%;
+
 }
 
 .form-warning-container {
