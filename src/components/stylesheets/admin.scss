@@ -209,7 +209,7 @@
     justify-content: space-between;
     overflow-x: hidden;
     white-space: nowrap;
-    margin: 4px 0px;
+    margin: 5px;
 
     label {
         overflow-x: hidden;
@@ -279,9 +279,7 @@
     padding: 10px;
     overflow-x: hidden;
     overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
+
 }
 
 #default {
