@@ -312,12 +312,6 @@ const AddSubject = () => {
 
     const warningCancel = () => {
       document.getElementById("warning-dialog-box").style.visibility = "hidden";
-      document.getElementById("incomplete-form").style.display = "none";
-      document.getElementById("duplicate-name").style.display = "none";
-      document.getElementById("max-tags-reached").style.display = "none";
-      document.getElementById("duplicate-tags").style.display = "none";
-      document.getElementById("duplicate-files").style.display = "none";
-      document.getElementById("file-too-large").style.display = "none";
     }
  
     return (
@@ -328,7 +322,7 @@ const AddSubject = () => {
           </div>
 
           <div className="popup-content">
-            <div id="incomplete-form">Not all fields are complete. Please complete all fields before submitting the form</div>
+            <div id="incomplete-form">There are issues with your form. Please fix errors highlighted in red.</div>
           </div>
 
           <div className="form-footer">
