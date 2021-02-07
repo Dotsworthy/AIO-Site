@@ -152,6 +152,10 @@
     display: flex;
     justify-content: flex-end;
     padding: 10px;
+
+    button {
+        margin: 10px 0 10px 10px;
+    }
 }
 
 .database-container {
@@ -159,11 +163,11 @@
 }
 
 .database-form {
-    // padding: 10px;
-    margin: 10px;
+    padding: 10px;
+    margin: 20px;
     background-color: #F4F5F5;
     box-shadow: 10px 10px;
-    // width: 600px;
+    width: 950px;
     min-width: 100%;
 }
 

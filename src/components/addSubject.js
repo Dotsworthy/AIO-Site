@@ -357,6 +357,7 @@ const AddSubject = () => {
               <input placeholder="Subject Name" value={name} name="name" onChange={e => setName(e.currentTarget.value)} type="text"/>
               
               {/* DESCRIPTION */}
+              <p>Write a preview of your subject. This is viewed by users to the resource catalogue, and could include a small introduction of the topic, an overview of the lesson plan, etc. (max characters: 3000)</p>
               <textarea placeholder="Subject Description" maxLength="2000" value={description} name="Description" onChange={e => setDescription(e.currentTarget.value)} type="text"/>
               </div>
 
@@ -427,7 +428,7 @@ const AddSubject = () => {
               <div className="form-subfield">
               <div>
                 <h3>Profile Image</h3>
-                <p>This image will be used on the resource catalogue</p>
+                <p>This image will be used on the resource catalogue page.</p>
               </div>
 
               <div className="image-container">
@@ -462,7 +463,8 @@ const AddSubject = () => {
               <div className="form-fields-notext">
                 <div className="form-subfield">
               <h3>Upload Resources</h3>
-
+              <p>Your teaching resources can be uploaded here, click to upload one or more files. There is no limit on the number of files you can upload but the maximum file size cannot exceed 50mb.</p>
+              <br></br>
               <p>Files to upload (Maximum total size 50mb):</p>
                 <div className="form-inside-content" id="downloads">
                   
