@@ -351,14 +351,24 @@ const AddSubject = () => {
               <h3>Subject Description</h3>
               
               {/* NAME */}
+              <div className="input-container">
               <div className="input-field">
+              <label>Subject Name:</label>
               <input placeholder="Subject Name" value={name} name="name" onChange={e => setName(e.currentTarget.value)} type="text"/>
+              </div>
               <div id="duplicate-name">A subject named {name} already exists.</div>
+              <div id="no-name">Please give your subject a name.</div>
               </div>
               
               {/* DESCRIPTION */}
               <p>Write a preview of your subject. This is viewed by users to the resource catalogue, and could include a small introduction of the topic, an overview of the lesson plan, etc. (max characters: 3000)</p>
-              <textarea placeholder="Subject Description" maxLength="2000" value={description} name="Description" onChange={e => setDescription(e.currentTarget.value)} type="text"/>
+              <div className="input-container">
+                <div className="input-field">
+                  <textarea placeholder="Subject Description" maxLength="2000" value={description} name="Description" onChange={e => setDescription(e.currentTarget.value)} type="text"/>
+                </div>
+                <div id="no-description">Please give your subject a description</div>
+              </div>
+              
               </div>
 
 
@@ -368,6 +378,9 @@ const AddSubject = () => {
               <p>Click to select from dropdown or start typing to search. Anything typed into the text box not in the database will be added.</p>
 
               {/* CATEGORY */}
+
+              <div className="input-field">
+              <label>Category:</label>  
               <input placeholder="Category" type="text" name="category" value={category} list="categoryList" onChange={e => setCategory(e.currentTarget.value)}/>
                {allCategories &&
                 <datalist id="categoryList">  
@@ -377,9 +390,13 @@ const AddSubject = () => {
                 }  
                 </datalist>
               }
+              <div id="no-category">Please give your subject a category</div>
+              </div>
               
               {/* LEVEL */}
-              <input placeholder="Level"value={level} name="level" list="levelList" onChange={e => setLevel(e.currentTarget.value)} type="level"/>
+              <div className="input-field">
+              <label>Educational Level:</label>
+              <input placeholder="Educational Level"value={level} name="level" list="levelList" onChange={e => setLevel(e.currentTarget.value)} type="level"/>
                 {allLevels &&
                 <datalist id="levelList">
                 {allLevels.map(singleLevel => {
@@ -387,11 +404,17 @@ const AddSubject = () => {
                   })}  
                 </datalist>  
               }
+              <div id="no-level">Please give your subject an educational level</div>
+              </div>
 
               {/* TAGS */}
               
               <div className="button-menu-container">
+              <div className="input-field">
+              <label>Tags:</label>
               <input placeholder="Tags" value={tag} name="tags" list="tagsList" onChange={e => setTag(e.currentTarget.value)} type="tags"/>
+              
+              </div>
               <button onClick={(e) => addTag(e, tag)}>Add Tag</button>
               </div>
 
@@ -420,6 +443,7 @@ const AddSubject = () => {
                   </div>
                     <div className="file-input-warning">
                     <div id="max-tags-reached">Maximum of four tags. Please delete a tag before adding a new one</div>
+                    <div id="no-tags">Please add at least one tag</div>
                     <div id="duplicate-tags">Tag already selected. Please select a different tag</div>   
                     </div>
                   </div>   

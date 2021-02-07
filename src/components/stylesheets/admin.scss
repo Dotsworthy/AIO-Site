@@ -3,6 +3,13 @@
 #warning-dialog-box { visibility: hidden; }
 #incomplete-form { display: none; color: red;}
 #duplicate-name { display: none; color: red;}
+#no-name { display: none; color: red;}
+#no-description { display: none; color: red;}
+#no-category { display: none; color: red;}
+#no-level { display: none; color: red;}
+#no-tags { display: none; color: red;}
+#no-image { display: none; color: red;}
+#no-downloads { display: none; color: red;}
 #max-tags-reached { display: none; color: red; width: 400px;}
 #duplicate-tags { display : none; color: red; width: 400px;}
 #duplicate-files { display: none; color: red;}
@@ -158,9 +165,20 @@
     }
 }
 
+.input-container {
+    display: flex;
+    align-items: center;
+}
+
 .input-field {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    width: 500px;
+
+    label {
+        margin-right: 10px;
+    }
 }
 
 .file-input-field {
