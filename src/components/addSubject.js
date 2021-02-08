@@ -3,6 +3,8 @@ import firebase from "firebase"
 import { navigate } from "gatsby"
 import 'firebase/storage'
 
+// To do: add switch statement to submit button to generate warnings for specific fields.
+
 const AddSubject = () => {
 
   // comment change?
@@ -105,8 +107,6 @@ const AddSubject = () => {
         htmlElement.src = "";
       }
     }
-
-
 
     // Loads and validates file uploads and prepares them for adding to the database 
     const prepareAllFiles = (e) => {
@@ -245,8 +245,26 @@ const AddSubject = () => {
         return query
     }
 
+    const resetAllWarnings = () => {
+      const warnings = ["no-name", "no-description", "no-category", "no-level", "no-tags", "no-image", "no-downloads",
+       "duplicate-name", "max-tags-reached", "duplicate-tags", "duplicate-files", "files-too-large"]
+
+      warnings.forEach(warning => {
+        document.getElementById(warning).style.display = "none";
+      }) 
+    }
+
+    const checkField = (field) => {
+      if (!field) {
+        document.getElementById(`no-${field}`).style.display = "block";
+      } else {
+        return
+      }
+    }
+
     const onSubmit = async e => {
       e.preventDefault()
+
       if (name && description && category && level && addedTags && imageUpload && resourceUploads.length > 0) {
 
       const nameCheck = await databaseCheck(name, "subjects")
@@ -356,8 +374,8 @@ const AddSubject = () => {
               
               {/* DESCRIPTION */}
               <p>Write a preview of your subject. This is viewed by users to the resource catalogue, and could include a small introduction of the topic, an overview of the lesson plan, etc. (max characters: 3000)</p>
-              <div className="input-container">
-                <div className="input-field">
+              <div className="vertical-input-container">
+                <div className="description-input-field">
                   <textarea placeholder="Subject Description" maxLength="2000" value={description} name="Description" onChange={e => setDescription(e.currentTarget.value)} type="text"/>
                 </div>
                 <div id="no-description">Please give your subject a description</div>
@@ -369,10 +387,10 @@ const AddSubject = () => {
 
             <div className="form-subfield">
               <h3>Subject Details </h3>
-              <p>Click to select from dropdown or start typing to search. Anything typed into the text box not in the database will be added.</p>
+              <p>Click to select from dropdown or start typing to search. Any text in the input field not currently in the database will be added.</p>
 
               {/* CATEGORY */}
-
+              <div className="input-container">
               <div className="input-field">
               <label>Category:</label>  
               <input placeholder="Category" type="text" name="category" value={category} list="categoryList" onChange={e => setCategory(e.currentTarget.value)}/>
@@ -384,10 +402,12 @@ const AddSubject = () => {
                 }  
                 </datalist>
               }
+              </div>
               <div id="no-category">Please give your subject a category</div>
               </div>
               
               {/* LEVEL */}
+              <div className="input-container">
               <div className="input-field">
               <label>Educational Level:</label>
               <input placeholder="Educational Level"value={level} name="level" list="levelList" onChange={e => setLevel(e.currentTarget.value)} type="level"/>
@@ -398,6 +418,7 @@ const AddSubject = () => {
                   })}  
                 </datalist>  
               }
+              </div>
               <div id="no-level">Please give your subject an educational level</div>
               </div>
 
@@ -507,8 +528,8 @@ const AddSubject = () => {
                       <p>No files added</p>}
                   </div>
                   <div className="file-input-warning">
-                  <div id="file-too-large"><p>The total size of all files attached cannot exceed 50mb.</p></div>
-               <div id="duplicate-files"><p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>
+                  <div id="file-too-large"><p>File could not be added because the total size of all files attached would exceed 50mb.</p></div>
+               <div id="duplicate-files"><p>One or more of your files are already on the list of downloads. Remove the existing file first.</p>
                <br></br>
                <p>Duplicate files:</p>
 
