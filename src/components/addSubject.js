@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react"
-import firebase from "firebase"
-import { navigate } from "gatsby"
-import 'firebase/storage'
-import { Switch } from "react-router-dom"
+import React, { useEffect, useState } from "react";
+import firebase from "firebase";
+import { navigate } from "gatsby";
+import 'firebase/storage';
 
 // To do: add switch statement to submit button to generate warnings for specific fields.
 
@@ -46,7 +45,7 @@ const AddSubject = () => {
     const allLevels = useItems("levels");
     const allTags = useItems("tags");
 
-    // Updates the database fields and removes any error messages on input.
+    // Updates the database fields and removes any error messages on input. Images and Downloads are done seperately.
     const changeField = (warning, e) => {
       switch(warning) {
         case "name":
@@ -511,14 +510,14 @@ const AddSubject = () => {
                 <div>
                   <p>Profile Image</p>          
                   <div className="catalogue-profile-image">
-                    <img id="preview" alt="No Profile "></img>
+                    <img id="preview" src={require("../images/aioLogo.png")} alt="No Profile Image"></img>
                   </div >
                 </div>  
                 
                 <div>
                   <p>Profile Card Image</p>
                   <div className ="catalogue-card-image">
-                    <img id="preview-2" alt="No profile"></img>
+                    <img id="preview-2" src={require("../images/aioLogo.png")} alt="No profile"></img>
                   </div>
                 </div>
 
