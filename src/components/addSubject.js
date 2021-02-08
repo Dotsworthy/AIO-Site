@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import firebase from "firebase"
 import { navigate } from "gatsby"
 import 'firebase/storage'
+import { Switch } from "react-router-dom"
 
 // To do: add switch statement to submit button to generate warnings for specific fields.
 
@@ -45,22 +46,45 @@ const AddSubject = () => {
     const allLevels = useItems("levels");
     const allTags = useItems("tags");
 
+    // Updates the database fields and removes any error messages on input.
+    const changeField = (warning, e) => {
+      switch(warning) {
+        case "name":
+          setName(e);
+          document.getElementById("no-name").style.display = "none";
+          document.getElementById("duplicate-name").style.display = "none";
+          break;
+        case "description":
+          setDescription(e);
+          document.getElementById("no-description").style.display = "none";
+          break;
+        case "category":
+          setCategory(e);
+          document.getElementById("no-category").style.display = "none";
+          break;
+        case "level":
+          setLevel(e);
+          document.getElementById("no-level").style.display = "none";
+          break;
+        case "tags":
+          setTag(e);
+          document.getElementById("no-tags").style.display = "none";
+          document.getElementById("max-tags-reached").style.display = "none";
+          document.getElementById("duplicate-tags").style.display = "none";
+          break;
+      }
+    }
+
     // Prepares and validates tags for addition to the database.
     const addTag = (e, tag) => {
       e.preventDefault()
-      document.getElementById("max-tags-reached").style.display = "none";
-      document.getElementById("duplicate-tags").style.display = "none";
 
       if (tag === "") { return } 
       else if (addedTags.includes(tag)) { 
-        // document.getElementById("warning-dialog-box").style.visibility = "visible";
-        document.getElementById("max-tags-reached").style.display = "none";
         document.getElementById("duplicate-tags").style.display = "block";
         setTag("")
       } 
       else if (addedTags.length === 4) { 
-        // document.getElementById("warning-dialog-box").style.visibility = "visible";
-        document.getElementById("duplicate-tags").style.display = "none";
         document.getElementById("max-tags-reached").style.display = "block";
       } 
       else {
@@ -82,11 +106,13 @@ const AddSubject = () => {
     // Loads profile image to display on the form and prepares them for addition to the database.
     const prepareProfileImage = (e, htmlLocation) => {
       if (e.target.files.length > 0) {
+        document.getElementById("no-image").style.display = "none";
         createPreview(e, htmlLocation)
         setImageUpload(e.target.files)
       } else if (e.target.files.length === 0) {
-        createPreview(e, htmlLocation)
-        setImageUpload("")
+        // createPreview(e, htmlLocation)
+        // setImageUpload("")
+        return
       }
     }
 
@@ -114,6 +140,7 @@ const AddSubject = () => {
       setDuplicateFiles([])
       document.getElementById("duplicate-files").style.display = "none";
       document.getElementById("file-too-large").style.display = "none";
+      document.getElementById("no-downloads").style.display = "none";
       
       const allFiles = Array.from(e.target.files)
       console.log(e.target.files);
@@ -247,23 +274,17 @@ const AddSubject = () => {
 
     const resetAllWarnings = () => {
       const warnings = ["no-name", "no-description", "no-category", "no-level", "no-tags", "no-image", "no-downloads",
-       "duplicate-name", "max-tags-reached", "duplicate-tags", "duplicate-files", "files-too-large"]
+       "duplicate-name", "max-tags-reached", "duplicate-tags", "duplicate-files", "file-too-large"]
 
       warnings.forEach(warning => {
         document.getElementById(warning).style.display = "none";
+        console.log(warning);
       }) 
-    }
-
-    const checkField = (field) => {
-      if (!field) {
-        document.getElementById(`no-${field}`).style.display = "block";
-      } else {
-        return
-      }
     }
 
     const onSubmit = async e => {
       e.preventDefault()
+      resetAllWarnings()
 
       if (name && description && category && level && addedTags && imageUpload && resourceUploads.length > 0) {
 
@@ -321,6 +342,15 @@ const AddSubject = () => {
       } else {
         document.getElementById("warning-dialog-box").style.visibility = "visible";
         document.getElementById("incomplete-form").style.display = "block";
+        if (!name) {document.getElementById("no-name").style.display = "block";}
+        if (!description) {document.getElementById("no-description").style.display = "block";}
+        if (!category) {document.getElementById("no-category").style.display = "block";}
+        if (!level) {document.getElementById("no-level").style.display = "block";}
+        if (addedTags.length === 0) {document.getElementById("no-tags").style.display = "block";}
+        if (!imageUpload) {document.getElementById("no-image").style.display = "block";}
+        if (resourceUploads.length === 0) {document.getElementById("no-downloads").style.display = "block";}
+
+        return
       }
     }
 
@@ -366,7 +396,7 @@ const AddSubject = () => {
               <div className="input-container">
               <div className="input-field">
               <label>Subject Name:</label>
-              <input placeholder="Subject Name" value={name} name="name" onChange={e => setName(e.currentTarget.value)} type="text"/>
+              <input placeholder="Subject Name" value={name} name="name" onChange={e => changeField("name", e.currentTarget.value)} type="text"/>
               </div>
               <div id="duplicate-name">A subject named {name} already exists.</div>
               <div id="no-name">Please give your subject a name.</div>
@@ -376,7 +406,7 @@ const AddSubject = () => {
               <p>Write a preview of your subject. This is viewed by users to the resource catalogue, and could include a small introduction of the topic, an overview of the lesson plan, etc. (max characters: 3000)</p>
               <div className="vertical-input-container">
                 <div className="description-input-field">
-                  <textarea placeholder="Subject Description" maxLength="2000" value={description} name="Description" onChange={e => setDescription(e.currentTarget.value)} type="text"/>
+                  <textarea placeholder="Subject Description" maxLength="2000" value={description} name="Description" onChange={e => changeField("description", e.currentTarget.value)} type="text"/>
                 </div>
                 <div id="no-description">Please give your subject a description</div>
               </div>
@@ -393,7 +423,7 @@ const AddSubject = () => {
               <div className="input-container">
               <div className="input-field">
               <label>Category:</label>  
-              <input placeholder="Category" type="text" name="category" value={category} list="categoryList" onChange={e => setCategory(e.currentTarget.value)}/>
+              <input placeholder="Category" type="text" name="category" value={category} list="categoryList" onChange={e => changeField("category", e.currentTarget.value)}/>
                {allCategories &&
                 <datalist id="categoryList">  
                 {allCategories.map(singleCategory => {
@@ -410,7 +440,7 @@ const AddSubject = () => {
               <div className="input-container">
               <div className="input-field">
               <label>Educational Level:</label>
-              <input placeholder="Educational Level"value={level} name="level" list="levelList" onChange={e => setLevel(e.currentTarget.value)} type="level"/>
+              <input placeholder="Educational Level"value={level} name="level" list="levelList" onChange={e => changeField("level", e.currentTarget.value)} type="level"/>
                 {allLevels &&
                 <datalist id="levelList">
                 {allLevels.map(singleLevel => {
@@ -427,7 +457,7 @@ const AddSubject = () => {
               <div className="button-menu-container">
               <div className="input-field">
               <label>Tags:</label>
-              <input placeholder="Tags" value={tag} name="tags" list="tagsList" onChange={e => setTag(e.currentTarget.value)} type="tags"/>
+              <input placeholder="Tags" value={tag} name="tags" list="tagsList" onChange={e => changeField("tags", e.currentTarget.value)} type="tags"/>
               
               </div>
               <button onClick={(e) => addTag(e, tag)}>Add Tag</button>
@@ -493,9 +523,12 @@ const AddSubject = () => {
                 </div>
 
               </div>
-
+              <div className="input-container">
+              <div className="input-field">
               <input className="custom-file-input" onChange={(e) => prepareProfileImage(e, "preview")} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
-
+              </div>
+              <div id="no-image">Please upload an image.</div>
+              </div>
               </div>
             </div>
 
@@ -529,7 +562,9 @@ const AddSubject = () => {
                   </div>
                   <div className="file-input-warning">
                   <div id="file-too-large"><p>File could not be added because the total size of all files attached would exceed 50mb.</p></div>
-               <div id="duplicate-files"><p>One or more of your files are already on the list of downloads. Remove the existing file first.</p>
+                  <div id="no-downloads"><p>Please add at least one file</p></div>
+                  <div id="duplicate-files"><p>One or more of your files are already on the list of downloads. Remove the existing file first.</p>
+                  
                <br></br>
                <p>Duplicate files:</p>
 
@@ -543,8 +578,11 @@ const AddSubject = () => {
               </div>
 
                 </div>
+                <div className="input-container">
+                <div className="input-field">
                 <input className="custom-file-input" onChange={(e) => {prepareAllFiles(e)}}type="file" id="download" name="download" multiple/>
-
+                </div>
+                </div>
                 
             </div> 
             </div>
