@@ -282,6 +282,13 @@ const AddSubject = () => {
       }) 
     }
 
+    const lockScreen = () => {
+      let nodes = document.getElementById("add-item-form").getElementsByTagName('*');
+      for(let i = 0; i < nodes.length; i++){
+      nodes[i].disabled = !nodes[i].disabled;
+}
+    }
+
     const onSubmit = async e => {
       e.preventDefault()
       resetAllWarnings()
@@ -342,6 +349,8 @@ const AddSubject = () => {
       } else {
         document.getElementById("warning-dialog-box").style.visibility = "visible";
         document.getElementById("incomplete-form").style.display = "block";
+        document.getElementById("add-item-form").disabled = true;
+        lockScreen()
         if (!name) {document.getElementById("no-name").style.display = "block";}
         if (!description) {document.getElementById("no-description").style.display = "block";}
         if (!category) {document.getElementById("no-category").style.display = "block";}
@@ -360,6 +369,7 @@ const AddSubject = () => {
 
     const warningCancel = () => {
       document.getElementById("warning-dialog-box").style.visibility = "hidden";
+      lockScreen();
     }
  
     return (

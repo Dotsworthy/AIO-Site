@@ -23,11 +23,9 @@
     position: fixed; 
     min-width: 300px;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    box-shadow: 10px 10px;
     background-color: #F4F5F5;
     border: 1px solid black;
-    border-radius: 10px;
 }
 
 .popup-content {
@@ -39,7 +37,7 @@
     height: 100%;
     width: 100%;
     // border: 1px solid black;
-    object-fit: contain;
+    // object-fit: contain;
 }
 
 #output {
@@ -254,7 +252,7 @@
 }
 
 .catalogue-card-image {
-    height: 250px;
+    height: 280px;
     width: 400px;
     display: flex;
     justify-content: center;
