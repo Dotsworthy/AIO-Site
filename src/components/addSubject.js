@@ -7,7 +7,6 @@ import 'firebase/storage';
 
 const AddSubject = () => {
 
-  // comment change?
     // database location. Needed for some functions.
     const database = firebase.firestore()
 
@@ -106,7 +105,10 @@ const AddSubject = () => {
     const prepareProfileImage = (e, htmlLocation) => {
       if (e.target.files.length > 0) {
         document.getElementById("no-image").style.display = "none";
-        createPreview(e, htmlLocation)
+        htmlLocation.forEach(id => {
+          createPreview(e, id)
+        })
+        // createPreview(e, htmlLocation)
         setImageUpload(e.target.files)
       } else if (e.target.files.length === 0) {
         // createPreview(e, htmlLocation)
@@ -118,7 +120,6 @@ const AddSubject = () => {
     // sends selected image file to JSX to render image. NOTE. clicking the upload image button and pressing cancel will remove the image from image uploads but does not remove preview. To fix.
     const createPreview = (e, htmlLocation) => {
       const htmlElement = document.getElementById(htmlLocation);
-      console.log(htmlElement);
       if (e.target.files.length > 0) {
         
         htmlElement.src = URL.createObjectURL(e.target.files[0]);
@@ -523,8 +524,8 @@ const AddSubject = () => {
 
               </div>
               <div className="input-container">
-              <div className="input-field">
-              <input className="custom-file-input" onChange={(e) => prepareProfileImage(e, "preview")} accept="image/*" placeholder="Image" id="image" name="image" type="file"/>
+              <div className="file-input-field">
+              <input className="custom-file-input" onChange={(e) => prepareProfileImage(e, ["preview", "preview-2"])} name="image" accept="image/*" id="image" type="file"/>
               </div>
               <div id="no-image">Please upload an image.</div>
               </div>
@@ -578,7 +579,7 @@ const AddSubject = () => {
 
                 </div>
                 <div className="input-container">
-                <div className="input-field">
+                <div className="file-input-field">
                 <input className="custom-file-input" onChange={(e) => {prepareAllFiles(e)}}type="file" id="download" name="download" multiple/>
                 </div>
                 </div>

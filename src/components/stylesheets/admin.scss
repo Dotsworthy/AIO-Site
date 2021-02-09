@@ -194,6 +194,8 @@
 
 .file-input-field {
     display: flex;
+
+    margin-right: 10px;
 }
 
 .file-input-warning {
@@ -338,8 +340,10 @@
 }
 
 .custom-file-input::-webkit-file-upload-button {
-    display: none;
-    width: 100%;
+    visibility: hidden;
+    // position: absolute;
+    // overflow: hidden;
+    // width: 0%;
   }
   .custom-file-input::before {
     // content: "Add File";
@@ -359,6 +363,7 @@
     outline: none;
     white-space: nowrap;
     -webkit-user-select: none;
+    overflow: hidden;
     cursor: pointer;
     // text-shadow: 1px 1px #fff;
     // font-weight: 700;
