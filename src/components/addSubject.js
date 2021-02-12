@@ -627,7 +627,7 @@ const AddSubject = () => {
             
           </div>
           <div className="form-footer">
-            <button type="submit" name="submit" onClick={() => handleCancel()} value="Cancel">Cancel</button>
+            <button type="button" name="cancel" onClick={() => handleCancel()} value="Cancel">Cancel</button>
             <button type="submit" name="submit" className="form-submit">Submit</button>
           </div>
           
