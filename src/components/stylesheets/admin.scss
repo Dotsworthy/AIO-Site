@@ -205,7 +205,7 @@
 }
 
 .database-container {
-    display: flex;
+    // display: flex;
 }
 
 .database-form {
@@ -266,13 +266,12 @@
 
 
 .database-navigation-container {
-    // height: 75px;
-    // min-width: 275px;
-    flex-basis: 1;
+    margin: 10px 10px 0 10px;
     padding: 10px;
     display: flex;
-    flex-direction: column;
-    // align-items: center;
+    width: 100%;
+    background-color: white;
+    // box-shadow: 10px 10px;
 
     a, a:visited {
         font-family: 'CodeDemo-Bold';
@@ -281,6 +280,31 @@
     letter-spacing: 1px;
     padding: 10px;
     }
+
+    .search-bar {
+        width: 85%;
+        margin: 0 5px;;
+    }
+
+    .add-subject-button {
+        width: 150px;
+    }
+
+    .database-navigation-footer {
+        width: 15%;
+        display: flex;
+        justify-content: center;
+
+        button {
+            width: 100%;
+            margin: 0 1px;
+        }
+    }
+}
+
+.database-navigation-content {
+    display: flex;
+    width: 100%;
 }
 
 .form-inside-content {
@@ -384,3 +408,92 @@
         content: "Select File/s";
 
   }
+
+.database-table {
+    border-collapse: collapse;
+    // margin: 25px 0;
+    font-size: 0.9em;
+    background-color: white;
+    margin: 0 10px 10px 10px;
+    font-family: sans-serif;
+    // min-width: 1250px;
+    box-shadow: 10px 10px;
+
+    th {
+        padding: 12px 15px;
+    }
+    
+    td {
+        padding: 12px 15px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .resource-name {
+        max-width: 200px;
+        min-width: 200px;
+    }
+
+    .category {
+        min-width: 200px;
+        max-width: 200px;
+    }
+
+    .level {
+        min-width: 200px;
+        max-width: 200px;
+    }
+
+    .table-buttons {
+        min-width: 200px;
+        max-width: 200px;
+
+        display: flex;
+        justify-content: center;
+
+        button {
+            width: 100%;
+        }
+    }
+
+
+
+    .tags {
+        max-width: 350px;
+        width: 350px;
+    }
+}
+
+thead {
+
+    tr {
+        background-color: #69BD5E;
+        color: #ffffff;
+        text-align: left;
+    }
+
+    button {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+    }
+
+}
+
+tbody {
+
+    tr {
+        border-bottom: 1px solid #dddddd;
+    
+        &:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        &:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+    }
+
+}
+

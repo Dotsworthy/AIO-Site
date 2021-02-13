@@ -100,26 +100,28 @@ const ListSubjects = () => {
       
       {!editing && <> 
         <div className="database-navigation-container">
-        <button onClick={((e) => addSubject(e))}>Add Subject</button>
+          <button className="add-subject-button" onClick={((e) => addSubject(e))}>Add Subject</button>
         
-        <form className="database-navigation-content" onSubmit={onSubmit}>
-          <input type="text" id="search" placeholder="Search" name="search"/>
-        
-        <div className="form-footer">
-        <button type="submit">Search</button>
-        <button type="reset" onClick={() => setSearchTerm(null)}>Clear</button>
-        </div>   
+          <form className="database-navigation-content" onSubmit={onSubmit}>
+            <input className="search-bar" type="text" id="search" placeholder="Search" name="search"/>
+            <div className="database-navigation-footer">
+              <button type="submit">Search</button>
+              <button type="reset" onClick={() => setSearchTerm(null)}>Clear</button>
+            </div>   
 
-        </form>
-      </div>  
-    
+          </form>
+        </div>  
+
       <table className="database-table">
-        <tbody>
+
+
+
+        <thead>
           <tr className="header-row">
             <th className="name">
               <button onClick={() => setOrderBy("name")}>Resource Name</button>
             </th>
-            
+          
             <th className="category">
               <button onClick={() => setOrderBy("category")}>Category</button>
             </th>
@@ -129,13 +131,19 @@ const ListSubjects = () => {
             </th>
             
             <th className="tags">
-              <button onClick={() => setOrderBy("tags")}>Tags</button>
+              <button onClick={() => setOrderBy("tags")} >
+              Tags
+              </button>
+            </th>
+
+            <th className="buttons">
+
             </th>
           </tr>
-        </tbody>
+        </thead>
+        <tbody>
         {resources.length > 0 ? resources.map(resource => (
-          <tbody key={resource.id}>
-            <tr className="data-row">
+            <tr className="data-row" key={resource.id}>
               <td className="resource-name">{resource.name}</td>
               <td className="category">{resource.category}</td>
               <td className="level">{resource.level}</td>
@@ -145,11 +153,12 @@ const ListSubjects = () => {
                 <button onClick={() => deleteSubject(resource)}>Delete</button>
               </td>
             </tr>
-          </tbody>
+
         ))
         :
         <p>No Results</p>
         }
+      </tbody>
       </table>
         
         
