@@ -3,6 +3,8 @@ import DeleteSubject from "./deleteSubject"
 import UpdateSubject from "./updateSubject"
 import { navigate } from "gatsby"
 import firebase from "./firebase"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSort } from '@fortawesome/free-solid-svg-icons'
 // import 'firebase/storage'
 
 // can't search by tags
@@ -103,7 +105,7 @@ const ListSubjects = () => {
           <button className="add-subject-button" onClick={((e) => addSubject(e))}>Add Subject</button>
         
           <form className="database-navigation-content" onSubmit={onSubmit}>
-            <input className="search-bar" type="text" id="search" placeholder="Search" name="search"/>
+            <input className="search-bar" type="text" id="search" placeholder="Search by name, catagory, education level, or tag" name="search"/>
             <div className="database-navigation-footer">
               <button type="submit">Search</button>
               <button type="reset" onClick={() => setSearchTerm(null)}>Clear</button>
@@ -119,21 +121,19 @@ const ListSubjects = () => {
         <thead>
           <tr className="header-row">
             <th className="name">
-              <button onClick={() => setOrderBy("name")}>Resource Name</button>
+              <button onClick={() => setOrderBy("name")}>Resource Name <FontAwesomeIcon icon={faSort}/></button>
             </th>
           
             <th className="category">
-              <button onClick={() => setOrderBy("category")}>Category</button>
+              <button onClick={() => setOrderBy("category")}>Category <FontAwesomeIcon icon={faSort}/></button>
             </th>
             
             <th className="level">
-              <button onClick={() => setOrderBy("level")}>Level</button>
+              <button onClick={() => setOrderBy("level")}>Education Level <FontAwesomeIcon icon={faSort}/></button>
             </th>
             
             <th className="tags">
-              <button onClick={() => setOrderBy("tags")} >
-              Tags
-              </button>
+              <button onClick={() => setOrderBy("tags")}>Tags <FontAwesomeIcon icon={faSort}/></button>
             </th>
 
             <th className="buttons">
@@ -149,7 +149,7 @@ const ListSubjects = () => {
               <td className="level">{resource.level}</td>
               <td className="tags">{resource.tags.join(', ')}</td>
               <td className="table-buttons">
-                <button onClick={() => editSubject(resource)}>Edit</button>
+                <button onClick={() => editSubject(resource)}>Update</button>
                 <button onClick={() => deleteSubject(resource)}>Delete</button>
               </td>
             </tr>

@@ -102,11 +102,16 @@ const UpdateDatabaseItem = ( { setEditing, currentItem }) => {
             
                 <div className="form-container">
                     <div><p>Updaing this {currentItem.location} will update all resources that have this {currentItem.location} attached.</p></div>
-                    <input type="text" name="name" value={item.name} onChange={onChange} />
-                <div className="form-footer">
-                    <button onClick={(e) => handleCancel(e)}>Cancel</button>
-                    <button type="submit" >Update</button>
-                </div>
+                    <div className="small-form-fields">
+                        <input type="text" name="name" value={item.name} onChange={onChange} />
+                        <div className="form-buttons">
+                            <button onClick={(e) => handleCancel(e)}>Cancel</button>
+                            <button type="submit" >Update</button>
+                        </div>
+                    </div>
+                {/* <div className="form-footer">
+                    
+                </div> */}
                 </div>
             </form>
             

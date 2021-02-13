@@ -71,8 +71,8 @@
     // padding: 10px;
     margin: 10px;
     background-color: #F4F5F5;
-    border-radius: 10px;
-    max-width: 300px;
+    box-shadow: 10px 10px;
+    // max-width: 300px;
 }
 
 .small-form-container {
@@ -97,7 +97,7 @@
     // display: flex;
     // flex-wrap: wrap;
     // justify-content: space-evenly;
-    padding: 0 10px;
+    padding: 10px;
     // align-items: flex-start;
 }
 
@@ -127,7 +127,6 @@
         margin: 5px 5px 5px 0px;
         padding: 10px;
         width: 250px;
-        
     }
 
     textarea {
@@ -141,6 +140,27 @@
         resize: none;
     }
     
+}
+
+.small-form-fields {
+    display: flex;
+
+    input {
+        margin: 5px 5px 5px 0px;
+        padding: 10px;
+        width: 250px;
+    }
+
+    .form-buttons {
+        min-width: 200px;
+        max-width: 200px;
+        display: flex;
+        align-items: center;
+    }
+
+    buttons {
+
+    }
 }
 
 .form-fields-notext {
@@ -267,6 +287,8 @@
 
 .database-navigation-container {
     margin: 10px 10px 0 10px;
+    box-shadow: 10px 10px;
+    border-bottom: 1px solid #dddddd;
     padding: 10px;
     display: flex;
     width: 100%;
@@ -283,7 +305,14 @@
 
     .search-bar {
         width: 85%;
-        margin: 0 5px;;
+        margin: 0 5px;
+        padding: 0 5px;
+    }
+
+    .search-bar-small {
+        width: 60%;
+        margin: 0 5px;
+        padding: 0 5px;
     }
 
     .add-subject-button {
@@ -292,6 +321,17 @@
 
     .database-navigation-footer {
         width: 15%;
+        display: flex;
+        justify-content: center;
+
+        button {
+            width: 100%;
+            margin: 0 1px;
+        }
+    }
+
+    .database-navigation-footer-small {
+        width: 40%;
         display: flex;
         justify-content: center;
 
@@ -454,6 +494,7 @@
 
         button {
             width: 100%;
+            margin: 0px 1px;
         }
     }
 
@@ -468,13 +509,14 @@
 thead {
 
     tr {
-        background-color: #69BD5E;
+        background-color: #D93030;
         color: #ffffff;
         text-align: left;
     }
 
     button {
         background-color: transparent;
+        color: white;
         border: none;
         padding: 0;
     }
@@ -491,7 +533,7 @@ tbody {
         }
 
         &:last-of-type {
-            border-bottom: 2px solid #009879;
+            border-bottom: 2px solid #D93030;
         }
     }
 

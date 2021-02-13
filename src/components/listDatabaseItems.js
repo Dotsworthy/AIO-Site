@@ -3,6 +3,8 @@ import firebase from "./firebase"
 import UpdateDatabaseItem from "./updateDatabaseItem"
 import DeleteDatabaseItem from "./deleteDatabaseItem"
 import RenderResourceNumber from "./renderResourceNumber"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSort } from '@fortawesome/free-solid-svg-icons'
 
 // TO DO: Implement similar search functionality from list Subjects
 
@@ -36,50 +38,6 @@ const ListDatabaseItems = ( { collection, resourceEntry} ) => {
       }
         
       }, [collection, items, editing, searchTerm])
-
-    // The functions below were used to render the number of resources attached. Currently non-working.
-
-    // const resources = []
-
-    // const useItems = (item) => {
-    //   const [items, setItems] = useState([]);
-    //   useEffect(() => {
-    //     database.collection(resourceEntry).where(`${resourceEntry}, "==", ${item}`).onSnapshot(snapshot => {
-    //       const listItems = snapshot.docs.map(doc => ({
-    //         id: doc.id,
-    //         ...doc.data()
-    //       }));
-    //       setItems(listItems);
-    //     })
-    //   })
-    //   console.log(items)
-    // }
-    
-    // const getResourcesAttached = async (item) => {
-    //   const resources = []
-    //   const resourcesRef = db.collection("items")
-    //   await resourcesRef.where(`${resourceEntry}`, "==", `${item.name}`).get().then(function(querySnapshot) {
-    //     if (querySnapshot.empty) {
-    //       return
-    //   } else {
-    //       querySnapshot.forEach(doc => {
-    //       resources.push({...doc.data()})
-    //       })}
-    //   }
-    //   ).catch(function(error) {
-    //     console.log("Error getting documents: ", error)
-    //   });
-    //   console.log(resources);
-    // }
-  
-    // const getResourcesAttached = async (category) => {
-    //   const result = await
-    //   addResourcesAttached(category).then(value => {
-    //     return value
-    //   })
-    //   const resourcesAttached = result.length
-    //   return resources.push({category, resourcesAttached})
-    // }  
 
     const editDatabaseItem = (item, collection, location) => {
       setCurrentItem({
@@ -116,36 +74,37 @@ const ListDatabaseItems = ( { collection, resourceEntry} ) => {
       {!editing && !deleting && 
       <>
          <div className="database-navigation-container">
-
-        <form onSubmit={onSubmit} className="nav-bar-form">
-        <input type="text" id="search" name="search" placeholder="Search"/>
-        <div className="form-footer">
-        <button type="submit">Search</button>
-        <button type="reset" onClick={() => setSearchTerm(null)}>Clear</button>
-        </div>
+           <form onSubmit={onSubmit} className="database-navigation-content">
+          <input className="search-bar-small" type="text" id="search" name="search" placeholder="Search"/>
+          <div className="database-navigation-footer-small">
+          <button type="submit">Search</button>
+          <button type="reset" onClick={() => setSearchTerm(null)}>Clear</button>
+          </div>
         </form>
         </div>
 
 
         <table className="database-table">
-        <tbody>
+        <thead>
         <tr className="header-row">
         <th className="name">Name</th>
-        <th>Resources Attached</th>
+        <th className="resources">Resources Attached</th>
+        <th className="buttons"></th>
         </tr>
-        </tbody>
+        </thead>
+        <tbody >
         {items.map(item => (
-          <tbody key={item.id}>
-            <tr className="data-row">
+          
+            <tr className="data-row" key={item.id}>
               <td className="item-name">{item.name}</td>
               <RenderResourceNumber currentItem={item} resourceEntry={resourceEntry}/>
-              <td className="buttons">
+              <td className="table-buttons">
                   <button onClick={() => editDatabaseItem(item, collection, resourceEntry)}>Edit</button>
                   <button onClick={() => deleteDatabaseItem(item, collection, resourceEntry)}>Delete</button>
               </td>
             </tr>
-          </tbody>
         ))}
+        </tbody>
         </table>
       </>
       
