@@ -158,9 +158,9 @@
         align-items: center;
     }
 
-    buttons {
+    // buttons {
 
-    }
+    // }
 }
 
 .form-fields-notext {
@@ -224,9 +224,9 @@
     max-height: 200px;
 }
 
-.database-container {
-    // display: flex;
-}
+// .database-container {
+//     // display: flex;
+// }
 
 .database-form {
     padding: 10px;
@@ -389,13 +389,13 @@
     justify-content: center;
     align-items: center;
 
-    button {
-        // @extend %admin-font-options;
-    }
+    // button {
+    //     // @extend %admin-font-options;
+    // }
 
-    h2 {
-    //    @extend %admin-font-options; 
-    }
+    // h2 {
+    // //    @extend %admin-font-options; 
+    // }
 
     .admin-subnav {
         margin: 10px 0 0 10px;
@@ -427,6 +427,7 @@
     outline: none;
     white-space: nowrap;
     -webkit-user-select: none;
+    user-select: none;
     overflow: hidden;
     cursor: pointer;
     // text-shadow: 1px 1px #fff;

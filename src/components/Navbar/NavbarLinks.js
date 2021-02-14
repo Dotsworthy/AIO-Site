@@ -1,21 +1,9 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { Link } from "gatsby"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons'
 
 const NavbarLinks = ( siteType ) => {
-
-  const [hasMounted, setHasMounted] = useState(false)
-
-  useEffect(() => {
-    setHasMounted(true)
-  },[])
-
-  // if (!hasMounted) {
-  //   return <>
-  //   </>
-  // }
-
 
   return (
     <>

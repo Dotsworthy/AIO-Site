@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import firebase from "firebase"
 
+// Needs refactoring. Is firing off requests repeated causing a quota limit.
 const RenderResourceNumber = ({ currentItem, resourceEntry }) => {
 
     const useItems = () => {

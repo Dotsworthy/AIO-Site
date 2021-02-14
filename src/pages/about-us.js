@@ -51,6 +51,7 @@ const AboutUs = () => {
                         <div className="link-box">
                             <a href={downloadFile}
                              target="_blank" 
+                             rel="noreferrer"
                              download>Mission Statement</a>
                         </div>
                     </div>

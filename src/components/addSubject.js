@@ -4,6 +4,7 @@ import { navigate } from "gatsby";
 import 'firebase/storage';
 
 // To do: add switch statement to submit button to generate warnings for specific fields.
+// Issue. If both warnings fire there is some minor issues with spacing.
 
 const AddSubject = () => {
 
@@ -69,6 +70,8 @@ const AddSubject = () => {
           document.getElementById("no-tags").style.display = "none";
           document.getElementById("max-tags-reached").style.display = "none";
           document.getElementById("duplicate-tags").style.display = "none";
+          break;
+        default:
           break;
       }
     }
@@ -143,10 +146,10 @@ const AddSubject = () => {
       document.getElementById("no-downloads").style.display = "none";
       
       const allFiles = Array.from(e.target.files)
-      console.log(e.target.files);
       const existingFiles = resourceUploads;
       const duplicates = [];
-      allFiles.map(file => {
+
+      allFiles.forEach(file => {
         const duplicate = existingFiles.filter(existingFile => existingFile.name === file.name)
         let newFolderSize = folderSize;
         newFolderSize += file.size / 1024 / 1024
@@ -298,10 +301,6 @@ const AddSubject = () => {
       document.body.style.overflow = null;
     }
 
-    const lockScreen = () => {
-      window.scrollTo(0,0);
-    }
-
     const onSubmit = async e => {
       e.preventDefault()
       resetAllWarnings()
@@ -423,8 +422,8 @@ const AddSubject = () => {
               {/* NAME */}
               <div className="input-container">
               <div className="input-field">
-              <label>Subject Name:</label>
-              <input placeholder="Subject Name" value={name} name="name" onChange={e => changeField("name", e.currentTarget.value)} type="text"/>
+              <label htmlFor="name" className="name_label">Subject Name:</label>
+              <input placeholder="Subject Name" value={name} name="name" id="name" onChange={e => changeField("name", e.currentTarget.value)} type="text"/>
               </div>
               <div id="duplicate-name">A subject named {name} already exists.</div>
               <div id="no-name">Please give your subject a name.</div>

@@ -3,8 +3,8 @@ import firebase from "./firebase"
 import UpdateDatabaseItem from "./updateDatabaseItem"
 import DeleteDatabaseItem from "./deleteDatabaseItem"
 import RenderResourceNumber from "./renderResourceNumber"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSort } from '@fortawesome/free-solid-svg-icons'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faSort } from '@fortawesome/free-solid-svg-icons'
 
 // TO DO: Implement similar search functionality from list Subjects
 
@@ -37,7 +37,7 @@ const ListDatabaseItems = ( { collection, resourceEntry} ) => {
         return unsubscribe
       }
         
-      }, [collection, items, editing, searchTerm])
+      }, [editing, searchTerm])
 
     const editDatabaseItem = (item, collection, location) => {
       setCurrentItem({
