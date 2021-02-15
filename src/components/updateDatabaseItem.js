@@ -101,7 +101,7 @@ const UpdateDatabaseItem = ( { setEditing, currentItem }) => {
                 <div className="form-header"><h2>Update {currentItem.location}</h2></div>
             
                 <div className="form-container">
-                    <div><p>Updaing this {currentItem.location} will update all resources that have this {currentItem.location} attached.</p></div>
+                <div className="small-form-content"><p>Updaing this database item will update all resources that have selected this item for {currentItem.location}.</p></div>
                     <div className="small-form-fields">
                         <input type="text" name="name" value={item.name} onChange={onChange} />
                         <div className="form-buttons">

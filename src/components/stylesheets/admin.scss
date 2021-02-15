@@ -144,6 +144,8 @@
 
 .small-form-fields {
     display: flex;
+    justify-content: space-between;
+    width: 100%;
 
     input {
         margin: 5px 5px 5px 0px;
@@ -152,15 +154,22 @@
     }
 
     .form-buttons {
-        min-width: 200px;
-        max-width: 200px;
+        min-width: 145px;
+        max-width: 145px;
         display: flex;
         align-items: center;
+        
     }
 
-    // buttons {
+    button {
+        margin: 0 1px;
+    }
+}
 
-    // }
+.small-form-content {
+    p {
+        max-width: 350px;
+    }
 }
 
 .form-fields-notext {
@@ -304,7 +313,7 @@
     }
 
     .search-bar {
-        width: 85%;
+        width: 82.3%;
         margin: 0 5px;
         padding: 0 5px;
     }
@@ -320,7 +329,7 @@
     }
 
     .database-navigation-footer {
-        width: 15%;
+        width: 18.1%;
         display: flex;
         justify-content: center;
 
@@ -487,6 +496,8 @@
     }
 
     .table-buttons {
+        margin-left: 5px;
+        padding: 12px 4px 12px 15px;
         min-width: 200px;
         max-width: 200px;
 
