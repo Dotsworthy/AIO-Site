@@ -100,45 +100,49 @@ const DeleteDatabaseItem = ({ setDeleting, currentItem}) => {
     }
     
     return (
-        <div>
+        <div className="database-container">
             {!deletingSubject && !editingSubject && 
-                <div className="database-form">
-                  <div className="form-header">
-                <h2>Confirm Delete?</h2>
-             </div>
+                  
 
-            <form className="popup-content" onSubmit={onSubmit}>
-                    <div>
-                        <h2>Delete Item</h2>
+            <form className="small-database-form" onSubmit={onSubmit}>
+                <div className="form-header">
+                    <h2>Delete Item</h2>
+                </div>
+
+                
+                    {/* <h2>Delete Item</h2> */}
                     {/* If there are resources in the database with the selected database item, it prevents the user from deleting the resource. */}
-                    {resources.length > 0 ? 
-                        <div>
+                    { resources.length > 0 ? 
+                        <div className="form-container">
                             <h3>Items attached to resources!</h3>
-                            <p>You cannot delete this database item as it is attached to resources in the database. You must first assign new items to these resources:</p>
-                        {resources.map(resource => {
-                            return <div>
+                            <div className="small-form-content"><p>You cannot delete this database item as it is attached to resources in the database. You must first assign new items to these resources:</p></div>
+                        
+                            <div className="form-inside-content">
+                            {resources.map(resource => {
+                            return <div className="added-item">
                                 <p>{resource.name}</p>
+                                <div className="form-inside-buttons">
                                 <button type="button" onClick={(e) => editSubject(e, resource)}>Edit</button>
                                 <button type="button" onClick={(e) => deleteSubject(e, resource)}>Delete</button>
-
+                                </div>
                             </div>
-                            
-                            
-                            
-                        })
-                        }
+                            })   
+                            }
+                            </div>
+
                     <button type="reset" onClick={(e) => handleCancel(e)} >Cancel</button>
                         </div>
                     : 
-                    <div>
-                    <p>No resources have this {currentItem.location} attached and can be safely deleted.</p>    
+                    <div className="form-container">
+                    <div className="small-form-content"><p>No resources have this {currentItem.location} attached and can be safely deleted.</p></div>
+                     
+                    <div className="form-footer">
                     <button onClick={(e) => handleCancel(e)} >Cancel</button>
                     <button type="submit">Delete Item</button>  
+                    </div>
                     </div> 
                 }  
-                </div> 
             </form>
-                </div>
             }
       
                 {editingSubject && <UpdateSubject setEditing={setEditingSubject} currentItem={currentSubject}/>}

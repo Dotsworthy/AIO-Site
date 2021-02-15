@@ -249,6 +249,7 @@
 .added-item {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     overflow-x: hidden;
     white-space: nowrap;
     margin: 5px;
@@ -257,6 +258,12 @@
         overflow-x: hidden;
         white-space: nowrap;
         margin-right: 5px;
+    }
+
+    
+    button {
+        margin: 0px 1px;
+        width: 70px;
     }
 
     // button {
@@ -365,6 +372,7 @@
     padding: 10px;
     overflow-x: hidden;
     overflow-y: auto;
+
 
 }
 
