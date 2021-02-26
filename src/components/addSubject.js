@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {triggerFormLock, disableScroll, enableScroll} from "./Utils/errorHandler";
+import {triggerFormLock, disableScroll, enableScroll, resetAllWarnings} from "./Utils/errorHandler";
+import {databaseCheck} from "./Utils/firebaseUtils";
 import firebase from "firebase";
 import { navigate } from "gatsby";
 import 'firebase/storage';
@@ -262,24 +263,6 @@ const AddSubject = () => {
     firebase.firestore().collection(location).doc(id).update({
       image,
       download,
-    })
-  }
-
-  // Looks for resources, categories, levels or tags in the database with the same name on the form.
-  const databaseCheck = async (name, location) => {
-    let query = []
-    const snapshot = await database.collection(location).where("name", "==", name).get()
-    snapshot.forEach((doc) => query.push(doc))
-    return query
-  }
-
-  const resetAllWarnings = () => {
-    const warnings = ["no-name", "no-description", "no-category", "no-level", "no-tags", "no-image", "no-downloads",
-      "duplicate-name", "max-tags-reached", "duplicate-tags", "duplicate-files", "file-too-large"]
-
-    warnings.forEach(warning => {
-      document.getElementById(warning).style.display = "none";
-      console.log(warning);
     })
   }
 

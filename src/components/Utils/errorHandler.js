@@ -14,3 +14,12 @@ export const enableScroll = () => {
   document.body.style.overflow = null;
   document.body.style.height = null;
 }
+
+export const resetAllWarnings = () => {
+  const warnings = ["no-name", "no-description", "no-category", "no-level", "no-tags", "no-image", "no-downloads",
+    "duplicate-name", "max-tags-reached", "duplicate-tags", "duplicate-files", "file-too-large"]
+
+  warnings.forEach(warning => {
+    document.getElementById(warning).style.display = "none";
+  })
+}

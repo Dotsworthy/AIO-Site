@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {triggerFormLock, disableScroll, enableScroll} from "./Utils/errorHandler";
+import {triggerFormLock, disableScroll, enableScroll, resetAllWarnings} from "./Utils/errorHandler";
 import firebase from "firebase"
 import 'firebase/storage'
 
@@ -305,6 +305,8 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
   // submission form
   const onSubmit = async e => {
     e.preventDefault();
+    resetAllWarnings();
+    
     if (item.name && item.description && item.category && item.level &&
       item.tags.length > 0
       &&
@@ -317,7 +319,10 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
 
       if (originalName !== item.name && nameCheck.length > 0) {
         document.getElementById("warning-dialog-box").style.visibility = "visible";
+        document.getElementById("incomplete-form").style.display = "block";
         document.getElementById("duplicate-name").style.display = "block";
+        disableScroll();
+        triggerFormLock("update-item-form");
       } else {
         document.getElementById("update-item-form").style.visibility = "hidden";
         document.getElementById("output").style.visibility = "hidden";
