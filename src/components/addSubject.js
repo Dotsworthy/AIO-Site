@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {triggerFormLock, disableScroll, enableScroll} from "./Utils/errorHandler";
 import firebase from "firebase";
 import { navigate } from "gatsby";
 import 'firebase/storage';
@@ -282,24 +283,6 @@ const AddSubject = () => {
     })
   }
 
-  const triggerFormLock = () => {
-    let nodes = document.getElementById("add-item-form").getElementsByTagName('*');
-    for (let i = 0; i < nodes.length; i++) {
-      nodes[i].disabled = !nodes[i].disabled;
-    }
-  }
-
-  const disableScroll = () => {
-    document.body.style.height = "100vh";
-    document.body.style.overflow = "hidden";
-    // document.querySelector('html').scrollTop = window.scrollY;
-  }
-
-  const enableScroll = () => {
-    document.body.style.overflow = null;
-    document.body.style.height = null;
-  }
-
   const onSubmit = async e => {
     e.preventDefault()
     resetAllWarnings()
@@ -560,12 +543,8 @@ const AddSubject = () => {
                 <p>Your teaching resources can be uploaded here, click to upload one or more files. There is no limit on the number of files you can upload but the maximum file size cannot exceed 50mb.</p>
                 <br></br>
                 <p>Files to upload (Maximum total size 50mb):</p>
-
-
                 <div className="file-input-field">
-
                   <div className="form-inside-content" id="default">
-
                     {resourceUploads.length > 0 ?
                       resourceUploads.map(file => (
                         <div className="added-item">
