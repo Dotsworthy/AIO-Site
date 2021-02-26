@@ -530,23 +530,19 @@ const AddSubject = () => {
                   <h3>Profile Image</h3>
                   <p>This image will be used on the resource catalogue page.</p>
                 </div>
-
                 <div className="image-container">
-
                   <div>
                     <p>Profile Image</p>
                     <div className="catalogue-profile-image">
                       <img id="preview" src={require("../images/aioLogo.png")} alt="No Profile Image"></img>
                     </div >
                   </div>
-
                   <div>
                     <p>Profile Card Image</p>
                     <div className="catalogue-card-image">
                       <img id="preview-2" src={require("../images/aioLogo.png")} alt="No profile"></img>
                     </div>
                   </div>
-
                 </div>
                 <div className="input-container">
                   <div className="file-input-field">

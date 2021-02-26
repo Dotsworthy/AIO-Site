@@ -390,22 +390,7 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
         </div>
 
         <div className="popup-content">
-          <div id="incomplete-form">Not all fields are complete. Please complete all fields before submitting the form</div>
-          <div id="duplicate-name">{item.name} already refers to an resource in the database. Either update the original resource, delete the original resource first, or choose a different name for the resource</div>
-          <div id="max-tags-reached">Maximum of four tags. Please delete a tag before adding a new one</div>
-          <div id="duplicate-tags">Tag already selected. Please select a different tag</div>
-          <div id="file-too-large"><p>The total size of all files attached cannot exceed 50mb.</p></div>
-          <div id="duplicate-files"><p>One or more of your files are already on the list of downloads. Delete this download first before reuploading</p>
-            <br></br>
-            <p>Duplicate files:</p>
-            <div className="form-inside-content">
-              {duplicateFiles.map(file => {
-                return <div className="added-item"><p>{file.name}</p></div>
-              })
-              }
-            </div>
-          </div>
-
+        <div id="incomplete-form">There are issues with your form. Please fix errors highlighted in red.</div>
         </div>
 
         <div className="form-footer">
@@ -423,10 +408,10 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
         <form onSubmit={onSubmit}>
           <div className="form-container">
             <div className="form-fields">
-              <h3>Subject Description</h3>
+
 
               <div className="form-subfield">
-
+                <h3>Subject Description</h3>
                 {/* NAME */}
                 <div className="input-container">
                   <div className="input-field">
@@ -523,51 +508,90 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
                   <div id="max-tags-reached">Maximum of four tags. Please delete a tag before adding a new one</div>
                   <div id="no-tags">Please add at least one tag</div>
                   <div id="duplicate-tags">Tag already selected. Please select a different tag</div>
+
+
                 </div>
               </div>
 
             </div>
 
-            <div className="form-downloads">
 
-              {/* IMAGE */}
-              <div>
-                <h2>Upload Image</h2>
+
+            {/* IMAGE */}
+            <div className="form-fields-notext">
+              <div className="form-subfield">
+                <div>
+                  <h2>Profile Image</h2>
+                  <p>This image will be used on the resource catalogue page.</p>
+                </div>
                 <div className="image-container">
-                  {item.image === "" ?
-                    <p>No Profile Image</p>
-                    :
-                    <img className="preview" id="output" alt="Loading..."></img>
-                  }
+                  <div>
+                    <p>Profile Image</p>
+                    <div className="catalogue-profile-image">
+                      <img className="preview" id="output" alt="No Profile Image"></img>
+                    </div>
+                  </div>
+                  <div>
+                    <p>Profile Card Image</p>
+                    <div className="catalogue-card-image">
+                      <img id="preview-2" id="output" alt="No Profile Image"></img>
+                    </div>
+                  </div>
                 </div>
-                <input onChange={(e) => loadFile(e)} accept="image/*" placeholder="Image" id="image" name="image" type="file" />
-              </div>
-
-              {/* DOWNLOADS */}
-              <div>
-                <h2>Upload Resources</h2>
-                <input onChange={(e) => loadAllFiles(e)} type="file" id="download" name="download" multiple />
-                <p>Files:</p>
-
-                <div className="form-inside-content">
-                  {item.download === "" ?
-                    <div><p>No files added</p></div>
-                    :
-                    item.download.map(file => (
-                      <div className="added-item">
-                        <label>{file}</label>
-                        <button onClick={(e) => removeFile(e, file, item.download.indexOf(file))}>Remove File</button>
-                      </div>
-                    ))}
+                <div className="input-container">
+                  <div className="file-input-field">
+                    <input className="custom-file-input" onChange={(e) => loadFile(e)} accept="image/*" placeholder="Image" id="image" name="image" type="file" />
+                  </div>
+                  <div id="no-image">Please upload an image.</div>
                 </div>
               </div>
-
             </div>
-          </div>
 
-          <div className="form-footer">
-            <button type="button" onClick={() => handleCancel()}>Cancel</button>
-            <button type="submit" >Update</button>
+            {/* DOWNLOADS */}
+            <div className="form-fields-notext">
+              <div className="form-subfield">
+                <h3>Upload Resources</h3>
+                <p>Your teaching resources can be uploaded here, click to upload one or more files. There is no limit on the number of files you can upload but the maximum file size cannot exceed 50mb.</p>
+                <br></br>
+                <p>Files added/to upload (Maximum total size 50mb):</p>
+                <div className="file-input-field">
+                  <div className="form-inside-content" id="default">
+                    {item.download === "" ?
+                      <div><p>No files added</p></div>
+                      :
+                      item.download.map(file => (
+                        <div className="added-item">
+                          <label>{file}</label>
+                          <button onClick={(e) => removeFile(e, file, item.download.indexOf(file))}>Remove File</button>
+                        </div>
+                      ))}
+                  </div>
+                  <div className="file-input-warning">
+                    <div id="file-too-large"><p>File could not be added because the total size of all files attached would exceed 50mb.</p></div>
+                    <div id="no-downloads"><p>Please add at least one file</p></div>
+                    <div id="duplicate-files"><p>One or more of your files are already on the list of downloads. Remove the existing file first.</p>
+                      <br></br>
+                      <p>Duplicate files:</p>
+                      <div className="form-inside-content">
+                        {duplicateFiles.map(file => {
+                          return <div className="added-item"><p>{file.name}</p></div>
+                        })
+                        }
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="input-container">
+                    <div className="file-input-field">
+                      <input className="custom-file-input" onChange={(e) => loadAllFiles(e)} type="file" id="download" name="download" multiple />
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <div className="form-footer">
+              <button type="button" name="cancel" onClick={() => handleCancel()} value="Cancel">Cancel</button>
+              <button type="submit" name="submit" className="form-submit">Update</button>
+            </div>
           </div>
         </form>
       </div>
