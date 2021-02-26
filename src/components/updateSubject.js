@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {triggerFormLock} from "./Utils/errorHandler";
+import {triggerFormLock, disableScroll, enableScroll} from "./Utils/errorHandler";
 import firebase from "firebase"
 import 'firebase/storage'
 
@@ -363,8 +363,21 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
         setEditing(false);
       }
     } else {
+      disableScroll();
+      triggerFormLock("update-item-form");
+
       document.getElementById("warning-dialog-box").style.visibility = "visible";
       document.getElementById("incomplete-form").style.display = "block";
+      document.getElementById("update-item-form").disabled = true;
+
+    
+      if (!item.name) { document.getElementById("no-name").style.display = "block"; }
+      if (!item.description) { document.getElementById("no-description").style.display = "block"; }
+      if (!item.category) { document.getElementById("no-category").style.display = "block"; }
+      if (!item.level) { document.getElementById("no-level").style.display = "block"; }
+      if (item.tags.length === 0) { document.getElementById("no-tags").style.display = "block"; }
+      if (!item.image) { document.getElementById("no-image").style.display = "block"; }
+      if (item.download.length === 0) { document.getElementById("no-downloads").style.display = "block"; }
     }
   };
 
@@ -374,6 +387,8 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
 
   const warningCancel = () => {
     document.getElementById("warning-dialog-box").style.visibility = "hidden";
+    triggerFormLock("update-item-form");
+    enableScroll();
   }
 
   return (

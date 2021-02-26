@@ -298,7 +298,7 @@ const AddSubject = () => {
         document.getElementById("incomplete-form").style.display = "block";
         document.getElementById("duplicate-name").style.display = "block";
         disableScroll();
-        triggerFormLock();
+        triggerFormLock("add-item-form");
       } else {
         document.getElementById("add-item-form").style.visibility = "hidden";
         document.getElementById("preview").style.visibility = "hidden";
@@ -345,7 +345,7 @@ const AddSubject = () => {
       }
     } else {
       disableScroll();
-      triggerFormLock();
+      triggerFormLock("add-item-form");
 
       document.getElementById("warning-dialog-box").style.visibility = "visible";
       document.getElementById("incomplete-form").style.display = "block";
@@ -370,7 +370,7 @@ const AddSubject = () => {
 
   const warningCancel = () => {
     document.getElementById("warning-dialog-box").style.visibility = "hidden";
-    triggerFormLock();
+    triggerFormLock("add-item-form");
     enableScroll();
   }
 
