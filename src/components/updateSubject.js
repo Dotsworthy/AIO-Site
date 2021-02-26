@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {triggerFormLock, disableScroll, enableScroll, resetAllWarnings} from "./Utils/errorHandler";
+import { triggerFormLock, disableScroll, enableScroll, resetAllWarnings } from "./Utils/errorHandler";
+import { databaseCheck } from "./Utils/firebaseUtils";
 import firebase from "firebase"
 import 'firebase/storage'
-
-// ISSUES:
-// Need to test that uploads and downloads are working properly.
 
 const UpdateSubject = ({ currentItem, setEditing }) => {
 
@@ -65,17 +63,6 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
   const allLevels = useItems("levels");
   const allTags = useItems("tags");
 
-  const databaseCheck = async (name, location) => {
-    let query = []
-    const snapshot = await database
-      .collection(location)
-      .where("name", "==", name)
-      .get()
-
-    snapshot.forEach((doc) => query.push(doc))
-    return query
-  }
-
   const addDatabaseField = (name, location) => {
     firebase
       .firestore()
@@ -84,6 +71,37 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
         name
       })
   }
+
+  // Updates the database fields and removes any error messages on input. Images and Downloads are done seperately.
+  // const changeField = (warning, e) => {
+  //   switch (warning) {
+  //     case "name":
+  //       setName(e);
+  //       document.getElementById("no-name").style.display = "none";
+  //       document.getElementById("duplicate-name").style.display = "none";
+  //       break;
+  //     case "description":
+  //       setDescription(e);
+  //       document.getElementById("no-description").style.display = "none";
+  //       break;
+  //     case "category":
+  //       setCategory(e);
+  //       document.getElementById("no-category").style.display = "none";
+  //       break;
+  //     case "level":
+  //       setLevel(e);
+  //       document.getElementById("no-level").style.display = "none";
+  //       break;
+  //     case "tags":
+  //       setTag(e);
+  //       document.getElementById("no-tags").style.display = "none";
+  //       document.getElementById("max-tags-reached").style.display = "none";
+  //       document.getElementById("duplicate-tags").style.display = "none";
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
 
   // changing item state
   const onChange = e => {
@@ -118,11 +136,9 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
     if (tag === "") {
       return
     } else if (item.tags.includes(tag)) {
-      document.getElementById("warning-dialog-box").style.visibility = "visible";
       document.getElementById("duplicate-tags").style.display = "block";
       setTag("")
     } else if (item.tags.length === 4) {
-      document.getElementById("warning-dialog-box").style.visibility = "visible";
       document.getElementById("max-tags-reached").style.display = "block";
     } else {
       const newTags = item.tags
@@ -134,6 +150,8 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
 
   const deleteTag = (e, index) => {
     e.preventDefault()
+    document.getElementById("max-tags-reached").style.display = "none";
+    document.getElementById("duplicate-tags").style.display = "none";
     const newTags = item.tags
     newTags.splice(index, 1)
     changeTags(newTags)
@@ -267,6 +285,9 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
 
   const loadAllFiles = (e) => {
     setDuplicateFiles([]);
+    document.getElementById("duplicate-files").style.display = "none";
+    document.getElementById("file-too-large").style.display = "none";
+    document.getElementById("no-downloads").style.display = "none";
     const upload = e.target.files;
     const allFiles = Array.from(upload)
     const existingFiles = Array.from(item.download);
@@ -281,13 +302,11 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
       console.log(newFolderSize);
 
       if (duplicate === true) {
-        document.getElementById("warning-dialog-box").style.visibility = "visible";
         document.getElementById("duplicate-files").style.display = "block";
         return duplicates.push(file);
       }
 
       if (newFolderSize > 50) {
-        document.getElementById("warning-dialog-box").style.visibility = "visible";
         document.getElementById("file-too-large").style.display = "block";
       }
 
@@ -306,7 +325,7 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
   const onSubmit = async e => {
     e.preventDefault();
     resetAllWarnings();
-    
+
     if (item.name && item.description && item.category && item.level &&
       item.tags.length > 0
       &&
@@ -375,7 +394,7 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
       document.getElementById("incomplete-form").style.display = "block";
       document.getElementById("update-item-form").disabled = true;
 
-    
+
       if (!item.name) { document.getElementById("no-name").style.display = "block"; }
       if (!item.description) { document.getElementById("no-description").style.display = "block"; }
       if (!item.category) { document.getElementById("no-category").style.display = "block"; }
@@ -405,7 +424,7 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
         </div>
 
         <div className="popup-content">
-        <div id="incomplete-form">There are issues with your form. Please fix errors highlighted in red.</div>
+          <div id="incomplete-form">There are issues with your form. Please fix errors highlighted in red.</div>
         </div>
 
         <div className="form-footer">
@@ -503,28 +522,31 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
                 }
 
                 <p>Tags added (4 maximum):</p>
-                <div className="file-input-field"></div>
-                <div className="form-inside-content" id="default">
-
-                  {item.tags === "" ?
-                    <p>None</p>
-                    :
-                    item.tags.map(singleTag => {
-                      return <div className="added-item">
-                        <label htmlFor={singleTag} key={item.tags.indexOf(singleTag)} id={item.tags.indexOf(singleTag)} name={singleTag}>{singleTag}</label>
-                        <button name={singleTag} onClick={(e) => deleteTag(e, item.tags.indexOf(singleTag))}>Delete Tag</button>
-                      </div>
-                    })
-                  }
+                <div className="file-input-field">
 
 
-                </div>
-                <div className="file-input-warning">
-                  <div id="max-tags-reached">Maximum of four tags. Please delete a tag before adding a new one</div>
-                  <div id="no-tags">Please add at least one tag</div>
-                  <div id="duplicate-tags">Tag already selected. Please select a different tag</div>
+                  <div className="form-inside-content" id="default">
+
+                    {item.tags === "" ?
+                      <p>None</p>
+                      :
+                      item.tags.map(singleTag => {
+                        return <div className="added-item">
+                          <label htmlFor={singleTag} key={item.tags.indexOf(singleTag)} id={item.tags.indexOf(singleTag)} name={singleTag}>{singleTag}</label>
+                          <button name={singleTag} onClick={(e) => deleteTag(e, item.tags.indexOf(singleTag))}>Delete Tag</button>
+                        </div>
+                      })
+                    }
 
 
+                  </div>
+                  <div className="file-input-warning">
+                    <div id="max-tags-reached">Maximum of four tags. Please delete a tag before adding a new one</div>
+                    <div id="no-tags">Please add at least one tag</div>
+                    <div id="duplicate-tags">Tag already selected. Please select a different tag</div>
+
+
+                  </div>
                 </div>
               </div>
 
@@ -597,10 +619,10 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
                   </div>
                 </div>
                 <div className="input-container">
-                    <div className="file-input-field">
-                      <input className="custom-file-input" onChange={(e) => loadAllFiles(e)} type="file" id="download" name="download" multiple />
-                    </div>
+                  <div className="file-input-field">
+                    <input className="custom-file-input" onChange={(e) => loadAllFiles(e)} type="file" id="download" name="download" multiple />
                   </div>
+                </div>
               </div>
             </div>
             <div className="form-footer">
