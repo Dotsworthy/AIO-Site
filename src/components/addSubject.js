@@ -313,7 +313,10 @@ const AddSubject = () => {
       
       if (nameCheck.length > 0) {
         document.getElementById("warning-dialog-box").style.visibility = "visible";
+        document.getElementById("incomplete-form").style.display = "block";
         document.getElementById("duplicate-name").style.display = "block";
+        disableScroll();
+        triggerFormLock();
       } else {
         document.getElementById("add-item-form").style.visibility = "hidden";
         document.getElementById("preview").style.visibility = "hidden";
@@ -417,26 +420,26 @@ const AddSubject = () => {
             <div className="form-fields">
 
               <div className="form-subfield">
-              <h3>Subject Description</h3>
+                <h3>Subject Description</h3>
               
-              {/* NAME */}
-              <div className="input-container">
-              <div className="input-field">
-              <label htmlFor="name" className="name_label">Subject Name:</label>
-              <input placeholder="Subject Name" value={name} name="name" id="name" onChange={e => changeField("name", e.currentTarget.value)} type="text"/>
-              </div>
-              <div id="duplicate-name">A subject named {name} already exists.</div>
-              <div id="no-name">Please give your subject a name.</div>
-              </div>
-              
-              {/* DESCRIPTION */}
-              <p>Write a preview of your subject. This is viewed by users to the resource catalogue, and could include a small introduction of the topic, an overview of the lesson plan, etc. (max characters: 3000)</p>
-              <div className="vertical-input-container">
-                <div className="description-input-field">
-                  <textarea placeholder="Subject Description" maxLength="2000" value={description} name="Description" onChange={e => changeField("description", e.currentTarget.value)} type="text"/>
+                {/* NAME */}
+                <div className="input-container">
+                  <div className="input-field">
+                    <label htmlFor="name" className="name_label">Subject Name:</label>
+                    <input placeholder="Subject Name" value={name} name="name" id="name" onChange={e => changeField("name", e.currentTarget.value)} type="text"/>
+                  </div>
+                  <div id="duplicate-name">A subject named {name} already exists.</div>
+                  <div id="no-name">Please give your subject a name.</div>
                 </div>
-                <div id="no-description">Please give your subject a description</div>
-              </div>
+              
+                {/* DESCRIPTION */}
+                <p>Write a preview of your subject. This is viewed by users to the resource catalogue, and could include a small introduction of the topic, an overview of the lesson plan, etc. (max characters: 3000)</p>
+                <div className="vertical-input-container">
+                  <div className="description-input-field">
+                    <textarea placeholder="Subject Description" maxLength="2000" value={description} name="Description" onChange={e => changeField("description", e.currentTarget.value)} type="text"/>
+                  </div>
+                  <div id="no-description">Please give your subject a description</div>
+                </div>
               
               </div>
 
@@ -448,46 +451,45 @@ const AddSubject = () => {
 
               {/* CATEGORY */}
               <div className="input-container">
-              <div className="input-field">
-              <label>Category:</label>  
-              <input placeholder="Category" type="text" name="category" value={category} list="categoryList" onChange={e => changeField("category", e.currentTarget.value)}/>
-               {allCategories &&
-                <datalist id="categoryList">  
-                {allCategories.map(singleCategory => {
+                <div className="input-field">
+                  <label>Category:</label>  
+                  <input placeholder="Category" type="text" name="category" value={category} list="categoryList" onChange={e => changeField("category", e.currentTarget.value)}/>
+                  {allCategories &&
+                  <datalist id="categoryList">  
+                  {allCategories.map(singleCategory => {
                   return <option key={singleCategory.id} value={singleCategory.name}>{singleCategory.name}</option>
-                })
-                }  
-                </datalist>
-              }
-              </div>
-              <div id="no-category">Please give your subject a category</div>
+                  })
+                  }  
+                  </datalist>
+                  }
+                </div>
+                <div id="no-category">Please give your subject a category</div>
               </div>
               
               {/* LEVEL */}
               <div className="input-container">
-              <div className="input-field">
-              <label>Educational Level:</label>
-              <input placeholder="Educational Level"value={level} name="level" list="levelList" onChange={e => changeField("level", e.currentTarget.value)} type="level"/>
-                {allLevels &&
-                <datalist id="levelList">
-                {allLevels.map(singleLevel => {
-                    return <option key={singleLevel.id} value={singleLevel.name}>{singleLevel.name}</option>
+                <div className="input-field">
+                  <label>Educational Level:</label>
+                  <input placeholder="Educational Level"value={level} name="level" list="levelList" onChange={e => changeField("level", e.currentTarget.value)} type="level"/>
+                  {allLevels &&
+                  <datalist id="levelList">
+                  {allLevels.map(singleLevel => {
+                  return <option key={singleLevel.id} value={singleLevel.name}>{singleLevel.name}</option>
                   })}  
-                </datalist>  
-              }
-              </div>
-              <div id="no-level">Please give your subject an educational level</div>
+                  </datalist>  
+                  }
+                </div>
+                <div id="no-level">Please give your subject an educational level</div>
               </div>
 
               {/* TAGS */}
               
               <div className="button-menu-container">
-              <div className="input-field">
-              <label>Tags:</label>
-              <input placeholder="Tags" value={tag} name="tags" list="tagsList" onChange={e => changeField("tags", e.currentTarget.value)} type="tags"/>
-              
-              </div>
-              <button onClick={(e) => addTag(e, tag)}>Add Tag</button>
+                <div className="input-field">
+                  <label>Tags:</label>
+                  <input placeholder="Tags" value={tag} name="tags" list="tagsList" onChange={e => changeField("tags", e.currentTarget.value)} type="tags"/>
+                </div>
+                <button onClick={(e) => addTag(e, tag)}>Add Tag</button>
               </div>
 
                 {allTags &&
@@ -581,7 +583,7 @@ const AddSubject = () => {
                       resourceUploads.map(file => (
                         <div className="added-item">
                         <label>{file.name}</label>
-                        <button onClick={(e) => removeFile(e, resourceUploads.indexOf(file))}>Remove File</button>
+                        <button className="remove-file" onClick={(e) => removeFile(e, resourceUploads.indexOf(file))}>Remove File</button>
                         </div>
                       ))
                       :

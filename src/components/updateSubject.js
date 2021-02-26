@@ -417,50 +417,89 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
         
         <div className="database-form" id="update-item-form">
           <div className="form-header">
-              <h2>Update Resource</h2>
+              <h2>Update Subject</h2>
           </div>
 
           <form onSubmit={onSubmit}>
             <div className="form-container">
               <div className="form-fields">
-                <h2>Resource Information</h2>
+                <h3>Subject Description</h3>
 
-                {/* NAME */}
-                <input type="text" name="name" value={item.name} onChange={onChange} />
-                
-                {/* DESCRIPTION */}
-                <textarea className="input-description" type="text" name="description" value={item.description} onChange={onChange}/>
-                
+                <div className="form-subfield">
+
+                  {/* NAME */}
+                  <div className="input-container">
+                    <div className="input-field">
+                      <label htmlFor="name" className="name_label">Subject Name:</label>
+                      <input type="text" name="name" value={item.name} onChange={onChange} />
+                    </div>
+                    <div id="duplicate-name">A subject named {item.name} already exists.</div>
+                    <div id="no-name">Please give your subject a name.</div>
+                  </div>
+
+
+                  {/* DESCRIPTION */}
+                  <p>Write a preview of your subject. This is viewed by users to the resource catalogue, and could include a small introduction of the topic, an overview of the lesson plan, etc. (max characters: 3000)</p>
+                  <div className="description-input-field">
+                    <textarea placeholder="Subject Description" maxLength="2000" className="input-description" type="text" name="description" value={item.description} onChange={onChange}/>
+                  </div>
+                  <div id="no-description">Please give your subject a description</div>
+                </div>
+
+                <div className="form-subfield">
+                  <h3>Subject Details</h3>
+                  <p>Click to select from dropdown or start typing to search. Any text in the input field not currently in the database will be added.</p>
+
                 {/* CATEGORY */}
-                <input placeholder="Category" type="text" name="category" value={item.category} list="categoryList" onChange={onChange}/>
-                {allCategories && 
-                <datalist id="categoryList">
-                  {allCategories.map(singleCategory => {
+                <div className="input-container">
+                  <div className="input-field">
+                    <label>Category:</label>  
+                    <input placeholder="Category" type="text" name="category" value={item.category} list="categoryList" onChange={onChange}/>
+                    {allCategories && 
+                    <datalist id="categoryList">
+                    {allCategories.map(singleCategory => {
                     return <option key={singleCategory.id} value={singleCategory.name}>{singleCategory.name}</option>
-                  })}  
-                  </datalist>
-                }
+                    })}  
+                    </datalist>
+                    }
+                  </div>
+                  <div id="no-category">Please give your subject a category</div>
+                </div>
 
                 {/* LEVEL */}
-                <input placeholder="Level"value={item.level} name="level" list="levelList" onChange={onChange} type="level"/>
-                {allLevels && 
-                  <datalist id="levelList">
-                  {allLevels.map(singleLevel => {
+                <div className="input-container">
+                  <div className="input-field">
+                    <label>Educational Level:</label>
+                    <input placeholder="Level"value={item.level} name="level" list="levelList" onChange={onChange} type="level"/>
+                    {allLevels && 
+                    <datalist id="levelList">
+                    {allLevels.map(singleLevel => {
                       return <option key={singleLevel.id} value={singleLevel.name}>{singleLevel.name}</option>
                     })}  
-                  </datalist>  
-                }
-                <input placeholder="Add a tag" value={tag} name="tags" list="tagsList" onChange={e => setTag(e.currentTarget.value)} type="tags"/>
-                <button onClick={(e) => addTag(e, tag)}>Add Tag</button>
+                    </datalist>  
+                    }
+                  </div>
+                  <div id="no-level">Please give your subject an educational level</div>
+                </div>
+
+
+                
                 
                 {/* TAGS */}
-                {allTags &&
-                <datalist id="tagsList">
+                <div className="button-menu-container">
+                  <div className="input-field">
+                    <label>Tags:</label>
+                    <input placeholder="Add a tag" value={tag} name="tags" list="tagsList" onChange={e => setTag(e.currentTarget.value)} type="tags"/>
+                  </div>
+                  <button onClick={(e) => addTag(e, tag)}>Add Tag</button>
+                </div>
+                  {allTags &&
+                  <datalist id="tagsList">
                   {allTags.map(singleTag => {
                     return <option key={singleTag.id} value={singleTag.name}>{singleTag.name}</option>
                   })}
-                </datalist>
-                }
+                  </datalist>
+                  }
 
                 <p className="tags-added-adjustment">Tags added:</p>
                 <div className="form-inside-content">
@@ -476,6 +515,7 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
                 }
                 
                 
+              </div>
               </div>
 
             </div>

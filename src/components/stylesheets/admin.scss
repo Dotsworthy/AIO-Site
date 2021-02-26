@@ -263,7 +263,11 @@
     
     button {
         margin: 0px 1px;
-        width: 70px;
+        min-width: 70px;
+    }
+
+    .remove-file {
+        min-width: 110px;
     }
 
     // button {
