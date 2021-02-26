@@ -10,12 +10,12 @@ import DownloadHandler from "../components/downloadHandler";
 // TODO: fire an event when a mobile filter is closed to reset the search field.
 // TODO: custom routes for more info?
 
-const ResourceCatalogue = ( ) => {
+const ResourceCatalogue = () => {
   const [resources, setResources] = useState([]);
   const [allCategories, setAllCategories] = useState([]);
   const [allLevels, setAllLevels] = useState([]);
   const [allTags, setAllTags] = useState([]);
-  const [categorySelected, setCategorySelected] = useState("") ;
+  const [categorySelected, setCategorySelected] = useState("");
   const [levelSelected, setLevelSelected] = useState("");
   const [tagSelected, setTagSelected] = useState("");
   const [searchTerm, setSearchTerm] = useState();
@@ -29,77 +29,77 @@ const ResourceCatalogue = ( ) => {
   useEffect(() => {
     let listTags
     firebase
-    .firestore()
-    .collection("tags")
-    .onSnapshot(snapshot => {
-      listTags = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-    }))
-      setAllTags(listTags)
-    })
-  },[])
+      .firestore()
+      .collection("tags")
+      .onSnapshot(snapshot => {
+        listTags = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+        setAllTags(listTags)
+      })
+  }, [])
 
   useEffect(() => {
     let listCategories
     firebase
-    .firestore()
-    .collection("categories")
-    .onSnapshot(snapshot => {
-      listCategories = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-    }))
-      setAllCategories(listCategories)
-    })
-  },[])
+      .firestore()
+      .collection("categories")
+      .onSnapshot(snapshot => {
+        listCategories = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+        setAllCategories(listCategories)
+      })
+  }, [])
 
   useEffect(() => {
     let listLevels
     firebase
-    .firestore()
-    .collection("levels")
-    .onSnapshot(snapshot => {
-      listLevels = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-    }))
-      setAllLevels(listLevels)
-    })
-  },[])
+      .firestore()
+      .collection("levels")
+      .onSnapshot(snapshot => {
+        listLevels = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+        setAllLevels(listLevels)
+      })
+  }, [])
 
   useEffect(() => {
     if (searchTerm) {
-        const unsubscribe = firebase.firestore().collection("subjects").orderBy("name").onSnapshot(snapshot => {
-          const listResources = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-          }))
-          let result = listResources
-          .filter(resource =>  
-               resource.name.toLowerCase().includes(searchTerm.toLowerCase()) 
-            || resource.category.toLowerCase().includes(searchTerm.toLowerCase()) 
+      const unsubscribe = firebase.firestore().collection("subjects").orderBy("name").onSnapshot(snapshot => {
+        const listResources = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+        let result = listResources
+          .filter(resource =>
+            resource.name.toLowerCase().includes(searchTerm.toLowerCase())
+            || resource.category.toLowerCase().includes(searchTerm.toLowerCase())
             || resource.level.toLowerCase().includes(searchTerm.toLowerCase())
-            || resource.tags.some(tag => 
+            || resource.tags.some(tag =>
               tag.toLowerCase().includes(searchTerm.toLowerCase())
-              )
             )
-          if (categorySelected) {
-            const category = result.filter(resource => resource.category === categorySelected)
-            result = category;
-          }
-          if (levelSelected) {
-            const level = result.filter(resource => resource.level === levelSelected)
-            result = level;
-          }  
-          if (tagSelected) {
-            const tag = result.filter(resource => 
+          )
+        if (categorySelected) {
+          const category = result.filter(resource => resource.category === categorySelected)
+          result = category;
+        }
+        if (levelSelected) {
+          const level = result.filter(resource => resource.level === levelSelected)
+          result = level;
+        }
+        if (tagSelected) {
+          const tag = result.filter(resource =>
             resource.tags.some(tag => tag.includes(tagSelected)))
-            result = tag;
-          }
-          setResources(result);
-          })
-        return unsubscribe
+          result = tag;
+        }
+        setResources(result);
+      })
+      return unsubscribe
     } else {
       const unsubscribe = firebase.firestore().collection("subjects").orderBy("name").onSnapshot(snapshot => {
         const listResources = snapshot.docs.map(doc => ({
@@ -114,10 +114,10 @@ const ResourceCatalogue = ( ) => {
         if (levelSelected) {
           const level = result.filter(resource => resource.level === levelSelected)
           result = level;
-        }  
+        }
         if (tagSelected) {
-          const tag = result.filter(resource => 
-          resource.tags.some(tag => tag.includes(tagSelected)))
+          const tag = result.filter(resource =>
+            resource.tags.some(tag => tag.includes(tagSelected)))
           result = tag;
         }
         setResources(result);
@@ -127,9 +127,9 @@ const ResourceCatalogue = ( ) => {
     }
   }, [searchTerm, categorySelected, levelSelected, tagSelected])
 
-//   useEffect(() => {
-//     setHasMounted(true);
-// }, [])
+  //   useEffect(() => {
+  //     setHasMounted(true);
+  // }, [])
 
   if (!hasMounted) {
     return null
@@ -153,11 +153,11 @@ const ResourceCatalogue = ( ) => {
   const downloadResource = item => {
     setDownloading(true);
     setCurrentItem({
-        id: item.id,
-        name: item.name,
-        download: item.download
+      id: item.id,
+      name: item.name,
+      download: item.download
     })
-}
+  }
 
   const clearFilters = () => {
     setLevelSelected("")
@@ -168,11 +168,11 @@ const ResourceCatalogue = ( ) => {
 
   const getImageURL = (id, location, resource) => {
     const storageRef = firebase.storage().ref(`${location}/${id}/${resource.image}`)
-    storageRef.getDownloadURL().then(function(url) {
+    storageRef.getDownloadURL().then(function (url) {
 
       const img = document.getElementById(id)
       img.src = url;
-    }).catch(function(error) {
+    }).catch(function (error) {
     })
   }
 
@@ -219,193 +219,193 @@ const ResourceCatalogue = ( ) => {
   return (
     <div className="resource-page">
       { !moreInfo && !downloading &&
-      <>
-        <form className="resource-page-search" onSubmit={onSubmit}>
-          <input type="text" id="search"  placeholder="Search names, tags, etc..." name="search"/>
+        <>
+          <form className="resource-page-search" onSubmit={onSubmit}>
+            <input type="text" id="search" placeholder="Search names, tags, etc..." name="search" />
 
-          {/* <div> */}
-          <button type="submit" className="search-button">
-          <FontAwesomeIcon icon={faSearch}/>
-          </button>
-          {/* </div> */}
-        </form>
-      
-        <div className="resource-page-container">
- 
-          <div className="resource-page-filter-bar">
+            {/* <div> */}
+            <button type="submit" className="search-button">
+              <FontAwesomeIcon icon={faSearch} />
+            </button>
+            {/* </div> */}
+          </form>
 
-            <div className="resource-page-button-menu">
-            <button onClick={() => clearFilters()}>Clear Filter</button>
-              <button type="button" class="collapsible" onClick={() => expandMenu("categories")}>Categories</button>
-              <button type="button" class="collapsible" onClick={() => expandMenu("levels")}>Level</button>
-              <button type="button" class="collapsible"  onClick={() => expandMenu("tags")}>Tags</button>
-            </div>
+          <div className="resource-page-container">
 
-            <div className="resource-page-filter-box">
-              <div className="content"  id="categories"> 
+            <div className="resource-page-filter-bar">
 
-              <div className="content-search">
-                <form><input type="text" id="search-filter categories" onChange={() => filterButtons("categories")} placeholder="search categories"/></form>
+              <div className="resource-page-button-menu">
+                <button onClick={() => clearFilters()}>Clear Filter</button>
+                <button type="button" class="collapsible" onClick={() => expandMenu("categories")}>Categories</button>
+                <button type="button" class="collapsible" onClick={() => expandMenu("levels")}>Level</button>
+                <button type="button" class="collapsible" onClick={() => expandMenu("tags")}>Tags</button>
               </div>
 
+              <div className="resource-page-filter-box">
+                <div className="content" id="categories">
 
-              <div className="content-filters">
-                {allCategories.map(category => (
-                        <button style={ category.name === categorySelected ? {color: "red"} : {color: "black"}} key={category.id} id="filter-button" className="filter-button categories"   
+                  <div className="content-search">
+                    <form><input type="text" id="search-filter categories" onChange={() => filterButtons("categories")} placeholder="search categories" /></form>
+                  </div>
+
+
+                  <div className="content-filters">
+                    {allCategories.map(category => (
+                      <button style={category.name === categorySelected ? { color: "red" } : { color: "black" }} key={category.id} id="filter-button" className="filter-button categories"
                         onClick={() => setCategorySelected(category.name)}
-                        >{category.name}</button>
+                      >{category.name}</button>
                     ))}
-              </div>
-            
-            </div>
-          
-            <div className="content"  id="levels">
+                  </div>
 
-            <div className="content-search">
-                <form><input type="text" id="search-filter levels" onChange={() => filterButtons("levels")} placeholder="search levels"/></form>
-              </div>      
+                </div>
 
-            <div className="content-filters">     
-              {allLevels.map(level => (
-                      <button style={ level.name === levelSelected ? {color: "red"} : {color: "black"}} key={level.id} className="filter-button levels" 
-                      onClick={() => setLevelSelected(level.name)}
+                <div className="content" id="levels">
+
+                  <div className="content-search">
+                    <form><input type="text" id="search-filter levels" onChange={() => filterButtons("levels")} placeholder="search levels" /></form>
+                  </div>
+
+                  <div className="content-filters">
+                    {allLevels.map(level => (
+                      <button style={level.name === levelSelected ? { color: "red" } : { color: "black" }} key={level.id} className="filter-button levels"
+                        onClick={() => setLevelSelected(level.name)}
                       >{level.name}</button>
-                  ))}
-            </div> 
+                    ))}
+                  </div>
+                </div>
+
+                <div className="content" id="tags">
+
+                  <div className="content-search">
+                    <form><input type="text" id="search-filter tags" onChange={() => filterButtons("tags")} placeholder="search levels" /></form>
+                  </div>
+
+                  <div className="content-filters">
+                    {allTags.map(tag => (
+                      <button style={tag.name === tagSelected ? { color: "red" } : { color: "black" }} key={tag.id} className="filter-button tags"
+                        onClick={() => setTagSelected(tag.name)}
+                      >{tag.name}</button>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="content"  id="tags">
+            <div className="resource-page-filters">
+              <button onClick={() => clearFilters()}>Clear Filter</button>
+              <div className="resource-page-filter">
+                <div className="catalogue-item-header">
+                  <h3>Categories</h3>
+                </div>
+                <div className="content-search">
+                  <form><input type="text" id="search-filter categories1" onChange={() => filterButtons("categories1")} placeholder="search categories" /></form>
+                </div>
+                <div
+                  className="form-inside-content"
+                >
 
-            <div className="content-search">
-                <form><input type="text" id="search-filter tags" onChange={() => filterButtons("tags")} placeholder="search levels"/></form>
-              </div>        
+                  {/* <button className="filter-button" onClick={() => setCategorySelected("")}>Show All</button>   */}
 
-                <div className="content-filters">
-              {allTags.map(tag => (
-                      <button style={ tag.name === tagSelected ? {color: "red"} : {color: "black"}} key={tag.id} className="filter-button tags" 
-                      onClick={() => setTagSelected(tag.name)}
-                      >{tag.name}</button>
+
+                  {allCategories.map(category => (
+                    <button style={category.name === categorySelected ? { color: "red" } : { color: "black" }} key={category.id} className="filter-button categories1"
+                      onClick={() => setCategorySelected(category.name)}
+                    >{category.name}</button>
+                  ))}
+
+
+                </div>
+              </div>
+              <div className="resource-page-filter">
+                <div className="catalogue-item-header">
+                  <h3>Education Level</h3>
+                </div>
+                <div className="content-search">
+                  <form><input type="text" id="search-filter levels1" onChange={() => filterButtons("levels1")} placeholder="search levels" /></form>
+                </div>
+                <div
+                  className="form-inside-content"
+                >
+
+                  {/* <button className="filter-button" onClick={() => setLevelSelected("")}>Show All</button>     */}
+                  {allLevels.map(level => (
+                    <button style={level.name === levelSelected ? { color: "red" } : { color: "black" }} key={level.id} className="filter-button levels1"
+                      onClick={() => setLevelSelected(level.name)}
+                    >{level.name}</button>
                   ))}
                 </div>
               </div>
+              <div className="resource-page-filter">
+                <div className="catalogue-item-header">
+                  <h3>Tags</h3>
+                </div>
+                <div className="content-search">
+                  <form><input type="text" id="search-filter tags1" onChange={() => filterButtons("tags1")} placeholder="search tags" /></form>
+                </div>
+                <div
+                  className="form-inside-content"
+                >
+
+                  {/* <button className="filter-button" onClick={() => setTagSelected("")}>Show All</button>     */}
+                  {allTags.map(tag => (
+                    <button style={tag.name === tagSelected ? { color: "red" } : { color: "black" }} key={tag.id} className="filter-button tags1"
+                      onClick={() => setTagSelected(tag.name)}
+                    >{tag.name}</button>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+
+            <div className="resource-page-items">
+              {resources.length > 0 ?
+                resources.map(resource => (
+                  <div key={resource.id} className="catalogue-item">
+                    <div className="catalogue-item-header">
+                      <h3>{resource.name}</h3>
+                    </div>
+
+                    <div className="catalogue-image-container">
+                      <img className="catalogue-image" src={getImageURL(resource.id, "images", resource)} id={resource.id} alt={resource.name}></img>
+                    </div>
+                    <div className="catalogue-button">
+                      <button onClick={() => getMoreInfo(resource)}>More Info</button>
+                      <button onClick={() => downloadResource(resource)}>Download</button>
+                    </div>
+                  </div>
+                ))
+                :
+                <div>
+                  <p>Sorry no results. Please try a different level or category, or press cancel filter to try a new search</p>
+                </div>
+              }
+            </div>
           </div>
+        </>
+      }
+
+      {moreInfo &&
+        <div className="additional-container">
+          <MoreInfo currentItem={currentItem} setDownloading={setDownloading} setMoreInfo={setMoreInfo} />
         </div>
 
-        <div className="resource-page-filters">
-        <button onClick={() => clearFilters()}>Clear Filter</button>
-        <div className="resource-page-filter">
-            <div className="catalogue-item-header">
-              <h3>Categories</h3>
+      }
+      {downloading &&
+        <div className="additional-container">
+          <div className="catalogue-download" id="white">
+            <div className="more-info-item-header">
+              <h2>Downloads</h2>
+              <button className="mobile-button" onClick={() => setDownloading(false)}>X</button>
             </div>
-            <div className="content-search">
-                <form><input type="text" id="search-filter categories1" onChange={() => filterButtons("categories1")} placeholder="search categories"/></form>
-              </div>
-              <div 
-              className="form-inside-content"
-              >
-              
-              {/* <button className="filter-button" onClick={() => setCategorySelected("")}>Show All</button>   */}
-              
-              
-              {allCategories.map(category => (
-                  <button style={ category.name === categorySelected ? {color: "red"} : {color: "black"}} key={category.id} className="filter-button categories1" 
-                  onClick={() => setCategorySelected(category.name)}
-                  >{category.name}</button>
-              ))}
-              
-              
-              </div>         
-              </div>
-          <div className="resource-page-filter">
-            <div className="catalogue-item-header">
-              <h3>Education Level</h3>
-              </div>
-              <div className="content-search">
-                <form><input type="text" id="search-filter levels1" onChange={() => filterButtons("levels1")} placeholder="search levels"/></form>
-              </div>
-              <div 
-              className="form-inside-content"
-              >
-              
-              {/* <button className="filter-button" onClick={() => setLevelSelected("")}>Show All</button>     */}
-              {allLevels.map(level => (
-                  <button style={ level.name === levelSelected ? {color: "red"} : {color: "black"}} key={level.id} className="filter-button levels1" 
-                  onClick={() => setLevelSelected(level.name)}
-                  >{level.name}</button>
-              ))}
-              </div>
+            <DownloadHandler currentItem={currentItem} setMoreInfo={setMoreInfo} setDownloading={setDownloading} />
           </div>
-          <div className = "resource-page-filter">
-            <div className = "catalogue-item-header">
-              <h3>Tags</h3>
-              </div>
-              <div className="content-search">
-                <form><input type="text" id="search-filter tags1" onChange={() => filterButtons("tags1")} placeholder="search tags"/></form>
-              </div>
-              <div
-               className="form-inside-content"
-              >
-              
-              {/* <button className="filter-button" onClick={() => setTagSelected("")}>Show All</button>     */}
-              {allTags.map(tag => (
-                  <button style={ tag.name === tagSelected ? {color: "red"} : {color: "black"}} key={tag.id} className="filter-button tags1" 
-                  onClick={() => setTagSelected(tag.name)}
-                  >{tag.name}</button>
-              ))}
-              </div>
-          </div>
+
 
         </div>
-          
-        <div className="resource-page-items">
-          {resources.length > 0  ? 
-          resources.map(resource => (
-          <div key={resource.id} className="catalogue-item">
-              <div className="catalogue-item-header">
-                <h3>{resource.name}</h3>
-              </div>
-              
-                          <div className="catalogue-image-container">
-              <img className="catalogue-image" src={getImageURL(resource.id, "images", resource)}  id={resource.id} alt={resource.name}></img>
-              </div>
-              <div className="catalogue-button">
-              <button onClick={() =>  getMoreInfo(resource)}>More Info</button>
-              <button onClick={() => downloadResource(resource)}>Download</button>
-              </div>
-          </div>      
-          ))
-            :
-            <div>
-              <p>Sorry no results. Please try a different level or category, or press cancel filter to try a new search</p>
-            </div>
-          }
-          </div>
-      </div>
-    </>
-    }
-
-    {moreInfo && 
-      <div className="additional-container">
-        <MoreInfo currentItem={currentItem} setDownloading={setDownloading} setMoreInfo={setMoreInfo}/>
-      </div>
-    
-    }
-    {downloading && 
-    <div className="additional-container">
-      <div className="catalogue-download" id="white">
-      <div className="more-info-item-header">
-                    <h2>Downloads</h2>
-                    <button className="mobile-button" onClick={() => setDownloading(false)}>X</button>
-                </div>   
-      <DownloadHandler currentItem={currentItem} setMoreInfo={setMoreInfo} setDownloading={setDownloading}/>
-    </div>
 
 
-    </div>
-    
-    
-    
-    }
+
+      }
     </div>
   )
 }

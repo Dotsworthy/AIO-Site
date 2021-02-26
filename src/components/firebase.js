@@ -6,13 +6,13 @@ import 'firebase/storage';
 
 // firebase config for main app
 var firebaseConfig = {
- apiKey: "AIzaSyAWAgYTE1z0CzHB3Nl2BYCUQfwbIOiOvmM",
- authDomain: "aio-resource-database.firebaseapp.com",
- projectId: "aio-resource-database",
- storageBucket: "aio-resource-database.appspot.com",
- messagingSenderId: "810036207784",
- appId: "1:810036207784:web:ba499b1c7d3969d32ae29d",
- measurementId: "G-PMX938KB3B"
+  apiKey: "AIzaSyAWAgYTE1z0CzHB3Nl2BYCUQfwbIOiOvmM",
+  authDomain: "aio-resource-database.firebaseapp.com",
+  projectId: "aio-resource-database",
+  storageBucket: "aio-resource-database.appspot.com",
+  messagingSenderId: "810036207784",
+  appId: "1:810036207784:web:ba499b1c7d3969d32ae29d",
+  measurementId: "G-PMX938KB3B"
 };
 
 
@@ -28,8 +28,8 @@ var firebaseConfig = {
 //   measurementId: "G-SNR4PBMFZ5"
 // };
 
-  firebase.initializeApp(firebaseConfig);
-  firebase.auth();
+firebase.initializeApp(firebaseConfig);
+firebase.auth();
 
-  export default firebase
+export default firebase
 

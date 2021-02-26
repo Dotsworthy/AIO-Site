@@ -36,7 +36,7 @@ const Layout = ({ children, siteType }) => {
 
   return (
     <>
-      <Navbar siteType={siteType}/>
+      <Navbar siteType={siteType} />
       {/* <Header siteTitle={data.site.siteMetadata.title} /> */}
       <div className="site"
         style={{
@@ -48,7 +48,7 @@ const Layout = ({ children, siteType }) => {
         }}
       >
         <div className="site-content"><main>{children}</main></div>
-        
+
         <footer className="footer">
           {/* <div>
             © {new Date().getFullYear()}, Built with
@@ -56,18 +56,18 @@ const Layout = ({ children, siteType }) => {
             <a href="https://www.gatsbyjs.org">Gatsby</a>
           </div> */}
           <Link className="logo" to="/">All in One Education</Link>
-          
+
           <div className="icons">
             <a className="icon-link" href="https://www.facebook.com/allinoneeducationuk">
-              <FontAwesomeIcon icon={faFacebook} size="1x"/>
-            </a>
-            
-            <a className="icon-link" href="https://twitter.com/aioeducation?lang=en">
-              <FontAwesomeIcon icon={faTwitter} size="1x"/>
+              <FontAwesomeIcon icon={faFacebook} size="1x" />
             </a>
 
-            <a className="icon-link"  href="https://www.instagram.com/allinoneeducationuk/">
-              <FontAwesomeIcon icon={faInstagram} size="1x"/>
+            <a className="icon-link" href="https://twitter.com/aioeducation?lang=en">
+              <FontAwesomeIcon icon={faTwitter} size="1x" />
+            </a>
+
+            <a className="icon-link" href="https://www.instagram.com/allinoneeducationuk/">
+              <FontAwesomeIcon icon={faInstagram} size="1x" />
             </a>
 
           </div>
@@ -79,11 +79,11 @@ const Layout = ({ children, siteType }) => {
           </div>
 
           <Link className="logo" to="/contact-us">Contact Us</Link>
-          
+
         </footer>
       </div>
 
-      
+
     </>
   )
 }

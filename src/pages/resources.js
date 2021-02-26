@@ -8,7 +8,7 @@ const ResourcePage = () => {
 
     return (
         <Layout siteType={"client"}>
-        <ResourceCatalogue/> 
+            <ResourceCatalogue />
         </Layout>
     )
 }

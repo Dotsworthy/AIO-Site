@@ -11,15 +11,15 @@ import SignInManager from "../../components/signInManager";
 
 const AdminPage = () => {
 
-  const SubjectList = () => <ListSubjects/>
-  const AddNewSubject = () => <AddSubject/>
-  const CategoryList = () => <ListDatabaseItems collection={"categories"} resourceEntry={"category"}/>
+  const SubjectList = () => <ListSubjects />
+  const AddNewSubject = () => <AddSubject />
+  const CategoryList = () => <ListDatabaseItems collection={"categories"} resourceEntry={"category"} />
   const LevelList = () => <ListDatabaseItems collection={"levels"} resourceEntry={"level"} />
   const TagList = () => <ListDatabaseItems collection={"tags"} resourceEntry={"tags"} />
 
   const [user, setUser] = useState();
-  
-  firebase.auth().onAuthStateChanged(function(user) {
+
+  firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       setUser(user)
     } else {
@@ -28,44 +28,44 @@ const AdminPage = () => {
   })
 
   const logout = () => {
-    firebase.auth().signOut().then(function() {
+    firebase.auth().signOut().then(function () {
       console.log("code reached signout")
-    }).catch(function(error) {
+    }).catch(function (error) {
       const errorCode = error.code
       console.log(errorCode)
     })
   }
 
   return (
-  <div>
-      {user ?     
+    <div>
+      {user ?
         <Layout siteType="admin">
           <div className="admin-layout">
-          <div
-           className="admin-subnav"
-           >
+            <div
+              className="admin-subnav"
+            >
               <button onClick={() => logout()}>Logout</button>
-          </div>
+            </div>
 
             <Router basepath="/admin">
-              <SubjectList path="/"/>
-              <SubjectList path="/subjectList"/>
-              <AddNewSubject path="/subjectList/addSubject"/>
-              <CategoryList path="/categoryList"/>
-              <LevelList path="/levelList"/>
-              <TagList path="/tagList"/>
+              <SubjectList path="/" />
+              <SubjectList path="/subjectList" />
+              <AddNewSubject path="/subjectList/addSubject" />
+              <CategoryList path="/categoryList" />
+              <LevelList path="/levelList" />
+              <TagList path="/tagList" />
 
-            </Router> 
+            </Router>
           </div>
         </Layout>
-    :
-    <Layout siteType={"client"}>
-    <SignInManager/>
-    </Layout>
-    }
-      
-    
-  </div>
+        :
+        <Layout siteType={"client"}>
+          <SignInManager />
+        </Layout>
+      }
+
+
+    </div>
   )
 }
 

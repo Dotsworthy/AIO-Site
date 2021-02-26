@@ -35,31 +35,31 @@ const ContactUs = () => {
                     <h1>CONTACT US</h1>
                 </div>
             </div>
-            
+
             <div className="content-box-variable">
-            
-            <div className="paragraph-box box1" id="white">
-            <p>Contact us to learn more about our mission and work, or get involved yourself.</p>
-            <p>enquiries@allinoneeducation.co.uk</p>
-            <img src={require("../images/42401748_m.jpg")} alt="contact-us"></img>
-            
-            
-            
+
+                <div className="paragraph-box box1" id="white">
+                    <p>Contact us to learn more about our mission and work, or get involved yourself.</p>
+                    <p>enquiries@allinoneeducation.co.uk</p>
+                    <img src={require("../images/42401748_m.jpg")} alt="contact-us"></img>
+
+
+
+                </div>
+                <div className="paragraph-box box2" id="white">
+                    <form id="form" onSubmit={handleSubmit} className="contact-us-form">
+                        <input type="text" name="first_name" placeholder="First Name" />
+                        <input type="text" name="last_name" placeholder="Last Name" />
+                        <input type="text" name="reply_to" placeholder="Email" />
+                        <textarea type="text" name="message" placeholder="Message" />
+                        <div id="confirm"><p>Thanks! We will reply to your enquiry ASAP.</p></div>
+                        <div id="error"><p>Oh No! It appears there was an error. Please try emailing us directly at enquiries@allinoneeducation.co.uk.</p></div>
+                        <input type="submit" id="button" value="Send Email" />
+                    </form>
+                </div>
+
             </div>
-            <div className="paragraph-box box2" id="white">
-            <form id="form" onSubmit={handleSubmit} className="contact-us-form">
-                <input type="text" name="first_name" placeholder="First Name"/>
-                <input type="text" name="last_name" placeholder = "Last Name"/>
-                <input type="text" name="reply_to" placeholder = "Email"/>
-                <textarea type="text" name="message" placeholder = "Message"/>
-                <div id="confirm"><p>Thanks! We will reply to your enquiry ASAP.</p></div>
-                <div id="error"><p>Oh No! It appears there was an error. Please try emailing us directly at enquiries@allinoneeducation.co.uk.</p></div>
-                <input type="submit" id="button" value="Send Email"/>
-            </form>
-            </div>
-            
-            </div>
-            
+
         </Layout>
     )
 }

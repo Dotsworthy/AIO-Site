@@ -10,7 +10,7 @@ import { faSort } from '@fortawesome/free-solid-svg-icons'
 // can't search by tags
 
 const ListSubjects = () => {
-  
+
   // used for rendering and filtering resources
   const [resources, setResources] = useState([]);
   const [searchTerm, setSearchTerm] = useState(null)
@@ -20,28 +20,28 @@ const ListSubjects = () => {
   const [deleting, setDeleting] = useState(false)
   const [editing, setEditing] = useState(false)
   const [currentItem, setCurrentItem] = useState([])
- 
+
   // renders the list of resources
   useEffect(() => {
     if (searchTerm) {
-        const unsubscribe = firebase.firestore().collection("subjects").orderBy(orderBy).onSnapshot(snapshot => {
-          const listResources = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-          }))
-          console.log(listResources);
-          const result = listResources
-          .filter(resource =>  
-               resource.name.toLowerCase().includes(searchTerm.toLowerCase()) 
-            || resource.category.toLowerCase().includes(searchTerm.toLowerCase()) 
+      const unsubscribe = firebase.firestore().collection("subjects").orderBy(orderBy).onSnapshot(snapshot => {
+        const listResources = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+        console.log(listResources);
+        const result = listResources
+          .filter(resource =>
+            resource.name.toLowerCase().includes(searchTerm.toLowerCase())
+            || resource.category.toLowerCase().includes(searchTerm.toLowerCase())
             || resource.level.toLowerCase().includes(searchTerm.toLowerCase())
-            || resource.tags.some(tag => 
+            || resource.tags.some(tag =>
               tag.toLowerCase().includes(searchTerm.toLowerCase())
-              )
-            )      
-          setResources(result);
-          })
-        return unsubscribe
+            )
+          )
+        setResources(result);
+      })
+      return unsubscribe
     } else {
       const unsubscribe = firebase.firestore().collection("subjects").orderBy(orderBy).onSnapshot(snapshot => {
         const listResources = snapshot.docs.map(doc => ({
@@ -83,7 +83,7 @@ const ListSubjects = () => {
 
     setEditing(true)
   }
-  
+
   // search form
   const onSubmit = e => {
     e.preventDefault()
@@ -97,87 +97,87 @@ const ListSubjects = () => {
   }
 
   return (
-    
+
     <div className="database-container">
-      
-      {!editing && <> 
+
+      {!editing && <>
         <div className="database-navigation-container">
           <button className="add-subject-button" onClick={((e) => addSubject(e))}>Add Subject</button>
-        
+
           <form className="database-navigation-content" onSubmit={onSubmit}>
-            <input className="search-bar" type="text" id="search" placeholder="Search by name, catagory, education level, or tag" name="search"/>
+            <input className="search-bar" type="text" id="search" placeholder="Search by name, catagory, education level, or tag" name="search" />
             <div className="database-navigation-footer">
               <button type="submit">Search</button>
               <button type="reset" onClick={() => setSearchTerm(null)}>Clear</button>
-            </div>   
+            </div>
 
           </form>
-        </div>  
+        </div>
 
-      <table className="database-table">
+        <table className="database-table">
 
 
 
-        <thead>
-          <tr className="header-row">
-            <th className="name">
-              <button onClick={() => setOrderBy("name")}>Resource Name <FontAwesomeIcon icon={faSort}/></button>
-            </th>
-          
-            <th className="category">
-              <button onClick={() => setOrderBy("category")}>Category <FontAwesomeIcon icon={faSort}/></button>
-            </th>
-            
-            <th className="level">
-              <button onClick={() => setOrderBy("level")}>Education Level <FontAwesomeIcon icon={faSort}/></button>
-            </th>
-            
-            <th className="tags">
-              <button onClick={() => setOrderBy("tags")}>Tags <FontAwesomeIcon icon={faSort}/></button>
-            </th>
+          <thead>
+            <tr className="header-row">
+              <th className="name">
+                <button onClick={() => setOrderBy("name")}>Resource Name <FontAwesomeIcon icon={faSort} /></button>
+              </th>
 
-            <th className="buttons">
+              <th className="category">
+                <button onClick={() => setOrderBy("category")}>Category <FontAwesomeIcon icon={faSort} /></button>
+              </th>
 
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-        {resources.length > 0 ? resources.map(resource => (
-            <tr className="data-row" key={resource.id}>
-              <td className="resource-name">{resource.name}</td>
-              <td className="category">{resource.category}</td>
-              <td className="level">{resource.level}</td>
-              <td className="tags">{resource.tags.join(', ')}</td>
-              <td className="table-buttons">
-                <button onClick={() => editSubject(resource)}>Update</button>
-                <button onClick={() => deleteSubject(resource)}>Delete</button>
-              </td>
+              <th className="level">
+                <button onClick={() => setOrderBy("level")}>Education Level <FontAwesomeIcon icon={faSort} /></button>
+              </th>
+
+              <th className="tags">
+                <button onClick={() => setOrderBy("tags")}>Tags <FontAwesomeIcon icon={faSort} /></button>
+              </th>
+
+              <th className="buttons">
+
+              </th>
             </tr>
+          </thead>
+          <tbody>
+            {resources.length > 0 ? resources.map(resource => (
+              <tr className="data-row" key={resource.id}>
+                <td className="resource-name">{resource.name}</td>
+                <td className="category">{resource.category}</td>
+                <td className="level">{resource.level}</td>
+                <td className="tags">{resource.tags.join(', ')}</td>
+                <td className="table-buttons">
+                  <button onClick={() => editSubject(resource)}>Update</button>
+                  <button onClick={() => deleteSubject(resource)}>Delete</button>
+                </td>
+              </tr>
 
-        ))
-        :
-        <p>No Results</p>
-        }
-      </tbody>
-      </table>
-        
-        
-        </>}
-      
+            ))
+              :
+              <p>No Results</p>
+            }
+          </tbody>
+        </table>
+
+
+      </>}
+
 
       {deleting && <div className="popup-container"><DeleteSubject
         setDeleting={setDeleting}
         currentItem={currentItem}
-        />
-        </div>
+      />
+      </div>
       }
 
       {editing && <UpdateSubject
-      currentItem={currentItem}
-      setEditing={setEditing}
+        currentItem={currentItem}
+        setEditing={setEditing}
       />}
 
-  </div>
+    </div>
   )
 }
 

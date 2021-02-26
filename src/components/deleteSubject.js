@@ -20,16 +20,16 @@ const DeleteSubject = ({ currentItem, setDeleting }) => {
     await deleteAllFiles(resource.download, resource.id, "downloads")
 
     firebase
-    .firestore()
-    .collection("subjects")
-    .doc(resource.id)
-    .delete()
+      .firestore()
+      .collection("subjects")
+      .doc(resource.id)
+      .delete()
 
     setDeleting(false);
 
-    
-  }  
-  
+
+  }
+
   // deletes a single file within a folder in firebase storage
   const deleteFile = async (file, id, location) => {
     const string = `${location}/${id}/${file}`
@@ -39,14 +39,14 @@ const DeleteSubject = ({ currentItem, setDeleting }) => {
       return
     } else {
       const fileRef = storageRef.child(`${string}`)
-      fileRef.delete().then(function() {
+      fileRef.delete().then(function () {
         console.log("resource deleted successfully")
-      }).catch(function(error) {
+      }).catch(function (error) {
         console.log(error)
       })
     }
   }
-  
+
   // deletes all files within a folder in firebase storage
   const deleteAllFiles = async (file, id, location) => {
     const storageRef = firebase.storage().ref()
@@ -58,9 +58,9 @@ const DeleteSubject = ({ currentItem, setDeleting }) => {
     } else {
       file.map(download => {
         const fileRef = storageRef.child(`${location}/${id}/${download}`)
-        return fileRef.delete().then(function() {
+        return fileRef.delete().then(function () {
           console.log("resource deleted successfully")
-        }).catch(function(error) {
+        }).catch(function (error) {
           console.log(error)
         })
       })
@@ -73,13 +73,13 @@ const DeleteSubject = ({ currentItem, setDeleting }) => {
         <h2>Confirm Delete?</h2>
       </div>
       <form className="popup-content" onSubmit={onSubmit}>
-      { waiting ? 
-      <p>Deleting Resource...</p>  
-      :
-      <p>Are you sure you want to delete this resource? This cannot be reversed!</p>
-      }
-      <button type="button" onClick={() => setDeleting(false)}>Cancel</button>
-      <button type="submit">Confirm</button>
+        {waiting ?
+          <p>Deleting Resource...</p>
+          :
+          <p>Are you sure you want to delete this resource? This cannot be reversed!</p>
+        }
+        <button type="button" onClick={() => setDeleting(false)}>Cancel</button>
+        <button type="submit">Confirm</button>
       </form>
     </div>
   )

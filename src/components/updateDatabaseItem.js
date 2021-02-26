@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import firebase from "./firebase";
 
 
-const UpdateDatabaseItem = ( { setEditing, currentItem }) => {
-    
+const UpdateDatabaseItem = ({ setEditing, currentItem }) => {
+
     // Used for updating the database item.
     const [item, setItem] = useState(currentItem);
     const originalTag = currentItem.name;
@@ -12,57 +12,57 @@ const UpdateDatabaseItem = ( { setEditing, currentItem }) => {
     const useItems = () => {
         const [items, setItems] = useState([])
         useEffect(() => {
-        if (item.location === "tags") {
-            
+            if (item.location === "tags") {
+
                 const unsubscribe = firebase
-                .firestore()
-                .collection("subjects")
-                .where(`${item.location}`, "array-contains", `${item.name}`)
-                .onSnapshot(function(snapshot) {
-                    const listItems = snapshot.docs.map(doc => ({
-                        id: doc.id,
-                        ...doc.data()
-                    }))
-                    setItems(listItems)
-                });
+                    .firestore()
+                    .collection("subjects")
+                    .where(`${item.location}`, "array-contains", `${item.name}`)
+                    .onSnapshot(function (snapshot) {
+                        const listItems = snapshot.docs.map(doc => ({
+                            id: doc.id,
+                            ...doc.data()
+                        }))
+                        setItems(listItems)
+                    });
                 return unsubscribe;
             } else {
                 const unsubscribe = firebase
-                .firestore()
-                .collection("subjects")
-                .where(`${item.location}`, "==", `${item.name}`)
-                .onSnapshot(function(snapshot) {
-                    const listItems = snapshot.docs.map(doc => ({
-                        id: doc.id,
-                        ...doc.data()
-                    }))
-                    setItems(listItems)
-                });
+                    .firestore()
+                    .collection("subjects")
+                    .where(`${item.location}`, "==", `${item.name}`)
+                    .onSnapshot(function (snapshot) {
+                        const listItems = snapshot.docs.map(doc => ({
+                            id: doc.id,
+                            ...doc.data()
+                        }))
+                        setItems(listItems)
+                    });
                 return unsubscribe;
             }
-        },[])    
-        return items      
-    } 
+        }, [])
+        return items
+    }
 
     // Collects and stores the resources that include the database item.
     const resources = useItems();
-    
+
     // Updates resources in the database to include the new database item.
     const updateResource = (resource, location) => {
 
         // Firebase cannot use variables for database entries, so we need seperate if functions for categories and levels
         if (item.location === "category") {
-            firebase.firestore().collection(location).doc(resource.id).update({category: item.name})
+            firebase.firestore().collection(location).doc(resource.id).update({ category: item.name })
         }
 
         if (item.location === "level") {
-            firebase.firestore().collection(location).doc(resource.id).update({level: item.name})
+            firebase.firestore().collection(location).doc(resource.id).update({ level: item.name })
         }
 
         // Tags are updated differently as it is an array.
         if (item.location === "tags") {
-            firebase.firestore().collection(location).doc(resource.id).update({tags: firebase.firestore.FieldValue.arrayRemove(`${originalTag}`)})
-            firebase.firestore().collection(location).doc(resource.id).update({tags: firebase.firestore.FieldValue.arrayUnion(`${item.name}`)})
+            firebase.firestore().collection(location).doc(resource.id).update({ tags: firebase.firestore.FieldValue.arrayRemove(`${originalTag}`) })
+            firebase.firestore().collection(location).doc(resource.id).update({ tags: firebase.firestore.FieldValue.arrayUnion(`${item.name}`) })
         }
 
         // To prevent errors
@@ -79,29 +79,29 @@ const UpdateDatabaseItem = ( { setEditing, currentItem }) => {
             return updateResource(resource, "subjects")
         })
 
-        firebase.firestore().collection(item.collection).doc(item.id).update({name: item.name})
-        
+        firebase.firestore().collection(item.collection).doc(item.id).update({ name: item.name })
+
         setEditing(false);
     }
 
     const onChange = e => {
         const { name, value } = e.target
         setItem({ ...item, [name]: value })
-      }
+    }
 
     const handleCancel = (e) => {
         e.preventDefault()
         setEditing(false)
-    }  
+    }
 
     return (
         <div className="database-container">
             <form className="small-database-form" onSubmit={onSubmit}>
-                
+
                 <div className="form-header"><h2>Update {currentItem.location}</h2></div>
-            
+
                 <div className="form-container">
-                <div className="small-form-content"><p>Updaing this database item will update all resources that have selected this item for {currentItem.location}.</p></div>
+                    <div className="small-form-content"><p>Updaing this database item will update all resources that have selected this item for {currentItem.location}.</p></div>
                     <div className="small-form-fields">
                         <input type="text" name="name" value={item.name} onChange={onChange} />
                         <div className="form-buttons">
@@ -109,12 +109,12 @@ const UpdateDatabaseItem = ( { setEditing, currentItem }) => {
                             <button type="submit" >Update</button>
                         </div>
                     </div>
-                {/* <div className="form-footer">
+                    {/* <div className="form-footer">
                     
                 </div> */}
                 </div>
             </form>
-            
+
         </div>
     )
 }
