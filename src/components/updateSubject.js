@@ -373,12 +373,6 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
 
   const warningCancel = () => {
     document.getElementById("warning-dialog-box").style.visibility = "hidden";
-    document.getElementById("incomplete-form").style.display = "none";
-    document.getElementById("duplicate-name").style.display = "none";
-    document.getElementById("max-tags-reached").style.display = "none";
-    document.getElementById("duplicate-tags").style.display = "none";
-    document.getElementById("duplicate-files").style.display = "none";
-    document.getElementById("file-too-large").style.display = "none";
   }
 
   return (
