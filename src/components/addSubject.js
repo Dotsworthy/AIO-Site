@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {triggerFormLock, disableScroll, enableScroll, resetAllWarnings} from "./Utils/errorHandler";
-import {databaseCheck} from "./Utils/firebaseUtils";
+// import {databaseCheck} from "./Utils/firebaseUtils";
 import firebase from "firebase";
 import { navigate } from "gatsby";
 import 'firebase/storage';
@@ -38,6 +38,14 @@ const AddSubject = () => {
     }, [location]);
     return items;
   };
+
+  // Looks for a resource with the name specified and returns the results in an array.
+const databaseCheck = async (name, location) => {
+  let query = []
+  const snapshot = await database.collection(location).where("name", "==", name).get()
+  snapshot.forEach((doc) => query.push(doc))
+  return query
+}
 
   // Auto-complete for form fields.
   const allCategories = useItems("categories");

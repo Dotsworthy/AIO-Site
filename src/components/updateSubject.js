@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { triggerFormLock, disableScroll, enableScroll, resetAllWarnings } from "./Utils/errorHandler";
-import { databaseCheck } from "./Utils/firebaseUtils";
+// import { databaseCheck } from "./Utils/firebaseUtils";
 import firebase from "firebase"
 import 'firebase/storage'
 
@@ -58,6 +58,14 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
     })
 
   }, [])
+
+  // Looks for a resource with the name specified and returns the results in an array.
+const databaseCheck = async (name, location) => {
+  let query = []
+  const snapshot = await database.collection(location).where("name", "==", name).get()
+  snapshot.forEach((doc) => query.push(doc))
+  return query
+}
 
   const allCategories = useItems("categories");
   const allLevels = useItems("levels");
