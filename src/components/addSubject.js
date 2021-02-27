@@ -582,15 +582,13 @@ const databaseCheck = async (name, location) => {
 
       </div>
       <div className="popup-container" id="submit-dialog-box">
-
         <div className="form-header">
           <h2>Submitting Resource</h2>
         </div>
-
         <div className="popup-content">
           <p>Uploading files. Do NOT refresh or leave the page while files are uploading. (If your upload has failed you can try again by updating the resource)</p>
           <br></br>
-          <div className="form-inside-content">
+          <div className="form-inside-content" id="submit-content">
             {resourceUploads.map(resource => {
               return <div className="added-item"><p id={resource.name}>Uploading...{resource.name}</p></div>
             })

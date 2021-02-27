@@ -15,9 +15,9 @@
 #duplicate-files { display: none; color: red;}
 #file-too-large { display: none; color: red;}
 
-.popup-container {
-    display: block;
-}
+// .popup-container {
+//     display: block;
+// }
 
 .popup-container {
     position: fixed; 
@@ -379,6 +379,10 @@
 #default {
     height: 200px;
     width: 50%;
+}
+
+#submit-content {
+    height: 200px;
 }
 
 #duplicates {

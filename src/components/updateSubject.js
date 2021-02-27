@@ -62,12 +62,12 @@ const UpdateSubject = ({ currentItem, setEditing }) => {
   }, [])
 
   // Looks for a resource with the name specified and returns the results in an array.
-const databaseCheck = async (name, location) => {
-  let query = []
-  const snapshot = await database.collection(location).where("name", "==", name).get()
-  snapshot.forEach((doc) => query.push(doc))
-  return query
-}
+  const databaseCheck = async (name, location) => {
+    let query = []
+    const snapshot = await database.collection(location).where("name", "==", name).get()
+    snapshot.forEach((doc) => query.push(doc))
+    return query
+  }
 
   const allCategories = useItems("categories");
   const allLevels = useItems("levels");
@@ -427,36 +427,35 @@ const databaseCheck = async (name, location) => {
 
   return (
     <div className="admin-layout">
-      <div className="popup-container" id="warning-dialog-box">
 
+      {/* 
+        * ERROR POP UP
+        */}
+      <div className="popup-container" id="warning-dialog-box">
         <div className="form-header">
           <h2>Warning</h2>
         </div>
-
         <div className="popup-content">
           <div id="incomplete-form">There are issues with your form. Please fix errors highlighted in red.</div>
         </div>
-
         <div className="form-footer">
           <button onClick={() => warningCancel()}>Close</button>
         </div>
-
       </div>
-
 
       <div className="database-form" id="update-item-form">
         <div className="form-header">
           <h2>Update Subject</h2>
         </div>
-
         <form onSubmit={onSubmit}>
           <div className="form-container">
             <div className="form-fields">
-
-
               <div className="form-subfield">
                 <h3>Subject Description</h3>
-                {/* NAME */}
+
+                {/* 
+                  * NAME 
+                  */}
                 <div className="input-container">
                   <div className="input-field">
                     <label htmlFor="name" className="name_label">Subject Name:</label>
@@ -466,8 +465,9 @@ const databaseCheck = async (name, location) => {
                   <div id="no-name">Please give your subject a name.</div>
                 </div>
 
-
-                {/* DESCRIPTION */}
+                {/* 
+                  * DESCRIPTION 
+                  */}
                 <p>Write a preview of your subject. This is viewed by users to the resource catalogue, and could include a small introduction of the topic, an overview of the lesson plan, etc. (max characters: 3000)</p>
                 <div className="description-input-field">
                   <textarea placeholder="Subject Description" maxLength="2000" className="input-description" type="text" name="description" value={item.description} onChange={(e) => changeField("description", e)} />
@@ -479,7 +479,9 @@ const databaseCheck = async (name, location) => {
                 <h3>Subject Details</h3>
                 <p>Click to select from dropdown or start typing to search. Any text in the input field not currently in the database will be added.</p>
 
-                {/* CATEGORY */}
+                {/* 
+                  * CATEGORY 
+                  */}
                 <div className="input-container">
                   <div className="input-field">
                     <label>Category:</label>
@@ -495,7 +497,9 @@ const databaseCheck = async (name, location) => {
                   <div id="no-category">Please give your subject a category</div>
                 </div>
 
-                {/* LEVEL */}
+                {/* 
+                  * LEVEL 
+                  */}
                 <div className="input-container">
                   <div className="input-field">
                     <label>Educational Level:</label>
@@ -511,10 +515,9 @@ const databaseCheck = async (name, location) => {
                   <div id="no-level">Please give your subject an educational level</div>
                 </div>
 
-
-
-
-                {/* TAGS */}
+                {/* 
+                  * TAGS 
+                  */}
                 <div className="button-menu-container">
                   <div className="input-field">
                     <label>Tags:</label>
@@ -522,7 +525,6 @@ const databaseCheck = async (name, location) => {
                   </div>
                   <button onClick={(e) => addTag(e, tag)}>Add Tag</button>
                 </div>
-
                 {allTags &&
                   <datalist id="tagsList">
                     {allTags.map(singleTag => {
@@ -530,13 +532,9 @@ const databaseCheck = async (name, location) => {
                     })}
                   </datalist>
                 }
-
                 <p>Tags added (4 maximum):</p>
                 <div className="file-input-field">
-
-
                   <div className="form-inside-content" id="default">
-
                     {item.tags === "" ?
                       <p>None</p>
                       :
@@ -547,24 +545,19 @@ const databaseCheck = async (name, location) => {
                         </div>
                       })
                     }
-
-
                   </div>
                   <div className="file-input-warning">
                     <div id="max-tags-reached">Maximum of four tags. Please delete a tag before adding a new one</div>
                     <div id="no-tags">Please add at least one tag</div>
                     <div id="duplicate-tags">Tag already selected. Please select a different tag</div>
-
-
                   </div>
                 </div>
               </div>
-
             </div>
 
-
-
-            {/* IMAGE */}
+            {/* 
+              * IMAGE 
+              */}
             <div className="form-fields-notext">
               <div className="form-subfield">
                 <div>
@@ -594,7 +587,9 @@ const databaseCheck = async (name, location) => {
               </div>
             </div>
 
-            {/* DOWNLOADS */}
+            {/* 
+              * DOWNLOADS 
+              */}
             <div className="form-fields-notext">
               <div className="form-subfield">
                 <h3>Upload Resources</h3>
@@ -643,22 +638,23 @@ const databaseCheck = async (name, location) => {
         </form>
       </div>
 
+      {/* 
+        * UPLOADING FILES POP-UP 
+        */}
       <div className="popup-container" id="submit-dialog-box">
-
         <div className="form-header">
           <h2>Submitting Resource</h2>
         </div>
-
-        <div className="pop-up-content"><h2>Submitting Resource</h2></div>
-        <div>
+        <div className="popup-content">
           <p>Uploading files. Do NOT refresh or leave the page while files are uploading. (If your upload has failed you can try again by updating the resource)</p>
-        </div>
-        <div>
+          <br></br>
+          <div className="form-inside-content" id="submit-content">
           {filesToUpload.map(resource => {
-            return <p id={resource.name}>Uploading...{resource.name}</p>
+            return <div className="added-item"> <p id={resource.name}>Uploading...{resource.name}</p></div>
           })
           }
         </div>
+          </div>
       </div>
     </div>
 
