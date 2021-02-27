@@ -6,9 +6,11 @@ import 'firebase/storage'
 
 const UpdateSubject = ({ currentItem, setEditing }) => {
 
+  // for Database Check.
+  const database = firebase.firestore()
+
   // item information to update the database
   const [item, setItem] = useState(currentItem);
-  const database = firebase.firestore()
 
   // states for changed data that needs processing
   const [filesToUpload, setFilesToUpload] = useState([]);
@@ -81,35 +83,35 @@ const databaseCheck = async (name, location) => {
   }
 
   // Updates the database fields and removes any error messages on input. Images and Downloads are done seperately.
-  // const changeField = (warning, e) => {
-  //   switch (warning) {
-  //     case "name":
-  //       setName(e);
-  //       document.getElementById("no-name").style.display = "none";
-  //       document.getElementById("duplicate-name").style.display = "none";
-  //       break;
-  //     case "description":
-  //       setDescription(e);
-  //       document.getElementById("no-description").style.display = "none";
-  //       break;
-  //     case "category":
-  //       setCategory(e);
-  //       document.getElementById("no-category").style.display = "none";
-  //       break;
-  //     case "level":
-  //       setLevel(e);
-  //       document.getElementById("no-level").style.display = "none";
-  //       break;
-  //     case "tags":
-  //       setTag(e);
-  //       document.getElementById("no-tags").style.display = "none";
-  //       document.getElementById("max-tags-reached").style.display = "none";
-  //       document.getElementById("duplicate-tags").style.display = "none";
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }
+  const changeField = (warning, e) => {
+    switch (warning) {
+      case "name":
+        onChange(e);
+        document.getElementById("no-name").style.display = "none";
+        document.getElementById("duplicate-name").style.display = "none";
+        break;
+      case "description":
+        onChange(e);
+        document.getElementById("no-description").style.display = "none";
+        break;
+      case "category":
+        onChange(e);
+        document.getElementById("no-category").style.display = "none";
+        break;
+      case "level":
+        onChange(e);
+        document.getElementById("no-level").style.display = "none";
+        break;
+      case "tags":
+        setTag(e.currentTarget.value);
+        document.getElementById("no-tags").style.display = "none";
+        document.getElementById("max-tags-reached").style.display = "none";
+        document.getElementById("duplicate-tags").style.display = "none";
+        break;
+      default:
+        break;
+    }
+  }
 
   // changing item state
   const onChange = e => {
@@ -458,7 +460,7 @@ const databaseCheck = async (name, location) => {
                 <div className="input-container">
                   <div className="input-field">
                     <label htmlFor="name" className="name_label">Subject Name:</label>
-                    <input type="text" name="name" value={item.name} onChange={onChange} />
+                    <input type="text" name="name" value={item.name} onChange={(e) => changeField("name", e)} />
                   </div>
                   <div id="duplicate-name">A subject named {item.name} already exists.</div>
                   <div id="no-name">Please give your subject a name.</div>
@@ -468,7 +470,7 @@ const databaseCheck = async (name, location) => {
                 {/* DESCRIPTION */}
                 <p>Write a preview of your subject. This is viewed by users to the resource catalogue, and could include a small introduction of the topic, an overview of the lesson plan, etc. (max characters: 3000)</p>
                 <div className="description-input-field">
-                  <textarea placeholder="Subject Description" maxLength="2000" className="input-description" type="text" name="description" value={item.description} onChange={onChange} />
+                  <textarea placeholder="Subject Description" maxLength="2000" className="input-description" type="text" name="description" value={item.description} onChange={(e) => changeField("description", e)} />
                 </div>
                 <div id="no-description">Please give your subject a description</div>
               </div>
@@ -481,7 +483,7 @@ const databaseCheck = async (name, location) => {
                 <div className="input-container">
                   <div className="input-field">
                     <label>Category:</label>
-                    <input placeholder="Category" type="text" name="category" value={item.category} list="categoryList" onChange={onChange} />
+                    <input placeholder="Category" type="text" name="category" value={item.category} list="categoryList" onChange={(e) => changeField("category", e)} />
                     {allCategories &&
                       <datalist id="categoryList">
                         {allCategories.map(singleCategory => {
@@ -497,7 +499,7 @@ const databaseCheck = async (name, location) => {
                 <div className="input-container">
                   <div className="input-field">
                     <label>Educational Level:</label>
-                    <input placeholder="Level" value={item.level} name="level" list="levelList" onChange={onChange} type="level" />
+                    <input placeholder="Level" value={item.level} name="level" list="levelList" onChange={(e) => changeField("level", e)} type="level" />
                     {allLevels &&
                       <datalist id="levelList">
                         {allLevels.map(singleLevel => {
@@ -516,7 +518,7 @@ const databaseCheck = async (name, location) => {
                 <div className="button-menu-container">
                   <div className="input-field">
                     <label>Tags:</label>
-                    <input placeholder="Add a tag" value={tag} name="tags" list="tagsList" onChange={e => setTag(e.currentTarget.value)} type="tags" />
+                    <input placeholder="Add a tag" value={tag} name="tags" list="tagsList" onChange={(e) => changeField("tags", e)} type="tags" />
                   </div>
                   <button onClick={(e) => addTag(e, tag)}>Add Tag</button>
                 </div>
@@ -607,7 +609,7 @@ const databaseCheck = async (name, location) => {
                       item.download.map(file => (
                         <div className="added-item">
                           <label>{file}</label>
-                          <button onClick={(e) => removeFile(e, file, item.download.indexOf(file))}>Remove File</button>
+                          <button className="remove-file" onClick={(e) => removeFile(e, file, item.download.indexOf(file))}>Remove File</button>
                         </div>
                       ))}
                   </div>
