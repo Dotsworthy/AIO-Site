@@ -4,6 +4,18 @@ import SEO from "../components/seo";
 import downloadFile from "../images/All-In-One-Education-Our-Mission.pdf";
 
 const AboutUs = () => {
+    const triggerProfile = (e, pictureID, paragraphID) => {
+        const picture = document.getElementById(pictureID)
+        const paragraph = document.getElementById(paragraphID)
+
+        if (picture.style.display === "none") {
+            picture.style.display = "block";
+            paragraph.style.display = "none";
+        } else {
+            picture.style.display = "none";
+            paragraph.style.display = "block";
+        }
+    }
 
     return (
         <Layout siteType={"client"}>
@@ -57,6 +69,24 @@ const AboutUs = () => {
                     </div>
                 </div>
 
+            </div>
+            <div className="content-box" id="blue">
+                <h1>MEET US:</h1>
+                <div className="content-box-horizontal">
+                    <div className="paragraph-box-horizontal" id="white">
+                        <h1>Test Person 1</h1>
+                        <img src={require("../images/38079971_m.jpg")} alt="inclusive" id="img-1"></img>
+                        <p className="employee-blurb" id="test-employee-1">Test Employee one is an employee of AIO</p>
+                    </div>
+                    <div className="paragraph-box-horizontal" id="white">
+                        <h1>Test Person 2</h1>
+                        <img src={require("../images/38079971_m.jpg")} alt="inclusive" id="img-2"></img>
+                        <p className="employee-blurb" id="test-employee-2">Test Employee Two is an employee of AIO</p>                    </div>
+                    <div onclick={triggerProfile("img-2", "test-employee-2")}className="paragraph-box-horizontal" id="white">
+                        <h1>Test Person 3</h1>
+                        <img src={require("../images/38079971_m.jpg")} alt="inclusive" id="img-3"></img>
+                        <p className="employee-blurb" id="test-employee-3">Test Employee Three is an employee of AIO</p>                    </div>
+                </div>
             </div>
 
             {/* Needs integration with Mailchimp */}
