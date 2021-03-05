@@ -261,6 +261,9 @@ $mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
 
 .content {
     display: none;
+    // visibility: hidden;
+    // height: 0;
+    max-height: 0px;
     padding: 5px;
     z-index: -1;
     align-items: flex-start;
@@ -269,7 +272,9 @@ $mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
     overflow: scroll;
     
     background-color: white;
+    transition: max-height 0.2s linear;
 }
+
 
 .content-box {
     padding: 3vw;

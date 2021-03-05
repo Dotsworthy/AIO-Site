@@ -181,14 +181,29 @@ const ResourceCatalogue = () => {
     const column = document.getElementsByClassName("content");
     const selectedColumn = document.getElementById(item);
 
-    if (selectedColumn.style.display === "flex") {
+    if (selectedColumn.style.maxHeight === "250px") {
+      // selectedColumn.style.visibility = "hidden";
+      selectedColumn.style.maxHeight = "0px";
+      selectedColumn.style.padding = "0";
       selectedColumn.style.display = "none";
       // selectedFilter.value = "";
     } else {
+      // column[0].style.visibility = "hidden";
+      column[0].style.maxHeight = "0px";
+      // column[0].style.padding = "0px";
       column[0].style.display = "none";
+      // column[1].style.visibility = "hidden";
+      column[1].style.maxHeight = "0px";
+      // column[1].style.padding = "0";
       column[1].style.display = "none";
+      // column[2].style.visibility = "hidden";
+      column[2].style.maxHeight = "0px";
+      // column[2].style.padding = "0";
       column[2].style.display = "none";
-      selectedColumn.style.display = "flex";
+      // selectedColumn.style.visibility = "visible";
+      selectedColumn.style.maxHeight = "250px";
+      // selectedColumn.style.padding = "5px";
+      selectedColumn.style.display = "block";
     }
   }
 
