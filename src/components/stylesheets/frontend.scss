@@ -636,8 +636,8 @@ $mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
     object-fit: cover;
     }
 
-    @media #{$mq-xlarge} {
-        max-width: 400px;
+    @media #{$mq-mobile} {
+        width: 350px;
     }
 
 }
