@@ -4,16 +4,28 @@ import SEO from "../components/seo";
 import downloadFile from "../images/All-In-One-Education-Our-Mission.pdf";
 
 const AboutUs = () => {
-    const triggerProfile = (e, pictureID, paragraphID) => {
+    const triggerProfile = (pictureID, paragraphID) => {
         const picture = document.getElementById(pictureID)
         const paragraph = document.getElementById(paragraphID)
 
-        if (picture.style.display === "none") {
-            picture.style.display = "block";
-            paragraph.style.display = "none";
+        if (picture.style.visibility === "hidden") {
+            picture.style.opacity = "1";
+            picture.style.visibility = "visible";
+            picture.style.height = "100%";
+            picture.style.width = "100%";
+
+            paragraph.style.opacity = "0";
+            paragraph.style.visibility = "hidden";
+            
         } else {
-            picture.style.display = "none";
-            paragraph.style.display = "block";
+            picture.style.opacity = "0";
+            picture.style.visibility = "hidden";
+            picture.style.height = "0%";
+            picture.style.width = "0%";
+            
+            paragraph.style.opacity = "1";
+            paragraph.style.visibility = "visible";
+            
         }
     }
 
@@ -73,18 +85,31 @@ const AboutUs = () => {
             <div className="content-box" id="blue">
                 <h1>MEET US:</h1>
                 <div className="content-box-horizontal">
-                    <div className="paragraph-box-horizontal" id="white">
+                    <div className="profile-box" id="white"
+                        onMouseEnter={() => triggerProfile("img-1", "test-employee-1")} 
+                        onMouseLeave={() => triggerProfile("img-1", "test-employee-1")}
+                        // onTouchStart={() => triggerProfile("img-1", "test-employee-1")}
+                        // onTouchLeave={() => triggerProfile("img-1", "test-employee-1")}
+                    >
                         <h1>Test Person 1</h1>
-                        <img src={require("../images/38079971_m.jpg")} alt="inclusive" id="img-1"></img>
+                        <img className="employee-picture" src={require("../images/38079971_m.jpg")} alt="inclusive" id="img-1"></img>
                         <p className="employee-blurb" id="test-employee-1">Test Employee one is an employee of AIO</p>
                     </div>
-                    <div className="paragraph-box-horizontal" id="white">
+                    <div className="profile-box" id="white"
+                        onMouseEnter={() => triggerProfile("img-2", "test-employee-2")} 
+                        onMouseLeave={() => triggerProfile("img-2", "test-employee-2")}
+                        // onTouchStart={() => triggerProfile("img-2", "test-employee-2")}
+                        // onTouchLeave={() => triggerProfile("img-2", "test-employee-2")}
+                    >
                         <h1>Test Person 2</h1>
-                        <img src={require("../images/38079971_m.jpg")} alt="inclusive" id="img-2"></img>
+                        <img className="employee-picture" src={require("../images/121432034_m.jpg")} alt="inclusive" id="img-2"></img>
                         <p className="employee-blurb" id="test-employee-2">Test Employee Two is an employee of AIO</p>                    </div>
-                    <div onclick={triggerProfile("img-2", "test-employee-2")}className="paragraph-box-horizontal" id="white">
+                    <div className="profile-box" id="white"
+                        onMouseEnter={() => triggerProfile("img-3", "test-employee-3")} 
+                        onMouseLeave={() => triggerProfile("img-3", "test-employee-3")}
+                    >
                         <h1>Test Person 3</h1>
-                        <img src={require("../images/38079971_m.jpg")} alt="inclusive" id="img-3"></img>
+                        <img className="employee-picture" src={require("../images/115668764_m.jpg")} alt="inclusive" id="img-3"></img>
                         <p className="employee-blurb" id="test-employee-3">Test Employee Three is an employee of AIO</p>                    </div>
                 </div>
             </div>
