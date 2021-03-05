@@ -620,8 +620,8 @@ $mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
 }
 
 .profile-box {
-    width: 350px;
-    height: 400px;
+    width: 500px;
+    height: 600px;
     box-shadow: 10px 10px;
     padding: 2vw;
     margin: 2vh 0.25vw;
@@ -637,7 +637,7 @@ $mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
     }
 
     @media #{$mq-xlarge} {
-        max-width: 500px;
+        max-width: 400px;
     }
 
 }
@@ -806,6 +806,7 @@ $mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
     visibility: hidden;
     transition: opacity 1s;
     opacity: 0;
+    margin: 10px;
 }
 
 .employee-picture {
@@ -814,6 +815,8 @@ $mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
     height: 100%;
     width: 100%;
     opacity: 1;
+    max-height: 400px;
+    margin: 10px;
 
 }
 

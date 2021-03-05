@@ -86,38 +86,99 @@ const AboutUs = () => {
                 <h1>MEET US:</h1>
                 <div className="content-box-horizontal">
                     <div className="profile-box" id="white"
-                        onMouseEnter={() => triggerProfile("img-1", "test-employee-1")} 
-                        onMouseLeave={() => triggerProfile("img-1", "test-employee-1")}
-                        // onTouchStart={() => triggerProfile("img-1", "test-employee-1")}
-                        // onTouchLeave={() => triggerProfile("img-1", "test-employee-1")}
+                        onMouseEnter={() => triggerProfile("img-1", "employee-1")} 
+                        onMouseLeave={() => triggerProfile("img-1", "employee-1")}
                     >
-                        <h1>Test Person 1</h1>
-                        <img className="employee-picture" src={require("../images/38079971_m.jpg")} alt="inclusive" id="img-1"></img>
-                        <p className="employee-blurb" id="test-employee-1">Test Employee one is an employee of AIO</p>
+                        <h2>Anna Ploszajski Mayhew - Chair</h2>
+                        <img className="employee-picture" src={require("../images/anna-mayhew.jpg")} alt="inclusive" id="img-1"></img>
+                        <div className="employee-blurb" id="employee-1">
+                        <p>Anna has a background in heritage learning, working for some of Scotland's biggest heritage organisations, including Historic Environment Scotland, and the National Galleries of Scotland. She currently coordinates the regional delivery of public music, arts, and heritage programmes across Falkirk, and oversees AIO’s strategic plan and mission as Chair of the Board. When not dreaming up new ways to get people excited about History, she is playing traditional music, losing at board games, and tending to her massive guinea pig, Angus.</p>
+                        <br></br>
+                        <p>To contact please email enquiries@allinoneeducation.co.uk</p>
+                        </div>
                     </div>
                     <div className="profile-box" id="white"
-                        onMouseEnter={() => triggerProfile("img-2", "test-employee-2")} 
-                        onMouseLeave={() => triggerProfile("img-2", "test-employee-2")}
-                        // onTouchStart={() => triggerProfile("img-2", "test-employee-2")}
-                        // onTouchLeave={() => triggerProfile("img-2", "test-employee-2")}
+                        onMouseEnter={() => triggerProfile("img-2", "employee-2")} 
+                        onMouseLeave={() => triggerProfile("img-2", "employee-2")}
                     >
-                        <h1>Test Person 2</h1>
-                        <img className="employee-picture" src={require("../images/121432034_m.jpg")} alt="inclusive" id="img-2"></img>
-                        <p className="employee-blurb" id="test-employee-2">Test Employee Two is an employee of AIO</p>                    </div>
+                        <h2>Zo Daniels - Vice Chair</h2>
+                        <img className="employee-picture" src={require("../images/zo-daniels.png")} alt="inclusive" id="img-2"></img>
+                        <div className="employee-blurb" id="employee-2">
+                        <p >Zo is a jack of all trades who has worked in various events and marketing roles in education and entertainment charities around London. An intersectional activist, and founding member of social activism group Collective Action For Black Matters, she has a thirst for knowledge and loves creating engaging and inspiring content. As AIO’s vice-chair, she directs strategy and oversees operations in England, and when she’s not working, you’ll probably find her hiding in a cinema somewhere. 
+                        </p>
+                        <br></br>
+                        <p>To contact please email enquiries@allinoneeducation.co.uk</p>                    
+                        </div>
+                        </div>
+                    
                     <div className="profile-box" id="white"
-                        onMouseEnter={() => triggerProfile("img-3", "test-employee-3")} 
-                        onMouseLeave={() => triggerProfile("img-3", "test-employee-3")}
+                        onMouseEnter={() => triggerProfile("img-3", "employee-3")} 
+                        onMouseLeave={() => triggerProfile("img-3", "employee-3")}
                     >
-                        <h1>Test Person 3</h1>
-                        <img className="employee-picture" src={require("../images/115668764_m.jpg")} alt="inclusive" id="img-3"></img>
-                        <p className="employee-blurb" id="test-employee-3">Test Employee Three is an employee of AIO</p>                    </div>
+                        <h2>Gina Lorenzetti - Treasurer</h2>
+                        <img className="employee-picture" src={require("../images/gina-lorenzetti.png")} alt="inclusive" id="img-3"></img>
+                        <p className="employee-blurb" id="employee-3">Gina is an employee of AIO</p>                    
+                    </div>
+
+                    <div className="profile-box" id="white"
+                        onMouseEnter={() => triggerProfile("img-4", "employee-4")} 
+                        onMouseLeave={() => triggerProfile("img-4", "employee-4")}
+                    >
+                        <h2>Nikhat Yusaf - Teaching Lead</h2>
+                        <img className="employee-picture" src={require("../images/nikhat-yusef.png")} alt="inclusive" id="img-4"></img>
+                        <div className="employee-blurb" id="employee-4">
+                        <p>Nikhat has a background in primary education and worked as a class teacher before taking on additional training to specialise in supporting bilingual learners and learners with literacy difficulties and dyslexia. When not developing and delivering training to teachers, supporting pupils with additional support needs and being an equalities champion at the Educational Institute of Scotland, she is a serial 'hobbyist', parent of four amazing young people and bird-mum to a demanding wee cockatiel, Momo. As AIO’s Teaching Lead, she coordinates our team of teacher creators and oversees our education strategy.</p>                    
+                        <br></br>
+                        <p>To contact please email enquiries@allinoneeducation.co.uk</p> 
+                        </div>
+                    </div>
+
+                    <div className="profile-box" id="white"
+                        onMouseEnter={() => triggerProfile("img-5", "employee-5")} 
+                        onMouseLeave={() => triggerProfile("img-5", "employee-5")}
+                    >
+                        <h2>Henry Lampitt - Relationships and Advocacy Lead</h2>
+                        <img className="employee-picture" src={require("../images/henry-lampitt.png")} alt="inclusive" id="img-5"></img>
+                        <div className="employee-blurb" id="employee-5">
+                        <p>Henry has a background working in heritage education across the south east of England, both as an education officer and as a volunteer coordinator. As Relationships Lead, he forges bonds with our partner organisations, and works to create our education resources with AIO’s designers. If he's not spreading the word of All In One Education, you'll find him on his bike, off to find the next best place to eat or drink, or cooking at home for his friends and family.</p>
+                        <br></br>
+                        <p>To contact please email enquiries@allinoneeducation.co.uk</p> 
+                        </div>
+                    </div>
+
+                    <div className="profile-box" id="white"
+                        onMouseEnter={() => triggerProfile("img-6", "employee-6")} 
+                        onMouseLeave={() => triggerProfile("img-6", "employee-6")}
+                    >
+                        <h2>Christine Pont - Development Lead</h2>
+                        <img className="employee-picture" src={require("../images/christine-pont.png")} alt="inclusive" id="img-6"></img>
+                        <div className="employee-blurb" id="employee-6">
+                        <p>Christine is AIO’s Business Development Lead, and has a background in museum education and various roles in the charity sector including fundraising and volunteer management. When she isn’t developing AIO into an exciting, accessible organisation, she spends most of her time trying to tame her toddler - but gets the odd opportunity to hide in a corner with a book or escape to her favourite routes to try and beat her 10k PB.</p>
+                        <br></br>
+                        <p>To contact please email enquiries@allinoneeducation.co.uk</p> 
+                        </div>
+                    </div>
+                    
+                    <div className="profile-box" id="white"
+                        onMouseEnter={() => triggerProfile("img-7", "employee-7")} 
+                        onMouseLeave={() => triggerProfile("img-7", "employee-7")}
+                    >
+                        <h2>Lizzie Riungu - Advocacy Lead</h2>
+                        <img className="employee-picture" src={require("../images/lizzie-riungu.png")} alt="inclusive" id="img-7"></img>
+                        <div className="employee-blurb" id="employee-7">
+                        <p>Lizzie has a background in social activism and events management, and is one of the co-founders of the Edinburgh in Solidarity with BLM activist group. She works in All In One’s Advocacy team, creating campaigns, content, and connections with educational institutes and social activism groups. Outwith this work, she is usually found walking her dog, playing board games, or learning how to make clothes.</p>
+                        <br></br>
+                        <p>To contact please email enquiries@allinoneeducation.co.uk</p>
+                        </div> 
+                    </div>
+
                 </div>
             </div>
 
             {/* Needs integration with Mailchimp */}
             {/* <div className="newsletter-banner">
                 <div className="paragraph-box" id="white">
-                <h1>SUBSCRIBE TO OUR NEWSLETTER</h1>
+                <h2>SUBSCRIBE TO OUR NEWSLETTER</h2>
                 <p>Sign up with your email address to receive news and updates.</p>
                 <form className="client-form">
                 <input placeholder="E-mail Address"/>
