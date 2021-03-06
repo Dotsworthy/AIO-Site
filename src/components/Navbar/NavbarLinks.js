@@ -10,6 +10,7 @@ const NavbarLinks = ( siteType ) => {
       { siteType.siteType === "client" && 
         <>
           <Link className="navbar-link" to="/about-us">About Us</Link>
+          <Link className="navbar-link" to="/news">News</Link>
           <Link className="navbar-link" to="/take-action">Take Action</Link>
           {/* <Link className="navbar-link" to="/resources/">Resources</Link> */}
           <Link className="navbar-link" to="/contact-us">Contact Us</Link>
