@@ -67,3 +67,6 @@ yarn-error.log
 .pnp.js
 # Yarn Integrity file
 .yarn-integrity
+
+#private key for Firebase
+./testproject-85401-firebase-adminsdk-jvfw5-3c231b2984.json
