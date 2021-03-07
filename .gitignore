@@ -69,4 +69,4 @@ yarn-error.log
 .yarn-integrity
 
 #private credentials folder
-credentials/
+/testproject-85401-firebase-adminsdk-jvfw5-3c231b2984.json
