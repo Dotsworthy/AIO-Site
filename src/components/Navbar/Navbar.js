@@ -26,7 +26,7 @@ const Navbar = ( siteType ) => {
   return (
     <nav className="navigation" id={ site === "client" ? "blue" : "red"}>
       <Link className="home-link" to="/">
-        <img className="image-link" src={aioLogo} alt="aio-logo"></img>
+        {/* <img className="image-link" src={aioLogo} alt="aio-logo"></img> */}
         All In One
         
         
